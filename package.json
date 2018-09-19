@@ -1,11 +1,13 @@
 {
-  "name": "is-select-app",
+  "name": "is-components-ngx",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4201",
     "build": "ng build",
-    "build.lib":"ng build --prod is-select && cd dist/is-select && npm pack && cp *.tgz ../../package",
+    "build.select": "ng build is-select && cd dist/is-select && npm pack --quiet && cp *.tgz ../../package",
+    "build.codemirror": "ng build is-codemirror && cd dist/is-codemirror && npm pack --quiet && cp *.tgz ../../package",
+    "build.froala": "ng build is-froala && cd dist/is-froala && npm pack --quiet && cp *.tgz ../../package",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -21,8 +23,11 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "at.js": "^1.5.4",
+    "codemirror": "^5.40.0",
     "core-js": "^2.5.4",
-    "is-select": "file:dist/is-select",
+    "font-awesome": "^4.7.0",
+    "froala-editor": "^2.8.5",
     "rxjs": "^6.2.2",
     "zone.js": "~0.8.26"
   },

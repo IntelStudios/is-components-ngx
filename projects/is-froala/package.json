@@ -1,0 +1,11 @@
+{
+  "name": "is-froala",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "at.js": "^1.5.4",
+    "font-awesome": "^4.7.0",
+    "froala-editor": "^2.8.5"
+  },
+  "version": "1.0.0"
+}

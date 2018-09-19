@@ -1,0 +1,65 @@
+
+$color-cls-danger-fg: var(--is-color-danger, red);
+$brand-warning: var(--is-color-warning, yellow);
+$input-color: var(--is-color-input, black);
+$input-border: var(--is-color-border, gray);
+
+:host {
+  &.ng-invalid,
+  &.ng-pending {
+    border: none !important;
+  }
+  &.single-line {
+    /deep/ .CodeMirror-scroll {
+      overflow: hidden;
+    }
+    /deep/ .CodeMirror {
+      min-height: 28px;
+      max-height: 28px;
+      line-height: 18px;
+      font-family: "Helvetica Neue", Helvetica;
+    }
+    /deep/ .CodeMirror-hscrollbar {
+      display: none !important;
+    }
+  }
+  &.cm-large {
+    /deep/ .CodeMirror-scroll {
+      min-height: 300px;
+      max-height: initial;
+    }
+  }
+
+  .cm-tooltip {
+    position: absolute;
+    background-color: #2b3643;
+    color: white;
+    padding: 2px 4px 2px 4px;
+    border-radius: 4px;
+    z-index: 2;
+  }
+}
+
+:host(.ng-invalid) {
+  /deep/ .CodeMirror {
+    border: 1px solid $color-cls-danger-fg;
+  }
+}
+
+:host(.ng-pending) {
+  /deep/ .CodeMirror {
+    border: 1px solid $brand-warning;
+  }
+}
+
+/deep/ .CodeMirror {
+  height: auto !important;
+  border-radius: 4px;
+  color: $input-color;
+  border: 1px solid $input-border;
+}
+
+/deep/ .CodeMirror-scroll {
+  min-height: 70px;
+  max-height: 600px;
+}

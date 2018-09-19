@@ -23,6 +23,18 @@
       ],
       "is-select/*": [
         "dist/is-select/*"
+      ],
+      "is-codemirror": [
+        "dist/is-codemirror"
+      ],
+      "is-codemirror/*": [
+        "dist/is-codemirror/*"
+      ],
+      "is-froala": [
+        "dist/is-froala"
+      ],
+      "is-froala/*": [
+        "dist/is-froala/*"
       ]
     }
   }

@@ -1,0 +1,54 @@
+@mixin short-scroll {
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px; //background: #fff;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgb(187, 187, 187);
+  }
+  &::-webkit-scrollbar-corner {
+    background: #fff;
+  }
+  @media print {
+    &::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+  }
+}
+
+:host {
+  min-height: 189px;
+  display: block;
+  border: none !important;
+
+  /deep/ iframe.fr-iframe {
+    position: initial !important;
+    min-height: 189px;
+  }
+
+  /deep/ .fr-wrapper {
+    @include short-scroll;
+  }
+
+  /deep/ .CodeMirror {
+    height: inherit !important;
+    border-radius: 4px;
+    max-height: 210px;
+  }
+
+  /deep/ .CodeMirror-scroll {
+    max-height: inherit !important;
+  }
+
+  /deep/ .CodeMirror-wrap {
+    height: inherit !important;
+  }
+
+  /deep/ .CodeMirror-vscrollbar {
+    @include short-scroll;
+  }
+
+  /deep/ .CodeMirror-hscrollbar {
+    @include short-scroll;
+  }
+}
