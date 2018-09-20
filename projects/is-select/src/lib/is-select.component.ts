@@ -76,7 +76,6 @@ export class IsSelectComponent implements OnInit {
         return new SelectItem(data);
       });
     }
-    this.changeDetector.markForCheck();
   }
 
   @Output() data: EventEmitter<any> = new EventEmitter();
@@ -344,7 +343,7 @@ export class IsSelectComponent implements OnInit {
     this.changeDetector.markForCheck();
   }
 
-  private hideOptions(): void {
+  hideOptions(): void {
     this.inputMode = false;
     this.optionsOpened = false;
     if (this._clickedOutsideListener) {
