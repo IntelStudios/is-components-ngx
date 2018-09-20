@@ -225,6 +225,7 @@ export class IsSelectComponent implements OnInit {
       this.data.next(this.active);
       this.doEvent('removed', item);
     }
+    this.changeDetector.markForCheck();
   }
 
   private doEvent(type: string, value: any): void {
@@ -299,6 +300,7 @@ export class IsSelectComponent implements OnInit {
 
   selectActive(value: SelectItem): void {
     this.activeOption = value;
+    this.changeDetector.markForCheck();
   }
 
   scrollToSelected(): void {
