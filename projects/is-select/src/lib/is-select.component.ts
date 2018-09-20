@@ -76,6 +76,7 @@ export class IsSelectComponent implements OnInit {
         return new SelectItem(data);
       });
     }
+    this.changeDetector.markForCheck();
   }
 
   @Output() data: EventEmitter<any> = new EventEmitter();
