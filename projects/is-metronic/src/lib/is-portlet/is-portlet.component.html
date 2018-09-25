@@ -1,0 +1,17 @@
+<div class="portlet light bordered">
+    <ng-content select="xa-loading"></ng-content>
+    <div class="portlet-title">
+        <div class="caption font-green-seagreen">
+            <span class="caption-subject bold uppercase">{{heading|translate}}</span>
+        </div>
+        <div class="tools">
+            <a *ngIf="enableCollapse" [class.collapse]="collapse==='open'" [class.expand]="collapse==='closed'" (click)="toggleCollapse()"></a>
+        </div>
+        <ng-content select=".actions"></ng-content>
+        <div class="clear"></div>
+        <ng-content select=".alerts"></ng-content>
+    </div>
+    <div [@collapseInOut]="collapse">
+        <ng-content select=".portlet-body"></ng-content>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Usage</h2>
+    <div [innerHTML]="usage"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Breadcrumb Box</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 tiles">
+    <!-- breadcrumbs MUST be rendered within parent having "tiles" class -->
+    <is-breadcrumb-box [breadcrumb]="{id:'1', icon:'fa fa-user', name: 'breadcrumb'}"></is-breadcrumb-box>
+    <is-breadcrumb-box bgClass="bg-red-thunderbird" [breadcrumb]="{id:'1', icon:'fa fa-user', name: 'breadcrumb'}"></is-breadcrumb-box>
+    <is-breadcrumb-box [count]="666" [breadcrumb]="{id:'2', icon:'fa fa-home', name: 'breadcrumb', route:['/']}"></is-breadcrumb-box>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Portlet</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <is-portlet [enableCollapse]="true" heading="Collapsible Portlet">
+        <div class="portlet-body">
+          Collapsible portlet body<br />
+          Collapsible portlet body<br />
+          Collapsible portlet body<br />
+          Collapsible portlet body<br />
+          Collapsible portlet body<br />
+          Collapsible portlet body<br />
+          Collapsible portlet body<br />
+          Collapsible portlet body<br />
+          Collapsible portlet body<br />
+          Collapsible portlet body<br />
+        </div>
+    </is-portlet>
+  </div>
+  <div class="col-sm-6">
+    <is-portlet heading="Portlet with actions">
+        <div class="actions">
+          <a class="btn btn-circle btn-default btn-sm"><i class="fa fa-close"></i> Close</a>
+        </div>
+        <div class="portlet-body">
+          Portlet body
+        </div>
+    </is-portlet>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Section</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <is-section heading="Section">
+        <div class="portlet-body">
+          Section body
+        </div>
+    </is-section>
+  </div>
+  <div class="col-sm-6">
+    <is-section portletClass="red-thunderbird" heading="Section with tools">
+        <div class="tools">
+          <i class="fa fa-close"></i>
+        </div>
+        <div class="portlet-body">
+          Section body
+        </div>
+    </is-section>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Tabs</h2>
+  </div>
+</div>
+<is-tabset>
+  <is-tab title="Tab 1">
+    <ng-template TabContent>
+      First tab content
+    </ng-template>
+  </is-tab>
+  <is-tab>
+    <ng-template TabTitle>
+      Advanced tab title <i class="fa fa-home"></i>
+    </ng-template>
+    <ng-template TabContent>
+      Second tab content
+    </ng-template>
+  </is-tab>
+</is-tabset>

@@ -1,0 +1,9 @@
+<a class="tile {{bgClass}}" [routerLink]="route">
+    <div class="tile-body">
+        <i [class]="breadcrumb.icon"></i>
+    </div>
+    <div class="tile-object">
+        <div class="name">{{breadcrumb.name|translate}}</div>
+        <div class="number" *ngIf="count">{{count}}</div>
+    </div>
+</a>

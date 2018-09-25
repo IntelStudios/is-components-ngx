@@ -8,6 +8,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class DemoSelectComponent implements OnInit {
 
+  usage: string = `
+
+<h3>Installation</h3>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-select-1.0.1.tgz</pre>
+
+<h3>Import Module</h3>
+<pre>import { IsSelectModule } from 'is-select';</pre>
+`
+
   select1selection: any[] = [];
 
   public items:Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',

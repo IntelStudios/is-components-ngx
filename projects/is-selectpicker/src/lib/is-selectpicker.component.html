@@ -1,0 +1,16 @@
+<div class="input-group">
+  <input type="text" [disabled]="disabled" readonly [placeholder]="placeholder" [value]="valueText" class="form-control">
+  <div class="input-group-btn" [autoClose]="false" dropdown (onShown)="onOptionsShown()" [isDisabled]="disabled" #rolesDropdown=bs-dropdown>
+    <button class="btn btn-default dropdown-toggle" dropdownToggle> <span class="caret"></span></button>
+    <div class="dropdown-menu pull-right dropdown-view">
+      <input type="search" *ngIf="isSearch" class="form-control input-search" [formControl]="searchControl" (keydown)="onKeyDown($event)" />
+      <ul class="short-scroll dropdown-default">
+        <li *ngFor="let c of filteredOptions" (click)="optionToggle(c)" [class.active]="c.ID === activeItem?.ID">
+          <div class="rows">
+            <span><i class="fa fa-fw" [class.fa-check]="c.Object == true"></i> {{c.Value}}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

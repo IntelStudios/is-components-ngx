@@ -35,6 +35,24 @@
       ],
       "is-froala/*": [
         "dist/is-froala/*"
+      ],
+      "is-metronic": [
+        "dist/is-metronic"
+      ],
+      "is-metronic/*": [
+        "dist/is-metronic/*"
+      ],
+      "is-datepicker": [
+        "dist/is-datepicker"
+      ],
+      "is-datepicker/*": [
+        "dist/is-datepicker/*"
+      ],
+      "is-selectpicker": [
+        "dist/is-selectpicker"
+      ],
+      "is-selectpicker/*": [
+        "dist/is-selectpicker/*"
       ]
     }
   }

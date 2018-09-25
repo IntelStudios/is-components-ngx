@@ -1,0 +1,7 @@
+<div class="portlet box {{portletClass || 'blue-hoki'}}">
+    <div class="portlet-title">
+        <div class="caption">{{heading}}</div>
+        <ng-content select=".tools"></ng-content>
+    </div>
+    <ng-content select=".portlet-body"></ng-content>
+</div>
