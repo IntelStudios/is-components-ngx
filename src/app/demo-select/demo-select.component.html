@@ -1,7 +1,7 @@
 <div style="padding: 10%" class="row">
   <div style="width: 300px; margin-bottom: 20px;" class="col-sm-6">
     <h3>Select a single city</h3>
-    <is-select #select1 [allowClear]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected">
+    <is-select #select1 [active]="select1selection" [allowClear]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected">
     </is-select>
   </div>
   <button (click)="setValue()">Select London</button>

@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
-import { IsSelectComponent } from '../../../projects/is-select/src/public_api';
 @Component({
   selector: 'app-demo-select',
   templateUrl: './demo-select.component.html',
@@ -9,8 +8,7 @@ import { IsSelectComponent } from '../../../projects/is-select/src/public_api';
 })
 export class DemoSelectComponent implements OnInit {
 
-  @ViewChild('select1')
-  select1: IsSelectComponent;
+  select1selection: any[] = [];
 
   public items:Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -34,7 +32,7 @@ export class DemoSelectComponent implements OnInit {
   private disabled:boolean = false;
 
   setValue() {
-    this.select1.active = ['London'];
+    this.select1selection = ['London'];
   }
 
   private get disabledV():string {

@@ -29,7 +29,9 @@
   /deep/ .fr-wrapper {
     @include short-scroll;
   }
-
+  /deep/ .is-button-hidden {
+    display: none;
+  }
   /deep/ .CodeMirror {
     height: inherit !important;
     border-radius: 4px;

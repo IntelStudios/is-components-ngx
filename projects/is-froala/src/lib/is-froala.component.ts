@@ -39,6 +39,17 @@ const debug = DEBUG ? debugFn('FROALA') : noop;
 const time = DEBUG ? console.time : noop;
 const timeEnd = DEBUG ? console.timeEnd : noop;
 
+const BTN_INTELLISENSE = 'intellisense';
+
+interface ICustomButton {
+  name: string;
+  configProperty: string;
+}
+
+const CUSTOM_BUTTONS: ICustomButton[] = [
+  { name: BTN_INTELLISENSE, configProperty: 'intellisenseModal' }
+];
+
 const IS_FROALA_EDITOR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => IsFroalaComponent),
@@ -89,15 +100,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     if (config) {
       if (!this._config || (config.id && this._config.id !== config.id)) {
         this._config = config;
-
-        if (this.config.intellisenseModal) {
-          setTimeout(() => {
-            this._froalaConfig.toolbarButtons.push('|', 'intellisense');
-            this.destroyEditor();
-            this.createEditor(false);
-          });
-        }
-
+        this.setCustomButtonsVisibility();
         // enable and configure autocomplete
         this.initAutocomplete();
       }
@@ -122,7 +125,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   constructor(@Optional() @Inject(configToken) private froalaConfig: IsFroalaConfig, private changeDetector: ChangeDetectorRef, private el: ElementRef, private zone: NgZone) {
     if (!froalaConfig) {
-      console.warn(`IS-FROALA: Config not provided. Wil not load license (use IsFroalaModule.forRoot() )`);
+      console.warn(`IS-FROALA: Config not provided. Will not load license (use IsFroalaModule.forRoot() )`);
       this.froalaConfig = {
         getLicense: () => {
           return '';
@@ -206,7 +209,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
         'fontFamily', 'fontSize', 'color', 'paragraphStyle', '|', 'align', 'formatOL',
         'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly',
         'insertTable', '|', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|',
-        'print', 'spellChecker', 'help', 'html', '|', 'fullscreen'],    // list of toolbar buttons
+        'print', 'spellChecker', 'help', 'html', '|', 'fullscreen', '|', BTN_INTELLISENSE],    // list of toolbar buttons
       codeMirrorOptions: {
         indentWithTabs: true,
         lineNumbers: true,
@@ -220,8 +223,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     };
 
     // TODO add config option for this custom button
-    $.FroalaEditor.DefineIcon('intellisense', { NAME: 'hand-o-up' });
-    $.FroalaEditor.RegisterCommand('intellisense', {
+    $.FroalaEditor.DefineIcon(BTN_INTELLISENSE, { NAME: 'hand-o-up' });
+    $.FroalaEditor.RegisterCommand(BTN_INTELLISENSE, {
       title: 'Intellisense',
       focus: false,
       undo: false,
@@ -229,13 +232,14 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
       callback: function() {
         // icon functionality
-        console.log('emit intellisense command');
+        debug('emit intellisense command');
         // [THIS] is a particular _editor instance (we previously assigned "onCommand" emitter and "cmdIntellisense")
         this.onCommand.emit(this.cmdIntellisense);
       }
     });
 
     defaults.events['froalaEditor.initialized'] = ((e, editor) => {
+      this.setCustomButtonsVisibility();
     }).bind(this);
 
     // before we use blur event, but it is not fire event when style of content was changed
@@ -285,6 +289,19 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       }
     }
     return defaults;
+  }
+
+  private setCustomButtonsVisibility() {
+    CUSTOM_BUTTONS.forEach((b: ICustomButton) => {
+      const btn = this.el.nativeElement.querySelector(`[data-cmd="${b.name}"]`);
+      if (btn) {
+        if (this.config && this.config[b.configProperty]) {
+          btn.classList.remove('is-button-hidden');
+        } else {
+          btn.classList.add('is-button-hidden');
+        }
+      }
+    });
   }
 
   private emitChange() {
