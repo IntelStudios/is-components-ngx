@@ -42,14 +42,15 @@ export class IsPortletComponent implements OnInit {
 
   ngOnInit() {
     if (this.id) {
-      this.collapse = localStorage.getItem(`portlet:${this.id}`) || 'open';
+      const setting = localStorage.getItem(`is-portlet:${this.id}`);
+      this.collapse = ['open','closed'].indexOf(setting) < 0 ? 'open' : setting;
     }
   }
 
   toggleCollapse() {
     this.collapse = this.collapse === 'open' ? 'closed' : 'open';
     if (this.id) {
-      localStorage.setItem(`portlet:${this.id}`, this.collapse);
+      localStorage.setItem(`is-portlet:${this.id}`, this.collapse);
     }
     this.changeDetector.markForCheck();
   }
