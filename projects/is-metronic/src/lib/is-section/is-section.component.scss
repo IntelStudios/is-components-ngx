@@ -1,7 +1,7 @@
 :host {
   display: block;
   /deep/ .portlet-body {
-    padding: 5px;
+    padding: 5px !important;
   }
   .portlet-title {
     min-height: 34px;
