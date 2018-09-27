@@ -7,12 +7,20 @@
     .tile-body {
       padding: 5px;
       overflow: visible !important;
-      .site-name {
-        font-size: 16px !important;
+      &.no-icon {
+        display: table;
+        width: 100%;
+        padding: 0;
       }
       i {
         font-size: 36px;
         margin-top: 8px;
+      }
+      .name-no-icon {
+        text-align: center;
+        font-size: 16px;
+        display: table-cell;
+        vertical-align: middle;
       }
     }
     .tile-object {
