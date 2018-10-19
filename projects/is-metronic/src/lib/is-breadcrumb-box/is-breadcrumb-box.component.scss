@@ -15,6 +15,9 @@
       i {
         font-size: 36px;
         margin-top: 8px;
+        &::before {
+          text-shadow: 1px 1px 2px #555;
+        }
       }
       .name-no-icon {
         text-align: center;
@@ -40,6 +43,7 @@
         right: -4px !important;
         margin: 0 !important;
         bottom: initial !important;
+        text-shadow: 1px 1px #555;
       }
     }
   }

@@ -4,6 +4,50 @@ export interface IsFroalaConfig {
   getLicense(): string
 }
 
+export interface IIsFroalaOptions {
+  /**
+   * helper property which determines whole options object "version". Editor applies
+   * changes only if this "id" differs from previously loaded options
+   */
+  id: number;
+  /**
+   * The list of allowed tags.
+   */
+  htmlAllowedTags?: string[];
+  /**
+   * The list of tags that are removed together with their content.
+   */
+  htmlRemoveTags?: string[];
+  /**
+   * The list of allowed attributes to be used for tags.
+   */
+  htmlAllowedAttrs?: string[];
+  heightMin?: number;
+  heightMax?: number;
+  /**
+   * atJS configuration
+   */
+  atjs?: IAtJSConfig;
+  iframe?: boolean,
+  /**
+   * Observable of intellisense suggestions
+   */
+  intellisense?: Observable<IntellisenseSuggestion[]>;
+  codeMirrorOptions?: any;
+  placeholderText?: string;
+  charCounterCount?: boolean,
+}
+
+export class IsFroalaOptions {
+
+  static stylesStripped(): IIsFroalaOptions {
+    return {
+      id: 1,
+      htmlRemoveTags: ['style']
+    };
+  }
+}
+
 export interface IntellisenseSuggestion {
   Code: string;
   Label: string;
@@ -26,7 +70,6 @@ export class FroalaCommand {
 }
 
 export interface IAtJSConfig {
-  id: number; // helper property which determines whole object change (if changes)
   at: string;
   data: any[];
   displayTpl: string;

@@ -17,7 +17,7 @@ import {
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
-import { IAtJSConfig, FroalaCommand, IntellisenseSuggestion, IsFroalaConfig } from './is-froala.interfaces';
+import { IAtJSConfig, FroalaCommand, IntellisenseSuggestion, IsFroalaConfig, IIsFroalaOptions, IsFroalaOptions } from './is-froala.interfaces';
 
 declare var $: any;
 
@@ -86,8 +86,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   // validation change function
   onValidatorChangeFn: Function = null;
 
-  // config which contains intellisense data for autocomplete
-  private _config: IAtJSConfig = null;
+  private _options: IIsFroalaOptions = null;
   // froala editor instance
   private _editor: any;
 
@@ -96,15 +95,19 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   private _$element: any;
 
   @Input()
-  set config(config: IAtJSConfig) {
+  set options(config: IIsFroalaOptions) {
     if (config) {
-      if (!this._config || (config.id && this._config.id !== config.id)) {
-        this._config = config;
+      if (!this._options || (config.id && this._options.id !== config.id)) {
+        this._options = config;
         this.setCustomButtonsVisibility();
         // enable and configure autocomplete
         this.initAutocomplete();
       }
     }
+  }
+
+  get options(): IIsFroalaOptions {
+    return this._options;
   }
 
   @Input()
@@ -118,10 +121,6 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   @Output()
   onCommand: EventEmitter<FroalaCommand> = new EventEmitter<FroalaCommand>();
-
-  get config(): IAtJSConfig {
-    return this._config;
-  }
 
   constructor(@Optional() @Inject(configToken) private froalaConfig: IsFroalaConfig, private changeDetector: ChangeDetectorRef, private el: ElementRef, private zone: NgZone) {
     if (!froalaConfig) {
@@ -149,7 +148,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.createEditor(true);
+      this.createEditor();
     });
   }
 
@@ -190,7 +189,6 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
   }
 
-  // init froala editor with default values
   private createFroalaConfig(): any {
 
     const defaults: any = {
@@ -198,8 +196,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       charCounterCount: false,     // shows character counter in bottom right corner
       iframe: true,               // component container is in iframe
       htmlAllowedTags: ['.*'],    // enable all html tags
-      htmlRemoveTags: [''],       // do not remove any html tags
-      //htmlDoNotWrapTags: [''],
+      htmlRemoveTags: ['script'],       // do not remove any html tags
+      htmlExecuteScripts: false, // disable script execution within froala
       heightMin: 189,             // min height of editor
       heightMax: 210,             // max height of editor - scrollbar appears
       quickInsertTags: [''],      // disable quick insert button on the left edge of editor
@@ -219,8 +217,10 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
         tabSize: 2,
         viewportMargin: Infinity
       },
-      events: {}
+      events: {},
     };
+
+    this.mergeOptions(defaults, this.options);
 
     // TODO add config option for this custom button
     $.FroalaEditor.DefineIcon(BTN_INTELLISENSE, { NAME: 'hand-o-up' });
@@ -291,11 +291,26 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     return defaults;
   }
 
+  private mergeOptions(defaults: any, options: any) {
+    if (!options) {
+      return;
+    }
+    Object.keys(options)
+      .forEach(key => {
+        const val = options[key];
+        if (Array.isArray(val)) {
+          defaults[key].push(...val);
+        } else {
+          defaults[key] = options[key];
+        }
+      });
+  }
+
   private setCustomButtonsVisibility() {
     CUSTOM_BUTTONS.forEach((b: ICustomButton) => {
       const btn = this.el.nativeElement.querySelector(`[data-cmd="${b.name}"]`);
       if (btn) {
-        if (this.config && this.config[b.configProperty]) {
+        if (this.options && this.options[b.configProperty]) {
           btn.classList.remove('is-button-hidden');
         } else {
           btn.classList.add('is-button-hidden');
@@ -316,18 +331,18 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
 
     // default usage with intellisense data from backend
-    if (this.config && this.config.intellisense) {
-      const suggestions: Observable<IntellisenseSuggestion[]> = this.config.intellisense;
+    if (this.options && this.options.intellisense) {
+      const suggestions: Observable<IntellisenseSuggestion[]> = this.options.intellisense;
 
       this._intellisenseSub = suggestions.subscribe((data: IntellisenseSuggestion[]) => {
         this._atJsConfig = this.createAtJsConfiguration(data);
         this.setupAtJs();
       });
       // when we want to use intellisense with custom static data
-    } else if (this.config && this.config.custom == true) {
+    } else if (this.options && this.options.atjs) {
 
       // this config is our at js config which comes from input
-      this._atJsConfig = this.config;
+      this._atJsConfig = this.options.atjs;
 
       this.setupAtJs();
     }
@@ -353,18 +368,16 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
   }
 
-  // create editor instance with default/custom config
-  private createEditor(createDefault: boolean) {
+  // create editor instance
+  private createEditor() {
     if (this._editor) {
       return;
     }
     time('createEditor');
 
     // get default config
-    if (createDefault) {
-      this._froalaConfig = this.createFroalaConfig();
-    }
-
+    this._froalaConfig = this.createFroalaConfig();
+    debug('OPTIONS', this._froalaConfig);
     time('registerEvents');
 
     for (const e in this._froalaConfig.events) {
@@ -412,7 +425,6 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       });
       // Define config for At.JS - autocomplete
       const config: IAtJSConfig = {
-        id: -1,
         at: '{',
         data: suggestions,
         displayTpl: '<li>${code} <small>${description}</small></li>',
@@ -428,7 +440,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   private destroyEditor() {
     if (this._editor) {
       debug('Destroy editor');
-      this._$element.off(this._eventListeners.join(" "));
+      this._$element.off(this._eventListeners.join(' '));
       this._editor.$el.off('keyup');
       this._$element.froalaEditor('destroy');
       this._eventListeners = [];
