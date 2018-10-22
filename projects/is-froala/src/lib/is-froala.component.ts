@@ -221,6 +221,10 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     };
 
     this.mergeOptions(defaults, this.options);
+    // delete observables & atjs config
+    // both can fail JSON.stringify(defaults) (internally used in froala)
+    delete defaults.intellisense;
+    delete defaults.atjs;
 
     // TODO add config option for this custom button
     $.FroalaEditor.DefineIcon(BTN_INTELLISENSE, { NAME: 'hand-o-up' });
