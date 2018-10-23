@@ -15,13 +15,13 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SelectItem } from './select-item';
 import { stripTags, escapeRegexp } from './select-pipes';
 import { OptionsBehavior } from './select-interfaces';
-import { IsSelectOptionDirective } from './is-select.directives';
+import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-select.directives';
 import { ChildrenBehavior, GenericBehavior } from './behavior';
 
 @Component({
   selector: 'is-select',
   templateUrl: './is-select.component.html',
-  styleUrls: ['./is-select.component.css'],
+  styleUrls: ['./is-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IsSelectComponent implements OnInit {
@@ -69,11 +69,7 @@ export class IsSelectComponent implements OnInit {
       let areItemsStrings = typeof selectedItems[0] === 'string';
 
       this._active = selectedItems.map((item: any) => {
-        let data = areItemsStrings
-          ? item
-          : { id: item[this.idField], text: item[this.textField] };
-
-        return new SelectItem(data);
+        return new SelectItem(item);
       });
     }
   }
@@ -103,6 +99,9 @@ export class IsSelectComponent implements OnInit {
 
   @ContentChild(IsSelectOptionDirective, {read: TemplateRef})
   templateOption: IsSelectOptionDirective;
+
+  @ContentChild(IsSelectOptionSelectedDirective, {read: TemplateRef})
+  templateOptionSelected: IsSelectOptionSelectedDirective;
 
   private inputMode: boolean = false;
   private _optionsOpened: boolean = false;

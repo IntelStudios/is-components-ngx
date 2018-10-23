@@ -1,16 +1,28 @@
-  .ui-select-toggle {
-    position: relative;
+:host {
+  *:focus {
+      outline: none;
   }
-  /* Fix caret going into new line in Firefox */
-
   .ui-select-placeholder {
     float: left;
   }
+
   /* Fix Bootstrap dropdown position when inside a input-group */
 
   .input-group>.dropdown {
     /* Instead of relative */
     position: static;
+  }
+
+  .ui-select-match {
+    >.ui-select-toggle {
+      position: relative;
+      >.btn-remove {
+        position: absolute;
+        right: 22px;
+        top: 8px;
+      }
+    }
+
   }
 
   .ui-select-match>.btn {
@@ -39,12 +51,12 @@
 
   .ui-select-choices-container {
     width: 100%;
-  }
 
-  .ui-select-choices-container>.ui-select-search {
-    padding: 3px;
-    padding-top: 0px;
-    margin-top: -2px;
+    >.ui-select-search {
+      padding: 3px;
+      padding-top: 0px;
+      margin-top: -2px;
+    }
   }
 
   .ui-select-choices {
@@ -115,3 +127,5 @@
     margin-top: -5px;
     font-size: 80%;
   }
+
+}
