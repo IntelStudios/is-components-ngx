@@ -1,3 +1,4 @@
+$color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 :host {
   *:focus {
       outline: none;
@@ -37,7 +38,7 @@
   }
 
   .ui-disabled {
-    background-color: #eceeef;
+    background-color: $color-disabled-bg;
     border-radius: 4px;
     position: absolute;
     width: 100%;
