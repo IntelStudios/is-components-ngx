@@ -8,6 +8,7 @@ import {
   OnDestroy,
   Output,
   ViewChild,
+  HostBinding
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -22,10 +23,12 @@ declare var CodeMirror: any;
       multi: true
     }
   ],
-  template: `<textarea #host></textarea>
-              <span *ngIf="isTranslation" class="cm-tooltip" [style.top]="topPos + 'px'" [style.left]="leftPos + 'px'">
-                {{translation}}
-              </span>`,
+  template: `
+  <textarea #host></textarea>
+    <div class="disabled-overlay"></div>
+    <span *ngIf="isTranslation" class="cm-tooltip" [style.top]="topPos + 'px'" [style.left]="leftPos + 'px'">
+      {{translation}}
+    </span>`,
   styleUrls: ['./is-codemirror.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -34,7 +37,7 @@ export class IsCodemirrorComponent implements ControlValueAccessor, OnDestroy {
   topPos: number;
   leftPos: number;
 
-  translation: string = "";
+  translation: string = '';
   isTranslation: boolean = false;
 
   private _cursorActivityFnc: Function = null;
@@ -68,13 +71,14 @@ export class IsCodemirrorComponent implements ControlValueAccessor, OnDestroy {
 
   @Output() instance = null;
 
+  @HostBinding('class.is-cm-disabled')
   disabled: boolean = false;
 
   _value = '';
   _config: any = {
     gutters: ['CodeMirror-lint-markers'],
     lint: true,
-    readOnly: this.disabled,
+    readOnly: this.disabled ? 'nocursor': false,
     extraKeys: { 'Ctrl-Space': 'autocomplete' },
     tabSize: 2,
     viewportMargin: Infinity, // enable autoresize together with CSS style for .CodeMirror
@@ -154,8 +158,8 @@ export class IsCodemirrorComponent implements ControlValueAccessor, OnDestroy {
       // 4 is default CM padding (which depends on the theme you're using)
 
       // now disallow adding newlines in the following simple way
-      this.instance.on("beforeChange", function (instance, change) {
-        var newtext = change.text.join("").replace(/\n/g, ""); // remove ALL \n !
+      this.instance.on('beforeChange', function (instance, change) {
+        var newtext = change.text.join('').replace(/\n/g, ''); // remove ALL \n !
         change.update(change.from, change.to, [newtext]);
         return true;
       });
@@ -186,7 +190,7 @@ export class IsCodemirrorComponent implements ControlValueAccessor, OnDestroy {
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     if (this.instance) {
-      this.instance.setOption('readOnly', isDisabled);
+      this.instance.setOption('readOnly', isDisabled ? 'nocursor' : false);
     }
   }
 
@@ -236,12 +240,12 @@ export class IsCodemirrorComponent implements ControlValueAccessor, OnDestroy {
       }
     }
 
-    this.instance.on("cursorActivity", this._cursorActivityFnc);
+    this.instance.on('cursorActivity', this._cursorActivityFnc);
   }
 
   private tooltipDestroy() {
     if (this._cursorActivityFnc) {
-      this.instance.off("cursorActivity", this._cursorActivityFnc);
+      this.instance.off('cursorActivity', this._cursorActivityFnc);
     }
   }
 
