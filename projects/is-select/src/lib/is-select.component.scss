@@ -1,4 +1,7 @@
 $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
+$color-selected-bg: var(--is-select-color-selected-bg, grey);
+$color-active-bg: var(--is-select-color-active-bg, #428bca);
+
 :host {
   *:focus {
       outline: none;
@@ -85,14 +88,14 @@ $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
   }
 
   .ui-select-choices-row.selected {
-    background-color: grey;
+    background-color: $color-selected-bg;
   }
 
   .ui-select-choices-row.active>a {
     color: #fff;
     text-decoration: none;
     outline: 0;
-    background-color: #428bca;
+    background-color: $color-active-bg;
   }
 
   .ui-select-multiple {
