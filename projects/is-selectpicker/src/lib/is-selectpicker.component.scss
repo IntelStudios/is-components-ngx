@@ -1,5 +1,4 @@
 $color-cls-danger-fg: var(--is-color-danger, red);
-
 :host {
   &.ng-invalid {
     border: none !important;
@@ -14,6 +13,27 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     max-height: 250px;
     overflow: auto;
     margin-top: 0px;
+  }
+  .input-group {
+    display: -webkit-box;
+  }
+  .show {
+    display: table-cell !important;
+  }
+  .caret {
+    display: none;
+  }
+  .dropdown-toggle:focus {
+    border-color: #ebedf2 !important;
+  }
+  .form-control {
+    box-shadow: none !important;
+  }
+  .form-control:focus {
+    border-color: #ebedf2 !important;
+  }
+  button.dropdown-toggle {
+    border-left: unset;
   }
 }
 
@@ -36,9 +56,13 @@ $color-cls-danger-fg: var(--is-color-danger, red);
 }
 
 .input-search {
+  width: 98%;
+  padding-top: 3px;
   padding-right: 3px;
   padding-bottom: 3px;
   padding-left: 3px;
+  margin-left: 2px;
+  border-radius: .25rem !important;
 }
 
 .input-search>input {
@@ -67,7 +91,7 @@ $color-cls-danger-fg: var(--is-color-danger, red);
   &.active {
     background-color: #eee;
     span {
-     // color: #fff;
+      // color: #fff;
     }
   }
 }
@@ -85,7 +109,6 @@ $color-cls-danger-fg: var(--is-color-danger, red);
 .rows {
   padding: 5px 10px !important;
   line-height: 1.2 !important;
-
   >span {
     color: #333;
   }

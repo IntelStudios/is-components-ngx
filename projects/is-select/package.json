@@ -2,7 +2,7 @@
   "name": "is-select",
   "version": "1.0.3",
   "peerDependencies": {
-    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
-    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0"
   }
 }
