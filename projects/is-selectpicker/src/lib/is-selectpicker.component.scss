@@ -90,9 +90,6 @@ $color-cls-danger-fg: var(--is-color-danger, red);
   cursor: pointer;
   &.active {
     background-color: #eee;
-    span {
-      // color: #fff;
-    }
   }
 }
 
