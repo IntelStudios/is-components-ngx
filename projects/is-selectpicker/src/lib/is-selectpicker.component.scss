@@ -24,13 +24,13 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     display: none;
   }
   .dropdown-toggle:focus {
-    border-color: #ebedf2 !important;
+    border-color: #ebedf2;
   }
   .form-control {
     box-shadow: none !important;
   }
   .form-control:focus {
-    border-color: #ebedf2 !important;
+    border-color: #ebedf2;
   }
   button.dropdown-toggle {
     border-left: unset;
@@ -62,7 +62,7 @@ $color-cls-danger-fg: var(--is-color-danger, red);
   padding-bottom: 3px;
   padding-left: 3px;
   margin-left: 2px;
-  border-radius: .25rem !important;
+  border-radius: .25rem;
 }
 
 .input-search>input {
