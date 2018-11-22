@@ -10,7 +10,7 @@ export class DemoSelectpickerComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/metronic_v5/package/is-selectpicker-2.0.1.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/metronic_v5/package/is-selectpicker-2.0.2.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectpickerModule } from 'is-selectpicker';</pre>

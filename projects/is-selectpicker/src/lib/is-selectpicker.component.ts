@@ -146,7 +146,6 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       return;
     }
 
-
     if ($event.keyCode === 35) { // end
       this.activeItem = this.filteredOptions[this.filteredOptions.length - 1];
       this.ensureActiveItemVisible()
@@ -154,8 +153,6 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       $event.preventDefault();
       return;
     }
-
-
 
     if ($event.keyCode === 13) { // Enter => toggle selection
       this.optionToggle(this.activeItem);
@@ -188,7 +185,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
 
   optionToggle($event: SelectPickerItem) {
     const val = this.values.find((o: any) => o === $event.ID);
-    if (!val) {
+    if (val === undefined) {
       this.values.push($event.ID);
       $event.Object = true;
     } else {
