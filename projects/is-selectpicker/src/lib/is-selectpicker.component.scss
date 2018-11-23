@@ -15,7 +15,11 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     margin-top: 0px;
   }
   .input-group {
-    display: -webkit-box;
+    display: inline-table;
+    >input {
+      width: 100%;
+      background-color: #fff;
+    }
   }
   .show {
     display: table-cell !important;
@@ -45,10 +49,6 @@ $color-cls-danger-fg: var(--is-color-danger, red);
   button.dropdown-toggle {
     border-color: $color-cls-danger-fg;
   }
-}
-
-.input-group>input {
-  background-color: #fff;
 }
 
 .dropdown-view {

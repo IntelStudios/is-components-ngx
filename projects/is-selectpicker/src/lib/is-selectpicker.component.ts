@@ -76,9 +76,11 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     return this._options;
   }
 
+  @Input()
+  customClass: string = '';
+
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
-
 
   isSearch: boolean = false;
 

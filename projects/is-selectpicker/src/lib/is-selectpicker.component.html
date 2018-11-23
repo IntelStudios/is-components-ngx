@@ -1,4 +1,4 @@
-<div class="input-group">
+<div class="input-group {{ customClass }}">
   <input type="text" data-type="is-selectpicker" [disabled]="disabled" readonly [placeholder]="placeholder" [value]="valueText" class="form-control">
   <div class="input-group-btn" [autoClose]="false" dropdown (onShown)="onOptionsShown()" [isDisabled]="disabled" #rolesDropdown=bs-dropdown>
     <button class="btn btn-default dropdown-toggle" dropdownToggle> <span class="caret"></span></button>
