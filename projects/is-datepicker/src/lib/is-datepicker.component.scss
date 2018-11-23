@@ -12,6 +12,10 @@ $color-cls-default-fg: var(--is-color-default, #333);
             border: 1px solid $color-cls-danger-fg;
         }
     }
+
+    .input-group {
+      display: table;
+    }
 }
 
 .ng-datepicker-input:not([disabled]) {
