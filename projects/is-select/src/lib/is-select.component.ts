@@ -32,6 +32,7 @@ export class IsSelectComponent implements OnInit {
   @Input() textField: string = 'text';
   @Input() multiple: boolean = false;
   @Input() isSearch: boolean = true;
+  @Input() customClass: string = '';
 
   @Input()
   set items(value: Array<any>) {
