@@ -23,7 +23,6 @@ $color-active-bg: var(--is-select-color-active-bg, #428bca);
       >.btn-remove {
         position: absolute;
         right: 22px;
-        top: 8px;
       }
     }
 
@@ -128,7 +127,6 @@ $color-active-bg: var(--is-select-color-active-bg, #428bca);
     position: absolute;
     top: 50%;
     right: 7px;
-    margin-top: -5px;
     font-size: 80%;
   }
 
