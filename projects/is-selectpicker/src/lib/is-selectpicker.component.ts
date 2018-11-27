@@ -181,7 +181,9 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       this.options.forEach((o: SelectPickerItem) => {
         o.Object = this.values.indexOf(o.ID) > -1;
       });
+      console.log("this.options ", this.options);
     } else {
+      console.log("setuping values to empty array");
       this.values = [];
     }
     this.changeDetector.detectChanges();
