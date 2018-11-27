@@ -178,7 +178,9 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     console.log("WRITE VALUE CALLED with value ", value, " options are ", this.options);
     if (value instanceof Array && this.options) {
       this.values = <number[]>value;
+      console.log("this . values ", this.values);
       this.options.forEach((o: SelectPickerItem) => {
+        console.log("o ", o);
         o.Object = this.values.indexOf(o.ID) > -1;
       });
       console.log("this.options ", this.options);
