@@ -59,6 +59,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     }
     this.isSearch = opts && opts.length > 5;
     this._options = opts;
+    console.log("incoming options ", this._options);
     this.filteredOptions = opts;
     if (opts && this.values.length > 0) {
       opts.forEach((o: SelectPickerItem) => {
