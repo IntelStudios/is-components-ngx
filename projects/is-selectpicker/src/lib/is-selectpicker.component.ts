@@ -174,6 +174,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: any): void {
+    console.log("WRITE VALUE CALLED with value ", value, " options are ", this.options);
     if (value instanceof Array && this.options) {
       this.values = <number[]>value;
       this.options.forEach((o: SelectPickerItem) => {
