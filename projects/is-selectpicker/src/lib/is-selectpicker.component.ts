@@ -59,7 +59,6 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     }
     this.isSearch = opts && opts.length > 5;
     this._options = opts;
-    console.log("incoming options ", this._options);
     this.filteredOptions = opts;
     if (opts && this.values.length > 0) {
       opts.forEach((o: SelectPickerItem) => {
@@ -175,17 +174,12 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: any): void {
-    console.log("WRITE VALUE CALLED with value ", value, " options are ", this.options);
     if (value instanceof Array && this.options) {
       this.values = <number[]>value;
-      console.log("this . values ", this.values);
       this.options.forEach((o: SelectPickerItem) => {
-        console.log("o ", o);
         o.Object = this.values.indexOf(o.ID) > -1;
       });
-      console.log("this.options ", this.options);
     } else {
-      console.log("setuping values to empty array");
       this.values = [];
     }
     this.changeDetector.detectChanges();
