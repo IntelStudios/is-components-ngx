@@ -183,6 +183,9 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     } else {
       this.values = [];
     }
+
+    this.updateValueText();
+
     this.changeDetector.detectChanges();
   }
 
