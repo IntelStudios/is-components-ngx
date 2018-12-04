@@ -14,7 +14,7 @@ export class DemoBootstrapSwitchComponent implements OnInit {
 <pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-bootstrap-switch-1.0.0.tgz</pre>
 
 <h3>Import Module</h3>
-<pre>import { IsBootstrapSwitchModule } from 'is-bootstrap-swicth';</pre>
+<pre>import { IsBootstrapSwitchModule } from 'is-bootstrap-switch';</pre>
 
 <h3>Import Module with component defaults</h3>
 <pre>import { IsBootstrapSwitchModule } from 'is-bootstrap-switch';
