@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Usage</h2>
+    <div [innerHTML]="usage"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <is-bs-switch [formControl]="control1"></is-bs-switch>
+    <button class="btn btn-default" style="margin-left: 10px;" (click)="toggle(control1)">Toggle Value</button>
+    <button class="btn btn-default" style="margin-left: 10px;" (click)="disable(control1)">Toggle Disabled</button>
+  </div>
+  <div class="col-sm-6">
+
+
+  </div>
+</div>

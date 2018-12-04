@@ -11,6 +11,7 @@
     "build.metronic": "ng build is-metronic && cd dist/is-metronic && npm pack --quiet && cp *.tgz ../../package",
     "build.datepicker": "ng build is-datepicker && cd dist/is-datepicker && npm pack --quiet && cp *.tgz ../../package",
     "build.selectpicker": "ng build is-selectpicker && cd dist/is-selectpicker && npm pack --quiet && cp *.tgz ../../package",
+    "build.bootstrap-switch": "ng build is-bootstrap-switch && cd dist/is-bootstrap-switch && npm pack --quiet && cp *.tgz ../../package",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

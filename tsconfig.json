@@ -53,6 +53,12 @@
       ],
       "is-selectpicker/*": [
         "dist/is-selectpicker/*"
+      ],
+      "is-bootstrap-switch": [
+        "dist/is-bootstrap-switch"
+      ],
+      "is-bootstrap-switch/*": [
+        "dist/is-bootstrap-switch/*"
       ]
     }
   }
