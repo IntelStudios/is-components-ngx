@@ -27,6 +27,16 @@ export class DemoMetronicComponent implements OnInit {
 @import 'assets/metronic/admin/layout/css/layout.css';</pre>
   `
 
+
+  hint: string = `
+    <p>Text</p>
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+  `
+
   constructor() { }
 
   ngOnInit() {
