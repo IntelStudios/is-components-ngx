@@ -176,10 +176,12 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
    */
   writeValue(value: any): void {
     if (value instanceof Array) {
-      this.values = <number[]>value;
-      this.options.forEach((o: SelectPickerItem) => {
-        o.Object = this.values.indexOf(o.ID) > -1;
-      });
+      this.values = <any[]>value;
+      if (this.options) {
+        this.options.forEach((o: SelectPickerItem) => {
+          o.Object = this.values.indexOf(o.ID) > -1;
+        });
+      }
     } else {
       this.values = [];
     }
@@ -191,7 +193,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
 
   optionToggle($event: SelectPickerItem) {
     const val = this.values.find((o: any) => o === $event.ID);
-    if (!val) {
+    if (val === undefined) {
       this.values.push($event.ID);
       $event.Object = true;
     } else {
@@ -204,6 +206,8 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
 
   onOptionsShown() {
     const input = this._eref.nativeElement.querySelector('input[type="search"]');
+    this.activeItem = null;
+    this.changeDetector.markForCheck();
     if (input) {
       setTimeout(() => input.focus());
     }
@@ -232,10 +236,15 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   }
 
   private updateValueText() {
-    const selected: string[] = this.options
-      .filter((o: SelectPickerItem) => o.Object == true)
-      .map((o: SelectPickerItem) => o.Value);
-    this.valueText = selected.join(', ');
+    if (this.options) {
+      const selected: string[] = this.options
+        .filter((o: SelectPickerItem) => o.Object == true)
+        .map((o: SelectPickerItem) => o.Value);
+      this.valueText = selected.join(', ');
+    } else {
+      this.valueText = '';
+    }
+
     this.changeDetector.detectChanges();
   }
 
@@ -272,8 +281,6 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       } else if (active.offsetTop < container.scrollTop) {
         container.scrollTop = active.offsetTop - container.offsetHeight;
       }
-
-
     });
 
   }
