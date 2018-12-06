@@ -1,0 +1,6 @@
+<ng-template #popTemplate>
+  <div [innerHtml]="hintValue()"></div>
+</ng-template>
+<button *ngIf="hint" container="body" tabIndex="-1" [popover]="popTemplate" #popover="bs-popover" (onShown)="onPopoverShown()" (onHidden)="onPopoverHidden()" [popoverTitle]="hintTitle | translate" [placement]="placement">
+  <i [class]="icon"></i>
+</button>`

@@ -5,8 +5,10 @@
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/animations": "^6.0.0",
     "@angular/router": "^6.0.0",
+    "@angular/platform-browser":"^6.0.0",
     "@ngx-translate/core": "^10.0.0",
-    "moment": "^2.22.2"
+    "moment": "^2.22.2",
+    "ngx-bootstrap":"^3.0.0"
   },
-  "version": "1.0.1"
+  "version": "1.0.2"
 }
