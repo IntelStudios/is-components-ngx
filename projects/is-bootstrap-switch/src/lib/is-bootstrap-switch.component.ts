@@ -73,8 +73,8 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
   private _animate: boolean = true;
   private _innerAnimate: boolean = true;
   private _indeterminate: boolean = false;
-  private _onColor: string = 'primary';
-  private _offColor: string = 'default';
+  private onColor: string = 'primary';
+  private offColor: string = 'default';
   private _wrapperClass: string = 'wrapper';
   private _innerState: boolean = false;
   private _innerHandleWidth: string | number = 'auto';
@@ -160,8 +160,8 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
   public getOnClasses(): string {
     let output: string = this.baseClass + '-handle-on';
 
-    if (this._onColor) {
-      output += ' ' + this.baseClass + '-' + this._onColor;
+    if (this.onColor) {
+      output += ' ' + this.baseClass + '-' + this.onColor;
     }
 
     return output;
@@ -174,8 +174,8 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
   public getOffClasses(): string {
     let output: string = this.baseClass + '-handle-off';
 
-    if (this._offColor) {
-      output += ' ' + this.baseClass + '-' + this._offColor;
+    if (this.offColor) {
+      output += ' ' + this.baseClass + '-' + this.offColor;
     }
 
     return output;
@@ -411,13 +411,13 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
 
   @Input('switch-on-color') set setOnColor(value: string) {
     if (value) {
-      this._onColor = value;
+      this.onColor = value;
     }
   }
 
   @Input('switch-off-color') set setOffColor(value: string) {
     if (value) {
-      this._offColor = value;
+      this.offColor = value;
     }
   }
 
