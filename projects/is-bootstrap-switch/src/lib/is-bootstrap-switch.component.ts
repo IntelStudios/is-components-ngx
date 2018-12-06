@@ -222,7 +222,7 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
   }
 
   ngAfterViewInit() {
-    this.calculateWith();
+    this.calculateWith(true);
   }
 
   @HostListener('click') onClick() {
