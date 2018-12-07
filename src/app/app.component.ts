@@ -16,7 +16,8 @@ export class AppComponent {
     { title: 'Metronic', route: '/metronic' },
     { title: 'Date Picker', route: '/datepicker' },
     { title: 'Select Picker', route: '/selectpicker' },
-    { title: 'Bootstrap Switch', route: '/bootstrap-switch' }
+    { title: 'Bootstrap Switch', route: '/bootstrap-switch' },
+    { title: 'Password', route: '/password' }
   ];
 
   constructor(private translate: TranslateService) {
