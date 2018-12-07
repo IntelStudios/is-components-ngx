@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IsBreadcrumbBoxComponent } from './is-breadcrumb-box/is-breadcrumb-box.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { PopoverModule } from 'ngx-bootstrap/popover';
+import { PopoverModule, PopoverConfig } from 'ngx-bootstrap/popover';
 import { BrowserModule } from '@angular/platform-browser';
 import { IsPortletComponent } from './is-portlet/is-portlet.component';
 import { IsSectionComponent } from './is-section/is-section.component';
@@ -19,4 +19,13 @@ import { IsHintComponent } from './is-hint/is-hint.component';
   exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsSectionComponent, IsTabsetComponent,
   IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent]
 })
-export class IsMetronicModule { }
+export class IsMetronicModule {
+  static forRoot(config: PopoverConfig): ModuleWithProviders {
+    return {
+      ngModule: IsMetronicModule,
+      providers: [
+        { provide: PopoverConfig, useValue: config }
+      ]
+    }
+  }
+ }
