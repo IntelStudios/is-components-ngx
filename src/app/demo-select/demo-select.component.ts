@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-demo-select',
   templateUrl: './demo-select.component.html',
@@ -11,13 +11,13 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-select-1.0.3.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-select-1.1.0.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
 `
 
-  select1selection: any[] = [];
+  select1Control: FormControl;
 
   public items:Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -40,8 +40,13 @@ export class DemoSelectComponent implements OnInit {
   private _disabledV:string = '0';
   private disabled:boolean = false;
 
-  setValue() {
-    this.select1selection = ['London'];
+  selectLondon() {
+    this.select1Control.setValue('London');
+  }
+
+
+  selectUnknown() {
+    this.select1Control.setValue('Olomouc???');
   }
 
   private get disabledV():string {
@@ -65,14 +70,15 @@ export class DemoSelectComponent implements OnInit {
     console.log('New search input: ', value);
   }
 
-  public refreshValue(value:any):void {
-    this.value = value;
+  public changed(value:any):void {
+    console.log('New value', value);
   }
 
 
   constructor() { }
 
   ngOnInit() {
+    this.select1Control = new FormControl();
   }
 
 }

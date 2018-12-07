@@ -9,28 +9,36 @@ import {
   ChangeDetectorRef,
   Renderer2,
   ContentChild,
-  TemplateRef
+  TemplateRef,
+  forwardRef
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Subscription } from 'rxjs';
+
 import { SelectItem } from './select-item';
 import { stripTags, escapeRegexp } from './select-pipes';
 import { OptionsBehavior } from './select-interfaces';
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-select.directives';
 import { ChildrenBehavior, GenericBehavior } from './behavior';
 
+export const IS_SELECT_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => IsSelectComponent),
+  multi: true
+};
+
 @Component({
   selector: 'is-select',
   templateUrl: './is-select.component.html',
   styleUrls: ['./is-select.component.scss'],
+  providers: [IS_SELECT_VALUE_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IsSelectComponent implements OnInit {
+export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   @Input() allowClear: boolean = false;
   @Input() placeholder: string = '';
-  @Input() idField: string = 'id';
-  @Input() textField: string = 'text';
-  @Input() multiple: boolean = false;
   @Input() isSearch: boolean = true;
 
   @Input()
@@ -39,52 +47,34 @@ export class IsSelectComponent implements OnInit {
       this._items = this.itemObjects = [];
     } else {
       this._items = value.filter((item: any) => {
-        // if ((typeof item === 'string' && item) || (typeof item === 'object' && item && item.text && item.id)) {
         if ((typeof item === 'string') || (typeof item === 'object' && item.text)) {
           return item;
         }
       });
-      // this.itemObjects = this._items.map((item:any) => (typeof item === 'string' ? new SelectItem(item) : new SelectItem({id: item[this.idField], text: item[this.textField]})));
       this.itemObjects = this._items.map((item: any) => new SelectItem(item));
     }
   }
 
   @Input()
   set disabled(value: boolean) {
-    this._disabled = value;
-    if (this._disabled === true) {
-      this.hideOptions();
-    }
+    this.setDisabledState(value);
   }
 
   get disabled(): boolean {
     return this._disabled;
   }
 
-  @Input()
-  set active(selectedItems: Array<any>) {
-    if (!selectedItems || selectedItems.length === 0) {
-      this._active = [];
-    } else {
-      let areItemsStrings = typeof selectedItems[0] === 'string';
-
-      this._active = selectedItems.map((item: any) => {
-        return new SelectItem(item);
-      });
-    }
-  }
-
-  @Output() data: EventEmitter<any> = new EventEmitter();
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() removed: EventEmitter<any> = new EventEmitter();
-  @Output() typed: EventEmitter<any> = new EventEmitter();
+  @Output() typed: EventEmitter<string> = new EventEmitter<string>();
   @Output() opened: EventEmitter<any> = new EventEmitter();
+  @Output() changed: EventEmitter<any> = new EventEmitter();
 
   options: Array<SelectItem> = [];
   itemObjects: Array<SelectItem> = [];
   activeOption: SelectItem;
 
-  get active(): Array<any> {
+  get active(): SelectItem {
     return this._active;
   }
 
@@ -97,10 +87,10 @@ export class IsSelectComponent implements OnInit {
     return this._optionsOpened;
   }
 
-  @ContentChild(IsSelectOptionDirective, {read: TemplateRef})
+  @ContentChild(IsSelectOptionDirective, { read: TemplateRef })
   templateOption: IsSelectOptionDirective;
 
-  @ContentChild(IsSelectOptionSelectedDirective, {read: TemplateRef})
+  @ContentChild(IsSelectOptionSelectedDirective, { read: TemplateRef })
   templateOptionSelected: IsSelectOptionSelectedDirective;
 
   private inputMode: boolean = false;
@@ -109,11 +99,53 @@ export class IsSelectComponent implements OnInit {
   inputValue: string = '';
   private _items: Array<any> = [];
   private _disabled: boolean = false;
-  private _active: Array<SelectItem> = [];
+  private _active: SelectItem = null;
   private _clickedOutsideListener = null;
+  private onTouched: Function;
+  private _changeSubscription: Subscription = null;
 
   constructor(public element: ElementRef, private renderer: Renderer2, private sanitizer: DomSanitizer, private changeDetector: ChangeDetectorRef) {
 
+  }
+
+  /**
+   * Implemented as part of ControlValueAccessor.
+   */
+  writeValue(value: any): void {
+    if (!value) {
+      this._active = null;
+    } else {
+      this._active = new SelectItem(value);
+      if (this.itemObjects && !this.itemObjects.find(o => o.id === this._active.id)) {
+        this._active = null;
+      }
+    }
+    this.changeDetector.markForCheck();
+  }
+
+  /**
+   * Implemented as part of ControlValueAccessor.
+   */
+  registerOnChange(fn: (_: any) => {}): void {
+    if (this._changeSubscription) {
+      this._changeSubscription.unsubscribe();
+    }
+    this._changeSubscription = this.changed.subscribe(fn);
+  }
+
+  /**
+   * Implemented as part of ControlValueAccessor.
+   */
+  setDisabledState(isDisabled: boolean): void {
+    this._disabled = isDisabled;
+    if (this._disabled === true) {
+      this.hideOptions();
+    }
+    this.changeDetector.detectChanges();
+  }
+
+  registerOnTouched(fn: (_: any) => {}): void {
+    this.onTouched = fn;
   }
 
   sanitize(html: string): any {
@@ -134,11 +166,11 @@ export class IsSelectComponent implements OnInit {
     }
     // backspace
     if (!isUpMode && e.keyCode === 8) {
-      let el: any = this.element.nativeElement
+      const el: any = this.element.nativeElement
         .querySelector('div.ui-select-search > input');
       if (!el.value || el.value.length <= 0) {
-        if (this.active.length > 0) {
-          this.remove(this.active[this.active.length - 1]);
+        if (this.active) {
+          this.remove();
         }
         e.preventDefault();
       }
@@ -152,8 +184,8 @@ export class IsSelectComponent implements OnInit {
     }
     // del
     if (!isUpMode && e.keyCode === 46 && !this.optionsOpened) {
-      if (this.active.length > 0) {
-        this.remove(this.active[this.active.length - 1]);
+      if (this.active) {
+        this.remove();
       }
       e.preventDefault();
     }
@@ -183,10 +215,8 @@ export class IsSelectComponent implements OnInit {
     }
     // enter
     if (!isUpMode && e.keyCode === 13) {
-      if (this.active.indexOf(this.activeOption) === -1) {
-        this.selectActiveMatch();
-        this.behavior.next();
-      }
+      this.selectActiveMatch();
+      this.behavior.next();
       e.preventDefault();
       return;
     }
@@ -197,7 +227,7 @@ export class IsSelectComponent implements OnInit {
     const filterValue = escapeRegexp(this.inputValue).trim();
     const parts: string[] = filterValue.split(' ').map((p: string) => p ? `(${p}).*` : '');
     this.behavior.filter(new RegExp(parts.join(''), 'ig'));
-    this.doEvent('typed', this.inputValue);
+    this.typed.emit(this.inputValue);
   }
 
   ngOnInit(): any {
@@ -209,27 +239,16 @@ export class IsSelectComponent implements OnInit {
 
   }
 
-  remove(item: SelectItem): void {
+  remove(): void {
     if (this._disabled === true) {
       return;
     }
-    if (this.multiple === true && this.active) {
-      let index = this.active.indexOf(item);
-      this.active.splice(index, 1);
-      this.data.next(this.active);
-      this.doEvent('removed', item);
-    }
-    if (this.multiple === false) {
-      this.active = [];
-      this.data.next(this.active);
-      this.doEvent('removed', item);
-    }
-    this.changeDetector.markForCheck();
-  }
-
-  private doEvent(type: string, value: any): void {
-    if ((this as any)[type] && value) {
-      (this as any)[type].next(value);
+    const current = this._active;
+    if (current) {
+      this._active = null;
+      this.changed.emit(null);
+      this.removed.emit(current);
+      this.changeDetector.markForCheck();
     }
   }
 
@@ -261,7 +280,7 @@ export class IsSelectComponent implements OnInit {
       return;
     }
     this.inputMode = !this.inputMode;
-    if (this.inputMode === true && ((this.multiple === true && e) || this.multiple === false)) {
+    if (this.inputMode === true) {
       this.focusToInput();
       this.open();
     }
@@ -287,12 +306,12 @@ export class IsSelectComponent implements OnInit {
       return;
     }
     this.inputMode = true;
-    let value = String
+    const value = String
       .fromCharCode(96 <= event.keyCode && event.keyCode <= 105 ? event.keyCode - 48 : event.keyCode)
       .toLowerCase();
     this.focusToInput(value);
     this.open();
-    let target = event.target || event.srcElement;
+    const target = event.target || event.srcElement;
     target.value = value;
     this.inputEvent(event);
   }
@@ -303,7 +322,7 @@ export class IsSelectComponent implements OnInit {
   }
 
   scrollToSelected(): void {
-    let selectedElement = this.element.nativeElement.querySelector('div.ui-select-choices-row.selected');
+    const selectedElement = this.element.nativeElement.querySelector('div.ui-select-choices-row.selected');
     if (selectedElement === null) {
       return;
     }
@@ -314,14 +333,14 @@ export class IsSelectComponent implements OnInit {
     return this.activeOption.text === value.text;
   }
 
-  removeClick(value: SelectItem, event: any): void {
+  removeClick(event: any): void {
     event.stopPropagation();
-    this.remove(value);
+    this.remove();
   }
 
   focusToInput(value: string = ''): void {
     setTimeout(() => {
-      let el = this.element.nativeElement.querySelector('div.ui-select-search > input');
+      const el = this.element.nativeElement.querySelector('div.ui-select-search > input');
       if (el) {
         el.focus();
         el.value = value;
@@ -330,9 +349,8 @@ export class IsSelectComponent implements OnInit {
   }
 
   private open(): void {
-    this.options = this.itemObjects
-      .filter((option: SelectItem) => (this.multiple === false ||
-        this.multiple === true && !this.active.find((o: SelectItem) => option.text === o.text)));
+    this.options = this.itemObjects;
+    // .filter((option: SelectItem) => (!this.active.find((o: SelectItem) => option.text === o.text)));
 
     if (this.options.length > 0) {
       this.behavior.first();
@@ -364,22 +382,12 @@ export class IsSelectComponent implements OnInit {
     if (this.options.length <= 0) {
       return;
     }
-    if (this.multiple === true) {
-      this.active.push(value);
-      this.data.next(this.active);
-    }
-    if (this.multiple === false) {
-      this.active[0] = value;
-      this.data.next(this.active[0]);
-    }
-    this.doEvent('selected', value);
+    this._active = value;
+    this.changed.next(this.active.id);
+    this.selected.emit(value);
     this.hideOptions();
-    if (this.multiple === true) {
-      this.focusToInput('');
-    } else {
-      this.focusToInput(stripTags(value.text));
-      this.element.nativeElement.querySelector('.ui-select-container').focus();
-    }
+    this.focusToInput(stripTags(value.text));
+    this.element.nativeElement.querySelector('.ui-select-container').focus();
   }
 
 }

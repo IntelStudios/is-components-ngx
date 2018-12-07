@@ -4,24 +4,24 @@ import { OptionsBehavior } from './select-interfaces';
 import { stripTags, escapeRegexp } from './select-pipes';
 
 export class Behavior {
-  public optionsMap:Map<string, number> = new Map<string, number>();
+  public optionsMap: Map<string, number> = new Map<string, number>();
 
-  public actor:IsSelectComponent;
+  public actor: IsSelectComponent;
 
-  public constructor(actor:IsSelectComponent) {
+  public constructor(actor: IsSelectComponent) {
     this.actor = actor;
   }
 
-  public fillOptionsMap():void {
+  public fillOptionsMap(): void {
     this.optionsMap.clear();
     let startPos = 0;
     this.actor.itemObjects
-      .map((item:SelectItem) => {
+      .map((item: SelectItem) => {
         startPos = item.fillChildrenHash(this.optionsMap, startPos);
       });
   }
 
-  public ensureHighlightVisible(optionsMap:Map<string, number> = void 0):void {
+  public ensureHighlightVisible(optionsMap: Map<string, number> = void 0): void {
     let container = this.actor.element.nativeElement.querySelector('.ui-select-choices');
     if (!container) {
       return;
@@ -34,13 +34,13 @@ export class Behavior {
     if (activeIndex < 0) {
       return;
     }
-    let highlighted:any = choices[activeIndex];
+    let highlighted: any = choices[activeIndex];
     if (!highlighted) {
       return;
     }
 
-    let posY:number = highlighted.offsetTop + highlighted.clientHeight - container.scrollTop;
-    let height:number = container.offsetHeight;
+    let posY: number = highlighted.offsetTop + highlighted.clientHeight - container.scrollTop;
+    let height: number = container.offsetHeight;
 
     let searchInputHeight = 0;
 
@@ -55,7 +55,7 @@ export class Behavior {
     }
   }
 
-  private getActiveIndex(optionsMap:Map<string, number> = void 0):number {
+  private getActiveIndex(optionsMap: Map<string, number> = void 0): number {
     let ai = this.actor.options.indexOf(this.actor.activeOption);
     if (ai < 0 && optionsMap !== void 0) {
       ai = optionsMap.get(this.actor.activeOption.id);
@@ -65,40 +65,38 @@ export class Behavior {
 }
 
 export class GenericBehavior extends Behavior implements OptionsBehavior {
-  public constructor(actor:IsSelectComponent) {
+  public constructor(actor: IsSelectComponent) {
     super(actor);
   }
 
-  public first():void {
+  public first(): void {
     this.actor.activeOption = this.actor.options[0];
     super.ensureHighlightVisible();
   }
 
-  public last():void {
+  public last(): void {
     this.actor.activeOption = this.actor.options[this.actor.options.length - 1];
     super.ensureHighlightVisible();
   }
 
-  public prev():void {
+  public prev(): void {
     let index = this.actor.options.indexOf(this.actor.activeOption);
     this.actor.activeOption = this.actor
       .options[index - 1 < 0 ? this.actor.options.length - 1 : index - 1];
     super.ensureHighlightVisible();
   }
 
-  public next():void {
+  public next(): void {
     let index = this.actor.options.indexOf(this.actor.activeOption);
     this.actor.activeOption = this.actor
       .options[index + 1 > this.actor.options.length - 1 ? 0 : index + 1];
     super.ensureHighlightVisible();
   }
 
-  public filter(query:RegExp):void {
+  public filter(query: RegExp): void {
     let options = this.actor.itemObjects
-      .filter((option:SelectItem) => {
-        return stripTags(option.text).match(query) &&
-          (this.actor.multiple === false ||
-          (this.actor.multiple === true && this.actor.active.map((item:SelectItem) => item.id).indexOf(option.id) < 0));
+      .filter((option: SelectItem) => {
+        return stripTags(option.text).match(query);
       });
     this.actor.options = options;
     if (this.actor.options.length > 0) {
@@ -109,17 +107,17 @@ export class GenericBehavior extends Behavior implements OptionsBehavior {
 }
 
 export class ChildrenBehavior extends Behavior implements OptionsBehavior {
-  public constructor(actor:IsSelectComponent) {
+  public constructor(actor: IsSelectComponent) {
     super(actor);
   }
 
-  public first():void {
+  public first(): void {
     this.actor.activeOption = this.actor.options[0].children[0];
     this.fillOptionsMap();
     this.ensureHighlightVisible(this.optionsMap);
   }
 
-  public last():void {
+  public last(): void {
     this.actor.activeOption =
       this.actor
         .options[this.actor.options.length - 1]
@@ -128,11 +126,11 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
     this.ensureHighlightVisible(this.optionsMap);
   }
 
-  public prev():void {
+  public prev(): void {
     let indexParent = this.actor.options
-      .findIndex((option:SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.id === option.id);
+      .findIndex((option: SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.id === option.id);
     let index = this.actor.options[indexParent].children
-      .findIndex((option:SelectItem) => this.actor.activeOption && this.actor.activeOption.id === option.id);
+      .findIndex((option: SelectItem) => this.actor.activeOption && this.actor.activeOption.id === option.id);
     this.actor.activeOption = this.actor.options[indexParent].children[index - 1];
     if (!this.actor.activeOption) {
       if (this.actor.options[indexParent - 1]) {
@@ -148,11 +146,11 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
     this.ensureHighlightVisible(this.optionsMap);
   }
 
-  public next():void {
+  public next(): void {
     let indexParent = this.actor.options
-      .findIndex((option:SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.id === option.id);
+      .findIndex((option: SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.id === option.id);
     let index = this.actor.options[indexParent].children
-      .findIndex((option:SelectItem) => this.actor.activeOption && this.actor.activeOption.id === option.id);
+      .findIndex((option: SelectItem) => this.actor.activeOption && this.actor.activeOption.id === option.id);
     this.actor.activeOption = this.actor.options[indexParent].children[index + 1];
     if (!this.actor.activeOption) {
       if (this.actor.options[indexParent + 1]) {
@@ -166,12 +164,12 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
     this.ensureHighlightVisible(this.optionsMap);
   }
 
-  public filter(query:RegExp):void {
-    let options:Array<SelectItem> = [];
-    let optionsMap:Map<string, number> = new Map<string, number>();
+  public filter(query: RegExp): void {
+    let options: Array<SelectItem> = [];
+    let optionsMap: Map<string, number> = new Map<string, number>();
     let startPos = 0;
     for (let si of this.actor.itemObjects) {
-      let children:Array<SelectItem> = si.children.filter((option:SelectItem) => query.test(option.text));
+      let children: Array<SelectItem> = si.children.filter((option: SelectItem) => query.test(option.text));
       startPos = si.fillChildrenHash(optionsMap, startPos);
       if (children.length > 0) {
         let newSi = si.getSimilar();

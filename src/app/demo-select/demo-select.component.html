@@ -7,13 +7,14 @@
 <div class="row">
   <div class="col-sm-6">
     <h3>Select a single city</h3>
-    <is-select #select1 [active]="select1selection" [allowClear]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected">
+    <is-select #select1 [formControl]="select1Control" [allowClear]="true" [items]="items" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected">
     </is-select>
-    <button class="btn btn-primary" (click)="setValue()">Select London</button>
+    <button class="btn btn-primary" (click)="selectLondon()">Select London</button>
+    <button class="btn btn-primary" (click)="selectUnknown()">Select Unknown</button>
   </div>
   <div class="col-sm-6">
     <h3>Select a single city</h3>
-    <is-select [allowClear]="true" [items]="itemsObject" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected">
+    <is-select [allowClear]="true" [items]="itemsObject" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected">
       <ng-template is-select-option let-item>
         <div [style.background]="item.source.background">{{item.text}} (option)</div>
       </ng-template>
