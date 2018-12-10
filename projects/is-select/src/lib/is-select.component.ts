@@ -52,10 +52,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         }
       });
       this.itemObjects = this._items.map((item: any) => new SelectItem(item));
-      if (this._active) {
+      if (this._value) {
         const prev = this._active;
-        this._active = this.itemObjects.find(o => o.id === this._active.id);
-        if (!this._active) {
+        this._active = this.itemObjects.find(o => o.id === this._value);
+        if (!this._active && prev) {
           // there was a value, but given options did not contain it
           this.changed.emit(this._active); // emit change
         }
@@ -111,6 +111,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   private _clickedOutsideListener = null;
   private onTouched: Function;
   private _changeSubscription: Subscription = null;
+  private _value: string;
 
   constructor(public element: ElementRef, private renderer: Renderer2, private sanitizer: DomSanitizer, private changeDetector: ChangeDetectorRef) {
 
@@ -120,14 +121,16 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: any): void {
+
     if (value === null || value === undefined) {
       this._active = null;
+      this._value = null;
     } else {
-      this._active = new SelectItem(value);
-      if (this.itemObjects) {
+      this._value = String(value);
+      if (this.itemObjects && this.itemObjects.length > 0) {
         const prev = this._active;
-        this._active = this.itemObjects.find(o => o.id === this._active.id);
-        if (!this._active) {
+        this._active = this.itemObjects.find(o => o.id === this._value);
+        if (!this._active && prev) {
           // there was a value, but given options did not contain it
           this.changed.emit(this._active); // emit change
         }

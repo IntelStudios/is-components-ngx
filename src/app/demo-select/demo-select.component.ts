@@ -11,7 +11,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-select-1.1.1.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-select-1.1.2.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -20,7 +20,7 @@ export class DemoSelectComponent implements OnInit {
   select1Control: FormControl;
   select2Control: FormControl;
 
-  public items:Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
+  public items: Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
     'Budapest', 'Cologne', 'Copenhagen', 'Dortmund', 'Dresden', 'Dublin',
     'Düsseldorf', 'Essen', 'Frankfurt', 'Genoa', 'Glasgow', 'Gothenburg',
@@ -31,15 +31,16 @@ export class DemoSelectComponent implements OnInit {
     'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
     'Zagreb', 'Zaragoza', 'Łódź'];
 
-    itemsObject = [
-      {id: 1, text: 'red', background: 'red'},
-      {id: 2, text: 'green', background: 'green'},
-      {id: 3, text: 'black', background: 'black'}
-    ]
+  itemsObject = [
+    { id: 1, text: 'red', background: 'red' },
+    { id: 2, text: 'green', background: 'green' },
+    { id: 3, text: 'black', background: 'black' }
+  ];
+  colors = undefined;
 
-  private value:any = {};
-  private _disabledV:string = '0';
-  private disabled:boolean = false;
+  private value: any = {};
+  private _disabledV: string = '0';
+  private disabled: boolean = false;
 
   selectLondon() {
     this.select1Control.setValue('London');
@@ -50,11 +51,11 @@ export class DemoSelectComponent implements OnInit {
   }
 
   loadMore() {
-    this.itemsObject = [
-      {id: 1, text: 'red', background: 'red'},
-      {id: 2, text: 'green', background: 'green'},
-      {id: 3, text: 'black', background: 'black'},
-      {id: 4, text: 'yellow', background: 'yellow'}
+    this.colors = [
+      { id: 1, text: 'red', background: 'red' },
+      { id: 2, text: 'green', background: 'green' },
+      { id: 3, text: 'black', background: 'black' },
+      { id: 4, text: 'yellow', background: 'yellow' }
     ];
     this.changeDetector.markForCheck();
   }
@@ -64,28 +65,28 @@ export class DemoSelectComponent implements OnInit {
     this.select1Control.setValue('Olomouc???');
   }
 
-  private get disabledV():string {
+  private get disabledV(): string {
     return this._disabledV;
   }
 
-  private set disabledV(value:string) {
+  private set disabledV(value: string) {
     this._disabledV = value;
     this.disabled = this._disabledV === '1';
   }
 
-  public selected(value:any):void {
+  public selected(value: any): void {
     console.log('Selected value is: ', value);
   }
 
-  public removed(value:any):void {
+  public removed(value: any): void {
     console.log('Removed value is: ', value);
   }
 
-  public typed(value:any):void {
+  public typed(value: any): void {
     console.log('New search input: ', value);
   }
 
-  public changed(value:any):void {
+  public changed(value: any): void {
     console.log('New value', value);
   }
 
