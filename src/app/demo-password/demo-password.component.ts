@@ -11,7 +11,7 @@ export class DemoPasswordComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-password-1.0.0.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-password-1.0.1.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsPasswordModule } from 'is-password';</pre>

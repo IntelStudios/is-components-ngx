@@ -31,9 +31,6 @@ export class IsPasswordComponent {
   @Input()
   placeholder: string = '';
 
-  @Input()
-  title: string;
-
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
 
