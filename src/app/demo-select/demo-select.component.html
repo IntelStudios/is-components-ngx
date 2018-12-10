@@ -14,7 +14,7 @@
   </div>
   <div class="col-sm-6">
     <h3>Select a single city</h3>
-    <is-select [allowClear]="true" [items]="itemsObject" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected">
+    <is-select [allowClear]="true" [formControl]="select2Control" [items]="itemsObject" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No color selected">
       <ng-template is-select-option let-item>
         <div [style.background]="item.source.background">{{item.text}} (option)</div>
       </ng-template>
@@ -22,6 +22,7 @@
         <div [style.background]="item.source.background">{{item.text}} (selected)</div>
       </ng-template>
     </is-select>
-
+    <button class="btn btn-primary" (click)="selectGreen()">Select green</button>
+    <button class="btn btn-primary" (click)="loadMore()">Load Yellow</button>
   </div>
 </div>

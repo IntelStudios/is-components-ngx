@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-demo-select',
@@ -11,13 +11,14 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-select-1.1.0.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-select-1.1.1.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
 `
 
   select1Control: FormControl;
+  select2Control: FormControl;
 
   public items:Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -42,6 +43,20 @@ export class DemoSelectComponent implements OnInit {
 
   selectLondon() {
     this.select1Control.setValue('London');
+  }
+
+  selectGreen() {
+    this.select2Control.setValue(2);
+  }
+
+  loadMore() {
+    this.itemsObject = [
+      {id: 1, text: 'red', background: 'red'},
+      {id: 2, text: 'green', background: 'green'},
+      {id: 3, text: 'black', background: 'black'},
+      {id: 4, text: 'yellow', background: 'yellow'}
+    ];
+    this.changeDetector.markForCheck();
   }
 
 
@@ -75,10 +90,11 @@ export class DemoSelectComponent implements OnInit {
   }
 
 
-  constructor() { }
+  constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.select1Control = new FormControl();
+    this.select2Control = new FormControl();
   }
 
 }

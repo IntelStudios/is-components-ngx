@@ -9,9 +9,12 @@ export class SelectItem {
     if (typeof source === 'string') {
       this.id = this.text = source;
     }
+    if (typeof source === 'number') {
+      this.id = this.text = String(source);
+    }
     if (typeof source === 'object') {
       this.source = source;
-      this.id = source.id || source.text;
+      this.id = String(source.id) || source.text;
       this.text = source.text;
       if (source.children && source.text) {
         this.children = source.children.map((c:any) => {

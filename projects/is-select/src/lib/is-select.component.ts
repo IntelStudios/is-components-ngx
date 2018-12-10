@@ -47,11 +47,19 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._items = this.itemObjects = [];
     } else {
       this._items = value.filter((item: any) => {
-        if ((typeof item === 'string') || (typeof item === 'object' && item.text)) {
+        if ((typeof item === 'string') || (typeof item === 'object' && item.text && item.id)) {
           return item;
         }
       });
       this.itemObjects = this._items.map((item: any) => new SelectItem(item));
+      if (this._active) {
+        const prev = this._active;
+        this._active = this.itemObjects.find(o => o.id === this._active.id);
+        if (!this._active) {
+          // there was a value, but given options did not contain it
+          this.changed.emit(this._active); // emit change
+        }
+      }
     }
   }
 
@@ -112,12 +120,17 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: any): void {
-    if (!value) {
+    if (value === null || value === undefined) {
       this._active = null;
     } else {
       this._active = new SelectItem(value);
-      if (this.itemObjects && !this.itemObjects.find(o => o.id === this._active.id)) {
-        this._active = null;
+      if (this.itemObjects) {
+        const prev = this._active;
+        this._active = this.itemObjects.find(o => o.id === this._active.id);
+        if (!this._active) {
+          // there was a value, but given options did not contain it
+          this.changed.emit(this._active); // emit change
+        }
       }
     }
     this.changeDetector.markForCheck();
