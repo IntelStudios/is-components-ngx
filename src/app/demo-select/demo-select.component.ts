@@ -32,9 +32,9 @@ export class DemoSelectComponent implements OnInit {
     'Zagreb', 'Zaragoza', 'Łódź'];
 
   itemsObject = [
-    { id: 1, text: 'red', background: 'red' },
-    { id: 2, text: 'green', background: 'green' },
-    { id: 3, text: 'black', background: 'black' }
+    { ID: 1, Value: 'red', background: 'red' },
+    { ID: 2, Value: 'green', background: 'green' },
+    { ID: 3, Value: 'black', background: 'black' }
   ];
   colors = undefined;
 
@@ -52,10 +52,10 @@ export class DemoSelectComponent implements OnInit {
 
   loadMore() {
     this.colors = [
-      { id: 1, text: 'red', background: 'red' },
-      { id: 2, text: 'green', background: 'green' },
-      { id: 3, text: 'black', background: 'black' },
-      { id: 4, text: 'yellow', background: 'yellow' }
+      { ID: 1, Value: 'red', background: 'red' },
+      { ID: 2, Value: 'green', background: 'green' },
+      { ID: 3, Value: 'black', background: 'black' },
+      { ID: 4, Value: 'yellow', background: 'yellow' }
     ];
     this.changeDetector.markForCheck();
   }

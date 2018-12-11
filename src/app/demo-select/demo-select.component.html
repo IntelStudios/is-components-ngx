@@ -16,10 +16,10 @@
     <h3>Select a single city</h3>
     <is-select [allowClear]="true" [formControl]="select2Control" [items]="colors" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No color selected">
       <ng-template is-select-option let-item>
-        <div [style.background]="item.source.background">{{item.text}} (option)</div>
+        <div [style.background]="item.source.background">{{item.Value}} (option)</div>
       </ng-template>
       <ng-template is-select-selection let-item>
-        <div [style.background]="item.source.background">{{item.text}} (selected)</div>
+        <div [style.background]="item.source.background">{{item.Value}} (selected)</div>
       </ng-template>
     </is-select>
     <button class="btn btn-primary" (click)="selectGreen()">Select green</button>

@@ -1,28 +1,28 @@
 export class SelectItem {
-  public id:string;
-  public text:string;
+  public ID:string;
+  public Value:string;
   public children:Array<SelectItem>;
   public parent:SelectItem;
   source: any = {};
 
   public constructor(source:any) {
     if (typeof source === 'string') {
-      this.id = this.text = source;
+      this.ID = this.Value = source;
     }
     if (typeof source === 'number') {
-      this.id = this.text = String(source);
+      this.ID = this.Value = String(source);
     }
     if (typeof source === 'object') {
       this.source = source;
-      this.id = String(source.id) || source.text;
-      this.text = source.text;
-      if (source.children && source.text) {
+      this.ID = String(source.ID);
+      this.Value = source.Value;
+      if (source.children && source.Value) {
         this.children = source.children.map((c:any) => {
           let r:SelectItem = new SelectItem(c);
           r.parent = this;
           return r;
         });
-        this.text = source.text;
+        this.Value = source.Value;
       }
     }
   }
@@ -30,7 +30,7 @@ export class SelectItem {
   public fillChildrenHash(optionsMap:Map<string, number>, startIndex:number):number {
     let i = startIndex;
     this.children.map((child:SelectItem) => {
-      optionsMap.set(child.id, i++);
+      optionsMap.set(child.ID, i++);
     });
     return i;
   }
@@ -41,8 +41,8 @@ export class SelectItem {
 
   public getSimilar():SelectItem {
     let r:SelectItem = new SelectItem(false);
-    r.id = this.id;
-    r.text = this.text;
+    r.ID = this.ID;
+    r.Value = this.Value;
     r.parent = this.parent;
     return r;
   }

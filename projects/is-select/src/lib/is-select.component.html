@@ -20,7 +20,7 @@
     </div>
     <ul class="ui-select-choices" *ngIf="options && options.length > 0">
       <li *ngFor="let o of options" role="menuitem">
-        <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.id == active?.id" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
+        <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == active?.ID" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
           <a href="javascript:void(0)" class="dropdown-item">
             <ng-container [ngTemplateOutlet]="templateOption || defaultTemplateOption" [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
             </ng-container>
@@ -36,10 +36,10 @@
     <ul *ngIf="options && options.length > 0" class="ui-select-choices" role="menu">
       <li *ngFor="let c of options; let index=index" role="menuitem">
         <div class="divider dropdown-divider" *ngIf="index > 0"></div>
-        <div class="dropdown-header">{{c.text}}</div>
+        <div class="dropdown-header">{{c.Value}}</div>
         <div *ngFor="let o of c.children" class="ui-select-choices-row" [class.active]="isActive(o)" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)" [ngClass]="{'active': isActive(o)}">
           <a href="javascript:void(0)" class="dropdown-item">
-            <div [innerHtml]="sanitize(o.text)"></div>
+            <div [innerHtml]="sanitize(o.Value)"></div>
           </a>
         </div>
       </li>
@@ -49,9 +49,9 @@
 
 <!--Default templates-->
 <ng-template #defaultTemplateOption let-item="item">
-  <div [innerHtml]="sanitize(item.text)"></div>
+  <div [innerHtml]="sanitize(item.Value)"></div>
 </ng-template>
 
 <ng-template #defaultTemplateSelection let-item="item">
-  <span [innerHtml]="sanitize(item.text)"></span>
+  <span [innerHtml]="sanitize(item.Value)"></span>
 </ng-template>

@@ -58,7 +58,7 @@ export class Behavior {
   private getActiveIndex(optionsMap: Map<string, number> = void 0): number {
     let ai = this.actor.options.indexOf(this.actor.activeOption);
     if (ai < 0 && optionsMap !== void 0) {
-      ai = optionsMap.get(this.actor.activeOption.id);
+      ai = optionsMap.get(this.actor.activeOption.ID);
     }
     return ai;
   }
@@ -96,7 +96,7 @@ export class GenericBehavior extends Behavior implements OptionsBehavior {
   public filter(query: RegExp): void {
     let options = this.actor.itemObjects
       .filter((option: SelectItem) => {
-        return stripTags(option.text).match(query);
+        return stripTags(option.Value).match(query);
       });
     this.actor.options = options;
     if (this.actor.options.length > 0) {
@@ -128,9 +128,9 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
 
   public prev(): void {
     let indexParent = this.actor.options
-      .findIndex((option: SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.id === option.id);
+      .findIndex((option: SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.ID === option.ID);
     let index = this.actor.options[indexParent].children
-      .findIndex((option: SelectItem) => this.actor.activeOption && this.actor.activeOption.id === option.id);
+      .findIndex((option: SelectItem) => this.actor.activeOption && this.actor.activeOption.ID === option.ID);
     this.actor.activeOption = this.actor.options[indexParent].children[index - 1];
     if (!this.actor.activeOption) {
       if (this.actor.options[indexParent - 1]) {
@@ -148,9 +148,9 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
 
   public next(): void {
     let indexParent = this.actor.options
-      .findIndex((option: SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.id === option.id);
+      .findIndex((option: SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.ID === option.ID);
     let index = this.actor.options[indexParent].children
-      .findIndex((option: SelectItem) => this.actor.activeOption && this.actor.activeOption.id === option.id);
+      .findIndex((option: SelectItem) => this.actor.activeOption && this.actor.activeOption.ID === option.ID);
     this.actor.activeOption = this.actor.options[indexParent].children[index + 1];
     if (!this.actor.activeOption) {
       if (this.actor.options[indexParent + 1]) {
@@ -169,7 +169,7 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
     let optionsMap: Map<string, number> = new Map<string, number>();
     let startPos = 0;
     for (let si of this.actor.itemObjects) {
-      let children: Array<SelectItem> = si.children.filter((option: SelectItem) => query.test(option.text));
+      let children: Array<SelectItem> = si.children.filter((option: SelectItem) => query.test(option.Value));
       startPos = si.fillChildrenHash(optionsMap, startPos);
       if (children.length > 0) {
         let newSi = si.getSimilar();

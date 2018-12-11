@@ -47,14 +47,14 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._items = this.itemObjects = [];
     } else {
       this._items = value.filter((item: any) => {
-        if ((typeof item === 'string') || (typeof item === 'object' && item.text && item.id)) {
+        if ((typeof item === 'string') || (typeof item === 'object' && item.ID && item.Value)) {
           return item;
         }
       });
       this.itemObjects = this._items.map((item: any) => new SelectItem(item));
       if (this._value) {
         const prev = this._active;
-        this._active = this.itemObjects.find(o => o.id === this._value);
+        this._active = this.itemObjects.find(o => o.ID === this._value);
         if (!this._active && prev) {
           // there was a value, but given options did not contain it
           this.changed.emit(this._active); // emit change
@@ -129,7 +129,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._value = String(value);
       if (this.itemObjects && this.itemObjects.length > 0) {
         const prev = this._active;
-        this._active = this.itemObjects.find(o => o.id === this._value);
+        this._active = this.itemObjects.find(o => o.ID === this._value);
         if (!this._active && prev) {
           // there was a value, but given options did not contain it
           this.changed.emit(this._active); // emit change
@@ -346,7 +346,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   isActive(value: SelectItem): boolean {
-    return this.activeOption.text === value.text;
+    return this.activeOption.Value === value.Value;
   }
 
   removeClick(event: any): void {
@@ -399,10 +399,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       return;
     }
     this._active = value;
-    this.changed.next(this.active.id);
+    this.changed.next(this.active.ID);
     this.selected.emit(value);
     this.hideOptions();
-    this.focusToInput(stripTags(value.text));
+    this.focusToInput(stripTags(value.Value));
     this.element.nativeElement.querySelector('.ui-select-container').focus();
   }
 
