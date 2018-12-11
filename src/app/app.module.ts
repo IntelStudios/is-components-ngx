@@ -48,11 +48,11 @@ export const routes: Routes = [
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { useHash: true }),
     ReactiveFormsModule, FormsModule,
     TranslateModule.forRoot(),
     IsSelectModule, IsCodemirrorModule, IsFroalaModule,
-    IsMetronicModule.forRoot({placement: 'right', triggers: 'click', outsideClick: true, container: 'body'}),
+    IsMetronicModule.forRoot({ placement: 'right', triggers: 'click', outsideClick: true, container: 'body' }),
     IsDatepickerModule,
     IsSelectpickerModule,
     IsBootstrapSwitchModule.forRoot({ onText: 'bs-switch-on', offText: 'bs-switch-off' }),
