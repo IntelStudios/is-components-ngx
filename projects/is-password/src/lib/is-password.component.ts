@@ -8,7 +8,6 @@ import {
   Output,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 export const IS_PASSWORD_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -38,11 +37,19 @@ export class IsPasswordComponent {
 
   disabled: boolean;
 
-  private _changeSubscription: Subscription = null;
-  private onTouched: Function;
+  // the method set in registerOnChange to emit changes back to the form
+  private _onChangeCallback = (_: any) => { };
+  private _onTouchedCallback = (_: any) => { };
 
   constructor(private changeDetector: ChangeDetectorRef) {
 
+  }
+
+  // change events from the input
+  onChange(event: any) {
+    if (event) {
+      this._onChangeCallback(event.target.value);
+    }
   }
 
   togglePassword(input: any) {
@@ -64,10 +71,7 @@ export class IsPasswordComponent {
    * Implemented as part of ControlValueAccessor.
    */
   registerOnChange(fn: (_: any) => {}): void {
-    if (this._changeSubscription) {
-      this._changeSubscription.unsubscribe();
-    }
-    this._changeSubscription = this.changed.subscribe(fn);
+    this._onChangeCallback = fn;
   }
 
   /**
@@ -82,6 +86,6 @@ export class IsPasswordComponent {
    * Implemented as part of ControlValueAccessor.
    */
   registerOnTouched(fn: (_: any) => {}): void {
-    this.onTouched = fn;
+    this._onTouchedCallback = fn;
   }
 }
