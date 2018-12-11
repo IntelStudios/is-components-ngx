@@ -478,7 +478,7 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
-    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   registerOnChange(fn: any) {
