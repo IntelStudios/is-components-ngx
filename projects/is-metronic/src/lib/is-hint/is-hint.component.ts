@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy, Renderer2, ChangeDetectionStrategy } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PopoverDirective } from 'ngx-bootstrap';
 
 @Component({
