@@ -17,8 +17,9 @@ export class AppComponent {
     { title: 'Date Picker', route: '/datepicker' },
     { title: 'Select Picker', route: '/selectpicker' },
     { title: 'Bootstrap Switch', route: '/bootstrap-switch' },
-    { title: 'Password', route: '/password' }
-  ];
+    { title: 'Password', route: '/password' },
+    { title: 'Select Tree', route: '/select-tree' }
+  ].sort((a, b) => a.title.localeCompare(b.title));
 
   constructor(private translate: TranslateService) {
     // for demo purpose we just set some translations so we do not need to introduce http-loader

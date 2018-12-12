@@ -59,6 +59,12 @@
       ],
       "is-bootstrap-switch/*": [
         "dist/is-bootstrap-switch/*"
+      ],
+      "is-select-tree": [
+        "dist/is-select-tree"
+      ],
+      "is-select-tree/*": [
+        "dist/is-select-tree/*"
       ]
     }
   }

@@ -4,14 +4,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { IsSelectModule } from '../../projects/is-select/src/lib/is-select.module';
-import { IsCodemirrorModule } from '../../projects/is-codemirror/src/lib/is-codemirror.module';
-import { IsFroalaModule } from '../../projects/is-froala/src/lib/is-froala.module';
-import { IsMetronicModule } from '../../projects/is-metronic/src/lib/is-metronic.module';
-import { IsDatepickerModule } from '../../projects/is-datepicker/src/lib/is-datepicker.module';
-import { IsSelectpickerModule } from '../../projects/is-selectpicker/src/lib/is-selectpicker.module';
-import { IsBootstrapSwitchModule } from '../../projects/is-bootstrap-switch/src/lib/is-bootstrap-switch.module';
-import { IsPasswordModule } from 'projects/is-password/src/lib/is-password.module';
+import { TreeModule } from 'angular-tree-component';
+
+import { IsSelectModule } from 'projects/is-select/src/public_api';
+import { IsCodemirrorModule } from 'projects/is-codemirror/src/public_api';
+import { IsFroalaModule } from 'projects/is-froala/src/public_api';
+import { IsMetronicModule } from 'projects/is-metronic/src/public_api';
+import { IsDatepickerModule } from 'projects/is-datepicker/src/public_api';
+import { IsSelectpickerModule } from 'projects/is-selectpicker/src/public_api';
+import { IsBootstrapSwitchModule } from 'projects/is-bootstrap-switch/src/public_api';
+import { IsPasswordModule } from 'projects/is-password/src/public_api';
+import { IsSelectTreeModule } from 'projects/is-select-tree/src/public_api';
+
+
 import { AppComponent } from './app.component';
 import { DemoSelectComponent } from './demo-select/demo-select.component';
 import { DemoCodemirrorComponent } from './demo-codemirror/demo-codemirror.component';
@@ -21,6 +26,7 @@ import { DemoDatepickerComponent } from './demo-datepicker/demo-datepicker.compo
 import { DemoSelectpickerComponent } from './demo-selectpicker/demo-selectpicker.component';
 import { DemoBootstrapSwitchComponent } from './demo-bootstrap-switch/demo-bootstrap-switch.component';
 import { DemoPasswordComponent } from './demo-password/demo-password.component';
+import { DemoSelectTreeComponent } from './demo-select-tree/demo-select-tree.component';
 
 export const routes: Routes = [
   { path: 'select', component: DemoSelectComponent },
@@ -31,7 +37,8 @@ export const routes: Routes = [
   { path: 'metronic', component: DemoMetronicComponent },
   { path: 'datepicker', component: DemoDatepickerComponent },
   { path: 'bootstrap-switch', component: DemoBootstrapSwitchComponent },
-  { path: 'password', component: DemoPasswordComponent }
+  { path: 'password', component: DemoPasswordComponent },
+  { path: 'select-tree', component: DemoSelectTreeComponent }
 ];
 
 @NgModule({
@@ -44,11 +51,13 @@ export const routes: Routes = [
     DemoDatepickerComponent,
     DemoSelectpickerComponent,
     DemoBootstrapSwitchComponent,
-    DemoPasswordComponent
+    DemoPasswordComponent,
+    DemoSelectTreeComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
     RouterModule.forRoot(routes, { useHash: true }),
+    TreeModule.forRoot(),
     ReactiveFormsModule, FormsModule,
     TranslateModule.forRoot(),
     IsSelectModule, IsCodemirrorModule, IsFroalaModule,
@@ -56,7 +65,8 @@ export const routes: Routes = [
     IsDatepickerModule,
     IsSelectpickerModule,
     IsBootstrapSwitchModule.forRoot({ onText: 'bs-switch-on', offText: 'bs-switch-off' }),
-    IsPasswordModule
+    IsPasswordModule,
+    IsSelectTreeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
