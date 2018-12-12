@@ -29,6 +29,12 @@ export class IsPortletComponent implements OnInit {
   id: string;
 
   @Input()
+  icon: string;
+
+  @Input()
+  fontColor: string = 'font-green-seagreen';
+
+  @Input()
   enableCollapse: boolean = false;
 
   @Input()

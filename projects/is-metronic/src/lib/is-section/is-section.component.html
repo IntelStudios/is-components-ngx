@@ -1,7 +1,15 @@
 <div class="portlet box {{portletClass || 'blue-hoki'}}">
     <div class="portlet-title">
-        <div class="caption">{{heading}}</div>
+        <div class="caption">
+          <i *ngIf="icon" class="{{icon}}" aria-hidden="true" style="margin-top: 3px;"></i>
+          <span class="caption-subject">{{heading}}</span>
+        </div>
+        <div class="tools">
+          <a *ngIf="enableCollapse" [class.collapse]="collapse==='open'" [class.expand]="collapse==='closed'" (click)="toggleCollapse()"></a>
+        </div>
         <ng-content select=".tools"></ng-content>
     </div>
-    <ng-content select=".portlet-body"></ng-content>
+    <div [@collapseInOut]="collapse" style="background-color: white !important;">
+      <ng-content select=".portlet-body"></ng-content>
+    </div>
 </div>

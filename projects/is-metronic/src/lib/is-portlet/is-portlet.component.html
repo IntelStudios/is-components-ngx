@@ -1,7 +1,8 @@
 <div class="portlet light bordered">
     <ng-content select="xa-loading"></ng-content>
     <div class="portlet-title">
-        <div class="caption font-green-seagreen">
+        <div class="caption {{fontColor}}">
+            <i *ngIf="icon" class="{{icon}} {{fontColor}}" aria-hidden="true" style="padding-top: 4px;"></i>
             <span class="caption-subject bold uppercase">{{heading|translate}}</span>
         </div>
         <div class="tools">
