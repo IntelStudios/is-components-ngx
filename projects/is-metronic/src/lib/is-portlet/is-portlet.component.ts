@@ -50,8 +50,6 @@ export class IsPortletComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.headingUpprcase);
-    console.log(this.headingBold);
     if (this.id) {
       const setting = localStorage.getItem(`is-portlet:${this.id}`);
       this.collapse = ['open','closed'].indexOf(setting) < 0 ? 'open' : setting;
