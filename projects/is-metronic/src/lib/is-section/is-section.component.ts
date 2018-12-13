@@ -29,7 +29,6 @@ export class IsSectionComponent {
 
   @Input()
   icon: string;
-
   @Input()
   portletClass: string = 'blue-hoki';
 

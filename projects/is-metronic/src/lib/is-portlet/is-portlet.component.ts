@@ -30,15 +30,18 @@ export class IsPortletComponent implements OnInit {
 
   @Input()
   icon: string;
-
   @Input()
   fontColor: string = 'font-green-seagreen';
 
   @Input()
-  enableCollapse: boolean = false;
+  heading: string;
+  @Input()
+  headingUpprcase: boolean = true;
+  @Input()
+  headingBold: boolean = true;
 
   @Input()
-  heading: string;
+  enableCollapse: boolean = false;
 
   collapse: string = 'open';
 
@@ -47,6 +50,8 @@ export class IsPortletComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.headingUpprcase);
+    console.log(this.headingBold);
     if (this.id) {
       const setting = localStorage.getItem(`is-portlet:${this.id}`);
       this.collapse = ['open','closed'].indexOf(setting) < 0 ? 'open' : setting;

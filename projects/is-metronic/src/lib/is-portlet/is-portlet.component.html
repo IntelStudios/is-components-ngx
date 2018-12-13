@@ -3,7 +3,7 @@
     <div class="portlet-title">
         <div class="caption {{fontColor}}">
             <i *ngIf="icon" class="{{icon}} {{fontColor}}" aria-hidden="true" style="padding-top: 4px;"></i>
-            <span class="caption-subject bold uppercase">{{heading|translate}}</span>
+            <span class="caption-subject" [class.bold]="headingBold" [class.uppercase]="headingUpprcase">{{heading|translate}}</span>
         </div>
         <div class="tools">
             <a *ngIf="enableCollapse" [class.collapse]="collapse==='open'" [class.expand]="collapse==='closed'" (click)="toggleCollapse()"></a>
