@@ -30,6 +30,7 @@ npm install --save froala-editor at.js font-awesome</pre>
 @import '../node_modules/froala-editor/css/froala_editor.pkgd.min.css';
 @import '../node_modules/froala-editor/css/froala_style.min.css';
 @import '../node_modules/froala-editor/css/plugins/code_view.min.css';
+@import '../node_modules/at.js/dist/css/jquery.atwho.css';
 
 @import '../node_modules/font-awesome/css/font-awesome.css';
 
