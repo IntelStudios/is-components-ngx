@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
+import { of } from 'rxjs';
+
+import { FieldErrorService, FieldErrorModel } from '../../../projects/is-metronic/src/public_api';
 
 @Component({
   selector: 'app-demo-metronic',
@@ -10,7 +14,7 @@ export class DemoMetronicComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-metronic-1.0.8.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-metronic-1.0.9.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsMetronicModule } from 'is-metronic';</pre>
@@ -27,7 +31,6 @@ export class DemoMetronicComponent implements OnInit {
 @import 'assets/metronic/admin/layout/css/layout.css';</pre>
   `
 
-
   hint: string = `
     <p>Text</p>
     <ul>
@@ -37,7 +40,34 @@ export class DemoMetronicComponent implements OnInit {
     </ul>
   `
 
-  constructor() { }
+  formControl1: FormControl;
+  formControl2: FormControl;
+
+  constructor() {
+    this.formControl1 = new FormControl();
+    this.formControl2 = new FormControl();
+
+    let inputRequiredValidator = (control: AbstractControl) => {
+      let invalid = FieldErrorService.requiredError();
+      return control.value !== '' ? of(null) : of(invalid);
+    };
+
+    this.formControl1.setAsyncValidators(inputRequiredValidator);
+
+    let customValidator = (control: AbstractControl) => {
+      let invalid = {
+        custom: new FieldErrorModel('custom', false).setPriority(10).withMessage('This is custom validator, input does not contain word "custom"')
+      };
+
+      if (control.value && control.value.indexOf('custom') > -1) {
+        return of(null);
+      } else {
+        return of(invalid);
+      }
+    }
+
+    this.formControl2.setAsyncValidators(customValidator);
+  }
 
   ngOnInit() {
   }

@@ -108,3 +108,19 @@
   </div>
 </div>
 <label>Control label <is-hint [hint]="hint"></is-hint></label>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Field Error</h2>
+  </div>
+</div>
+<label>Type something and delete it: <is-field-error [field]="formControl1"></is-field-error></label>
+<br>
+<input type="text" [formControl]="formControl1">
+<br>
+<p>You can use predefined validators from is-field-error.service or you can define custom.</p>
+<label>Custom validator, input must contain word 'custom': <is-field-error [field]="formControl2"></is-field-error></label>
+<br>
+  <input type="text" [formControl]="formControl2">
+<br>
+

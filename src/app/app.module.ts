@@ -61,7 +61,7 @@ export const routes: Routes = [
     ReactiveFormsModule, FormsModule,
     TranslateModule.forRoot(),
     IsSelectModule, IsCodemirrorModule, IsFroalaModule,
-    IsMetronicModule.forRoot({ placement: 'right', triggers: 'click', outsideClick: true, container: 'body' }),
+    IsMetronicModule.forRoot({ placement: 'right', triggers: 'click', outsideClick: true, container: 'body' }, { container: 'body', placement: 'right', triggers: 'click'}),
     IsDatepickerModule,
     IsSelectpickerModule,
     IsBootstrapSwitchModule.forRoot({ onText: 'bs-switch-on', offText: 'bs-switch-off' }),
