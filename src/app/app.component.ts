@@ -18,7 +18,8 @@ export class AppComponent {
     { title: 'Select Picker', route: '/selectpicker' },
     { title: 'Bootstrap Switch', route: '/bootstrap-switch' },
     { title: 'Password', route: '/password' },
-    { title: 'Select Tree', route: '/select-tree' }
+    { title: 'Select Tree', route: '/select-tree' },
+    { title: 'Modal', route: '/modal' }
   ].sort((a, b) => a.title.localeCompare(b.title));
 
   constructor(private translate: TranslateService) {

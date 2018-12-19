@@ -65,6 +65,12 @@
       ],
       "is-select-tree/*": [
         "dist/is-select-tree/*"
+      ],
+      "is-modal": [
+        "dist/is-modal"
+      ],
+      "is-modal/*": [
+        "dist/is-modal/*"
       ]
     }
   }

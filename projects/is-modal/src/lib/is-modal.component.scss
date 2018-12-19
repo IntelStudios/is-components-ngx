@@ -1,0 +1,11 @@
+:host {
+  .modal-footer > .buttons > button > i {
+    margin-right: 3px;
+  }
+  .modal-body {
+    &.short-scroll {
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<div class="modal-header" *ngIf="title">
+  <h4 class="modal-title pull-left">{{title|translate}}</h4>
+  <button type="button" class="close pull-right" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" [class.short-scroll]="bodyScroll">
+  <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{$implicit: this, modal: this}">
+  </ng-container>
+</div>
+<div class="modal-footer" *ngIf="buttonsLeft || buttonsRight">
+  <div class="buttons">
+    <button *ngFor="let b of buttonsLeft" type="button" class="btn pull-left {{b.buttonClass}}" (click)="buttonClick(b)"><i *ngIf="b.icon" [class]="b.icon"></i>{{b.title|translate}}</button>
+    <button *ngFor="let b of buttonsRight" type="button" class="btn pull-right {{b.buttonClass}}" (click)="buttonClick(b)"><i *ngIf="b.icon" [class]="b.icon"></i>{{b.title|translate}}</button>
+  </div>
+</div>

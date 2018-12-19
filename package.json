@@ -15,6 +15,7 @@
     "build.selectpicker": "ng build is-selectpicker && cd dist/is-selectpicker && npm pack --quiet && cp *.tgz ../../package",
     "build.bootstrap-switch": "ng build is-bootstrap-switch && cd dist/is-bootstrap-switch && npm pack --quiet && cp *.tgz ../../package",
     "build.password": "ng build is-password && cd dist/is-password && npm pack --quiet && cp *.tgz ../../package",
+    "build.modal": "ng build is-modal && cd dist/is-modal && npm pack --quiet && cp *.tgz ../../package",
     "docs": "./node_modules/.bin/compodoc -p tsconfig.json -d dist/docs --silent --theme readthedocs --disableCoverage --disableGraph --disablePrivate",
     "test": "ng test",
     "lint": "ng lint",
