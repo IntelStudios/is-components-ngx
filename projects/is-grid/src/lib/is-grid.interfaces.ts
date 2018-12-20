@@ -113,3 +113,17 @@ export class IsGridModel {
     return gm;
   }
 }
+ export class IsGridData {
+   GridModel: IsGridModel;
+   DataTable: IsGridDataRow[];
+
+   static deserialize(json: any): IsGridData {
+     const data: IsGridData = new IsGridData();
+     if (!json.GridModel || !Array.isArray(json.DataTable)) {
+       throw new Error('Unable to deserialize IsGridData. GridModel object and DataTable array are not set');
+     }
+     data.GridModel = IsGridModel.deserialize(json.GridModel);
+     data.DataTable = json.DataTable.map(i => IsGridDataRow.deserialize(i));
+     return data;
+   }
+ }
