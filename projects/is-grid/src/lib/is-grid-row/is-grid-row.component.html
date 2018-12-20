@@ -1,0 +1,12 @@
+  <div>
+    <div *ngIf="gm.$isEmpty" class="div-ellipsis">&nbsp;</div>
+    <div *ngIf="gm.IsTitle && !gm.$isEmpty" class="div-ellipsis">
+      <b *ngIf="!gm.ProcessValue" class="yellow-casablanca-header">{{row[gm.ColumnName]}}</b>
+      <b *ngIf="gm.ProcessValue"  class="yellow-casablanca-header" [innerHTML]="row['$$'+gm.ColumnName]"></b>
+    </div>
+    <div *ngIf="!gm.IsTitle && !gm.$isEmpty" class="div-ellipsis" title="{{gm.Name}}: {{row[gm.ColumnName]}}">
+       {{gm.Name}}:
+      <strong *ngIf="!gm.ProcessValue">{{row[gm.ColumnName]}}</strong>
+      <strong *ngIf="gm.ProcessValue" [innerHTML]="row['$$'+gm.ColumnName]"></strong>
+    </div>
+  </div>

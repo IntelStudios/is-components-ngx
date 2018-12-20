@@ -36,7 +36,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -499,6 +499,41 @@
             "tsConfig": [
               "projects/is-modal/tsconfig.lib.json",
               "projects/is-modal/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "is-grid": {
+      "root": "projects/is-grid",
+      "sourceRoot": "projects/is-grid/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/is-grid/tsconfig.lib.json",
+            "project": "projects/is-grid/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/is-grid/src/test.ts",
+            "tsConfig": "projects/is-grid/tsconfig.spec.json",
+            "karmaConfig": "projects/is-grid/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/is-grid/tsconfig.lib.json",
+              "projects/is-grid/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

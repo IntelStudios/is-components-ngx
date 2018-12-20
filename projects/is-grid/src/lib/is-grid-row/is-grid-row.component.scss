@@ -1,0 +1,13 @@
+:host {
+  .yellow-casablanca-header {
+    color: #f2784b !important;
+    font-weight: bold;
+  }
+
+  /deep/ .badge {
+    height: 16px !important;
+    padding: 2px 6px 2px 6px !important;
+    vertical-align: bottom;
+    font-weight: bold;
+  }
+}

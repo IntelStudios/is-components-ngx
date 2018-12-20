@@ -1,0 +1,221 @@
+$color-cls-default-bg: var(--is-grid-default-bg, #fafafa);
+
+$color-cls-danger-bg: var(--is-grid-danger-bg, #f2dede);
+$color-cls-danger-fg: var(--is-grid-danger-fg, #a94442);
+
+$color-cls-info-bg: var(--is-grid-info-bg, #d9edf7);
+$color-cls-info-fg: var(--is-grid-info-fg, #31708f);
+
+$color-disabled-bg: var(--is-grid-disabled-bg, #e9edef);
+$color-disabled-fg: var(--is-grid-disabled-fg, #80898e);
+
+$color-success-bg: var(--is-grid-success-bg, #abe7ed);
+$color-success-fg: var(--is-grid-success-fg, #27a4b0);
+
+$color-warning-bg: var(--is-grid-warning-bg, #f9e491);
+$color-warning-fg: var(--is-grid-warning-fg, #c29d0b);
+
+$general-panel-bg-color: var(--is-grid-panel-bg, #fff);
+$general-panel-border-color: var(--is-grid-border-color, #ccc);
+
+// :host-context(.xa-layout-compact) {
+
+//   .mt-checkbox {
+//     margin-bottom: 15px;
+//   }
+//   .filter-panel {
+//     margin-top: 0px;
+//     margin-bottom: 0px;
+
+//     .btn-reload {
+//       margin-bottom: 5px;
+//     }
+//   }
+//   .status-text {
+//     padding: 15px 0px 0px 15px;
+//   }
+//   tr > td >.order-handle {
+//       right: 5px;
+//       font-size: 14px;
+//       line-height: 14px;
+//       top: calc(50% - 4px);
+//     }
+
+//   .table>thead>tr>th,
+//   .table>thead>tr>td,
+//   .table>tbody>tr>th,
+//   .table>tbody>tr>td,
+//   .table>tfoot>tr>th,
+//   .table>tfoot>tr>td {
+//     padding: 3px;
+//   }
+//   .table td,
+//   .table th {
+//     font-size: 13px;
+//     line-height: 1.2;
+//   }
+
+// }
+
+:host {
+
+  table {
+    margin-top: 5px;
+    margin-bottom: 0;
+    border: 0;
+  }
+
+  tbody {
+    overflow: auto;
+    display: block;
+    height: 100%;
+  }
+
+  thead {
+    .data-table-header {
+      background-color: #95a5a6;
+      color: #fff;
+      height: 28px;
+    }
+  }
+
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  tbody>tr {
+    background-color: $color-cls-default-bg;
+  }
+
+  tbody>tr:last-child>td {
+    border-bottom-width: 1px;
+  }
+
+  th.check-header,
+  td.check-cell {
+    width: 25px !important;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  th.actions-header,
+  td.actions-cell {
+    width: 80px !important;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  th.quick-actions-header,
+  td.quick-actions-cell {
+    vertical-align: middle;
+    text-align: center;
+  }
+
+
+  .status-text {
+    padding: 15px 0px 0px 39px;
+    display: inline-block;
+  }
+
+  .filter-control {
+    input {
+      width: 250px;
+      float: right;
+    }
+  }
+
+  .disabled-cls {
+    color: $color-disabled-fg !important;
+    background-color: $color-disabled-bg !important;
+  }
+
+  .warning-cls {
+    color: $color-warning-fg !important;
+    background-color: $color-warning-bg !important;
+  }
+
+  .success-cls {
+    color: $color-success-fg !important;
+    background-color: $color-success-bg !important;
+  }
+
+  .info-cls {
+    color: $color-cls-info-fg !important;
+    background-color: $color-cls-info-bg !important;
+  }
+
+  .danger-cls {
+    color: $color-cls-danger-fg !important;
+    background-color: $color-cls-danger-bg !important;
+  }
+
+  .page-size-control {
+    is-select {
+      width: 80px;
+      display: inline-block;
+    }
+
+    span {
+      padding: 6px;
+      ;
+    }
+  }
+
+  /deep/ pagination ul {
+    margin: 10px 0 0;
+  }
+}
+
+.filter-panel {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  float: left;
+  width: 100%;
+  background-color: $general-panel-bg-color;
+  border: 1px solid $general-panel-border-color;
+
+  .btn-reload {
+    margin-bottom: 15px;
+  }
+}
+
+.short-scroll {
+  overflow-y: auto;
+}
+
+.grid-toolbar {
+  margin-bottom: 10px;
+}
+
+.short-scroll>tr:hover {
+  filter: brightness(95%);
+}
+
+tr {
+  >td {
+    border-bottom-width: 0;
+    position: relative;
+    &.cursor-pointer {
+      cursor: pointer;
+    }
+    >.order-handle {
+      position: absolute;
+      cursor: move;
+      right: 18px;
+      font-size: 16px;
+      line-height: 16px;
+      top: calc(50% - 8px);
+      z-index: 1;
+    }
+  }
+
+  &.gu-mirror {
+    box-shadow: 0px 0px 3px 0px #888;
+    display: table;
+    width: 100%;
+    table-layout: fixed
+  }
+}

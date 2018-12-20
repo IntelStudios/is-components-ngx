@@ -1,0 +1,97 @@
+<div class="gridtable">
+    <div class="row grid-toolbar" *ngIf="enableToolbar">
+        <div class="col-sm-6 page-size-control">
+            <is-select [formControl]="pageSizeControl" [items]="pageSizeOptions" [isSearch]="false" [allowClear]="false">
+            </is-select>
+            <span>{{gridConfig.translations.pageSize|translate}}</span>
+            <button *ngIf="canCollapse" class="btn btn-icon-only btn-default" (click)="toggleColapseMode()">
+              <i class="fa" [class.fa-th-list]="!collapseMode" [class.fa-list]="collapseMode"></i>
+            </button>
+            <label *ngIf="canAutoRefresh" class="mt-checkbox mt-checkbox-outline" style="font-weight: initial; padding-left: 25px; margin-left: 5px;">
+              <input type="checkbox" [formControl]="autoRefreshControl">
+              <span></span> {{gridConfig.translations.autoRefresh|translate}}
+            </label>
+            <label *ngIf="canFilterActive" class="mt-checkbox mt-checkbox-outline" style="font-weight: initial; padding-left: 25px; margin-left: 5px;">
+              <input type="checkbox" (change)="showInactiveToggle($event)">
+              <span></span> {{gridConfig.translations.showInactive|translate}}
+            </label>
+        </div>
+
+        <div class="col-sm-6 pull-right filter-control" *ngIf="canSearch">
+           <input class="form-control" [placeholder]="gridConfig.translations.search" type="search" [formControl]="searchControl" />
+        </div>
+    </div>
+    <table class="table table-striped table-bordered dataTable" role="grid">
+        <thead>
+            <tr role="row" class="data-table-header">
+                <th class="check-header" *ngIf="canCheck">
+                  <label class="mt-checkbox mt-checkbox-outline">
+                    <input type="checkbox" (change)="allChecked($event.target.checked)">
+                    <span></span>
+                  </label>
+                </th>
+                <th>
+                    <div class="pull-right">
+                        <!--
+                        <button *ngIf="canReload" [title]="'button.reload'|translate" class="btn btn-xs btn-default" (click)="reload()">
+                            <i [class]="icons.REFRESH"></i>
+                        </button>
+                        -->
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <!--
+          <tbody [dragula]="'order'" class="short-scroll" xa-autoheight [autoheightMargin]="autoheightMargin">
+          -->
+        <tbody class="short-scroll" [style.height]="getHeight()">
+            <tr *ngFor="let row of data" [attr.id]="row.ID" [class]="row.$clazz" (mouseleave)="collapseRow(row)" (mouseenter)="expandRow(row)">
+                <td class="check-cell" *ngIf="canCheck">
+                  <label class="mt-checkbox mt-checkbox-outline">
+                    <input type="checkbox" [value]="row.$checked" (change)="onRowChecked(row)">
+                    <span></span>
+                  </label>
+                </td>
+                <td class="igRow" [class.cursor-pointer]="canSelectRow" (click)="onRowSelected(row)">
+                    <!--<i *ngIf="canReorder" class="order-handle fa fa-bars"></i>-->
+                    <div>
+                        <is-grid-row *ngFor="let gm of gridModel.firstRow; trackBy: trackByFunction" class="{{gm.$clazz}} div-ellipsis" [gm]="gm" [row]="row">
+                        </is-grid-row>
+                      </div>
+                      <div [@collapsed]="row.$collapsed" style="overflow: hidden; clear: both;">
+                        <is-grid-row *ngFor="let gm of gridModel.rows; trackBy: trackByFunction" class="{{gm.$clazz}} div-ellipsis"  [gm]="gm" [row]="row">
+                        </is-grid-row>
+                    </div>
+                </td>
+                <!--
+                <td class="actions-cell" *ngIf="canActions && actions">
+                    <div class="btn-group" dropdown>
+                        <button class="btn btn-xs dropdown-toggle red" type="button" dropdownToggle>
+                            <i [class]="icons.ACTIONS"></i>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li *ngFor="let action of actions">
+                                <a (click)="actionClick(action, row.ID)">{{action.title|translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                <td class="quick-actions-cell" *ngIf="quickActions" [style.width]="(5 + (quickActions.length * 30))+'px'">
+                    <div class="btn-group">
+                        <button class="btn btn-xs btn-default" *ngFor="let action of quickActions" [title]="action.title|translate" type="button" (click)="actionClick(action, row.ID)">
+                            <i [class]="action.icon"></i>
+                        </button>
+                    </div>
+                </td>
+                -->
+            </tr>
+            <tr *ngIf="rows == null || data.length == 0">
+                <td colspan="2" class="dataTables_empty">{{gridConfig.translations.noData|translate}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row" [hidden]=" _rows?.length === 0">
+        <span class="status-text">{{statusText}}</span>
+        <pagination class="pagination-sm pull-right" style="padding-right: 15px;" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="pageSize" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable($event)" (numPages)="numPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+    </div>

@@ -71,6 +71,12 @@
       ],
       "is-modal/*": [
         "dist/is-modal/*"
+      ],
+      "is-grid": [
+        "dist/is-grid"
+      ],
+      "is-grid/*": [
+        "dist/is-grid/*"
       ]
     }
   }

@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Usage</h2>
+    <div [innerHTML]="usage"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Grid</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12" style="margin-bottom: 10px;">
+    <button class="btn btn-primary" (click)="loadData()">Load Data</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12" style="padding: 15px;">
+    <is-grid [gridModel]="gridModel" [rows]="rows$ | async" maxHeight="200px" [canAutoRefresh]="false" [canFilterActive]="false"></is-grid>
+  </div>
+</div>
+

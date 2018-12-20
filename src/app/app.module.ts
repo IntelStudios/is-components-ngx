@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeModule } from 'angular-tree-component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { IsSelectModule } from 'projects/is-select/src/public_api';
 import { IsCodemirrorModule } from 'projects/is-codemirror/src/public_api';
@@ -17,6 +18,7 @@ import { IsBootstrapSwitchModule } from 'projects/is-bootstrap-switch/src/public
 import { IsPasswordModule } from 'projects/is-password/src/public_api';
 import { IsSelectTreeModule } from 'projects/is-select-tree/src/public_api';
 import { IsModalModule } from 'projects/is-modal/src/public_api';
+import { IsGridModule } from 'projects/is-grid/src/public_api';
 
 import { AppComponent } from './app.component';
 import { DemoSelectComponent } from './demo-select/demo-select.component';
@@ -29,6 +31,7 @@ import { DemoBootstrapSwitchComponent } from './demo-bootstrap-switch/demo-boots
 import { DemoPasswordComponent } from './demo-password/demo-password.component';
 import { DemoSelectTreeComponent } from './demo-select-tree/demo-select-tree.component';
 import { DemoModalComponent } from './demo-modal/demo-modal.component';
+import { DemoGridComponent } from './demo-grid/demo-grid.component';
 
 export const routes: Routes = [
   { path: 'select', component: DemoSelectComponent },
@@ -41,7 +44,8 @@ export const routes: Routes = [
   { path: 'bootstrap-switch', component: DemoBootstrapSwitchComponent },
   { path: 'password', component: DemoPasswordComponent },
   { path: 'select-tree', component: DemoSelectTreeComponent },
-  { path: 'modal', component: DemoModalComponent }
+  { path: 'modal', component: DemoModalComponent },
+  { path: 'grid', component: DemoGridComponent }
 ];
 
 @NgModule({
@@ -56,7 +60,8 @@ export const routes: Routes = [
     DemoBootstrapSwitchComponent,
     DemoPasswordComponent,
     DemoSelectTreeComponent,
-    DemoModalComponent
+    DemoModalComponent,
+    DemoGridComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
@@ -65,6 +70,7 @@ export const routes: Routes = [
     ReactiveFormsModule, FormsModule,
     TranslateModule.forRoot(),
     ModalModule.forRoot(),
+    PaginationModule.forRoot(),
     IsSelectModule, IsCodemirrorModule, IsFroalaModule,
     IsMetronicModule.forRoot({ placement: 'right', triggers: 'click', outsideClick: true, container: 'body' }, { container: 'body', placement: 'right', triggers: 'click'}),
     IsDatepickerModule,
@@ -72,7 +78,8 @@ export const routes: Routes = [
     IsBootstrapSwitchModule.forRoot({ onText: 'bs-switch-on', offText: 'bs-switch-off' }),
     IsPasswordModule,
     IsSelectTreeModule,
-    IsModalModule
+    IsModalModule,
+    IsGridModule
   ],
   providers: [],
   bootstrap: [AppComponent]

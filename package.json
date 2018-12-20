@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4201",
+    "start": "ng build is-select && ng serve --port 4201",
     "build": "ng build",
-    "build.prod": "ng build --prod",
+    "build.prod": "ng build is-select && ng build --prod",
     "build.select": "ng build is-select && cd dist/is-select && npm pack --quiet && cp *.tgz ../../package",
     "build.select-tree": "ng build is-select-tree && cd dist/is-select-tree && npm pack --quiet && cp *.tgz ../../package",
     "build.codemirror": "ng build is-codemirror && cd dist/is-codemirror && npm pack --quiet && cp *.tgz ../../package",
@@ -16,7 +16,8 @@
     "build.bootstrap-switch": "ng build is-bootstrap-switch && cd dist/is-bootstrap-switch && npm pack --quiet && cp *.tgz ../../package",
     "build.password": "ng build is-password && cd dist/is-password && npm pack --quiet && cp *.tgz ../../package",
     "build.modal": "ng build is-modal && cd dist/is-modal && npm pack --quiet && cp *.tgz ../../package",
-    "docs": "./node_modules/.bin/compodoc -p tsconfig.json -d dist/docs --silent --theme readthedocs --disableCoverage --disableGraph --disablePrivate",
+    "build.grid": "ng build is-grid && cd dist/is-grid && npm pack --quiet && cp *.tgz ../../package",
+    "docs": "./node_modules/.bin/compodoc -p tsconfig.json -d dist/app/docs --silent --theme readthedocs --disableCoverage --disableGraph --disablePrivate",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
