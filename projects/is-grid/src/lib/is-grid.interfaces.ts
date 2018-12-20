@@ -7,12 +7,15 @@ export interface IsGridTranslationsConfig {
   showInactive: string;
   noData: string;
   search: string;
+  reload: string;
 }
 
 export interface IIsGridConfig {
   canAutoRefresh?: boolean;
   canSelectRow?: boolean;
   canCollapse?: boolean;
+  canFilterActive?: boolean;
+  canReload?: boolean;
   translations: IsGridTranslationsConfig;
 }
 
@@ -27,7 +30,8 @@ export class IsGridConfig {
         autoRefresh: 'Auto Refresh',
         showInactive: 'Show Inactive',
         noData: 'No Data',
-        search: 'Search'
+        search: 'Search',
+        reload: 'Reload'
       }
     }
   }

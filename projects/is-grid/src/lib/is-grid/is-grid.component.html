@@ -32,11 +32,9 @@
                 </th>
                 <th>
                     <div class="pull-right">
-                        <!--
-                        <button *ngIf="canReload" [title]="'button.reload'|translate" class="btn btn-xs btn-default" (click)="reload()">
-                            <i [class]="icons.REFRESH"></i>
+                        <button *ngIf="canReload" [title]="gridConfig.translations.reload|translate" class="btn btn-xs btn-default" (click)="reload()">
+                            <i class="fa fa-refresh"></i>
                         </button>
-                        -->
                     </div>
                 </th>
             </tr>

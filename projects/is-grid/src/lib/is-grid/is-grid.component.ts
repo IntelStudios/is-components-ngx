@@ -121,7 +121,7 @@ export class IsGridComponent implements OnInit, OnDestroy {
   canAutoRefresh: boolean = true;
 
   @Input()
-  canReload: boolean;
+  canReload: boolean = true;
 
   @Input()
   canCheck: boolean;
@@ -190,17 +190,11 @@ export class IsGridComponent implements OnInit, OnDestroy {
       this.gridConfig = IsGridConfig.default();
     }
 
-    if (this.gridConfig.canAutoRefresh !== undefined) {
-      this.canAutoRefresh = this.gridConfig.canAutoRefresh;
-    }
-
-    if (this.gridConfig.canSelectRow !== undefined) {
-      this.canSelectRow = this.gridConfig.canSelectRow;
-    }
-
-    if (this.gridConfig.canCollapse !== undefined) {
-      this.canCollapse = this.gridConfig.canCollapse;
-    }
+    ['canAutoRefresh', 'canSelectRow', 'canCollapse', 'canFilterActive', 'canReload'].forEach(key => {
+      if (this.gridConfig[key] !== undefined) {
+        this[key] = this.gridConfig[key];
+      }
+    });
 
     this.pageSizeOptions = [
       { ID: 15, Value: '15' },
@@ -419,6 +413,7 @@ export class IsGridComponent implements OnInit, OnDestroy {
         });
     }
   }
+
 
   private filterRows(rows: Array<IsGridDataRow>): Array<IsGridDataRow> {
     let filtered = rows;
