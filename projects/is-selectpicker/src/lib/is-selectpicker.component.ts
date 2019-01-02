@@ -79,7 +79,6 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
 
-
   isSearch: boolean = false;
 
   constructor(private _eref: ElementRef, private changeDetector: ChangeDetectorRef) {

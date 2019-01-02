@@ -5,10 +5,17 @@ import { Subscription } from 'rxjs';
 
 import { FieldErrorModel } from './is-field-error.model';
 
+// export const IS_FIELD_ERROR_VALUE_ACCESSOR: any = {
+//   provide: NG_VALUE_ACCESSOR,
+//   useExisting: forwardRef(() => IsFieldErrorComponent),
+//   multi: true
+// };
+
 @Component({
   selector: 'is-field-error',
-  template: `<i *ngIf="isShown" class="fa fa-exclamation-triangle" [tooltip]="error" placement="right" container="body" containerClass="tooltip-field-error"></i><span *ngIf="isShown && !showOnlyIcon">{{error}}</span>`,
+  template: `<i *ngIf="isShown" class="fa fa-exclamation-triangle" placement="right" container="body" containerClass="tooltip-field-error"></i><span *ngIf="isShown && !showOnlyIcon">{{error}}</span>`,
   styleUrls: ['./is-field-error.component.scss'],
+  // providers: [IS_FIELD_ERROR_VALUE_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IsFieldErrorComponent implements OnInit, OnDestroy {
@@ -19,8 +26,14 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   @Input()
   showOnlyIcon: boolean = false;
 
+  // @Output()
+  // changed: EventEmitter<any> = new EventEmitter<any>();
+
   private subStat: Subscription;
   private subVal: Subscription;
+  // private onTouched: Function;
+
+  // private _changeSubscription: Subscription = null;
 
   isShown: boolean = false;
 
@@ -39,9 +52,33 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
     });
   }
 
+  // /**
+  // * Implemented as part of ControlValueAccessor.
+  // */
+  // writeValue(value: any): void {
+  //   console.log("[Is-FieldError Component] Write value: ", value);
+
+  //   this.changeDetector.detectChanges();
+  // }
+
+  // registerOnChange(fn: (_: any) => {}): void {
+  //   if (this._changeSubscription) {
+  //     this._changeSubscription.unsubscribe();
+  //   }
+  //   this._changeSubscription = this.changed.subscribe(fn);
+  // }
+
+  // registerOnTouched(fn: (_: any) => {}): void {
+  //   this.onTouched = fn;
+  // }
+
   ngOnDestroy() {
     this.subVal.unsubscribe();
     this.subStat.unsubscribe();
+
+    // if (this._changeSubscription) {
+    //   this._changeSubscription.unsubscribe();
+    // }
   }
 
   private detectChanges() {
