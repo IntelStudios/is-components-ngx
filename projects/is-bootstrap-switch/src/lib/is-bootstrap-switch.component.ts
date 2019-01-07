@@ -225,7 +225,11 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
     this.calculateWith(true);
   }
 
-  @HostListener('click') onClick() {
+  @HostListener('click', ['$event']) onClick(e: MouseEvent) {
+    if ((e.target as HTMLElement).localName === 'is-bs-switch') {
+      // ignore when click comes from component but not from inner divs/spans
+      return;
+    }
     if (!this.disabled && !this.readonly && !this._dragEnd) {
       this.setStateValue(!this._innerState);
     } else if (this._dragEnd) {
