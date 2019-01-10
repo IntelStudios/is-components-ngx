@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 
 export interface IsFroalaConfig {
   getLicense(): string
+  defaultToolbarButtons?: string[];
 }
 
 export interface IIsFroalaOptions {

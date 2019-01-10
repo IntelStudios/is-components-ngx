@@ -11,7 +11,7 @@ export class DemoFroalaComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-froala-1.0.3.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-froala-1.0.4.tgz
 npm install --save froala-editor at.js font-awesome</pre>
 
 <h3>Import Module</h3>

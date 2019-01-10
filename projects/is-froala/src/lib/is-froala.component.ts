@@ -220,6 +220,10 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       events: {},
     };
 
+    if (this.froalaConfig && this.froalaConfig.defaultToolbarButtons) {
+      defaults['toolbarButtons'] = this.froalaConfig.defaultToolbarButtons;
+    }
+
     this.mergeOptions(defaults, this.options);
     // delete observables & atjs config
     // both can fail JSON.stringify(defaults) (internally used in froala)
@@ -234,7 +238,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       undo: false,
       refreshAfterCallback: false,
 
-      callback: function() {
+      callback: function () {
         // icon functionality
         debug('emit intellisense command');
         // [THIS] is a particular _editor instance (we previously assigned "onCommand" emitter and "cmdIntellisense")
@@ -270,7 +274,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
         const reader = new FileReader();
 
         // Set the reader to insert images when they are loaded.
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           const eventTarget = <FileReader>e.target;
           editor.image.insert(eventTarget.result, null, null, editor.image.get());
         };
