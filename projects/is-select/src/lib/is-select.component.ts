@@ -1,26 +1,26 @@
 import {
-  Component,
-  OnInit,
-  EventEmitter,
-  Input,
-  Output,
-  ElementRef,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Renderer2,
+  Component,
   ContentChild,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+  Renderer2,
   TemplateRef,
-  forwardRef
 } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 
-import { SelectItem } from './select-item';
-import { stripTags, escapeRegexp } from './select-pipes';
-import { OptionsBehavior } from './select-interfaces';
-import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-select.directives';
 import { ChildrenBehavior, GenericBehavior } from './behavior';
+import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-select.directives';
+import { OptionsBehavior } from './select-interfaces';
+import { SelectItem } from './select-item';
+import { escapeRegexp, stripTags } from './select-pipes';
 
 export const IS_SELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -47,7 +47,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._items = this.itemObjects = [];
     } else {
       this._items = value.filter((item: any) => {
-        if ((typeof item === 'string') || (typeof item === 'object' && item.ID && item.Value)) {
+        if ((typeof item === 'string') || (typeof item === 'object' && (item.ID || item.ID === 0) && item.Value)) {
           return item;
         }
       });
@@ -121,7 +121,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: any): void {
-
     if (value === null || value === undefined) {
       this._active = null;
       this._value = null;
