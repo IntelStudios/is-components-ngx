@@ -8,7 +8,9 @@ import { IsBreadcrumbBoxComponent } from './is-breadcrumb-box/is-breadcrumb-box.
 import { IsFieldErrorComponent } from './is-field-error/is-field-error.component';
 import { IsHintComponent } from './is-hint/is-hint.component';
 import { IsPortletComponent } from './is-portlet/is-portlet.component';
+import { IsPortletTitleDirective } from './is-portlet/is-portlet.directives';
 import { IsSectionComponent } from './is-section/is-section.component';
+import { IsSectionTitleDirective } from './is-section/is-section.directives';
 import {
   IsTabContentDirective,
   IsTabDirective,
@@ -21,9 +23,9 @@ import { TooltipModule, TooltipConfig } from 'ngx-bootstrap';
   imports: [
     CommonModule, RouterModule, TranslateModule, PopoverModule, TooltipModule
   ],
-  declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsSectionComponent, IsTabsetComponent,
+  declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsSectionComponent, IsSectionTitleDirective, IsTabsetComponent,
   IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent],
-  exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsSectionComponent, IsTabsetComponent,
+  exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsSectionComponent, IsSectionTitleDirective, IsTabsetComponent,
   IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent]
 })
 export class IsMetronicModule {

@@ -1,5 +1,7 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, TemplateRef, ContentChild } from '@angular/core';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+
+import { IsPortletTitleDirective } from './is-portlet.directives';
 
 @Component({
   selector: 'is-portlet',
@@ -42,6 +44,9 @@ export class IsPortletComponent implements OnInit {
 
   @Input()
   enableCollapse: boolean = false;
+
+  @ContentChild(IsPortletTitleDirective, { read: TemplateRef })
+  templateTitle: IsPortletTitleDirective;
 
   collapse: string = 'open';
 

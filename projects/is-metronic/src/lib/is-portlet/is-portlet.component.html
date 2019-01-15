@@ -1,10 +1,8 @@
 <div class="portlet light bordered">
     <ng-content select="xa-loading"></ng-content>
     <div class="portlet-title">
-        <div class="caption {{fontColor}}">
-            <i *ngIf="icon" class="{{icon}} {{fontColor}}" aria-hidden="true" style="padding-top: 4px;"></i>
-            <span class="caption-subject" [class.bold]="headingBold" [class.uppercase]="headingUpprcase">{{heading|translate}}</span>
-        </div>
+        <ng-container [ngTemplateOutlet]="templateTitle || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
+        </ng-container>
         <div class="tools">
             <a *ngIf="enableCollapse" [class.collapse]="collapse==='open'" [class.expand]="collapse==='closed'" (click)="toggleCollapse()"></a>
         </div>
@@ -16,3 +14,11 @@
         <ng-content select=".portlet-body"></ng-content>
     </div>
 </div>
+
+<!--Default templates-->
+<ng-template #defaultTemplateTitle>
+  <div class="caption {{fontColor}}">
+    <i *ngIf="icon" class="{{icon}} {{fontColor}}" aria-hidden="true" style="padding-top: 4px;"></i>
+    <span class="caption-subject" [class.bold]="headingBold" [class.uppercase]="headingUpprcase">{{heading|translate}}</span>
+  </div>
+</ng-template>

@@ -1,5 +1,7 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, TemplateRef, ContentChild } from '@angular/core';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+
+import { IsSectionTitleDirective } from './is-section.directives';
 
 @Component({
   selector: 'is-section',
@@ -37,6 +39,9 @@ export class IsSectionComponent {
 
   @Input()
   enableCollapse: boolean = false;
+
+  @ContentChild(IsSectionTitleDirective, { read: TemplateRef })
+  templateTitle: IsSectionTitleDirective;
 
   collapse: string = 'open';
 
