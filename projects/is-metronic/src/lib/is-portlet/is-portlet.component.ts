@@ -1,5 +1,15 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, TemplateRef, ContentChild } from '@angular/core';
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 
 import { IsPortletTitleDirective } from './is-portlet.directives';
 
@@ -32,18 +42,24 @@ export class IsPortletComponent implements OnInit {
 
   @Input()
   icon: string;
+
   @Input()
   fontColor: string = 'font-green-seagreen';
 
   @Input()
   heading: string;
+
   @Input()
   headingUpprcase: boolean = true;
+
   @Input()
   headingBold: boolean = true;
 
   @Input()
   enableCollapse: boolean = false;
+
+  @Output()
+  colapsed: EventEmitter<string>;
 
   @ContentChild(IsPortletTitleDirective, { read: TemplateRef })
   templateTitle: IsPortletTitleDirective;
@@ -51,13 +67,13 @@ export class IsPortletComponent implements OnInit {
   collapse: string = 'open';
 
   constructor(private changeDetector: ChangeDetectorRef) {
-
+    this.colapsed = new EventEmitter<string>();
   }
 
   ngOnInit() {
     if (this.id) {
       const setting = localStorage.getItem(`is-portlet:${this.id}`);
-      this.collapse = ['open','closed'].indexOf(setting) < 0 ? 'open' : setting;
+      this.collapse = ['open', 'closed'].indexOf(setting) < 0 ? 'open' : setting;
     }
   }
 
@@ -67,5 +83,6 @@ export class IsPortletComponent implements OnInit {
       localStorage.setItem(`is-portlet:${this.id}`, this.collapse);
     }
     this.changeDetector.markForCheck();
+    this.colapsed.emit(this.collapse);
   }
 }
