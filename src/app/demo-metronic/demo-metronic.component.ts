@@ -14,7 +14,7 @@ export class DemoMetronicComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-metronic-1.1.1.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-metronic-1.1.2.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsMetronicModule } from 'is-metronic';</pre>
