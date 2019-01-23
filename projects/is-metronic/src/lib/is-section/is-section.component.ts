@@ -1,5 +1,5 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, TemplateRef, ContentChild } from '@angular/core';
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, Input, TemplateRef } from '@angular/core';
 
 import { IsSectionTitleDirective } from './is-section.directives';
 
@@ -31,6 +31,7 @@ export class IsSectionComponent {
 
   @Input()
   icon: string;
+
   @Input()
   portletClass: string = 'blue-hoki';
 
@@ -40,10 +41,18 @@ export class IsSectionComponent {
   @Input()
   enableCollapse: boolean = false;
 
+  @Input()
+  set defaultBorder(value: boolean) {
+    if (value) {
+      this.borderStyle = '1px solid #e7ecf1';
+    }
+  }
+
   @ContentChild(IsSectionTitleDirective, { read: TemplateRef })
   templateTitle: IsSectionTitleDirective;
 
   collapse: string = 'open';
+  borderStyle: string;
 
   constructor(private changeDetector: ChangeDetectorRef) {
 
@@ -52,7 +61,7 @@ export class IsSectionComponent {
   ngOnInit() {
     if (this.id) {
       const setting = localStorage.getItem(`is-section:${this.id}`);
-      this.collapse = ['open','closed'].indexOf(setting) < 0 ? 'open' : setting;
+      this.collapse = ['open', 'closed'].indexOf(setting) < 0 ? 'open' : setting;
     }
   }
 

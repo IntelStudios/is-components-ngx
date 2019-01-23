@@ -1,9 +1,9 @@
-<div class="portlet box {{portletClass || 'blue-hoki'}}">
+<div class="portlet box {{portletClass || 'blue-hoki'}}" [style.border]="borderStyle">
     <div class="portlet-title">
         <ng-container [ngTemplateOutlet]="templateTitle || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
         </ng-container>
         <div class="tools">
-          <a *ngIf="enableCollapse" [class.collapse]="collapse==='open'" [class.expand]="collapse==='closed'" (click)="toggleCollapse()"></a>
+          <a *ngIf="enableCollapse" [class.collapse]="collapse==='closed'" [class.expand]="collapse==='open'" (click)="toggleCollapse()"></a>
         </div>
         <ng-content select=".tools"></ng-content>
     </div>
