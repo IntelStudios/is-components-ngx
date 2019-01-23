@@ -1,6 +1,6 @@
 <div class="portlet light bordered">
     <ng-content select="xa-loading"></ng-content>
-    <div class="portlet-title">
+    <div class="portlet-title" [ngClass]="{'collapsed-closed': collapse==='closed'}">
         <ng-container [ngTemplateOutlet]="templateTitle || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
         </ng-container>
         <div class="tools">

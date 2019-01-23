@@ -4,10 +4,8 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChild,
-  EventEmitter,
   Input,
   OnInit,
-  Output,
   TemplateRef,
 } from '@angular/core';
 
@@ -58,16 +56,13 @@ export class IsPortletComponent implements OnInit {
   @Input()
   enableCollapse: boolean = false;
 
-  @Output()
-  colapsed: EventEmitter<string>;
-
   @ContentChild(IsPortletTitleDirective, { read: TemplateRef })
   templateTitle: IsPortletTitleDirective;
 
   collapse: string = 'open';
 
   constructor(private changeDetector: ChangeDetectorRef) {
-    this.colapsed = new EventEmitter<string>();
+
   }
 
   ngOnInit() {
@@ -83,6 +78,5 @@ export class IsPortletComponent implements OnInit {
       localStorage.setItem(`is-portlet:${this.id}`, this.collapse);
     }
     this.changeDetector.markForCheck();
-    this.colapsed.emit(this.collapse);
   }
 }
