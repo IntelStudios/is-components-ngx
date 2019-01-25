@@ -11,12 +11,10 @@ import { IsSectionTitleDirective } from './is-section.directives';
   animations: [
     trigger('collapseInOut', [
       state('open', style({
-        overflow: 'hidden',
         height: '*',
       })),
       state('closed', style({
         opacity: '0',
-        overflow: 'hidden',
         height: '0px'
       })),
       transition('closed => open', animate('250ms ease-in-out')),
