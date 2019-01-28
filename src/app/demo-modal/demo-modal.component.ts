@@ -14,7 +14,7 @@ export class DemoModalComponent implements OnInit {
 
 <h3>Installation</h3>
 <p>ngx-bootstrap peer dependency is required</p>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-modal-1.0.0.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-modal-1.0.1.tgz
 npm install --save ngx-bootstrap
 </pre>
 
@@ -55,14 +55,14 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         }
       ]
     };
-    this.bsModalservice.show(IsModalComponent, { class:'modal-sm', initialState: config });
+    this.bsModalservice.show(IsModalComponent, { class: 'modal-sm', initialState: config });
   }
 
   openDialog2() {
     const config: IsModalConfig = {
       template: this.template,
     };
-    this.bsModalservice.show(IsModalComponent, { class:'modal-sm', initialState: config });
+    this.bsModalservice.show(IsModalComponent, { class: 'modal-sm', initialState: config });
   }
 
   openModal(ref: TemplateRef<any>) {
@@ -86,11 +86,19 @@ import { ModalModule } from 'ngx-bootstrap/modal';
           onClick: () => {
             console.log('OK button click');
           }
+        },
+        {
+          title: 'OK 2',
+          icon: 'fa fa-check',
+          buttonClass: 'btn-danger',
+          onClick: () => {
+            console.log('OK 2 button click');
+          }
         }
       ]
     };
 
-    this.bsModalservice.show(IsModalComponent, { class:'modal-lg', initialState: config });
+    this.bsModalservice.show(IsModalComponent, { class: 'modal-lg', initialState: config });
   }
 
 }

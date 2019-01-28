@@ -1,7 +1,14 @@
 :host {
-  .modal-footer > .buttons > button > i {
-    margin-right: 3px;
+  .modal-footer>.buttons {
+    >button>i {
+      margin-right: 3px;
+    }
+
+    button+button {
+      margin-left: 5px;
+    }
   }
+
   .modal-body {
     &.short-scroll {
       max-height: 80vh;

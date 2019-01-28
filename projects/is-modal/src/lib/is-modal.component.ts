@@ -19,11 +19,10 @@ export class IsModalComponent implements OnInit {
   constructor(public modalRef: BsModalRef) { }
 
   ngOnInit() {
-    console.log(this.bodyScroll);
   }
 
   buttonClick(btn: IsModalButtonConfig) {
-    btn.onClick();
+    btn.onClick && btn.onClick();
     if (btn.autoClose !== false) {
       this.modalRef.hide();
     }

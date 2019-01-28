@@ -20,7 +20,7 @@ export interface IsModalButtonConfig {
   /**
    * click handler
    */
-  onClick: () => void
+  onClick?: () => void
 }
 
 export interface IsModalConfig {
