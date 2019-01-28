@@ -14,7 +14,7 @@ export class DemoModalComponent implements OnInit {
 
 <h3>Installation</h3>
 <p>ngx-bootstrap peer dependency is required</p>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-modal-1.0.1.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-modal-1.0.2.tgz
 npm install --save ngx-bootstrap
 </pre>
 
@@ -52,6 +52,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
           onClick: () => {
             console.log('OK button click');
           }
+        },
+        {
+          title: 'OK2',
+          buttonClass: 'btn-primary'
         }
       ]
     };
@@ -72,6 +76,13 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       buttonsLeft: [
         {
           title: 'Just a button',
+          autoClose: false,
+          onClick: () => {
+            console.log('Just a button click');
+          }
+        },
+        {
+          title: 'Just a button 2',
           autoClose: false,
           onClick: () => {
             console.log('Just a button click');
