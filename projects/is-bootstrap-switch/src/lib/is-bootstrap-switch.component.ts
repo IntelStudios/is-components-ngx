@@ -1,32 +1,28 @@
 import {
-  Component,
-  ElementRef,
-  Input,
-  Output,
-  HostListener,
   AfterViewInit,
-  forwardRef,
-  SimpleChanges,
-  EventEmitter,
-  ViewChild,
-  OnChanges,
-  Renderer2,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  InjectionToken,
-  Optional,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostListener,
   Inject,
+  InjectionToken,
+  Input,
+  OnChanges,
+  Optional,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
 } from '@angular/core';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR
-} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { IsBootstrapSwitchConfig } from './is-bootstrap-switch.interfaces';
 
 const callback = () => {
 };
-
 
 export const configToken = new InjectionToken<IsBootstrapSwitchConfig>('IsBootstrapSwitchConfig');
 
@@ -87,7 +83,6 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
   private _onChangeCallback: (_: any) => void = callback;
 
   @Output() changeState: EventEmitter<any> = new EventEmitter<any>();
-
 
   // Defining DOM Elements
   @ViewChild('container') container: ElementRef;

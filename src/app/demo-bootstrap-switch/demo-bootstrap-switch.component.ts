@@ -1,5 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { IsModalConfig, IsModalComponent } from 'projects/is-modal/src/public_api';
+import { BsModalService } from 'ngx-bootstrap';
+
 @Component({
   selector: 'app-demo-bootstrap-switch',
   templateUrl: './demo-bootstrap-switch.component.html',
@@ -36,25 +39,48 @@ export class DemoBootstrapSwitchComponent implements OnInit {
 `;
 
   control1: FormControl = new FormControl();
+  control2: FormControl = new FormControl();
 
-  constructor() { }
+  constructor(private bsModalservice: BsModalService) { }
 
   ngOnInit() {
     this.control1 = new FormControl();
     this.control1.setValue(false);
   }
 
-
   toggle(control: FormControl) {
     const val = control.value;
     control.setValue(!val);
   }
 
-
   disable(control: FormControl) {
     control.disabled ? control.enable() : control.disable();
   }
 
+  openModal(ref: TemplateRef<any>) {
+    const config: IsModalConfig = {
+      template: ref,
+      title: 'Modal Title',
+      buttonsRight: [
+        {
+          title: 'OK',
+          icon: 'fa fa-check',
+          buttonClass: 'btn-primary',
+          onClick: () => {
+            console.log('OK button click');
+          }
+        },
+        {
+          title: 'OK 2',
+          icon: 'fa fa-check',
+          buttonClass: 'btn-danger',
+          onClick: () => {
+            console.log('OK 2 button click');
+          }
+        }
+      ]
+    };
 
-
+    this.bsModalservice.show(IsModalComponent, { class: 'modal-lg', initialState: config });
+  }
 }

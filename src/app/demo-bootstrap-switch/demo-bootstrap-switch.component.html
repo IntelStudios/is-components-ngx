@@ -13,3 +13,28 @@
   <div class="col-sm-6">
   </div>
 </div>
+
+<!-- modal example -->
+<div class="row">
+  <div class="col-sm-6">
+    <h2>Modals</h2>
+    <button class="btn btn-primary" (click)="openModal(modalContent)">Default</button>
+  </div>
+</div>
+<ng-template #modalContent let-modal="modal">
+  <is-tabset>
+    <is-tab title="Tab 1">
+      <ng-template TabContent>
+        <is-bs-switch [formControl]="control2"></is-bs-switch>
+      </ng-template>
+    </is-tab>
+    <is-tab>
+      <ng-template TabTitle>
+        Advanced tab title <i class="fa fa-home"></i>
+      </ng-template>
+      <ng-template TabContent>
+        Second tab content
+      </ng-template>
+    </is-tab>
+  </is-tabset>
+</ng-template>
