@@ -348,8 +348,6 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
         ? Math.max(this.$on().offsetWidth, this.$off().offsetWidth)
         : this._innerHandleWidth;
 
-      console.log('width: ', width);
-
       if (this.$label().offsetWidth < width) {
         if (this._innerLabelWidth === 'auto') {
           this.labelWidth = Number(width);
