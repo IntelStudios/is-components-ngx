@@ -364,11 +364,8 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
         }
       }
 
-      this.handleWidth = Number(width);
-
-      console.log('handleWidth: ', this.handleWidth);
-      console.log('labelWidth: ', this.labelWidth);
-
+      this.handleWidth = Number(width) === 0 ? 47 : Number(width);
+      this.labelWidth = this.labelWidth === 0 ? 47 : this.labelWidth;
 
       this.render.setStyle(this.$label(), 'width', this.labelWidth + 'px');
       this.render.setStyle(this.$on(), 'width', this.handleWidth + 'px');
