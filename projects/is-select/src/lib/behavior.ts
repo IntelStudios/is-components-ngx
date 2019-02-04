@@ -1,7 +1,7 @@
-import { SelectItem } from './select-item';
 import { IsSelectComponent } from './is-select.component';
 import { OptionsBehavior } from './select-interfaces';
-import { stripTags, escapeRegexp } from './select-pipes';
+import { SelectItem } from './select-item';
+import { stripTags } from './select-pipes';
 
 export class Behavior {
   public optionsMap: Map<string, number> = new Map<string, number>();

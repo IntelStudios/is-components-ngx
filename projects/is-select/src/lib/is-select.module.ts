@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+
 import { IsSelectComponent } from './is-select.component';
-import { HighlightPipe } from './select-pipes';
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-select.directives';
+import { HighlightPipe } from './select-pipes';
+
 @NgModule({
   imports: [
     CommonModule

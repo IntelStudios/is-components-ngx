@@ -1,13 +1,13 @@
-import {Directive, TemplateRef} from '@angular/core';
+import { Directive, TemplateRef } from '@angular/core';
 
-@Directive({selector: '[is-select-option]'})
+@Directive({ selector: '[is-select-option]' })
 export class IsSelectOptionDirective {
-    constructor(public template: TemplateRef<any>) {
-    }
+  constructor(public template: TemplateRef<any>) {
+  }
 }
 
-@Directive({selector: '[is-select-selection]'})
+@Directive({ selector: '[is-select-selection]' })
 export class IsSelectOptionSelectedDirective {
-    constructor(public template: TemplateRef<any>) {
-    }
+  constructor(public template: TemplateRef<any>) {
+  }
 }
