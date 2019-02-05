@@ -1,5 +1,5 @@
 <div class="portlet box {{portletClass || 'blue-hoki'}}" [style.border]="borderStyle">
-    <div class="portlet-title">
+    <div class="portlet-title {{titleClass}}">
         <ng-container [ngTemplateOutlet]="templateTitle || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
         </ng-container>
         <div class="tools">

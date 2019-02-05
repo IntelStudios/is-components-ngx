@@ -34,6 +34,9 @@ export class IsSectionComponent {
   portletClass: string = 'blue-hoki';
 
   @Input()
+  titleClass: string = '';
+
+  @Input()
   heading: string;
 
   @Input()
