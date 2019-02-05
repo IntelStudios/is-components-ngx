@@ -72,6 +72,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     return this._disabled;
   }
 
+  @Input()
+  set selection(val: any) {
+    this.writeValue(val);
+  }
+
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() removed: EventEmitter<any> = new EventEmitter();
   @Output() typed: EventEmitter<string> = new EventEmitter<string>();
