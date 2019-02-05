@@ -20,6 +20,14 @@ $color-active-bg: var(--is-select-color-active-bg, #428bca);
   .ui-select-match {
     >.ui-select-toggle {
       position: relative;
+      >.ui-select-match-text {
+        overflow: hidden;
+        max-width: calc(100% - 10px);
+        text-overflow: ellipsis;
+        &.ui-select-allow-clear {
+          max-width: calc(100% - 25px);
+        }
+      }
       >.btn-remove {
         position: absolute;
         right: 22px;
@@ -84,7 +92,6 @@ $color-active-bg: var(--is-select-color-active-bg, #428bca);
     font-weight: 400;
     line-height: 1.42857143;
     color: #333;
-    white-space: nowrap;
   }
 
   .ui-select-choices-row.selected {

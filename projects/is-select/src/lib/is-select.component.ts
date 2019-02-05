@@ -38,7 +38,7 @@ export const IS_SELECT_VALUE_ACCESSOR: any = {
 export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   @Input() allowClear: boolean = false;
-  @Input() placeholder: string = '';
+  @Input() placeholder: string = 'None';
   @Input() isSearch: boolean = true;
 
   @Input()
