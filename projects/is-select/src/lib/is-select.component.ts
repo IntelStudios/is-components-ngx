@@ -13,7 +13,6 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 
 import { ChildrenBehavior, GenericBehavior } from './behavior';
@@ -61,13 +60,26 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         }
       }
     }
+
+    // neccessary check if you are using select with groups
+    if (this.firstItemHasChildren) {
+      if (this.itemObjects.findIndex((item: SelectItem) => item.children === null || item.children === undefined) > -1) {
+        // it is required that every parent must have own child/ren
+        console.warn('Every item of the array must have children, filtering items without children');
+        this.itemObjects = this.itemObjects.filter((item: SelectItem) => item.children);
+      }
+      this.behavior = new ChildrenBehavior(this);
+    } else {
+      this.behavior = new GenericBehavior(this);
+    }
+
+    console.log(this.behavior);
   }
 
   @Input()
   set disabled(value: boolean) {
     this.setDisabledState(value);
   }
-
   get disabled(): boolean {
     return this._disabled;
   }
@@ -85,6 +97,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   options: Array<SelectItem> = [];
   itemObjects: Array<SelectItem> = [];
+  inputValue: string = '';
   activeOption: SelectItem;
 
   get active(): SelectItem {
@@ -100,6 +113,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     return this._optionsOpened;
   }
 
+  public get firstItemHasChildren(): boolean {
+    return this.itemObjects[0] && this.itemObjects[0].hasChildren();
+  }
+
   @ContentChild(IsSelectOptionDirective, { read: TemplateRef })
   templateOption: IsSelectOptionDirective;
 
@@ -109,7 +126,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   private inputMode: boolean = false;
   private _optionsOpened: boolean = false;
   private behavior: OptionsBehavior;
-  inputValue: string = '';
   private _items: Array<any> = [];
   private _disabled: boolean = false;
   private _active: SelectItem = null;
@@ -118,7 +134,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   private _changeSubscription: Subscription = null;
   private _value: string;
 
-  constructor(public element: ElementRef, private renderer: Renderer2, private sanitizer: DomSanitizer, private changeDetector: ChangeDetectorRef) {
+  constructor(public element: ElementRef, private renderer: Renderer2, private changeDetector: ChangeDetectorRef) {
+
+  }
+
+  ngOnInit() {
 
   }
 
@@ -250,15 +270,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     this.typed.emit(this.inputValue);
   }
 
-  ngOnInit(): any {
-    this.behavior = (this.firstItemHasChildren) ?
-      new ChildrenBehavior(this) : new GenericBehavior(this);
-  }
-
-  ngOnDestroy() {
-
-  }
-
   remove(): void {
     if (this._disabled === true) {
       return;
@@ -270,24 +281,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this.removed.emit(current);
       this.changeDetector.markForCheck();
     }
-  }
-
-  private clickedOutside($event: MouseEvent): void {
-    if (this.optionsOpened) {
-      let element: HTMLElement = <HTMLElement>$event.target;
-      let isThisEl = false;
-      while (element.parentElement && !isThisEl) {
-        isThisEl = this.element.nativeElement === element;
-        element = element.parentElement;
-      }
-      if (!isThisEl) {
-        this.hideOptions();
-      }
-    }
-  }
-
-  public get firstItemHasChildren(): boolean {
-    return this.itemObjects[0] && this.itemObjects[0].hasChildren();
   }
 
   matchClick(e: MouseEvent): void {
@@ -368,18 +361,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     }, 0);
   }
 
-  private open(): void {
-    this.options = this.itemObjects;
-    // .filter((option: SelectItem) => (!this.active.find((o: SelectItem) => option.text === o.text)));
-
-    if (this.options.length > 0) {
-      this.behavior.first();
-    }
-    this.optionsOpened = true;
-    this._clickedOutsideListener = this.renderer.listen('document', 'click', this.clickedOutside.bind(this));
-    this.changeDetector.markForCheck();
-  }
-
   hideOptions(): void {
     this.inputMode = false;
     this.optionsOpened = false;
@@ -388,10 +369,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._clickedOutsideListener = null;
     }
     this.changeDetector.markForCheck();
-  }
-
-  private selectActiveMatch(): void {
-    this.selectMatch(this.activeOption);
   }
 
   selectMatch(value: SelectItem, e: Event = void 0): void {
@@ -410,4 +387,38 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     this.element.nativeElement.querySelector('.ui-select-container').focus();
   }
 
+  private open(): void {
+    this.options = this.itemObjects;
+    // .filter((option: SelectItem) => (!this.active.find((o: SelectItem) => option.text === o.text)));
+
+    if (this.options.length > 0) {
+      this.behavior.first();
+    }
+
+    this.optionsOpened = true;
+    this._clickedOutsideListener = this.renderer.listen('document', 'click', this.clickedOutside.bind(this));
+    this.changeDetector.markForCheck();
+  }
+
+  private clickedOutside($event: MouseEvent): void {
+    if (this.optionsOpened) {
+      let element: HTMLElement = <HTMLElement>$event.target;
+      let isThisEl = false;
+      while (element.parentElement && !isThisEl) {
+        isThisEl = this.element.nativeElement === element;
+        element = element.parentElement;
+      }
+      if (!isThisEl) {
+        this.hideOptions();
+      }
+    }
+  }
+
+  private selectActiveMatch(): void {
+    this.selectMatch(this.activeOption);
+  }
+
+  ngOnDestroy() {
+
+  }
 }

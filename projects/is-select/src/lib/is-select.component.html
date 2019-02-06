@@ -14,6 +14,7 @@
     </span>
   </div>
   <!-- options template -->
+  <!-- options without groups -->
   <div *ngIf="optionsOpened && !firstItemHasChildren" class="ui-select-choices-container dropdown-menu" role="menu">
     <div class="ui-select-search" *ngIf="isSearch">
       <input type="text" autocomplete="false" tabindex="-1" (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" [disabled]="disabled" class="form-control" placeholder="{{!active ? placeholder : ''}}">
@@ -29,17 +30,18 @@
       </li>
     </ul>
   </div>
+  <!-- options with groups -->
   <div *ngIf="optionsOpened && firstItemHasChildren" class="ui-select-choices-container dropdown-menu" role="menu">
     <div class="ui-select-search" *ngIf="isSearch">
-      <input type="text" autocomplete="false" tabindex="-1" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" [disabled]="disabled" class="form-control" placeholder="{{!active ? placeholder : ''}}">
+      <input type="text" autocomplete="false" tabindex="-1" (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" [disabled]="disabled" class="form-control" placeholder="{{!active ? placeholder : ''}}">
     </div>
     <ul *ngIf="options && options.length > 0" class="ui-select-choices" role="menu">
-      <li *ngFor="let c of options; let index=index" role="menuitem">
-        <div class="divider dropdown-divider" *ngIf="index > 0"></div>
+      <li *ngFor="let c of options" role="menuitem">
         <div class="dropdown-header">{{c.Value}}</div>
         <div *ngFor="let o of c.children" class="ui-select-choices-row" [class.active]="isActive(o)" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)" [ngClass]="{'active': isActive(o)}">
           <a href="javascript:void(0)" class="dropdown-item">
-            <div [innerHtml]="sanitize(o.Value)"></div>
+            <ng-container [ngTemplateOutlet]="templateOption || defaultTemplateOption" [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
+            </ng-container>
           </a>
         </div>
       </li>

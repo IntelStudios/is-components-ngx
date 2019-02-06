@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+
 @Component({
   selector: 'app-demo-select',
   templateUrl: './demo-select.component.html',
@@ -19,6 +20,7 @@ export class DemoSelectComponent implements OnInit {
 
   select1Control: FormControl;
   select2Control: FormControl;
+  select3Control: FormControl;
 
   public items: Array<string> = ['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -38,9 +40,45 @@ export class DemoSelectComponent implements OnInit {
   ];
   colors = undefined;
 
+  itemsGrouped: any[] = [];
+
   private value: any = {};
   private _disabledV: string = '0';
   private disabled: boolean = false;
+
+  constructor(private changeDetector: ChangeDetectorRef) { }
+
+  ngOnInit() {
+    this.select1Control = new FormControl();
+    this.select2Control = new FormControl();
+    this.select3Control = new FormControl();
+
+    let item1: any = {
+      ID: '1', Value: 'Europe', children:
+        [
+          { ID: '1', Value: 'Czech' },
+          { ID: '2', Value: 'Poland' },
+          { ID: '3', Value: 'Nederlands' }
+        ]
+    };
+    let item2: any = { ID: '2', Value: 'Asia', children: [
+      { ID: '1', Value: 'China' },
+      { ID: '2', Value: 'Thailand' },
+      { ID: '3', Value: 'Malaysia' },
+      { ID: '3', Value: 'Russia' }
+    ]};
+    let item3: any = {
+      ID: '3', Value: 'USA', children:
+        [
+          { ID: '1', Value: 'Miami' },
+          { ID: '2', Value: 'Florida' },
+          { ID: '3', Value: 'LA' }
+        ]
+    };
+
+    this.itemsGrouped.push(item1, item2, item3);
+    this.changeDetector.markForCheck();
+  }
 
   selectLondon() {
     this.select1Control.setValue('London');
@@ -88,14 +126,6 @@ export class DemoSelectComponent implements OnInit {
 
   public changed(value: any): void {
     console.log('New value', value);
-  }
-
-
-  constructor(private changeDetector: ChangeDetectorRef) { }
-
-  ngOnInit() {
-    this.select1Control = new FormControl();
-    this.select2Control = new FormControl();
   }
 
 }

@@ -138,5 +138,9 @@ $color-active-bg: var(--is-select-color-active-bg, #428bca);
     margin-top: -5px;
     font-size: 80%;
   }
-
+  .dropdown-header {
+    font-weight: bold;
+    color: black;
+    padding: 3px 7px 4px;
+  }
 }

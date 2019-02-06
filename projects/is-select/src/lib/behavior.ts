@@ -21,7 +21,7 @@ export class Behavior {
       });
   }
 
-  public ensureHighlightVisible(optionsMap: Map<string, number> = void 0): void {
+  public ensureHighlightVisible(optionsMap: Map<string, number> = void(0)): void {
     let container = this.actor.element.nativeElement.querySelector('.ui-select-choices');
     if (!container) {
       return;
@@ -57,7 +57,7 @@ export class Behavior {
 
   private getActiveIndex(optionsMap: Map<string, number> = void 0): number {
     let ai = this.actor.options.indexOf(this.actor.activeOption);
-    if (ai < 0 && optionsMap !== void 0) {
+    if (ai < 0 && optionsMap !== void(0)) {
       ai = optionsMap.get(this.actor.activeOption.ID);
     }
     return ai;
