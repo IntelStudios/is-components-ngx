@@ -65,15 +65,13 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     if (this.firstItemHasChildren) {
       if (this.itemObjects.findIndex((item: SelectItem) => item.children === null || item.children === undefined) > -1) {
         // it is required that every parent must have own child/ren
-        console.warn('Every item of the array must have children, filtering items without children');
+        console.warn('Every item of the array must have children, filtering items without children...');
         this.itemObjects = this.itemObjects.filter((item: SelectItem) => item.children);
       }
       this.behavior = new ChildrenBehavior(this);
     } else {
       this.behavior = new GenericBehavior(this);
     }
-
-    console.log(this.behavior);
   }
 
   @Input()
