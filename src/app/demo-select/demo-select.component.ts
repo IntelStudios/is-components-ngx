@@ -56,23 +56,23 @@ export class DemoSelectComponent implements OnInit {
     let item1: any = {
       ID: '1', Value: 'Europe', children:
         [
-          { ID: '1', Value: 'Czech' },
-          { ID: '2', Value: 'Poland' },
-          { ID: '3', Value: 'Nederlands' }
+          { ID: '11', Value: 'Czech' },
+          { ID: '12', Value: 'Poland' },
+          { ID: '13', Value: 'Nederlands' }
         ]
     };
     let item2: any = { ID: '2', Value: 'Asia', children: [
-      { ID: '1', Value: 'China' },
-      { ID: '2', Value: 'Thailand' },
-      { ID: '3', Value: 'Malaysia' },
-      { ID: '3', Value: 'Russia' }
+      { ID: '111', Value: 'China' },
+      { ID: '112', Value: 'Thailand' },
+      { ID: '113', Value: 'Malaysia' },
+      { ID: '114', Value: 'Russia' }
     ]};
     let item3: any = {
       ID: '3', Value: 'USA', children:
         [
-          { ID: '1', Value: 'Miami' },
-          { ID: '2', Value: 'Florida' },
-          { ID: '3', Value: 'LA' }
+          { ID: '1111', Value: 'Miami' },
+          { ID: '1112', Value: 'Florida' },
+          { ID: '1113', Value: 'LA' }
         ]
     };
 

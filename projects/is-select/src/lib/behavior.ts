@@ -56,6 +56,14 @@ export class Behavior {
   }
 
   private getActiveIndex(optionsMap: Map<string, number> = void 0): number {
+    // let parentID = this.actor.activeOption.parent.ID;
+    // let selectedItem = this.actor.options.find((parent: SelectItem) => parent.ID === parentID);
+
+    // let ai = this.actor.options.find(item => item === selectedItem).children.indexOf(this.actor.activeOption)//.indexOf(this.actor.activeOption);
+    // if (ai < 0 && optionsMap !== void(0)) {
+    //   ai = optionsMap.get(this.actor.activeOption.ID);
+    // }
+    // return ai;
     let ai = this.actor.options.indexOf(this.actor.activeOption);
     if (ai < 0 && optionsMap !== void(0)) {
       ai = optionsMap.get(this.actor.activeOption.ID);
