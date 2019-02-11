@@ -49,6 +49,7 @@ export class IsDatepickerComponent implements ControlValueAccessor, OnInit {
   @Input('isStatic') isStatic: boolean;
   @Input('isEOD') isEOD: boolean = false;
   @Input('isSOD') isSOD: boolean = false;
+  @Input('placeholder') placeholder: string = '';
 
   @Output() changed: EventEmitter<Date> = new EventEmitter<Date>();
 
