@@ -15,4 +15,12 @@
   .collapsable-body {
     overflow: hidden;
   }
+  .caret-sm {
+    a.collapse, a.expand {
+      background-image: none;
+    }
+  }
+  .is-caret {
+    color: white;
+  }
 }

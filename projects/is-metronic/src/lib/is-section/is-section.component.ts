@@ -43,6 +43,9 @@ export class IsSectionComponent {
   enableCollapse: boolean = false;
 
   @Input()
+  smallCaret: boolean = false;
+
+  @Input()
   set defaultBorder(value: boolean) {
     if (value) {
       this.borderStyle = '1px solid #e7ecf1';

@@ -25,4 +25,13 @@
   .collapsed-closed {
     border-bottom: none !important;
   }
+  .caret-sm {
+    a.collapse, a.expand {
+      background-image: none;
+    }
+  }
+  .is-caret {
+    color: #ccc;
+  }
+
 }

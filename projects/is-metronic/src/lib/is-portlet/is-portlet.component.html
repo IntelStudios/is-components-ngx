@@ -3,8 +3,11 @@
     <div class="portlet-title" [ngClass]="{'collapsed-closed': collapse==='closed'}">
         <ng-container [ngTemplateOutlet]="templateTitle || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
         </ng-container>
-        <div class="tools">
-            <a *ngIf="enableCollapse" [class.collapse]="collapse==='closed'" [class.expand]="collapse==='open'" (click)="toggleCollapse()"></a>
+        <div class="tools" [ngClass]="{'caret-sm': smallCaret === true}">
+            <a *ngIf="enableCollapse" [class.collapse]="collapse==='closed'" [class.expand]="collapse==='open'" (click)="toggleCollapse()">
+              <i *ngIf="smallCaret === true && collapse==='closed'" class="is-caret fa fa-angle-down btn-toggle-object-type" aria-hidden="true"></i>
+              <i *ngIf="smallCaret === true && collapse==='open'" class="is-caret fa fa-angle-up btn-toggle-object-type" aria-hidden="true"></i>
+            </a>
         </div>
         <ng-content select=".actions"></ng-content>
         <div class="clear"></div>
