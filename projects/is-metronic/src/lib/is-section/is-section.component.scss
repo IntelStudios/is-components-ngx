@@ -3,9 +3,6 @@
   .portlet {
     background: transparent;
   }
-  .portlet-body {
-    padding: 5px !important;
-  }
   .portlet-title {
     min-height: 34px;
     .caption {
@@ -17,6 +14,7 @@
   }
   .collapsable-body {
     overflow: hidden;
+    padding: 5px;
   }
   .caret-sm {
     a.collapse, a.expand {
