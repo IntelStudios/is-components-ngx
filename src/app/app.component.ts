@@ -20,7 +20,8 @@ export class AppComponent {
     { title: 'Password', route: '/password' },
     { title: 'Select Tree', route: '/select-tree' },
     { title: 'Modal', route: '/modal' },
-    { title: 'Grid', route: '/grid' }
+    { title: 'Grid', route: '/grid' },
+    { title: 'Time Picker', route: '/timepicker' }
   ].sort((a, b) => a.title.localeCompare(b.title));
 
   constructor(private translate: TranslateService) {

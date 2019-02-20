@@ -1,37 +1,38 @@
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeModule } from 'angular-tree-component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-
-import { IsSelectModule } from 'projects/is-select/src/public_api';
-import { IsCodemirrorModule } from 'projects/is-codemirror/src/public_api';
-import { IsFroalaModule } from 'projects/is-froala/src/public_api';
-import { IsMetronicModule } from 'projects/is-metronic/src/public_api';
-import { IsDatepickerModule } from 'projects/is-datepicker/src/public_api';
-import { IsSelectpickerModule } from 'projects/is-selectpicker/src/public_api';
 import { IsBootstrapSwitchModule } from 'projects/is-bootstrap-switch/src/public_api';
+import { IsCodemirrorModule } from 'projects/is-codemirror/src/public_api';
+import { IsDatepickerModule } from 'projects/is-datepicker/src/public_api';
+import { IsFroalaModule } from 'projects/is-froala/src/public_api';
+import { IsGridModule } from 'projects/is-grid/src/public_api';
+import { IsMetronicModule } from 'projects/is-metronic/src/public_api';
+import { IsModalModule } from 'projects/is-modal/src/public_api';
 import { IsPasswordModule } from 'projects/is-password/src/public_api';
 import { IsSelectTreeModule } from 'projects/is-select-tree/src/public_api';
-import { IsModalModule } from 'projects/is-modal/src/public_api';
-import { IsGridModule } from 'projects/is-grid/src/public_api';
+import { IsSelectModule } from 'projects/is-select/src/public_api';
+import { IsSelectpickerModule } from 'projects/is-selectpicker/src/public_api';
+import { IsTimepickerModule } from 'projects/is-timepicker/src/lib/is-timepicker.module';
 
 import { AppComponent } from './app.component';
-import { DemoSelectComponent } from './demo-select/demo-select.component';
-import { DemoCodemirrorComponent } from './demo-codemirror/demo-codemirror.component';
-import { DemoFroalaComponent } from './demo-froala/demo-froala.component';
-import { DemoMetronicComponent } from './demo-metronic/demo-metronic.component';
-import { DemoDatepickerComponent } from './demo-datepicker/demo-datepicker.component';
-import { DemoSelectpickerComponent } from './demo-selectpicker/demo-selectpicker.component';
 import { DemoBootstrapSwitchComponent } from './demo-bootstrap-switch/demo-bootstrap-switch.component';
+import { DemoCodemirrorComponent } from './demo-codemirror/demo-codemirror.component';
+import { DemoDatepickerComponent } from './demo-datepicker/demo-datepicker.component';
+import { DemoFroalaComponent } from './demo-froala/demo-froala.component';
+import { DemoGridComponent } from './demo-grid/demo-grid.component';
+import { DemoMetronicComponent } from './demo-metronic/demo-metronic.component';
+import { DemoModalComponent } from './demo-modal/demo-modal.component';
 import { DemoPasswordComponent } from './demo-password/demo-password.component';
 import { DemoSelectTreeComponent } from './demo-select-tree/demo-select-tree.component';
-import { DemoModalComponent } from './demo-modal/demo-modal.component';
-import { DemoGridComponent } from './demo-grid/demo-grid.component';
+import { DemoSelectComponent } from './demo-select/demo-select.component';
+import { DemoSelectpickerComponent } from './demo-selectpicker/demo-selectpicker.component';
+import { DemoTimepickerComponent } from './demo-timepicker/demo-timepicker.component';
 
 export const routes: Routes = [
   { path: 'select', component: DemoSelectComponent },
@@ -45,7 +46,8 @@ export const routes: Routes = [
   { path: 'password', component: DemoPasswordComponent },
   { path: 'select-tree', component: DemoSelectTreeComponent },
   { path: 'modal', component: DemoModalComponent },
-  { path: 'grid', component: DemoGridComponent }
+  { path: 'grid', component: DemoGridComponent },
+  { path: 'timepicker', component: DemoTimepickerComponent }
 ];
 
 @NgModule({
@@ -61,7 +63,8 @@ export const routes: Routes = [
     DemoPasswordComponent,
     DemoSelectTreeComponent,
     DemoModalComponent,
-    DemoGridComponent
+    DemoGridComponent,
+    DemoTimepickerComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
@@ -79,7 +82,8 @@ export const routes: Routes = [
     IsPasswordModule,
     IsSelectTreeModule,
     IsModalModule,
-    IsGridModule
+    IsGridModule,
+    IsTimepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
