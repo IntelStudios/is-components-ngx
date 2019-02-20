@@ -1,7 +1,14 @@
 import { IsSelectComponent } from './is-select.component';
-import { OptionsBehavior } from './select-interfaces';
 import { SelectItem } from './select-item';
 import { stripTags } from './select-pipes';
+
+export interface OptionsBehavior {
+  first(): any;
+  last(): any;
+  prev(): any;
+  next(): any;
+  filter(query: RegExp): any;
+}
 
 export class Behavior {
   public optionsMap: Map<string, number> = new Map<string, number>();

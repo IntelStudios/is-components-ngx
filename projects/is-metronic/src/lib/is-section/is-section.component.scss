@@ -1,6 +1,9 @@
 :host {
   display: block;
-  /deep/ .portlet-body {
+  .portlet {
+    background: transparent;
+  }
+  .portlet-body {
     padding: 5px !important;
   }
   .portlet-title {
@@ -8,7 +11,7 @@
     .caption {
       padding: 8px 0 9px 0;
     }
-    /deep/ .tools {
+    .tools {
       padding: 8px 0 8px 0;
     }
   }
@@ -21,6 +24,6 @@
     }
   }
   .is-caret {
-    color: white;
+    color: #fff;
   }
 }

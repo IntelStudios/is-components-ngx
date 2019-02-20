@@ -12,7 +12,7 @@ export class DemoGridComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-grid-1.0.3.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-grid-7.0.0.tgz
 npm install --save ngx-bootstrap</pre>
 
 <h3>Import Module</h3>

@@ -15,9 +15,8 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { ChildrenBehavior, GenericBehavior } from './behavior';
+import { ChildrenBehavior, GenericBehavior, OptionsBehavior } from './behavior';
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-select.directives';
-import { OptionsBehavior } from './select-interfaces';
 import { SelectItem } from './select-item';
 import { escapeRegexp, stripTags } from './select-pipes';
 
@@ -341,7 +340,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   isActive(value: SelectItem): boolean {
-    return this.activeOption.Value === value.Value;
+    return this.activeOption.ID === value.ID;
   }
 
   removeClick(event: any): void {

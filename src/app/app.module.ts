@@ -72,7 +72,7 @@ export const routes: Routes = [
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
     IsSelectModule, IsCodemirrorModule, IsFroalaModule,
-    IsMetronicModule.forRoot({ placement: 'right', triggers: 'click', outsideClick: true, container: 'body' }, { container: 'body', placement: 'right', triggers: 'click'}),
+    IsMetronicModule.forRoot({ placement: 'right', triggers: 'click', outsideClick: true, container: 'body' }, { delay: 3000, container: 'body', placement: 'right', triggers: 'click'}),
     IsDatepickerModule,
     IsSelectpickerModule,
     IsBootstrapSwitchModule.forRoot({ onText: 'bs-switch-on', offText: 'bs-switch-off' }),

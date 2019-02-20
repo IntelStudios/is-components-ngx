@@ -1,0 +1,29 @@
+:host {
+  .preview {
+    width: 16px;
+    height: 16px;
+    margin-right: 3px;
+    margin-top: 2px;
+    border: 1px solid #eaeaea;
+    float: left;
+  }
+  .preview-full {
+    border: 1px solid #eaeaea;
+  }
+  .input-group-addon {
+    padding: 0px 8px;
+  }
+  .input-group-addon>i {
+    display: block;
+    width: 15px;
+    height: 15px;
+  }
+  ul>li {
+    padding: 1px;
+  }
+  .short-scroll {
+    max-height: 250px;
+    overflow: auto;
+    margin-top: 0px;
+  }
+}

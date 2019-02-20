@@ -22,10 +22,12 @@ $color-active-bg: var(--is-select-color-active-bg, #428bca);
       position: relative;
       >.ui-select-match-text {
         overflow: hidden;
+        width: calc(100% - 10px);
         max-width: calc(100% - 10px);
         text-overflow: ellipsis;
         &.ui-select-allow-clear {
           max-width: calc(100% - 25px);
+          width: calc(100% - 25px);
         }
       }
       >.btn-remove {

@@ -30,4 +30,15 @@
     <is-select #select3 [formControl]="select3Control" [allowClear]="true" [items]="itemsGrouped" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No item selected">
     </is-select>
   </div>
+
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Select Color</h3>
+    <is-select-color [allowClear]="true"></is-select-color>
+  </div>
+  <div class="col-sm-6">
+    <h3>Select Color (no lables)</h3>
+    <is-select-color [allowClear]="true" [showLabel]="false" [isSearch]="false"></is-select-color>
+  </div>
 </div>

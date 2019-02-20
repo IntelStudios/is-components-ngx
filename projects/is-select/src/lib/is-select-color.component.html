@@ -1,0 +1,18 @@
+<div [innerHtml]="styleContent()"></div>
+<is-select #select [placeholder]="placeholder" [allowClear]="allowClear" [items]="items"
+  (selected)="valueSelected($event)" (removed)="removed()" [class.disabled]="disabled" [disabled]="disabled"
+  [isSearch]="isSearch">
+  <ng-template is-select-option let-item *ngIf="showLabel">
+    <span class="preview option is-bg-{{item.ID}}"></span> {{item.source.Value}}
+  </ng-template>
+  <ng-template is-select-selection let-item *ngIf="showLabel">
+    <span class="preview is-bg-{{item.ID}}"></span> {{item.source.Value}}
+  </ng-template>
+
+  <ng-template is-select-option let-item *ngIf="!showLabel">
+    <div class="preview-full option is-bg-{{item.ID}}">&nbsp;</div>
+  </ng-template>
+  <ng-template is-select-selection let-item *ngIf="!showLabel">
+    <div class="preview-full is-bg-{{item.ID}}">&nbsp;</div>
+  </ng-template>
+</is-select>

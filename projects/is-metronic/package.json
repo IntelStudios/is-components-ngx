@@ -1,14 +1,14 @@
 {
   "name": "is-metronic",
   "peerDependencies": {
-    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
-    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
-    "@angular/animations": "^6.0.0",
-    "@angular/router": "^6.0.0",
-    "@angular/platform-browser":"^6.0.0",
+    "@angular/common": "^7.0.0",
+    "@angular/core": "^7.0.0",
+    "@angular/animations": "^7.0.0",
+    "@angular/router": "^7.0.0",
+    "@angular/platform-browser":"^7.0.0",
     "@ngx-translate/core": "^10.0.0",
     "moment": "^2.22.2",
-    "ngx-bootstrap":"^3.0.0"
+    "ngx-bootstrap":"^3.2.0"
   },
-  "version": "1.2.0"
+  "version": "7.0.0"
 }

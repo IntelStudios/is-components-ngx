@@ -11,7 +11,7 @@ export class DemoCodemirrorComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-codemirror-1.0.1.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-codemirror-7.0.0.tgz
 npm install --save codemirror</pre>
 
 <h3>Import Module</h3>
