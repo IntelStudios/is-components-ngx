@@ -7,7 +7,7 @@
     "@angular/forms":"^7.0.0",
     "@angular/platform-browser":"^7.0.0",
     "ngx-bootstrap": "^3.0.0",
-    "@ngx-translate/core": "^10.0.0",
+    "@ngx-translate/core": "^11.0.0",
     "is-select": "^7.0.0"
   },
   "devDependencies": {
