@@ -395,9 +395,8 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   private open(): void {
     this.options = this.itemObjects;
-    // .filter((option: SelectItem) => (!this.active.find((o: SelectItem) => option.text === o.text)));
 
-    if (this.options.length > 0) {
+    if (this.options.length > 0 && !this.active) {
       this.behavior.first();
     }
 

@@ -16,7 +16,7 @@
   <!-- options template -->
   <!-- options without groups -->
   <div *ngIf="optionsOpened && !firstItemHasChildren" class="ui-select-choices-container dropdown-menu" role="menu">
-    <div class="ui-select-search" *ngIf="isSearch">
+    <div class="ui-select-search" [class.hidden-input]="!isSearch">
       <input type="text" autocomplete="false" tabindex="-1" (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" [disabled]="disabled" class="form-control" placeholder="{{!active ? placeholder : ''}}">
     </div>
     <ul class="ui-select-choices" *ngIf="options && options.length > 0">
@@ -32,7 +32,7 @@
   </div>
   <!-- options with groups -->
   <div *ngIf="optionsOpened && firstItemHasChildren" class="ui-select-choices-container dropdown-menu" role="menu">
-    <div class="ui-select-search" *ngIf="isSearch">
+    <div class="ui-select-search" [class.hidden-input]="!isSearch">
       <input type="text" autocomplete="false" tabindex="-1" (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" [disabled]="disabled" class="form-control" placeholder="{{!active ? placeholder : ''}}">
     </div>
     <ul *ngIf="options && options.length > 0" class="ui-select-choices" role="menu">
