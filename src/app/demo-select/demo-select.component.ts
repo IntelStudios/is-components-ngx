@@ -12,7 +12,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.3.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.4.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -64,15 +64,15 @@ export class DemoSelectComponent implements OnInit {
     let item2: any = { ID: '2', Value: 'Asia', children: [
       { ID: '111', Value: 'China' },
       { ID: '112', Value: 'Thailand', Disabled: true },
-      { ID: '113', Value: 'Malaysia' },
+      { ID: '113', Value: 'Malaysia', Disabled: true },
       { ID: '114', Value: 'Russia' }
     ]};
     let item3: any = {
       ID: '3', Value: 'USA', children:
         [
           { ID: '1111', Value: 'Miami' },
-          { ID: '1112', Value: 'Florida', Disabled: true },
-          { ID: '1113', Value: 'LA' }
+          { ID: '1112', Value: 'Florida'},
+          { ID: '1113', Value: 'LA', Disabled: true  }
         ]
     };
 

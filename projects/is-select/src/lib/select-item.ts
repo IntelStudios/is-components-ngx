@@ -17,7 +17,11 @@ export class SelectItem {
       this.source = source;
       this.ID = String(source.ID);
       this.Value = source.Value;
-      this.disabled = source.Disabled;
+      if(source.Disabled) {
+        this.disabled = source.Disabled;
+      } else {
+        this.disabled = false;
+      }
       if (source.children && source.Value) {
         this.children = source.children.map((c: any) => {
           let r: SelectItem = new SelectItem(c);

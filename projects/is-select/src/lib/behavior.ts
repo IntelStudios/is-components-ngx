@@ -125,16 +125,52 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
   }
 
   public first(): void {
-    this.actor.activeOption = this.actor.options[0].children[0];
+    let parentIndex = 0;
+    let childIndex = 0;
+
+    // if first child is disabled find other one which is not disabled
+    for (let i = 0; i < this.actor.options.length; i++) {
+      let child = this.actor.options[parentIndex].children[childIndex];
+      if (child) {
+        if (child.disabled === true) {
+          childIndex++;
+        } else {
+          this.actor.activeOption = this.actor.options[parentIndex].children[childIndex];
+          break;
+        }
+      } else {
+        parentIndex++;
+        childIndex = 0;
+        this.actor.activeOption = null;
+      }
+    }
+
     this.fillOptionsMap();
     this.ensureHighlightVisible(this.optionsMap);
   }
 
   public last(): void {
-    this.actor.activeOption =
-      this.actor
-        .options[this.actor.options.length - 1]
-        .children[this.actor.options[this.actor.options.length - 1].children.length - 1];
+    let parentIndex = 1;
+    let childIndex = 1;
+
+    // if first child is disabled find other one which is not disabled
+    for (let i = 0; i < this.actor.options.length; i++) {
+      let child = this.actor.options[this.actor.options.length - parentIndex].children[this.actor.options[this.actor.options.length - parentIndex].children.length - childIndex];
+      if (child) {
+        if (child.disabled === true) {
+          childIndex++;
+        } else {
+          this.actor.activeOption = this.actor.options[this.actor.options.length - parentIndex].children[this.actor.options[this.actor.options.length - parentIndex].children.length - childIndex];
+          break;
+        }
+      } else {
+        parentIndex++;
+        childIndex = 1;
+        this.actor.activeOption = null;
+      }
+    }
+
+    //this.actor.activeOption = this.actor.options[this.actor.options.length - 1].children[this.actor.options[this.actor.options.length - 1].children.length - 1];
     this.fillOptionsMap();
     this.ensureHighlightVisible(this.optionsMap);
   }
@@ -145,6 +181,20 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
     let index = this.actor.options[indexParent].children
       .findIndex((option: SelectItem) => this.actor.activeOption && this.actor.activeOption.ID === option.ID);
     this.actor.activeOption = this.actor.options[indexParent].children[index - 1];
+
+    // if one or more child/children is/are disabled, skip them
+    if (this.actor.activeOption && this.actor.activeOption.disabled === true) {
+      let tempIndex = 1;
+      for (let i = 0; i < this.actor.options.length; i++) {
+        if (this.actor.options[indexParent].children[index - tempIndex] && this.actor.options[indexParent].children[index - tempIndex].disabled === true) {
+          tempIndex++;
+        } else {
+          this.actor.activeOption = this.actor.options[indexParent].children[index - tempIndex];
+          break;
+        }
+      }
+    }
+
     if (!this.actor.activeOption) {
       if (this.actor.options[indexParent - 1]) {
         this.actor.activeOption = this.actor
@@ -165,6 +215,20 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
     let index = this.actor.options[indexParent].children
       .findIndex((option: SelectItem) => this.actor.activeOption && this.actor.activeOption.ID === option.ID);
     this.actor.activeOption = this.actor.options[indexParent].children[index + 1];
+
+    // if one or more child/children is/are disabled, skip them
+    if (this.actor.activeOption && this.actor.activeOption.disabled === true) {
+      let tempIndex = 1;
+      for (let i = 0; i < this.actor.options.length; i++) {
+        if (this.actor.options[indexParent].children[index + tempIndex] && this.actor.options[indexParent].children[index + tempIndex].disabled === true) {
+          tempIndex++;
+        } else {
+          this.actor.activeOption = this.actor.options[indexParent].children[index + tempIndex];
+          break;
+        }
+      }
+    }
+
     if (!this.actor.activeOption) {
       if (this.actor.options[indexParent + 1]) {
         this.actor.activeOption = this.actor.options[indexParent + 1].children[0];
