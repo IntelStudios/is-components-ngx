@@ -26,9 +26,9 @@
     <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
   </div>
   <div class="col-sm-6">
-    <h3>Select with groups</h3>
-    <is-select #select3 [formControl]="select3Control" [allowClear]="true" [items]="itemsGrouped" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No item selected">
-    </is-select>
+    <h3>Select with groups including disabled items</h3>
+    <is-select #select3 [formControl]="select3Control" [allowClear]="true" [items]="itemsGrouped" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No item selected"></is-select>
+    <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
   </div>
 
 </div>

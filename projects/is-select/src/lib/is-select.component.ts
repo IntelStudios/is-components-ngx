@@ -150,7 +150,16 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._value = String(value);
       if (this.itemObjects && this.itemObjects.length > 0) {
         const prev = this._active;
-        this._active = this.itemObjects.find(o => o.ID === this._value);
+        if (this.behavior instanceof ChildrenBehavior) {
+          this.itemObjects.forEach((item: SelectItem) => {
+            const activeChildren = item.children.find(c => c.ID === this._value);
+            if (activeChildren) {
+              this._active = activeChildren;
+            }
+          });
+        } else {
+          this._active = this.itemObjects.find(o => o.ID === this._value);
+        }
         if (!this._active && prev) {
           // there was a value, but given options did not contain it
           this.changed.emit(this._active); // emit change

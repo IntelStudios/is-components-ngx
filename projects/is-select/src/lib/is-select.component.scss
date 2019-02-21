@@ -87,6 +87,11 @@ $color-active-bg: var(--is-select-color-active-bg, #428bca);
     margin-top: 1px;
   }
 
+  .ui-select-choices-row.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
   .ui-select-choices-row>a {
     display: block;
     padding: 3px 20px;

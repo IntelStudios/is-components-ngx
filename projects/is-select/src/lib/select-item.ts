@@ -4,6 +4,7 @@ export class SelectItem {
   public children: Array<SelectItem>;
   public parent: SelectItem;
   source: any = {};
+  public disabled: boolean = false;
 
   public constructor(source: any) {
     if (typeof source === 'string') {
@@ -16,6 +17,7 @@ export class SelectItem {
       this.source = source;
       this.ID = String(source.ID);
       this.Value = source.Value;
+      this.disabled = source.Disabled;
       if (source.children && source.Value) {
         this.children = source.children.map((c: any) => {
           let r: SelectItem = new SelectItem(c);

@@ -96,15 +96,13 @@ export class GenericBehavior extends Behavior implements OptionsBehavior {
 
   public prev(): void {
     let index = this.actor.options.indexOf(this.actor.activeOption);
-    this.actor.activeOption = this.actor
-      .options[index - 1 < 0 ? this.actor.options.length - 1 : index - 1];
+    this.actor.activeOption = this.actor.options[index - 1 < 0 ? this.actor.options.length - 1 : index - 1];
     super.ensureHighlightVisible();
   }
 
   public next(): void {
     let index = this.actor.options.indexOf(this.actor.activeOption);
-    this.actor.activeOption = this.actor
-      .options[index + 1 > this.actor.options.length - 1 ? 0 : index + 1];
+    this.actor.activeOption = this.actor.options[index + 1 > this.actor.options.length - 1 ? 0 : index + 1];
     super.ensureHighlightVisible();
   }
 

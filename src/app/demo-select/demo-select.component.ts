@@ -12,7 +12,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.1.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.2.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -56,7 +56,7 @@ export class DemoSelectComponent implements OnInit {
     let item1: any = {
       ID: '1', Value: 'Europe', children:
         [
-          { ID: '11', Value: 'Czech' },
+          { ID: '11', Value: 'Czech', Disabled: true },
           { ID: '12', Value: 'Poland' },
           { ID: '13', Value: 'Nederlands' }
         ]
@@ -64,7 +64,7 @@ export class DemoSelectComponent implements OnInit {
     let item2: any = { ID: '2', Value: 'Asia', children: [
       { ID: '110', Value: 'Czech' },
       { ID: '111', Value: 'China' },
-      { ID: '112', Value: 'Thailand' },
+      { ID: '112', Value: 'Thailand', Disabled: true },
       { ID: '113', Value: 'Malaysia' },
       { ID: '114', Value: 'Russia' }
     ]};
@@ -72,7 +72,7 @@ export class DemoSelectComponent implements OnInit {
       ID: '3', Value: 'USA', children:
         [
           { ID: '1111', Value: 'Miami' },
-          { ID: '1112', Value: 'Florida' },
+          { ID: '1112', Value: 'Florida', Disabled: true },
           { ID: '1113', Value: 'LA' }
         ]
     };
@@ -102,6 +102,10 @@ export class DemoSelectComponent implements OnInit {
 
   selectUnknown() {
     this.select1Control.setValue('Olomouc???');
+  }
+
+  selectNetherlands() {
+    this.select3Control.setValue(13);
   }
 
   private get disabledV(): string {
