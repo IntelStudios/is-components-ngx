@@ -28,7 +28,7 @@ export class Behavior {
       });
   }
 
-  public ensureHighlightVisible(optionsMap: Map<string, number> = void(0)): void {
+  public ensureHighlightVisible(optionsMap: Map<string, number> = void (0)): void {
     let container = this.actor.element.nativeElement.querySelector('.ui-select-choices');
     if (!container) {
       return;
@@ -72,7 +72,7 @@ export class Behavior {
     // }
     // return ai;
     let ai = this.actor.options.indexOf(this.actor.activeOption);
-    if (ai < 0 && optionsMap !== void(0)) {
+    if (ai < 0 && optionsMap !== void (0)) {
       ai = optionsMap.get(this.actor.activeOption.ID);
     }
     return ai;
@@ -176,6 +176,9 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
   }
 
   public prev(): void {
+    if (!this.actor.activeOption) {
+      return;
+    }
     let indexParent = this.actor.options
       .findIndex((option: SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.ID === option.ID);
     let index = this.actor.options[indexParent].children
@@ -210,6 +213,9 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
   }
 
   public next(): void {
+    if (!this.actor.activeOption) {
+      return;
+    }
     let indexParent = this.actor.options
       .findIndex((option: SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.ID === option.ID);
     let index = this.actor.options[indexParent].children

@@ -12,7 +12,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.5.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.6.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -56,22 +56,22 @@ export class DemoSelectComponent implements OnInit {
     let item1: any = {
       ID: '1', Value: 'Europe', children:
         [
-          { ID: '11', Value: 'Czech', Disabled: true },
-          { ID: '12', Value: 'Poland' },
-          { ID: '13', Value: 'Nederlands' }
+          { ID: '11', Value: 'Czech' },
+          { ID: '12', Value: 'Poland', Disabled: true },
+          { ID: '13', Value: 'Nederlands', Disabled: true }
         ]
     };
     let item2: any = { ID: '2', Value: 'Asia', children: [
       { ID: '111', Value: 'China' },
-      { ID: '112', Value: 'Thailand', Disabled: true },
+      { ID: '112', Value: 'Thailand' },
       { ID: '113', Value: 'Malaysia', Disabled: true },
-      { ID: '114', Value: 'Russia' }
+      { ID: '114', Value: 'Russia', Disabled: true }
     ]};
     let item3: any = {
       ID: '3', Value: 'USA', children:
         [
           { ID: '1111', Value: 'Miami' },
-          { ID: '1112', Value: 'Florida'},
+          { ID: '1112', Value: 'Florida', Disabled: true },
           { ID: '1113', Value: 'LA', Disabled: true  }
         ]
     };

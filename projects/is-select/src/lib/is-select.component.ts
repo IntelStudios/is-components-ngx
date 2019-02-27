@@ -349,6 +349,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   isActive(value: SelectItem): boolean {
+    if(!this.activeOption) {
+      return;
+    }
     return this.activeOption.ID === value.ID;
   }
 
