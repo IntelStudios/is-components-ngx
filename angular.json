@@ -541,6 +541,41 @@
           }
         }
       }
+    },
+    "is-timepicker": {
+      "root": "projects/is-timepicker",
+      "sourceRoot": "projects/is-timepicker/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/is-timepicker/tsconfig.lib.json",
+            "project": "projects/is-timepicker/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/is-timepicker/src/test.ts",
+            "tsConfig": "projects/is-timepicker/tsconfig.spec.json",
+            "karmaConfig": "projects/is-timepicker/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/is-timepicker/tsconfig.lib.json",
+              "projects/is-timepicker/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "is-components-ngx"

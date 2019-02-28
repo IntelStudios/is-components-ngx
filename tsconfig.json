@@ -78,7 +78,10 @@
       ],
       "is-grid/*": [
         "dist/is-grid/*"
-      ]
+      ],
+      "is-timepicker": [
+        "dist/is-timepicker"
+      ],
     }
   }
 }

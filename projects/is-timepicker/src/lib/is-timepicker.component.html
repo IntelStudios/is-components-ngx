@@ -1,0 +1,7 @@
+<div class="input-group margin-bottom-sm">
+  <input type="text" class="ng-timepicker-input form-control" (click)="toggleTimepicker()" [value]="viewValue" [disabled]="disabled" [placeholder]="placeholder" readonly>
+  <span class="input-group-addon ng-timepicker-icon" [class.disabled]="disabled" (click)="toggleTimepicker()"><i class="fa fa-clock-o fa-fw"></i></span>
+</div>
+<div class="ng-timepicker" *ngIf="isOpened">
+  <timepicker [(ngModel)]="timeValue" [showSeconds]="true" [showMeridian]="false" (ngModelChange)="onChange($event)"></timepicker>
+</div>
