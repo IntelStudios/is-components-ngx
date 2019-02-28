@@ -99,7 +99,7 @@ export class IsTimepickerComponent implements OnInit {
   public toggleTimepicker(): void {
     if (!this.disabled) {
       this.isOpened = !this.isOpened;
-      if(!this.isOpened) {
+      if (!this.isOpened) {
         this.setValue(this.timeValue);
       }
       this.changeDetector.detectChanges();
@@ -111,12 +111,14 @@ export class IsTimepickerComponent implements OnInit {
   }
 
   private setValue(value: Date): void {
-    let val = moment(value, 'HH:mm:ss');
-    this.viewValue = val.format('HH:mm:ss');
+    if (value) {
+      let val = moment(value, 'HH:mm:ss');
+      this.viewValue = val.format('HH:mm:ss');
 
-    this.changed.emit(value);
+      this.changed.emit(value);
 
-    this.changeDetector.markForCheck();
+      this.changeDetector.markForCheck();
+    }
   }
 
   private initMouseEvents(): void {
