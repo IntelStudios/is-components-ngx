@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-demo-datepicker',
@@ -11,17 +12,24 @@ export class DemoDatepickerComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-datepicker-7.0.1.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-datepicker-7.0.2.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsDatepickerModule } from 'is-datepicker';</pre>
 
   `
 
+  control: FormControl;
 
-  constructor() { }
+  constructor() {
+    this.control = new FormControl();
+  }
 
   ngOnInit() {
+  }
+
+  onClearDate() {
+    this.control.setValue(null);
   }
 
 }

@@ -116,7 +116,6 @@ export class IsDatepickerComponent implements ControlValueAccessor, OnInit {
    */
   writeValue(value: string): void {
     if (!value) {
-      this.dateValue = null;
       this.cannonical = null;
       this.viewValue = '';
 
