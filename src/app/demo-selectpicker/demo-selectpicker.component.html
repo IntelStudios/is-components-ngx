@@ -36,3 +36,18 @@
     <button class="btn btn-default" (click)="control1.setValue(['D'])">Select Item D</button>
   </div>
 </div>
+
+
+<div class="row">
+  <div class="col-sm-6">
+    <h3>SelectPicker (lazy load search)</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <is-selectpicker [formControl]="control2" [minSearchChars]="3" [options]="moreOptions$ | async" (optionsRequired)="onOptionsRequired($event)"></is-selectpicker>
+  </div>
+  <div class="col-sm-6">
+    <button class="btn btn-default" (click)="control2.setValue([6])">Select Item 6</button>
+  </div>
+</div>

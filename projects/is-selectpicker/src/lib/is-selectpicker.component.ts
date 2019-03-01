@@ -42,11 +42,13 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   private _changeSubscription: Subscription = null;
   private _searchControlSubscription: Subscription = null;
   private onTouched: Function;
+  private _minSearchChars = 0;
 
   public values: any[] = [];
   public valueText: string = '';
 
   searchControl: FormControl;
+  showLoading = false;
   disabled: boolean;
   filteredOptions: SelectPickerItem[];
 
@@ -55,11 +57,11 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   @Input()
   set options(opts: SelectPickerItem[]) {
     if (opts) {
-      opts = opts.map((o: SelectPickerItem) => Object.assign({}, o));
+      opts = opts.map((o: SelectPickerItem) => Object.assign({}, o))
     }
-    this.isSearch = opts && opts.length > 5;
+    this.isSearch = (opts && opts.length > 5) || (this._minSearchChars > 0);
     this._options = opts;
-    this.filteredOptions = opts;
+    this.filterOptions(this.searchControl.value || '');
     if (opts && this.values.length > 0) {
       opts.forEach((o: SelectPickerItem) => {
         o.Object = this.values.indexOf(o.ID) > -1;
@@ -67,10 +69,18 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       this.updateValueText();
       this.setActiveItem();
     }
+    this.showLoading = false;
+    this.changeDetector.detectChanges();
   }
 
   @Input()
   placeholder: string = '';
+
+  @Input()
+  set minSearchChars(val: number) {
+    this.isSearch = val > 0;
+    this._minSearchChars = val;
+  }
 
   get options(): SelectPickerItem[] {
     return this._options;
@@ -78,6 +88,9 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
 
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  optionsRequired: EventEmitter<null> = new EventEmitter<null>();
 
   isSearch: boolean = false;
 
@@ -90,6 +103,12 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     this._searchControlSubscription = this.searchControl.valueChanges.pipe(
       debounceTime(100))
       .subscribe((newValue: string) => {
+        if (this._minSearchChars > 0) {
+          if (newValue.length === this._minSearchChars && (!this.options || !this.options.length)) {
+            this.optionsRequired.emit();
+            this.showLoading = true;
+          }
+        }
         this.filterOptions(newValue);
       });
   }
@@ -105,7 +124,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
 
   onKeyDown($event: KeyboardEvent) {
     // console.log($event);
-    if (this.filteredOptions.length === 0) {
+    if ((!this.filteredOptions) || (this.filteredOptions.length === 0)) {
       return;
     }
     if ($event.keyCode === 40) { // key down
@@ -257,9 +276,13 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   }
 
   private filterOptions(newValue: string) {
-    this.filteredOptions = this._options.filter(item => {
-      return item.Value.toUpperCase().indexOf(newValue.toUpperCase()) !== -1
-    });
+    if (!this.options || newValue.length < this._minSearchChars) {
+      this.filteredOptions = [];
+    } else {
+      this.filteredOptions = this._options.filter(item => {
+        return item.Value.toUpperCase().indexOf(newValue.toUpperCase()) !== -1;
+      });
+    }
     this.setActiveItem();
     this.changeDetector.detectChanges();
   }

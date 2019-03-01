@@ -5,6 +5,7 @@
     <div class="dropdown-menu pull-right dropdown-view">
       <input type="search" *ngIf="isSearch" class="form-control input-search" [formControl]="searchControl" (keydown)="onKeyDown($event)" />
       <ul class="short-scroll dropdown-default">
+        <li *ngIf="showLoading"><div class="options-loading-box">&#x27f3;</div></li>
         <li *ngFor="let c of filteredOptions" (click)="optionToggle(c)" [class.active]="c.ID === activeItem?.ID">
           <div class="rows">
             <span><i class="fa fa-fw" [class.fa-check]="c.Object == true"></i> {{c.Value}}</span>

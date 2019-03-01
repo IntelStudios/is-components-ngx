@@ -90,3 +90,24 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     color: #333;
   }
 }
+
+.options-loading-box {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  animation: options-loading-box-rotation 2s infinite linear;
+  font-weight: bold;
+  font-size: 1.1em;
+  display: block;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+@keyframes options-loading-box-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
