@@ -10,9 +10,9 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import * as m from 'moment';
 import { Subscription } from 'rxjs';
 
-import * as m from 'moment';
 const moment = m;
 
 interface CalendarDate {
@@ -115,7 +115,16 @@ export class IsDatepickerComponent implements ControlValueAccessor, OnInit {
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: string): void {
-    if (!value) return;
+    if (!value) {
+      this.dateValue = null;
+      this.cannonical = null;
+      this.viewValue = '';
+
+      this.changeDetector.markForCheck();
+
+      return;
+    };
+
     this.setValue(value);
   }
 
@@ -233,9 +242,11 @@ export class IsDatepickerComponent implements ControlValueAccessor, OnInit {
   }
 
   private setValue(value: any): void {
-    let val = moment.utc(value, this.modelFormat || 'YYYY-MM-DD');
-    this.viewValue = val.format(this.viewFormat || 'Do MMMM YYYY');
-    this.cannonical = val.toDate().getTime();
-    this.changeDetector.markForCheck();
+    if (value) {
+      let val = moment.utc(value, this.modelFormat || 'YYYY-MM-DD');
+      this.viewValue = val.format(this.viewFormat || 'Do MMMM YYYY');
+      this.cannonical = val.toDate().getTime();
+      this.changeDetector.markForCheck();
+    }
   }
 }
