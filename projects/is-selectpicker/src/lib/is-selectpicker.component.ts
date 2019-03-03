@@ -71,6 +71,9 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   searchPlaceholder: string = '';
 
   @Input()
+  showSelectAll = false;
+
+  @Input()
   set minLoadChars(val: number) {
     this.isSearch = val > 0;
     this._minLoadChars = val;
@@ -277,6 +280,30 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     }
     this.updateValueText();
     this.changed.next(this.useModels ? this.values : this.values.map(v => v.ID));
+  }
+
+  optionsSelectAll() {
+    this.filteredOptions.forEach((option: any) => {
+      const val = this.values.find(o => o.ID === option.ID);
+      if (val === undefined) {
+        this.values.push(option);
+        option.Object = true;
+      }
+    });
+    this.updateValueText();
+    this.changed.next(this.values);
+  }
+
+  optionsDeselectAll() {
+    this.filteredOptions.forEach((option: any) => {
+      const val = this.values.find(o => o.ID === option.ID);
+      if (val !== undefined) {
+        this.values.splice(this.values.indexOf(val), 1);
+        option.Object = false;
+      }
+    });
+    this.updateValueText();
+    this.changed.next(this.values);
   }
 
   onOptionsShown() {
