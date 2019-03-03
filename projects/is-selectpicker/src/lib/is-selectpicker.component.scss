@@ -151,3 +151,12 @@ $color-cls-danger-fg: var(--is-color-danger, red);
   top: 9px;
   z-index: 20;
 }
+
+.dropdown-button-holder {
+  display: flex;
+  width: 100%;
+}
+
+.btn-dropdown {
+  flex-grow: 1;
+}
