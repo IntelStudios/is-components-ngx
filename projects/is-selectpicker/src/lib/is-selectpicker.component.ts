@@ -42,13 +42,13 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   private _changeSubscription: Subscription = null;
   private _searchControlSubscription: Subscription = null;
   private onTouched: Function;
-  private _minSearchChars = 0;
+  private _minLoadChars = 0;
 
-  public values: any[] = [];
+  public values: SelectPickerItem[] = [];
   public valueText: string = '';
 
   searchControl: FormControl;
-  showLoading = false;
+  isLoadingOptions = false;
   disabled: boolean;
   filteredOptions: SelectPickerItem[];
 
@@ -56,20 +56,23 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
 
   @Input()
   set options(opts: SelectPickerItem[]) {
+    if (!this.canSetOptions() || !opts) {
+      return;
+    }
     if (opts) {
       opts = opts.map((o: SelectPickerItem) => Object.assign({}, o))
     }
-    this.isSearch = (opts && opts.length > 5) || (this._minSearchChars > 0);
+    this.isSearch = (opts && opts.length > 5) || (this._minLoadChars > 0);
     this._options = opts;
     this.filterOptions(this.searchControl.value || '');
     if (opts && this.values.length > 0) {
       opts.forEach((o: SelectPickerItem) => {
-        o.Object = this.values.indexOf(o.ID) > -1;
+        o.Object = this.values.findIndex(i => i.ID === o.ID) > -1;
       });
       this.updateValueText();
       this.setActiveItem();
     }
-    this.showLoading = false;
+    this.isLoadingOptions = false;
     this.changeDetector.detectChanges();
   }
 
@@ -77,9 +80,12 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   placeholder: string = '';
 
   @Input()
-  set minSearchChars(val: number) {
+  searchPlaceholder: string = '';
+
+  @Input()
+  set minLoadChars(val: number) {
     this.isSearch = val > 0;
-    this._minSearchChars = val;
+    this._minLoadChars = val;
   }
 
   get options(): SelectPickerItem[] {
@@ -90,7 +96,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   changed: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
-  optionsRequired: EventEmitter<null> = new EventEmitter<null>();
+  loadOptions: EventEmitter<string> = new EventEmitter<string>();
 
   isSearch: boolean = false;
 
@@ -101,12 +107,22 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   ngOnInit() {
     this.searchControl.setValue('');
     this._searchControlSubscription = this.searchControl.valueChanges.pipe(
-      debounceTime(100))
+      debounceTime(50))
       .subscribe((newValue: string) => {
-        if (this._minSearchChars > 0) {
-          if (newValue.length === this._minSearchChars && (!this.options || !this.options.length)) {
-            this.optionsRequired.emit();
-            this.showLoading = true;
+        if (this._minLoadChars > 0) {
+
+          if (newValue.length >= this._minLoadChars && !this.isLoadingOptions && (!this.options || !this.options.length)) {
+            this.isLoadingOptions = true;
+            this.loadOptions.emit(newValue);
+          } else if (newValue.length < this._minLoadChars) {
+            // clear options, because we need to load them again once user types minSearchChars
+            this._options = null;
+            if (this.isLoadingOptions) {
+              // emit loadOptions event with null value - client should cancel option load
+              this.loadOptions.emit(null);
+            }
+            this.isLoadingOptions = false;
+            // console.log('unset options');
           }
         }
         this.filterOptions(newValue);
@@ -194,10 +210,16 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
    */
   writeValue(value: any): void {
     if (value instanceof Array) {
-      this.values = <any[]>value;
+      this.values = (<any[]>value).map((i: any) => {
+        if (i.ID && i.Value) {
+          return i;
+        } else {
+          return {ID: i, Value: i, Object: null};
+        }
+      })
       if (this.options) {
         this.options.forEach((o: SelectPickerItem) => {
-          o.Object = this.values.indexOf(o.ID) > -1;
+          o.Object = this.values.findIndex(i => i.ID === o.ID) > -1;
         });
       }
     } else {
@@ -210,16 +232,16 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   }
 
   optionToggle($event: SelectPickerItem) {
-    const val = this.values.find((o: any) => o === $event.ID);
+    const val = this.values.find(o => o.ID === $event.ID);
     if (val === undefined) {
-      this.values.push($event.ID);
+      this.values.push($event);
       $event.Object = true;
     } else {
       this.values.splice(this.values.indexOf(val), 1);
       $event.Object = false;
     }
     this.updateValueText();
-    this.changed.next(this.values);
+    this.changed.next(this.values.map(v => v.ID));
   }
 
   onOptionsShown() {
@@ -253,12 +275,13 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     this.onTouched = fn;
   }
 
+  private canSetOptions() {
+    return this._minLoadChars === 0 || (this.isLoadingOptions && this._minLoadChars > 0);
+  }
+
   private updateValueText() {
-    if (this.options) {
-      const selected: string[] = this.options
-        .filter((o: SelectPickerItem) => o.Object == true)
-        .map((o: SelectPickerItem) => o.Value);
-      this.valueText = selected.join(', ');
+    if (this.values) {
+      this.valueText = this.values.map((o: SelectPickerItem) => o.Value).join(', ');
     } else {
       this.valueText = '';
     }
@@ -276,7 +299,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   }
 
   private filterOptions(newValue: string) {
-    if (!this.options || newValue.length < this._minSearchChars) {
+    if (!this.options || newValue.length < this._minLoadChars) {
       this.filteredOptions = [];
     } else {
       this.filteredOptions = this._options.filter(item => {

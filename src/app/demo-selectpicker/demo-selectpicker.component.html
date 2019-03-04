@@ -45,9 +45,9 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-selectpicker [formControl]="control2" [minSearchChars]="3" [options]="moreOptions$ | async" (optionsRequired)="onOptionsRequired($event)"></is-selectpicker>
+    <is-selectpicker [formControl]="control2" [minLoadChars]="3" [options]="moreOptions$ | async" (loadOptions)="onOptionsRequired($event)"></is-selectpicker>
   </div>
   <div class="col-sm-6">
-    <button class="btn btn-default" (click)="control2.setValue([6])">Select Item 6</button>
+    <button class="btn btn-default" (click)="control2.setValue([{ID: 6, Value: 'aaabb'}])">Select aaabb</button>
   </div>
 </div>

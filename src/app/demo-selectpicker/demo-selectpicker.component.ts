@@ -59,19 +59,25 @@ export class DemoSelectpickerComponent implements OnInit {
 
   moreOptions$: Observable<any[]>;
 
-  onOptionsRequired() {
+  onOptionsRequired($event: any) {
+
+    if ($event == null) {
+      console.log('Should cancel loading');
+      return;
+    }
+    console.log(`Loading options filter=${$event}`);
     this.moreOptions$ = new Observable((observer) => {
       setTimeout(() => {
       observer.next([
-          {ID: 1, Value: 'Value 1'},
-          {ID: 2, Value: 'Value 2'},
-          {ID: 3, Value: 'Value 3'},
-          {ID: 4, Value: 'Value 4'},
-          {ID: 5, Value: 'Value 5'},
-          {ID: 6, Value: 'Value 6'},
+          {ID: 1, Value: 'aaaaa'},
+          {ID: 2, Value: 'aaaab'},
+          {ID: 3, Value: 'aaaac'},
+          {ID: 4, Value: 'aaaad'},
+          {ID: 5, Value: 'aaaba'},
+          {ID: 6, Value: 'aaabb'},
         ]);
-        observer.complete();
-      }, 2000);
+
+      }, 1000);
     });
   }
 }
