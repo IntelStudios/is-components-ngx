@@ -77,6 +77,9 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   }
 
   @Input()
+  useModels: boolean = false;
+
+  @Input()
   placeholder: string = '';
 
   @Input()
@@ -212,8 +215,14 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     if (value instanceof Array) {
       this.values = (<any[]>value).map((i: any) => {
         if (i.ID && i.Value) {
+          if (!this.useModels) {
+            throw new Error('[useModels] is not enabled, but you are trying to set model value')
+          }
           return i;
         } else {
+          if (this.useModels) {
+            throw new Error('[useModels] is enabled, but you are trying to set non-model value')
+          }
           return {ID: i, Value: i, Object: null};
         }
       })
@@ -241,7 +250,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       $event.Object = false;
     }
     this.updateValueText();
-    this.changed.next(this.values.map(v => v.ID));
+    this.changed.next(this.useModels ? this.values : this.values.map(v => v.ID));
   }
 
   onOptionsShown() {
