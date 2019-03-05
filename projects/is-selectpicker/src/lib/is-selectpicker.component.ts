@@ -214,15 +214,13 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   writeValue(value: any): void {
     if (value instanceof Array) {
       this.values = (<any[]>value).map((i: any) => {
-        if (i.ID && i.Value) {
+        if (i.ID !== null && i.ID !== undefined && i.Value) {
           if (!this.useModels) {
-            console.error('[useModels] is enabled, but value is: ', value);
             throw new Error('[useModels] is not enabled, but you are trying to set model value')
           }
           return i;
         } else {
           if (this.useModels) {
-            console.error('[useModels] is enabled, but value is: ', value);
             throw new Error('[useModels] is enabled, but you are trying to set non-model value: ')
           }
           return {ID: i, Value: i, Object: null};
