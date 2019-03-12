@@ -15,3 +15,12 @@
     </div>
   </div>
 </div>
+
+<!--Default templates-->
+<ng-template #defaultTemplateOption let-item="item">
+  <div [innerHtml]="sanitize(item.Value)"></div>
+</ng-template>
+
+<ng-template #defaultTemplateSelection let-item="item">
+  <span [innerHtml]="sanitize(item.Value)"></span>
+</ng-template>

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ContentChild,
   ElementRef,
   EventEmitter,
   forwardRef,
@@ -9,6 +10,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -16,6 +18,7 @@ import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
+import { IsSelectpickerOptionDirective, IsSelectpickerOptionSelectedDirective } from './is-selectpicker.directives';
 import { SelectPickerItem } from './is-selectpicker.interfaces';
 
 export const IS_SELECTPICKER_VALUE_ACCESSOR: any = {
@@ -35,24 +38,6 @@ export const IS_SELECTPICKER_VALUE_ACCESSOR: any = {
   },
 })
 export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, OnDestroy {
-
-  @ViewChild('rolesDropdown') rolesDropdown: BsDropdownDirective;
-
-  private _options: SelectPickerItem[] = [];
-  private _changeSubscription: Subscription = null;
-  private _searchControlSubscription: Subscription = null;
-  private onTouched: Function;
-  private _minLoadChars = 0;
-
-  public values: SelectPickerItem[] = [];
-  public valueText: string = '';
-
-  searchControl: FormControl;
-  isLoadingOptions = false;
-  disabled: boolean;
-  filteredOptions: SelectPickerItem[];
-
-  activeItem: SelectPickerItem = null;
 
   @Input()
   set options(opts: SelectPickerItem[]) {
@@ -101,7 +86,30 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   @Output()
   loadOptions: EventEmitter<string> = new EventEmitter<string>();
 
+  @ContentChild(IsSelectpickerOptionDirective, { read: TemplateRef })
+  templateOption: IsSelectpickerOptionDirective;
+
+  @ContentChild(IsSelectpickerOptionSelectedDirective, { read: TemplateRef })
+  templateOptionSelected: IsSelectpickerOptionSelectedDirective;
+
+  @ViewChild('rolesDropdown') rolesDropdown: BsDropdownDirective;
+
+  public values: SelectPickerItem[] = [];
+  public valueText: string = '';
+
+  searchControl: FormControl;
+  isLoadingOptions = false;
+  disabled: boolean;
+  filteredOptions: SelectPickerItem[];
+
+  activeItem: SelectPickerItem = null;
   isSearch: boolean = false;
+
+  private _options: SelectPickerItem[] = [];
+  private _changeSubscription: Subscription = null;
+  private _searchControlSubscription: Subscription = null;
+  private onTouched: Function;
+  private _minLoadChars = 0;
 
   constructor(private _eref: ElementRef, private changeDetector: ChangeDetectorRef) {
     this.searchControl = new FormControl();
@@ -146,6 +154,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     if ((!this.filteredOptions) || (this.filteredOptions.length === 0)) {
       return;
     }
+
     if ($event.keyCode === 40) { // key down
       const i = this.filteredOptions.indexOf(this.activeItem) + 1;
       if (this.filteredOptions.length > i) {
@@ -160,6 +169,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       $event.preventDefault();
       return;
     }
+
     if ($event.keyCode === 38) { // key up
       const i = this.filteredOptions.indexOf(this.activeItem) - 1;
       if (i > -1) {
@@ -183,7 +193,6 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       return;
     }
 
-
     if ($event.keyCode === 35) { // end
       this.activeItem = this.filteredOptions[this.filteredOptions.length - 1];
       this.ensureActiveItemVisible()
@@ -192,14 +201,13 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       return;
     }
 
-
-
     if ($event.keyCode === 13) { // Enter => toggle selection
       this.optionToggle(this.activeItem);
       $event.preventDefault();
       $event.stopPropagation();
       return;
     }
+
     if ($event.keyCode === 27) { // Escape => Close dropdown
       this.rolesDropdown.toggle();
       $event.preventDefault();
@@ -223,7 +231,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
           if (this.useModels) {
             throw new Error('[useModels] is enabled, but you are trying to set non-model value: ')
           }
-          return {ID: i, Value: i, Object: null};
+          return { ID: i, Value: i, Object: null };
         }
       })
       if (this.options) {
@@ -237,6 +245,24 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
 
     this.updateValueText();
 
+    this.changeDetector.detectChanges();
+  }
+
+  /**
+ * Implemented as part of ControlValueAccessor.
+ */
+  registerOnChange(fn: (_: any) => {}): void {
+    if (this._changeSubscription) {
+      this._changeSubscription.unsubscribe();
+    }
+    this._changeSubscription = this.changed.subscribe(fn);
+  }
+
+  /**
+   * Implemented as part of ControlValueAccessor.
+   */
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
     this.changeDetector.detectChanges();
   }
 
@@ -260,24 +286,6 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     if (input) {
       setTimeout(() => input.focus());
     }
-  }
-
-  /**
-   * Implemented as part of ControlValueAccessor.
-   */
-  registerOnChange(fn: (_: any) => {}): void {
-    if (this._changeSubscription) {
-      this._changeSubscription.unsubscribe();
-    }
-    this._changeSubscription = this.changed.subscribe(fn);
-  }
-
-  /**
-   * Implemented as part of ControlValueAccessor.
-   */
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-    this.changeDetector.detectChanges();
   }
 
   registerOnTouched(fn: (_: any) => {}): void {
@@ -336,6 +344,5 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
         container.scrollTop = active.offsetTop - container.offsetHeight;
       }
     });
-
   }
 }
