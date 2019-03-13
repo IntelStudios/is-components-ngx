@@ -13,7 +13,7 @@ export class DemoSelectpickerComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-selectpicker-7.0.4.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-selectpicker-7.0.5.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectpickerModule } from 'is-selectpicker';</pre>
@@ -21,6 +21,7 @@ export class DemoSelectpickerComponent implements OnInit {
 
   control1: FormControl;
   control2: FormControl;
+  controlBadges: FormControl;
 
   constructor() { }
 
@@ -30,6 +31,8 @@ export class DemoSelectpickerComponent implements OnInit {
 
     this.control2 = new FormControl();
 
+    this.controlBadges = new FormControl();
+    this.controlBadges.setValue([{ ID: 1, Value: '1 - [Danger_Value 1]' }, { ID: 3, Value: '3 - [Info_Value 3]' }]);
   }
 
   options: any[] = [
@@ -47,6 +50,12 @@ export class DemoSelectpickerComponent implements OnInit {
     { ID: 6, Value: 'Value 6' },
   ];
 
+  optionsBadges: any[] = [
+    { ID: 1, Value: '1 - [Danger_Value 1]' },
+    { ID: 2, Value: '2 - [Warning_Value 2]' },
+    { ID: 3, Value: '3 - [Info_Value 3]' }
+  ];
+
   options$: Observable<any[]>;
 
   loadOptions() {
@@ -56,6 +65,10 @@ export class DemoSelectpickerComponent implements OnInit {
     { ID: 'C', Value: 'Value C' },
     { ID: 'D', Value: 'Value D' }
   ]);
+  }
+
+  badgeChange($event) {
+    console.log('change', $event);
   }
 
   moreOptions$: Observable<any[]>;

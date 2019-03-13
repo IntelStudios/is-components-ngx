@@ -5,12 +5,13 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { IsSelectpickerOptionDirective, IsSelectpickerOptionSelectedDirective } from './is-selectpicker.directives';
 import { IsSelectpickerComponent } from './is-selectpicker.component';
+import { IsSelectpickerBadgeComponent } from './is-selectpicker-badge.component';
 
 @NgModule({
   imports: [
     CommonModule, BsDropdownModule.forRoot(), ReactiveFormsModule
   ],
-  declarations: [IsSelectpickerComponent, IsSelectpickerOptionDirective, IsSelectpickerOptionSelectedDirective],
-  exports: [IsSelectpickerComponent, IsSelectpickerOptionDirective, IsSelectpickerOptionSelectedDirective]
+  declarations: [IsSelectpickerComponent, IsSelectpickerBadgeComponent, IsSelectpickerOptionDirective, IsSelectpickerOptionSelectedDirective],
+  exports: [IsSelectpickerComponent, IsSelectpickerBadgeComponent, IsSelectpickerOptionDirective, IsSelectpickerOptionSelectedDirective]
 })
 export class IsSelectpickerModule { }
