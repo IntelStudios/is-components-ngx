@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-demo-select',
@@ -39,6 +40,7 @@ export class DemoSelectComponent implements OnInit {
     { ID: 3, Value: 'black', background: 'black' }
   ];
   colors = undefined;
+  colors$ = undefined;
 
   itemsGrouped: any[] = [];
 
@@ -96,6 +98,18 @@ export class DemoSelectComponent implements OnInit {
       { ID: 4, Value: 'yellow', background: 'yellow' }
     ];
     this.changeDetector.markForCheck();
+  }
+
+  loadMoreAsync() {
+    setTimeout(() => {
+      this.colors$ = of([
+        { ID: 1, Value: 'red', background: 'red' },
+        { ID: 2, Value: 'green', background: 'green' },
+        { ID: 3, Value: 'black', background: 'black' },
+        { ID: 4, Value: 'yellow', background: 'yellow' }
+      ]);
+      this.changeDetector.markForCheck();
+    }, 2000);
   }
 
 

@@ -164,4 +164,11 @@ $color-active-bg: var(--is-select-color-active-bg, #428bca);
     color: black;
     padding: 3px 7px 4px;
   }
+
+  .options-loading {
+    position: absolute;
+    right: 4px;
+    top: 9px;
+    z-index: 20;
+  }
 }
