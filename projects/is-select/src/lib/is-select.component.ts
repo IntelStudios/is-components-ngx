@@ -71,6 +71,19 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     } else {
       this.behavior = new GenericBehavior(this);
     }
+
+    if (this.isLoadingOptions && this.inputValue && this.inputValue.length >= this._minLoadChars) {
+      const filterValue = escapeRegexp(this.inputValue).trim();
+      const parts: string[] = filterValue.split(' ').map((p: string) => p ? `(${p}).*` : '');
+      this.behavior.filter(new RegExp(parts.join(''), 'ig'));
+      this.isLoadingOptions = false;
+    }
+  }
+
+  @Input()
+  set minLoadChars(val: number) {
+    this.isSearch = val > 0;
+    this._minLoadChars = val;
   }
 
   @Input()
@@ -91,11 +104,13 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Output() typed: EventEmitter<string> = new EventEmitter<string>();
   @Output() opened: EventEmitter<any> = new EventEmitter();
   @Output() changed: EventEmitter<any> = new EventEmitter();
+  @Output() loadOptions: EventEmitter<string> = new EventEmitter<string>();
 
   options: Array<SelectItem> = [];
   itemObjects: Array<SelectItem> = [];
   inputValue: string = '';
   activeOption: SelectItem;
+  isLoadingOptions = false;
 
   get active(): SelectItem {
     return this._active;
@@ -130,6 +145,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   private onTouched: Function;
   private _changeSubscription: Subscription = null;
   private _value: string;
+  private _minLoadChars = 0;
 
   constructor(public element: ElementRef, private renderer: Renderer2, private changeDetector: ChangeDetectorRef) {
 
@@ -270,6 +286,21 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   onSearchChange($event: any) {
     this.inputValue = $event;
+    if (this._minLoadChars > 0) {
+      if (this.inputValue.length >= this._minLoadChars && !this.isLoadingOptions && (!this._items || !this._items.length)) {
+        this.isLoadingOptions = true;
+        this.loadOptions.emit(this.inputValue);
+      } else if (this.inputValue.length < this._minLoadChars) {
+        // clear options, because we need to load them again once user types minSearchChars
+        this.items = null;
+        if (this.isLoadingOptions) {
+          // emit loadOptions event with null value - client should cancel option load
+          this.loadOptions.emit(null);
+        }
+        this.isLoadingOptions = false;
+        // console.log('unset options');
+      }
+    }
     const filterValue = escapeRegexp(this.inputValue).trim();
     const parts: string[] = filterValue.split(' ').map((p: string) => p ? `(${p}).*` : '');
     this.behavior.filter(new RegExp(parts.join(''), 'ig'));

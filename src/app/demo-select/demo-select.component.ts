@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-demo-select',
@@ -32,6 +33,7 @@ export class DemoSelectComponent implements OnInit {
     'Rotterdam', 'Seville', 'Sheffield', 'Sofia', 'Stockholm', 'Stuttgart',
     'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
     'Zagreb', 'Zaragoza', 'Łódź'];
+  items$ = undefined;
 
   itemsObject = [
     { ID: 1, Value: 'red', background: 'red' },
@@ -96,6 +98,22 @@ export class DemoSelectComponent implements OnInit {
       { ID: 4, Value: 'yellow', background: 'yellow' }
     ];
     this.changeDetector.markForCheck();
+  }
+
+  loadMoreAsync() {
+    setTimeout(() => {
+      this.items$ = of(['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
+        'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
+        'Budapest', 'Cologne', 'Copenhagen', 'Dortmund', 'Dresden', 'Dublin',
+        'Düsseldorf', 'Essen', 'Frankfurt', 'Genoa', 'Glasgow', 'Gothenburg',
+        'Hamburg', 'Hannover', 'Helsinki', 'Kraków', 'Leeds', 'Leipzig', 'Lisbon',
+        'London', 'Madrid', 'Manchester', 'Marseille', 'Milan', 'Munich', 'Málaga',
+        'Naples', 'Palermo', 'Paris', 'Poznań', 'Prague', 'Riga', 'Rome',
+        'Rotterdam', 'Seville', 'Sheffield', 'Sofia', 'Stockholm', 'Stuttgart',
+        'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
+        'Zagreb', 'Zaragoza', 'Łódź']);
+      this.changeDetector.markForCheck();
+    }, 1000);
   }
 
 

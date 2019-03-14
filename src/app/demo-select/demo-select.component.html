@@ -26,6 +26,17 @@
     <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
   </div>
   <div class="col-sm-6">
+    <h3>Select a single city (lazy load search)</h3>
+    <is-select [allowClear]="true" [minLoadChars]="2" [items]="items$ | async" (loadOptions)="loadMoreAsync()" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected">
+      <ng-template is-select-option let-item>
+        <div [style.background]="item.source.background">{{item.Value}} (option)</div>
+      </ng-template>
+      <ng-template is-select-selection let-item>
+        <div [style.background]="item.source.background">{{item.Value}} (selected)</div>
+      </ng-template>
+    </is-select>
+  </div>
+  <div class="col-sm-6">
     <h3>Select with groups including disabled items</h3>
     <is-select #select3 [formControl]="select3Control" [allowClear]="true" [items]="itemsGrouped" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No item selected"></is-select>
     <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
