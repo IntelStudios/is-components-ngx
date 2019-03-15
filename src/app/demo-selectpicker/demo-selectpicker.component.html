@@ -14,10 +14,10 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-selectpicker [options]="options"></is-selectpicker>
+    <is-selectpicker [options]="options" [xeStyle]="false"></is-selectpicker>
   </div>
   <div class="col-sm-6">
-    <is-selectpicker [options]="moreOptions"></is-selectpicker>
+    <is-selectpicker [options]="moreOptions" [xeStyle]="false"></is-selectpicker>
   </div>
 </div>
 
@@ -28,7 +28,7 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-selectpicker [formControl]="control1" [options]="options$ | async"></is-selectpicker>
+    <is-selectpicker [formControl]="control1" [options]="options$ | async" [xeStyle]="false"></is-selectpicker>
 
   </div>
   <div class="col-sm-6">
@@ -46,7 +46,7 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-selectpicker [formControl]="control2" [useModels]="true" [minLoadChars]="3" [options]="moreOptions$ | async" (loadOptions)="onOptionsRequired($event)"></is-selectpicker>
+    <is-selectpicker [formControl]="control2" [useModels]="true" [minLoadChars]="3" [options]="moreOptions$ | async" [xeStyle]="false" (loadOptions)="onOptionsRequired($event)"></is-selectpicker>
   </div>
   <div class="col-sm-6">
     <button class="btn btn-default" (click)="control2.setValue([{ID: 6, Value: 'aaabb'}])">Select aaabb</button>
@@ -61,6 +61,12 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-selectpicker-badge [formControl]="controlBadges" [useModels]="true" [options]="optionsBadges"></is-selectpicker-badge>
+    <is-selectpicker-badge [formControl]="controlBadges" [useModels]="true" [options]="optionsBadges" [xeStyle]="true"></is-selectpicker-badge>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h3>SelectPicker (with badges)</h3>
   </div>
 </div>

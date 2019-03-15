@@ -1,8 +1,9 @@
-<is-selectpicker #selectPicker [options]="options" [useModels]="useModels" [placeholder]="placeholder" (changed)="valueChanged($event)">
+<is-selectpicker #selectPicker [options]="options" [useModels]="useModels" [placeholder]="placeholder" [xeStyle]="xeStyle" (changed)="valueChanged($event)">
   <ng-template is-selectpicker-option let-item>
     <span><i class="fa fa-fw" [class.fa-check]="item.Object == true"></i> <span class="pull-right" [innerHTML]="parseBadge(item.Value)"></span></span>
   </ng-template>
-  <ng-template is-selectpicker-selection>
-    <div [ngClass]="{'selectpicker-disabled': selectPicker.disabled}" [innerHTML]="parseBadge(valueText) || placeholder" class="form-control"></div>
+  <ng-template is-selectpicker-selection let-item="item">
+    <!-- <div [ngClass]="{'selectpicker-disabled': selectPicker.disabled}" [innerHTML]="parseBadge(valueText) || placeholder" class="form-control"></div> -->
+    <span [innerHTML]="parseBadge(item.Value)"></span>
   </ng-template>
 </is-selectpicker>

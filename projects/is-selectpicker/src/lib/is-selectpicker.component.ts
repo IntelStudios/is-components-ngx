@@ -35,7 +35,7 @@ export const IS_SELECTPICKER_VALUE_ACCESSOR: any = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(document:click)': 'onClick($event)',
-  },
+  }
 })
 export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
@@ -63,6 +63,9 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
 
   @Input()
   useModels: boolean = false;
+
+  @Input()
+  xeStyle: boolean = true; // styled for Xeelo User
 
   @Input()
   placeholder: string = '';
@@ -292,12 +295,35 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
     this.onTouched = fn;
   }
 
+  onRemove(selectPickerItem: SelectPickerItem) {
+    if (this.useModels) {
+      this.values.splice(this.values.indexOf(this.values.find(item => item === selectPickerItem)), 1);
+    } else {
+      this.values.splice(this.values.indexOf(this.values.find(item => item.ID === selectPickerItem.ID)), 1);
+    }
+
+    if (this.filteredOptions) {
+      const option = this.filteredOptions.find((opts: SelectPickerItem) => opts.ID === selectPickerItem.ID);
+      if (option) {
+        option.Object = false;
+      }
+    }
+
+    this.changeDetector.markForCheck();
+  }
+
+  openDropdown() {
+    if (this.xeStyle) {
+      this.rolesDropdown.show();
+    }
+  }
+
   private canSetOptions() {
     return this._minLoadChars === 0 || (this.isLoadingOptions && this._minLoadChars > 0);
   }
 
   private updateValueText() {
-    if (this.values) {
+    if (this.values && !this.xeStyle) {
       this.valueText = this.values.map((o: SelectPickerItem) => o.Value).join(', ');
     } else {
       this.valueText = '';

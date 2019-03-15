@@ -31,7 +31,7 @@ export const IS_SELECTPICKER_BADGE_VALUE_ACCESSOR: any = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(document:click)': 'onClick($event)',
-  },
+  }
 })
 export class IsSelectpickerBadgeComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
@@ -59,6 +59,9 @@ export class IsSelectpickerBadgeComponent implements ControlValueAccessor, OnIni
 
   @Input()
   placeholder: string = '';
+
+  @Input()
+  xeStyle: boolean = true;
 
   get options(): SelectPickerItem[] {
     return this._options;

@@ -13,7 +13,7 @@ export class DemoSelectpickerComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-selectpicker-7.0.5.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-selectpicker-7.0.6.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectpickerModule } from 'is-selectpicker';</pre>
@@ -38,7 +38,13 @@ export class DemoSelectpickerComponent implements OnInit {
   options: any[] = [
     { ID: 1, Value: 'Value 1' },
     { ID: 2, Value: 'Value 2' },
-    { ID: 3, Value: 'Value 3' }
+    { ID: 3, Value: 'Value 3' },
+    { ID: 4, Value: 'Value 4' },
+    { ID: 5, Value: 'Value 5' },
+    { ID: 6, Value: 'Value 6' },
+    { ID: 7, Value: 'Value 7' },
+    { ID: 8, Value: 'Value 8' },
+    { ID: 9, Value: 'Value 9' }
   ];
 
   moreOptions: any[] = [
@@ -53,7 +59,13 @@ export class DemoSelectpickerComponent implements OnInit {
   optionsBadges: any[] = [
     { ID: 1, Value: '1 - [Danger_Value 1]' },
     { ID: 2, Value: '2 - [Warning_Value 2]' },
-    { ID: 3, Value: '3 - [Info_Value 3]' }
+    { ID: 3, Value: '3 - [Info_Value 3]' },
+    { ID: 4, Value: '1 - [Danger_Value 1]' },
+    { ID: 5, Value: '2 - [Warning_Value 2]' },
+    { ID: 6, Value: '3 - [Info_Value 3]' },
+    { ID: 7, Value: '1 - [Danger_Value 1]' },
+    { ID: 8, Value: '2 - [Warning_Value 2]' },
+    { ID: 9, Value: '3 - [Info_Value 3]' }
   ];
 
   options$: Observable<any[]>;

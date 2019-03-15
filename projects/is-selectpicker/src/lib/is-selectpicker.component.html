@@ -1,16 +1,28 @@
-<div class="input-group">
-  <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateOptionSelection">
-  </ng-container>
+<div class="input-group" [ngClass]="{ 'input-group-xe-style': xeStyle }" (click)="openDropdown()">
+  <div *ngIf="values" [ngClass]="{ 'selectpicker-disabled': disabled, 'container-xe-style': xeStyle, 'overflowed': !xeStyle }" class="form-control">
+    <!-- style as Xeelo user - bordered values with fa-times icon -->
+    <div *ngIf="xeStyle">
+      <div *ngFor="let item of values">
+          <div class="selectpicker-item"> <i class="fa fa-times icon-times" [ngClass]="{'icon-times-xe-style': xeStyle}" aria-hidden="true" (click)="onRemove(item)"></i>
+            <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateOptionSelection" [ngTemplateOutletContext]="{$implicit: item, index: 0, item: item}"></ng-container>
+          </div>
+      </div>
+    </div>
+    <!-- classic selectpicker style -->
+    <div *ngIf="!xeStyle">
+      <!-- <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateOptionSelection" [ngTemplateOutletContext]="{$implicit: item, index: 0, item: item}"></ng-container> -->
+      <div [innerHTML]="valueText"></div>
+    </div>
+  </div>
   <div class="input-group-btn" [autoClose]="false" dropdown (onShown)="onOptionsShown()" [isDisabled]="disabled" #rolesDropdown=bs-dropdown>
-    <button class="btn btn-default dropdown-toggle" dropdownToggle> <span class="caret"></span></button>
-    <div class="dropdown-menu pull-right dropdown-view">
+    <div class="btn btn-default dropdown-toggle" dropdownToggle [ngClass]="{'dropdown-toggle-xe-style': xeStyle}"> <span class="caret"></span></div>
+    <div class="dropdown-menu pull-right dropdown-view" [ngClass]="{'dropdown-view-xe-style': xeStyle}">
       <input type="search" *ngIf="isSearch" class="form-control input-search" [placeholder]="searchPlaceholder" [formControl]="searchControl" (keydown)="onKeyDown($event)" />
       <ul class="short-scroll dropdown-default">
         <i *ngIf="isLoadingOptions" class="fa fa-circle-o-notch fa-spin options-loading"></i>
         <li *ngFor="let c of filteredOptions" (click)="optionToggle(c)" [class.active]="c.ID === activeItem?.ID">
           <div class="rows">
-            <ng-container [ngTemplateOutlet]="templateOption || defaultTemplateOption" [ngTemplateOutletContext]="{$implicit: c, index: 0, item: c}">
-            </ng-container>
+            <ng-container [ngTemplateOutlet]="templateOption || defaultTemplateOption" [ngTemplateOutletContext]="{$implicit: c, index: 0, item: c}"></ng-container>
           </div>
         </li>
       </ul>
@@ -23,6 +35,6 @@
   <span><i class="fa fa-fw" [class.fa-check]="item.Object == true"></i> {{item.Value}}</span>
 </ng-template>
 
-<ng-template #defaultTemplateOptionSelection>
-  <div [ngClass]="{'selectpicker-disabled': disabled}" [innerHTML]="valueText || placeholder" class="form-control"></div>
+<ng-template #defaultTemplateOptionSelection let-item="item">
+  {{item.Value}}
 </ng-template>
