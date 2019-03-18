@@ -19,6 +19,9 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     overflow: auto;
     margin-top: 0px;
   }
+  /deep/ .selectpicker-item {
+    padding: 1px 5px 1px 18px !important;
+  }
 }
 
 :host(.ng-invalid) {
