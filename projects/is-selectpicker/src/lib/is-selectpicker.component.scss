@@ -31,7 +31,7 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     cursor: default;
   }
   .container-xe-style{
-    position: absolute;
+    position: relative;
     height: auto;
     min-height: 100%; //padding: 6px 0px 2px 0px !important;
     padding-left: 0px;
@@ -47,9 +47,11 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     height: auto;
     position: relative;
     cursor: pointer;
+    width: 100%;
   }
   .dropdown-toggle-xe-style {
     position: static;
+    display: none;
   }
   .dropdown-view-xe-style {
     margin-top: 0px;
