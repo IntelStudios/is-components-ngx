@@ -1,6 +1,6 @@
 {
   "name": "is-selectpicker",
-  "version": "7.0.8",
+  "version": "7.0.9",
   "peerDependencies": {
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0",

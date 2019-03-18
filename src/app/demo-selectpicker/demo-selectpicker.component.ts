@@ -13,7 +13,7 @@ export class DemoSelectpickerComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-selectpicker-7.0.8.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/master/package/is-selectpicker-7.0.9.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectpickerModule } from 'is-selectpicker';</pre>
