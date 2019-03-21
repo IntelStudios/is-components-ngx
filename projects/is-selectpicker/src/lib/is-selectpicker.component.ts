@@ -104,6 +104,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   isLoadingOptions = false;
   disabled: boolean;
   filteredOptions: SelectPickerItem[];
+  showCaret: boolean = false;
 
   activeItem: SelectPickerItem = null;
   isSearch: boolean = false;

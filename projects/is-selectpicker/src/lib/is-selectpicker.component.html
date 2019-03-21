@@ -13,6 +13,7 @@
       <!-- <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateOptionSelection" [ngTemplateOutletContext]="{$implicit: item, index: 0, item: item}"></ng-container> -->
       <div [innerHTML]="valueText"></div>
     </div>
+    <i *ngIf="showCaret" class="glyphicon dropdown-caret pull-right" [ngClass]="{'glyphicon-menu-down': !rolesDropdown.isOpen, 'glyphicon-menu-up': rolesDropdown.isOpen}"></i>
   </div>
   <div [ngClass]="{'input-group-btn': !xeStyle}" [autoClose]="false" dropdown (onShown)="onOptionsShown()" [isDisabled]="disabled" #rolesDropdown=bs-dropdown>
     <div class="btn btn-default dropdown-toggle" dropdownToggle [ngClass]="{'dropdown-toggle-xe-style': xeStyle}"> <span class="caret"></span></div>

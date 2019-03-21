@@ -63,6 +63,13 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     overflow: hidden;
     line-height: 23px;
   }
+  .dropdown-caret {
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    margin-top: -5px;
+    font-size: 80%;
+  }
 }
 
 :host(.ng-invalid) {
