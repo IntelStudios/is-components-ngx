@@ -61,14 +61,10 @@ export class IsSelectpickerBadgeComponent implements ControlValueAccessor, OnIni
   placeholder: string = '';
 
   @Input()
-  xeStyle: boolean = true;
+  xeStyle: boolean = false;
 
   @Input()
-  set showCaret(value: boolean) {
-    if(value) {
-      this.selectPicker.showCaret = value;
-    }
-  }
+  showCaret: boolean = false;
 
   get options(): SelectPickerItem[] {
     return this._options;

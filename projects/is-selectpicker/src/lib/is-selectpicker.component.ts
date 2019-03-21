@@ -65,7 +65,10 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   useModels: boolean = false;
 
   @Input()
-  xeStyle: boolean = true; // styled for Xeelo User
+  xeStyle: boolean = false; // styled for Xeelo User
+
+  @Input()
+  showCaret: boolean = false; // use only when xeStyle = true
 
   @Input()
   placeholder: string = '';
@@ -104,7 +107,6 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   isLoadingOptions = false;
   disabled: boolean;
   filteredOptions: SelectPickerItem[];
-  showCaret: boolean = false;
 
   activeItem: SelectPickerItem = null;
   isSearch: boolean = false;
