@@ -16,3 +16,10 @@
     <button (click)="disableCustomButtons()">Disable Custom Buttons</button>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Disabled load on init - click for load</h2>
+    <is-froala [options]="froalaConfig" [loadOnInit]="false" (onCommand)="onFroalaCommand($event)"></is-froala>
+  </div>
+</div>

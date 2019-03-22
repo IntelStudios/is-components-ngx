@@ -20,12 +20,10 @@
   min-height: 189px;
   display: block;
   border: none !important;
-
   /deep/ iframe.fr-iframe {
     position: initial !important;
     min-height: 189px;
   }
-
   /deep/ .fr-wrapper {
     @include short-scroll;
   }
@@ -37,20 +35,39 @@
     border-radius: 4px;
     max-height: 210px;
   }
-
   /deep/ .CodeMirror-scroll {
     max-height: inherit !important;
   }
-
   /deep/ .CodeMirror-wrap {
     height: inherit !important;
   }
-
   /deep/ .CodeMirror-vscrollbar {
     @include short-scroll;
   }
-
   /deep/ .CodeMirror-hscrollbar {
     @include short-scroll;
+  }
+  .view-border {
+    position: relative;
+    font-size: 14px;
+    font-weight: normal;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    box-shadow: none;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 6px;
+    min-height: 249px;
+    max-height: 1049px;
+    overflow-y: auto;
+    cursor: pointer;
+  }
+  .icon-load {
+    position: absolute;
+    top: 6px;
+    right: 6px;
   }
 }

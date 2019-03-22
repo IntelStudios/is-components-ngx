@@ -66,7 +66,7 @@ export const configToken = new InjectionToken<IsFroalaConfig>('IsFroalaConfig');
 
 @Component({
   selector: 'is-froala',
-  template: `<textarea hidden></textarea>`,
+  templateUrl: 'is-froala.component.html',
   providers: [IS_FROALA_EDITOR_VALUE_ACCESSOR, IS_FROALA_EDITOR_VALIDATORS],
   styleUrls: ['./is-froala.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -116,6 +116,9 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   @Input()
   licenseKey: string;
 
+  @Input()
+  loadOnInit: boolean = true;
+
   @Output()
   change: EventEmitter<string> = new EventEmitter<string>();
 
@@ -147,9 +150,15 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.createEditor();
-    });
+    if (this.loadOnInit) {
+      setTimeout(() => {
+        this.createEditor();
+      });
+    }
+  }
+
+  loadEditor() {
+    this.createEditor();
   }
 
   // Begin ControlValueAccesor methods
