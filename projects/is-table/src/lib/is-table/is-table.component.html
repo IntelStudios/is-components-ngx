@@ -1,0 +1,62 @@
+<div class="table">
+  <div class="row table-toolbar" *ngIf="enableToolbar">
+    <div class="col-sm-6 page-size-control">
+      <is-select [formControl]="pageSizeControl" [items]="pageSizeOptions" [isSearch]="false" [allowClear]="false">
+      </is-select>
+      <span>{{tableConfig.translations.pageSize|translate}}</span>
+    </div>
+
+    <div class="col-sm-6 pull-right filter-control" *ngIf="canSearch">
+      <input class="form-control" [placeholder]="tableConfig.translations.search|translate" type="search" [formControl]="searchControl" />
+    </div>
+  </div>
+  <table class="table table-striped table-bordered dataTable" role="grid">
+    <thead>
+      <tr role="row" class="data-table-header">
+        <th *ngIf="columns">
+          <div *ngFor="let col of columns;" style="display: inline-block;" [ngStyle]="{'width': col.width, 'text-align': col.align}">{{col.name|translate}}</div>
+        </th>
+        <th *ngIf="showActionButtons" class="actions" style="width: 40px;">
+        </th>
+      </tr>
+    </thead>
+    <tbody class="short-scroll">
+      <tr *ngFor="let row of data;" [class]="!row.$isActive ? 'disabled-cls' : row.$clazz ? row.$clazz : ''">
+        <td [class.cursor-pointer]="canSelectRow" (click)="onRowSelected(row)">
+          <div *ngFor="let col of columns;" style="display: inline-block;" [ngStyle]="{'width': col.width, 'text-align': col.align}">
+            <ng-container [ngTemplateOutlet]="templateColumn || defaultTemplateColumn" [ngTemplateOutletContext]="{$implicit: row.Data[col.id], index: 0, item: row.Data[col.id], col: col, row: row}">
+            </ng-container>
+          </div>
+        </td>
+        <td *ngIf="showActionButtons" class="actions-cell" style="width: 40px;">
+          <div class="btn-group">
+            <ng-container [ngTemplateOutlet]="templateActionsColumn || defaultTemplateActionsColumn" [ngTemplateOutletContext]="{$implicit: row, index: 0, item: row}">
+            </ng-container>
+
+            <button *ngIf="row.CanDisable || canDisableRow" class="btn btn-xs btn-default" [title]="this.translate.instant(row.$isActive ? tableConfig.translations.deactivate : tableConfig.translations.activate)" type="button" (click)="onRowTrashClicked(row)">
+              <i [class]="row.$isActive ? 'fa fa-trash' : 'fa fa-recycle'"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="!length">
+        <td [attr.colspan]="showActionButtons ? 2 : 1">
+          {{'Common.NoResultsFound'|translate}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="canPaging" class="row" [hidden]="_rows?.length === 0">
+    <span class="status-text">{{statusText}}</span>
+    <pagination class="pagination-sm pull-right" style="padding-right: 15px;" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="pageSize" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable($event)" (numPages)="numPages = $event" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    </pagination>
+  </div>
+</div>
+
+<!--Default templates-->
+<ng-template #defaultTemplateColumn let-item="item" let-col="col" let-row="row">
+  <div [innerHTML]="item"></div>
+</ng-template>
+
+<ng-template #defaultTemplateActionsColumn let-item="item" let-row="row">
+</ng-template>

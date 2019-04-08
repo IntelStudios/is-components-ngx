@@ -12,6 +12,7 @@ import { IsCodemirrorModule } from 'projects/is-codemirror/src/public_api';
 import { IsDatepickerModule } from 'projects/is-datepicker/src/public_api';
 import { IsFroalaModule } from 'projects/is-froala/src/public_api';
 import { IsGridModule } from 'projects/is-grid/src/public_api';
+import { IsTableModule } from 'projects/is-table/src/public_api';
 import { IsMetronicModule } from 'projects/is-metronic/src/public_api';
 import { IsModalModule } from 'projects/is-modal/src/public_api';
 import { IsPasswordModule } from 'projects/is-password/src/public_api';
@@ -26,6 +27,7 @@ import { DemoCodemirrorComponent } from './demo-codemirror/demo-codemirror.compo
 import { DemoDatepickerComponent } from './demo-datepicker/demo-datepicker.component';
 import { DemoFroalaComponent } from './demo-froala/demo-froala.component';
 import { DemoGridComponent } from './demo-grid/demo-grid.component';
+import { DemoTableComponent } from './demo-table/demo-table.component';
 import { DemoMetronicComponent } from './demo-metronic/demo-metronic.component';
 import { DemoModalComponent } from './demo-modal/demo-modal.component';
 import { DemoPasswordComponent } from './demo-password/demo-password.component';
@@ -47,6 +49,7 @@ export const routes: Routes = [
   { path: 'select-tree', component: DemoSelectTreeComponent },
   { path: 'modal', component: DemoModalComponent },
   { path: 'grid', component: DemoGridComponent },
+  { path: 'table', component: DemoTableComponent },
   { path: 'timepicker', component: DemoTimepickerComponent }
 ];
 
@@ -64,6 +67,7 @@ export const routes: Routes = [
     DemoSelectTreeComponent,
     DemoModalComponent,
     DemoGridComponent,
+    DemoTableComponent,
     DemoTimepickerComponent
   ],
   imports: [
@@ -83,6 +87,7 @@ export const routes: Routes = [
     IsSelectTreeModule,
     IsModalModule,
     IsGridModule,
+    IsTableModule,
     IsTimepickerModule
   ],
   providers: [],

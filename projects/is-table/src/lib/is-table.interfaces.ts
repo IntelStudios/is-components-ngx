@@ -1,0 +1,64 @@
+export interface IsTableTranslationsConfig {
+  status: string;
+  statusFiltered: string;
+  statusNoMatch: string;
+  pageSize: string;
+  noData: string;
+  search: string;
+  activate: string;
+  deactivate: string;
+}
+
+export interface IIsTableConfig {
+  canSelectRow?: boolean;
+  searchItems: Array<string>;
+  translations: IsTableTranslationsConfig;
+}
+
+export class IsTableConfig {
+  static default(): IIsTableConfig {
+    return {
+      searchItems: [],
+      translations: {
+        status: 'Showing {{start}} to {{end}} of {{total}} records',
+        statusFiltered: 'Showing {{start}} to {{end}} of {{totalFiltered}} filtered rows ({{total}} total)',
+        statusNoMatch: 'Filter does not match any items ({{total}} total)',
+        pageSize: 'Page Size',
+        noData: 'No Data',
+        search: 'Search',
+        activate: 'Activate',
+        deactivate: 'Deactivate'
+      }
+    }
+  }
+}
+
+export class IsTableRow {
+  ID: any;
+  CanDisable: boolean = true;
+  $clazz: string = '';
+  $isActive: boolean = true;
+
+  Data: Map<string, any>;
+
+  static deserialize(input: any): IsTableRow {
+    const r: IsTableRow = Object.assign(new IsTableRow(), input);
+    if (input.Color) {
+      const rowClass = input.Color.toLowerCase();
+      r.$isActive = rowClass !== 'disabled';
+      r.$clazz = rowClass === 'default' ? 'default-cls' : rowClass + '-cls';
+    } else {
+      r.$clazz = 'default';
+    }
+
+    return r;
+  }
+}
+
+export class IsTableColumn {
+  id: string;
+  name: string;
+  width: string;
+  align: string = "left";
+  translate: boolean = true;
+}

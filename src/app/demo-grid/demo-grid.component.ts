@@ -58,7 +58,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
         const r = IsGridDataRow.deserialize({
           ID: i,
           COL1_TITLE: 'Row title',
-          COL1_Value: 'Row value'
+          COL1_Value: `Row value`
         });
         rows.push(r);
       }

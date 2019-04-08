@@ -6,7 +6,7 @@
 </div>
 <div class="row">
   <div class="col-sm-12">
-    <h3>Grid</h3>
+    <h3>Table</h3>
   </div>
 </div>
 <div class="row">
@@ -16,7 +16,7 @@
 </div>
 <div class="row">
   <div class="col-sm-12" style="padding: 15px;">
-    <is-grid [gridModel]="gridModel" [rows]="rows$ | async" maxHeight="200px"></is-grid>
+    <is-table [searchItems]="searchItems" [columns]="columns" [rows]="rows$ | async" [canDisableRow]="true"></is-table>
   </div>
 </div>
 

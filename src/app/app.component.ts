@@ -21,6 +21,7 @@ export class AppComponent {
     { title: 'Select Tree', route: '/select-tree' },
     { title: 'Modal', route: '/modal' },
     { title: 'Grid', route: '/grid' },
+    { title: 'Table', route: '/table' },
     { title: 'Time Picker', route: '/timepicker' }
   ].sort((a, b) => a.title.localeCompare(b.title));
 

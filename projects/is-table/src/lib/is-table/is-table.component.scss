@@ -1,0 +1,142 @@
+$color-cls-default-bg: var(--is-grid-default-bg, #fafafa);
+
+$color-cls-danger-bg: var(--is-grid-danger-bg, #f2dede);
+$color-cls-danger-fg: var(--is-grid-danger-fg, #a94442);
+
+$color-cls-info-bg: var(--is-grid-info-bg, #d9edf7);
+$color-cls-info-fg: var(--is-grid-info-fg, #31708f);
+
+$color-disabled-bg: var(--is-grid-disabled-bg, #e9edef);
+$color-disabled-fg: var(--is-grid-disabled-fg, #80898e);
+
+$color-success-bg: var(--is-grid-success-bg, #abe7ed);
+$color-success-fg: var(--is-grid-success-fg, #27a4b0);
+
+$color-warning-bg: var(--is-grid-warning-bg, #f9e491);
+$color-warning-fg: var(--is-grid-warning-fg, #c29d0b);
+
+$general-panel-bg-color: var(--is-grid-panel-bg, #fff);
+$general-panel-border-color: var(--is-grid-border-color, #ccc);
+
+:host {
+
+  table {
+    margin-top: 5px;
+    margin-bottom: 0;
+    border: 0;
+  }
+
+  tbody {
+    overflow: auto;
+    display: block;
+    height: 100%;
+  }
+
+  thead {
+    .data-table-header {
+      background-color: #95a5a6;
+      color: #fff;
+      height: 28px;
+    }
+  }
+
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  tbody>tr {
+    background-color: $color-cls-default-bg;
+  }
+
+  tbody>tr:last-child>td {
+    border-bottom-width: 1px;
+  }
+
+  td.actions-cell {
+    vertical-align: middle;
+    text-align: center;
+
+    button>i {
+      padding-top: 2px;
+    }
+  }
+
+
+  .status-text {
+    padding: 15px 0px 0px 39px;
+    display: inline-block;
+  }
+
+  .filter-control {
+    input {
+      width: 250px;
+      float: right;
+    }
+  }
+
+  .disabled-cls {
+    color: $color-disabled-fg !important;
+    background-color: $color-disabled-bg !important;
+  }
+
+  .warning-cls {
+    color: $color-warning-fg !important;
+    background-color: $color-warning-bg !important;
+  }
+
+  .success-cls {
+    color: $color-success-fg !important;
+    background-color: $color-success-bg !important;
+  }
+
+  .info-cls {
+    color: $color-cls-info-fg !important;
+    background-color: $color-cls-info-bg !important;
+  }
+
+  .danger-cls {
+    color: $color-cls-danger-fg !important;
+    background-color: $color-cls-danger-bg !important;
+  }
+
+  .page-size-control {
+    is-select {
+      width: 80px;
+      display: inline-block;
+    }
+
+    span {
+      padding: 6px;
+      ;
+    }
+  }
+
+  /deep/ pagination ul {
+    margin: 10px 0 0;
+  }
+}
+
+.short-scroll {
+  overflow-y: auto;
+}
+
+.table-toolbar {
+  margin-bottom: 10px;
+}
+
+.short-scroll>tr:hover {
+  filter: brightness(95%);
+}
+
+tr {
+  >td {
+    border-bottom-width: 0;
+    position: relative;
+    &.cursor-pointer {
+      cursor: pointer;
+    }
+  }
+}

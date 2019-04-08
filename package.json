@@ -17,6 +17,7 @@
     "build.password": "ng build is-password && cd dist/is-password && npm pack --quiet && cp *.tgz ../../package",
     "build.modal": "ng build is-modal && cd dist/is-modal && npm pack --quiet && cp *.tgz ../../package",
     "build.grid": "ng build is-grid && cd dist/is-grid && npm pack --quiet && cp *.tgz ../../package",
+    "build.table": "ng build is-table && cd dist/is-table && npm pack --quiet && cp *.tgz ../../package",
     "build.timepicker": "ng build is-timepicker && cd dist/is-timepicker && npm pack --quiet && cp *.tgz ../../package",
     "docs": "./node_modules/.bin/compodoc -p tsconfig.json -d dist/app/docs --silent --theme readthedocs --disableCoverage --disableGraph --disablePrivate",
     "test": "ng test",
