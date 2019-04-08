@@ -9,8 +9,8 @@ import { IsSelectModule } from 'is-select';
 import { IIsTableConfig } from './is-table.interfaces';
 import { IsTableComponent, configToken } from './is-table/is-table.component';
 import {
-  IsDataTableActionsColumnDirective,
-  IsDataTableColumnDirective
+  IsTableActionsColumnDirective,
+  IsTableColumnDirective
 } from './is-table.directives';
 
 @NgModule({
@@ -18,8 +18,8 @@ import {
     CommonModule, IsSelectModule,TranslateModule, BsDropdownModule, ReactiveFormsModule, FormsModule,
     PaginationModule
   ],
-  declarations: [IsTableComponent, IsDataTableColumnDirective, IsDataTableActionsColumnDirective],
-  exports: [IsTableComponent, IsDataTableColumnDirective, IsDataTableActionsColumnDirective]
+  declarations: [IsTableComponent, IsTableColumnDirective, IsTableActionsColumnDirective],
+  exports: [IsTableComponent, IsTableColumnDirective, IsTableActionsColumnDirective]
 })
 export class IsTableModule {
   static forRoot(config: IIsTableConfig): ModuleWithProviders {

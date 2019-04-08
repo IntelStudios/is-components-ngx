@@ -24,7 +24,7 @@ import {
   IIsTableConfig,
   IsTableConfig
 } from '../is-table.interfaces';
-import { IsDataTableColumnDirective, IsDataTableActionsColumnDirective } from '../is-table.directives';
+import { IsTableColumnDirective, IsTableActionsColumnDirective } from '../is-table.directives';
 
 export const configToken = new InjectionToken<IIsTableConfig>('IsTableConfig');
 
@@ -118,11 +118,11 @@ export class IsTableComponent implements OnInit, OnDestroy {
 
   private _subs: Subscription[] = [];
 
-  @ContentChild(IsDataTableColumnDirective, { read: TemplateRef })
-  templateColumn: IsDataTableColumnDirective;
+  @ContentChild(IsTableColumnDirective, { read: TemplateRef })
+  templateColumn: IsTableColumnDirective;
 
-  @ContentChild(IsDataTableActionsColumnDirective, { read: TemplateRef })
-  templateActionsColumn: IsDataTableActionsColumnDirective;
+  @ContentChild(IsTableActionsColumnDirective, { read: TemplateRef })
+  templateActionsColumn: IsTableActionsColumnDirective;
 
   constructor(
     @Optional() @Inject(configToken) public tableConfig: IIsTableConfig,

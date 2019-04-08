@@ -1,13 +1,13 @@
 import { Directive, TemplateRef } from '@angular/core';
 
-@Directive({selector: '[is-data-table-column]'})
-export class IsDataTableColumnDirective {
+@Directive({selector: '[is-table-column]'})
+export class IsTableColumnDirective {
   constructor(public template: TemplateRef<any>) {
   }
 }
 
-@Directive({selector: '[is-data-table-actions-column]'})
-export class IsDataTableActionsColumnDirective {
+@Directive({selector: '[is-table-actions-column]'})
+export class IsTableActionsColumnDirective {
   constructor(public template: TemplateRef<any>) {
   }
 }
