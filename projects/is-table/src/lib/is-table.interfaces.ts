@@ -36,20 +36,14 @@ export class IsTableConfig {
 export class IsTableRow {
   ID: any;
   CanDisable: boolean = true;
+  IsActive: boolean = true;
   $clazz: string = '';
-  $isActive: boolean = true;
 
   Data: Map<string, any>;
 
   static deserialize(input: any): IsTableRow {
     const r: IsTableRow = Object.assign(new IsTableRow(), input);
-    if (input.Color) {
-      const rowClass = input.Color.toLowerCase();
-      r.$isActive = rowClass !== 'disabled';
-      r.$clazz = rowClass === 'default' ? 'default-cls' : rowClass + '-cls';
-    } else {
-      r.$clazz = 'default';
-    }
+    r.$clazz = input.IsActive ? 'default-cls' : 'disabled-cls';
 
     return r;
   }

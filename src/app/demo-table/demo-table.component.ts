@@ -12,7 +12,7 @@ export class DemoTableComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-table-7.0.1.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-table-7.0.2.tgz
 npm install --save ngx-bootstrap</pre>
 
 <h3>Import Module</h3>
@@ -49,7 +49,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
       const rows: IsTableRow[] = [];
 
       for (var i = 20 - 1; i >= 0; i--) {
-        rows.push(IsTableRow.deserialize({ ID: i, CanDisable: false,  Color: i % 7 === 0 ? 'disabled': '', Data: {Company: `[danger_Company ${i}]`, Name: `Name ${13 * i}` }}));
+        rows.push(IsTableRow.deserialize({ ID: i, CanDisable: false,  IsActive: i % 7 !== 0, Data: {Company: `[danger_Company ${i}]`, Name: `Name ${13 * i}` }}));
       }
 
       this.rows$ = of(rows);

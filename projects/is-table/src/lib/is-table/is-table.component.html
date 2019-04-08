@@ -21,7 +21,7 @@
       </tr>
     </thead>
     <tbody class="short-scroll">
-      <tr *ngFor="let row of data;" [class]="!row.$isActive ? 'disabled-cls' : row.$clazz ? row.$clazz : ''">
+      <tr *ngFor="let row of data;" [class]="!row.IsActive ? 'disabled-cls' : row.$clazz ? row.$clazz : ''">
         <td [class.cursor-pointer]="canSelectRow" (click)="onRowSelected(row)">
           <div *ngFor="let col of columns;" style="display: inline-block;" [ngStyle]="{'width': col.width, 'text-align': col.align}">
             <ng-container [ngTemplateOutlet]="templateColumn || defaultTemplateColumn" [ngTemplateOutletContext]="{$implicit: row.Data[col.id], index: 0, item: row.Data[col.id], col: col, row: row}">
@@ -33,8 +33,8 @@
             <ng-container [ngTemplateOutlet]="templateActionsColumn || defaultTemplateActionsColumn" [ngTemplateOutletContext]="{$implicit: row, index: 0, item: row}">
             </ng-container>
 
-            <button *ngIf="row.CanDisable || canDisableRow" class="btn btn-xs btn-default" [title]="this.translate.instant(row.$isActive ? tableConfig.translations.deactivate : tableConfig.translations.activate)" type="button" (click)="onRowTrashClicked(row)">
-              <i [class]="row.$isActive ? 'fa fa-trash' : 'fa fa-recycle'"></i>
+            <button *ngIf="row.CanDisable || canDisableRow" class="btn btn-xs btn-default" [title]="this.translate.instant(row.IsActive ? tableConfig.translations.deactivate : tableConfig.translations.activate)" type="button" (click)="onRowTrashClicked(row)">
+              <i [class]="row.IsActive ? 'fa fa-trash' : 'fa fa-recycle'"></i>
             </button>
           </div>
         </td>
