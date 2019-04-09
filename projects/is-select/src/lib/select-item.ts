@@ -1,3 +1,5 @@
+import { IsSelectModelConfig } from './is-select.interfaces';
+
 export class SelectItem {
   public ID: string;
   public Value: string;
@@ -6,7 +8,7 @@ export class SelectItem {
   source: any = {};
   public disabled: boolean = false;
 
-  public constructor(source: any) {
+  public constructor(source: any, modelConfig?: IsSelectModelConfig) {
     if (typeof source === 'string') {
       this.ID = this.Value = source;
     }
@@ -15,8 +17,14 @@ export class SelectItem {
     }
     if (typeof source === 'object') {
       this.source = source;
-      this.ID = String(source.ID);
-      this.Value = source.Value;
+      if (modelConfig) {
+        this.ID = String(source[modelConfig.idProp]);
+        this.Value = source[modelConfig.textProp];
+      } else {
+        this.ID = String(source.ID);
+        this.Value = source.Value;
+      }
+
       if(source.Disabled) {
         this.disabled = source.Disabled;
       } else {
@@ -24,7 +32,7 @@ export class SelectItem {
       }
       if (source.children && source.Value) {
         this.children = source.children.map((c: any) => {
-          let r: SelectItem = new SelectItem(c);
+          let r: SelectItem = new SelectItem(c, modelConfig);
           r.parent = this;
           return r;
         });

@@ -3,3 +3,8 @@ export interface IsColorItem {
   Value: string;
   Object: string;
 }
+
+export interface IsSelectModelConfig {
+  idProp: string;
+  textProp: string;
+}

@@ -19,6 +19,7 @@ import { ChildrenBehavior, GenericBehavior, OptionsBehavior } from './behavior';
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-select.directives';
 import { SelectItem } from './select-item';
 import { escapeRegexp, stripTags } from './select-pipes';
+import { IsSelectModelConfig } from './is-select.interfaces';
 
 export const IS_SELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -39,6 +40,13 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string = 'None';
   @Input() isSearch: boolean = true;
 
+  /**
+   * when modelConfig is set, component will require model in writeValue
+   * and will emit similar model on change.
+   */
+  @Input()
+  modelConfig: IsSelectModelConfig = null;
+
   @Input()
   set items(value: Array<any>) {
     if (!value) {
@@ -55,7 +63,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         this._active = this.itemObjects.find(o => o.ID === this._value);
         if (!this._active && prev) {
           // there was a value, but given options did not contain it
-          this.changed.emit(this._active); // emit change
+          this.emitChange() // emit change
         }
       }
     }
@@ -163,7 +171,12 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._active = null;
       this._value = null;
     } else {
-      this._value = String(value);
+      if (this.modelConfig) {
+        this._value = String(value[this.modelConfig.idProp]);
+      } else {
+        this._value = String(value);
+      }
+
       if (this.itemObjects && this.itemObjects.length > 0) {
         const prev = this._active;
         if (this.behavior instanceof ChildrenBehavior) {
@@ -178,7 +191,12 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         }
         if (!this._active && prev) {
           // there was a value, but given options did not contain it
-          this.changed.emit(this._active); // emit change
+          this.emitChange(); // emit change
+        }
+      } else {
+        // no options, but if we have modelConfig we must look like the option is set
+        if (this.modelConfig) {
+          this._active = new SelectItem(value, this.modelConfig);
         }
       }
     }
@@ -420,11 +438,28 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       return;
     }
     this._active = value;
-    this.changed.next(this.active.ID);
+    this.emitChange();
     this.selected.emit(value);
     this.hideOptions();
     this.focusToInput(stripTags(value.Value));
     this.element.nativeElement.querySelector('.ui-select-container').focus();
+  }
+
+  private emitChange() {
+    if (this.modelConfig) {
+      if (this.active) {
+        const obj: any = {};
+        obj[this.modelConfig.idProp] = this.active.ID;
+        obj[this.modelConfig.textProp] = this.active.Value;
+        this.changed.emit(obj);
+      } else {
+        this.changed.emit(null);
+      }
+
+    } else {
+      this.changed.emit(this.active ? this.active.ID : null);
+    }
+
   }
 
   private open(): void {

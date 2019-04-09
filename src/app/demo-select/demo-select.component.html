@@ -53,3 +53,13 @@
     <is-select-color [allowClear]="true" [showLabel]="false" [isSearch]="false"></is-select-color>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Select model (colors)</h3>
+    <is-select [allowClear]="true" [items]="colors" [formControl]="select4Control"  [modelConfig]="{idProp: 'Data', textProp: 'Name'}"></is-select>
+    <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
+    <button class="btn btn-primary" (click)="selectGreenModel()">Select green (model)</button>
+    <p>Value: {{select4Control.valueChanges|async|json}}</p>
+  </div>
+</div>
