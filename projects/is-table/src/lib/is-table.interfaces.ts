@@ -38,6 +38,7 @@ export class IsTableRow {
   CanDisable: boolean = true;
   IsActive: boolean = true;
   $clazz: string = '';
+  $searchString: string = '';
 
   Data: Map<string, any>;
 

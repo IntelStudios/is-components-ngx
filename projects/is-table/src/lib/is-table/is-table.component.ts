@@ -75,6 +75,14 @@ export class IsTableComponent implements OnInit, OnDestroy {
           const match: Array<string> = row.Data[key].match(pattern);
           if (match) {
             row.Data[key] = `<span class="badge datagrid-badge badge-${match[1].toLowerCase()} badge-roundless">${match[2]}</span>`;
+            if (this.searchItems.length === 0 || this.searchItems.indexOf(key) > -1) {
+              row.$searchString += match[2].toLowerCase() + '|';
+            }
+          }
+          else {
+            if (this.searchItems.length === 0 || this.searchItems.indexOf(key) > -1) {
+              row.$searchString += row.Data[key].toLowerCase() + '|';
+            }
           }
         });
       });
@@ -211,22 +219,18 @@ export class IsTableComponent implements OnInit, OnDestroy {
 
   private filterRows(rows: Array<IsTableRow>): Array<IsTableRow> {
     if (this.searchControl.value) {
-      console.time('filter')
       let f: string = '';
       if (this.searchControl.value) {
         f = this.searchControl.value.toLowerCase();
       }
-      rows = rows.filter((item: any) => {
+      rows = rows.filter((item: IsTableRow) => {
         let accept = false;
-        Object.keys(item.Data).forEach((key: string) => {
-          if (!accept && (this.searchItems.length === 0 || this.searchItems.length > 0 && this.searchItems.indexOf(key) > -1)) {
-            accept = f ? item.Data[key].indexOf(f) > -1 : true;
-          }
-        })
 
+        if (!accept) {
+          accept = f ? item.$searchString.indexOf(f) > -1 : true;
+        }
         return accept;
       });
-      console.timeEnd('filter')
       return rows;
     }
     return rows;
