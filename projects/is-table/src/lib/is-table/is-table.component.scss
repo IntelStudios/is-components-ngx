@@ -66,7 +66,7 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
 
 
   .status-text {
-    padding: 15px 0px 0px 39px;
+    padding: 15px 0 0 15px;
     display: inline-block;
   }
 
@@ -110,7 +110,6 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
 
     span {
       padding: 6px;
-      ;
     }
   }
 
@@ -133,6 +132,7 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
 
 tr {
   >td {
+    padding-top: 9px;
     border-bottom-width: 0;
     position: relative;
     &.cursor-pointer {
