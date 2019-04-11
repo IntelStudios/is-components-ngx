@@ -41,7 +41,7 @@
       </tr>
       <tr *ngIf="!length">
         <td [attr.colspan]="showActionButtons ? 2 : 1">
-          {{'Common.NoResultsFound'|translate}}
+          {{tableConfig.translations.noData|translate}}
         </td>
       </tr>
     </tbody>
