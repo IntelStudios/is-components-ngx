@@ -152,6 +152,11 @@ $color-active-bg: var(--is-select-color-active-bg, #428bca);
     margin: 0 3px 3px 0;
   }
 
+  .ui-select-toggle {
+    background-color: #fff;
+    border-color: #ccc;
+  }
+
   .ui-select-toggle>.dropdown-caret {
     position: absolute;
     top: 50%;

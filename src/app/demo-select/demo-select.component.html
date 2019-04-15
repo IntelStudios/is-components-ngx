@@ -63,3 +63,14 @@
     <p>Value: {{select4Control.valueChanges|async|json}}</p>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Select (with badges)</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <is-select-badge [formControl]="select5Control" [allowClear]="true" [items]="itemsBadges"> </is-select-badge>
+  </div>
+</div>

@@ -13,7 +13,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.8.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.9.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -23,6 +23,7 @@ export class DemoSelectComponent implements OnInit {
   select2Control: FormControl;
   select3Control: FormControl;
   select4Control: FormControl;
+  select5Control: FormControl;
 
   public items: Array<string> = ['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -43,6 +44,13 @@ export class DemoSelectComponent implements OnInit {
   colors = undefined;
   colors$ = undefined;
 
+  public itemsBadges = [
+    { ID: 0, Value: '0 - [default_Unknown]' },
+    { ID: 1, Value: '1 - [danger_High]' },
+    { ID: 2, Value: '2 - [warning_Medium]' },
+    { ID: 3, Value: '3 - [info_Low]' }
+  ];
+
   itemsGrouped: any[] = [];
 
   private value: any = {};
@@ -56,6 +64,7 @@ export class DemoSelectComponent implements OnInit {
     this.select2Control = new FormControl();
     this.select3Control = new FormControl();
     this.select4Control = new FormControl();
+    this.select5Control = new FormControl();
 
     let item1: any = {
       ID: '1', Value: 'Europe', children:
