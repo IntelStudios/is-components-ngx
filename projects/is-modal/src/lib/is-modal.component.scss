@@ -15,4 +15,14 @@
       overflow-y: auto;
     }
   }
+
+  .modal-btn-close {
+    text-indent: -10px;
+    background-image: none !important;
+  }
+
+  .close {
+    width: unset;
+    height: unset;
+  }
 }

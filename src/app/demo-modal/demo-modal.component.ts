@@ -14,7 +14,7 @@ export class DemoModalComponent implements OnInit {
 
 <h3>Installation</h3>
 <p>ngx-bootstrap peer dependency is required</p>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-modal-7.0.1.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-modal-7.0.2.tgz
 npm install --save ngx-bootstrap
 </pre>
 
