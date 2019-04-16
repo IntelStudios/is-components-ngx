@@ -12,7 +12,7 @@ export class DemoTableComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-table-7.0.5.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-table-7.0.6.tgz
 npm install --save ngx-bootstrap</pre>
 
 <h3>Import Module</h3>
@@ -38,6 +38,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
   searchItems: Array<string> = ['Company', 'Name'];
 
   rows$: Observable<IsTableRow[]>;
+  rowsTemplates$: Observable<IsTableRow[]>;
 
   constructor(private changeDetector: ChangeDetectorRef) { }
 
@@ -53,6 +54,20 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
       }
 
       this.rows$ = of(rows);
+
+      this.changeDetector.markForCheck();
+    });
+  }
+
+  loadDataTemplates() {
+    setTimeout(() => {
+      const rowsTemplates: IsTableRow[] = [];
+
+      for (var i = 20 - 1; i >= 0; i--) {
+        rowsTemplates.push(IsTableRow.deserialize({ ID: i, IsActive: i % 7 !== 0, Data: { Company: `[info_Company ${i}]`, Name: `${13 * i} Name` }}));
+      }
+
+      this.rowsTemplates$ = of(rowsTemplates);
 
       this.changeDetector.markForCheck();
     });

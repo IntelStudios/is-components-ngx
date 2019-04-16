@@ -20,3 +20,30 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Table (with custom templates)</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12" style="margin-bottom: 10px;">
+    <button class="btn btn-primary" (click)="loadDataTemplates()">Load Data</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12" style="padding: 15px;">
+    <is-table [searchItems]="searchItems" [columns]="columns" [rows]="rowsTemplates$ | async" [canDisableRow]="true">
+      <ng-template is-table-column let-item let-col="col" let-row="row">
+        <span [ngSwitch]="col.id">
+          <span *ngSwitchCase="'Company'">
+            <span style="background-color: yellow;" [innerHTML]="row.Data.Company"></span>
+          </span>
+          <span *ngSwitchCase="'Name'">
+            <span style="background-color: green; color: white;" [innerHTML]="row.Data.Name"></span>
+          </span>
+          <span *ngSwitchDefault>{{item}}</span>
+        </span>
+      </ng-template>
+    </is-table>
+  </div>
+</div>

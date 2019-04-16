@@ -72,16 +72,20 @@ export class IsTableComponent implements OnInit, OnDestroy {
 
       this._rows.forEach((row: IsTableRow) => {
         Object.keys(row.Data).forEach((key: string) => {
-          const match: Array<string> = row.Data[key].match(pattern);
-          if (match) {
-            row.Data[key] = `<span class="badge datagrid-badge badge-${match[1].toLowerCase()} badge-roundless">${match[2]}</span>`;
-            if (this.searchItems.length === 0 || this.searchItems.indexOf(key) > -1) {
-              row.$searchString += match[2].toLowerCase() + '|';
+          const data: any = row.Data[key];
+
+          if (typeof(data) === "string") {
+            const match: Array<string> = data.toString().match(pattern);
+            if (match) {
+              row.Data[key] = `<span class="badge datagrid-badge badge-${match[1].toLowerCase()} badge-roundless">${match[2]}</span>`;
+              if (this.searchItems.length === 0 || this.searchItems.indexOf(key) > -1) {
+                row.$searchString += match[2].toLowerCase() + '|';
+              }
             }
-          }
-          else {
-            if (this.searchItems.length === 0 || this.searchItems.indexOf(key) > -1) {
-              row.$searchString += row.Data[key].toLowerCase() + '|';
+            else {
+              if (this.searchItems.length === 0 || this.searchItems.indexOf(key) > -1) {
+                row.$searchString += row.Data[key].toLowerCase() + '|';
+              }
             }
           }
         });
