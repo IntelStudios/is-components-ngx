@@ -78,8 +78,8 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
   }
 
   .disabled-cls {
-    color: $color-disabled-fg;
-    background-color: $color-disabled-bg;
+    color: $color-disabled-fg !important;
+    background-color: $color-disabled-bg !important;
   }
 
   .warning-cls {
