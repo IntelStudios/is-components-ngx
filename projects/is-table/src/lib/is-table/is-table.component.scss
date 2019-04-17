@@ -78,28 +78,28 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
   }
 
   .disabled-cls {
-    color: $color-disabled-fg !important;
-    background-color: $color-disabled-bg !important;
+    color: $color-disabled-fg;
+    background-color: $color-disabled-bg;
   }
 
   .warning-cls {
-    color: $color-warning-fg !important;
-    background-color: $color-warning-bg !important;
+    color: $color-warning-fg;
+    background-color: $color-warning-bg;
   }
 
   .success-cls {
-    color: $color-success-fg !important;
-    background-color: $color-success-bg !important;
+    color: $color-success-fg;
+    background-color: $color-success-bg;
   }
 
   .info-cls {
-    color: $color-cls-info-fg !important;
-    background-color: $color-cls-info-bg !important;
+    color: $color-cls-info-fg;
+    background-color: $color-cls-info-bg;
   }
 
   .danger-cls {
-    color: $color-cls-danger-fg !important;
-    background-color: $color-cls-danger-bg !important;
+    color: $color-cls-danger-fg;
+    background-color: $color-cls-danger-bg;
   }
 
   .page-size-control {
