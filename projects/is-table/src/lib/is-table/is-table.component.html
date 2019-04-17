@@ -23,7 +23,7 @@
     <tbody class="short-scroll">
       <tr *ngFor="let row of data;" [class]="!row.IsActive ? 'disabled-cls' : row.$clazz ? row.$clazz : ''">
         <td [class.cursor-pointer]="canSelectRow" (click)="onRowSelected(row)">
-          <div *ngFor="let col of columns;" style="display: inline-block;" [ngStyle]="{'width': col.width, 'text-align': col.align}">
+          <div *ngFor="let col of columns;" style="display: inline-block; vertical-align: top;" [ngStyle]="{'width': col.width, 'text-align': col.align}">
             <ng-container [ngTemplateOutlet]="templateColumn || defaultTemplateColumn" [ngTemplateOutletContext]="{$implicit: row.Data[col.id], index: 0, item: row.Data[col.id], col: col, row: row}">
             </ng-container>
           </div>
