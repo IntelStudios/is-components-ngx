@@ -178,7 +178,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: any): void {
-    console.log('ww', value);
     if (value === null || value === undefined) {
       this._active = null;
       this._value = null;
