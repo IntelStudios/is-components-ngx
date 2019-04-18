@@ -20,6 +20,7 @@ import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-s
 import { SelectItem } from './select-item';
 import { escapeRegexp, stripTags } from './select-pipes';
 import { IsSelectModelConfig } from './is-select.interfaces';
+import { createFilterRegexp } from './diacritics';
 
 export const IS_SELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -57,17 +58,17 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input()
   set items(value: Array<any>) {
     if (!value) {
-      this._items = this.options = [];
+      this._items = this.itemObjects = [];
     } else {
       this._items = value.filter((item: any) => {
         if ((typeof item === 'string') || (typeof item === 'object' && (item.ID || item.ID === 0) && item.Value)) {
           return item;
         }
       });
-      this.options = this._items.map((item: any) => new SelectItem(item));
+      this.itemObjects = this._items.map((item: any) => new SelectItem(item));
       if (this._value) {
         const prev = this._active;
-        const active = this.options.find(o => o.ID === this._value);
+        const active = this.itemObjects.find(o => o.ID === this._value);
         if (active) {
           this._active = active;
         }
@@ -81,23 +82,22 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
     // neccessary check if you are using select with groups
     if (this.firstItemHasChildren) {
-      if (this.options.findIndex((item: SelectItem) => item.children === null || item.children === undefined) > -1) {
+      if (this.itemObjects.findIndex((item: SelectItem) => item.children === null || item.children === undefined) > -1) {
         // it is required that every parent must have own child/ren
         console.warn('Every item of the array must have children, filtering items without children...');
-        this.options = this.options.filter((item: SelectItem) => item.children);
+        this.itemObjects = this.itemObjects.filter((item: SelectItem) => item.children);
       }
       this.behavior = new ChildrenBehavior(this);
     } else {
       this.behavior = new GenericBehavior(this);
     }
 
+    this.options = this.itemObjects;
+
     if (value && this.isLoadingOptions && this.inputValue && this.inputValue.length >= this._minLoadChars) {
-      const filterValue = escapeRegexp(this.inputValue).trim();
-      const parts: string[] = filterValue.split(' ').map((p: string) => p ? `(${p}).*` : '');
-      this.behavior.filter(new RegExp(parts.join(''), 'ig'));
+      this.behavior.filter(createFilterRegexp(this.inputValue));
       this.isLoadingOptions = false;
     }
-    this.changeDetector.markForCheck();
   }
 
   @Input()
@@ -127,6 +127,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Output() loadOptions: EventEmitter<string> = new EventEmitter<string>();
 
   options: Array<SelectItem> = [];
+  itemObjects: Array<SelectItem> = [];
   inputValue: string = '';
   activeOption: SelectItem;
   isLoadingOptions = false;
@@ -145,7 +146,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   public get firstItemHasChildren(): boolean {
-    return this.options[0] && this.options[0].hasChildren();
+    return this.itemObjects[0] && this.itemObjects[0].hasChildren();
   }
 
   @ContentChild(IsSelectOptionDirective, { read: TemplateRef })
@@ -188,18 +189,18 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         this._value = String(value);
       }
 
-      if (this.options && this.options.length > 0) {
+      if (this.itemObjects && this.itemObjects.length > 0) {
         const prev = this._active;
         let active = null;
         if (this.behavior instanceof ChildrenBehavior) {
-          this.options.forEach((item: SelectItem) => {
+          this.itemObjects.forEach((item: SelectItem) => {
             const activeChildren = item.children.find(c => c.ID === this._value);
             if (activeChildren) {
               active = activeChildren;
             }
           });
         } else {
-          active = this.options.find(o => o.ID === this._value);
+          active = this.itemObjects.find(o => o.ID === this._value);
         }
 
         if (active) {
@@ -342,9 +343,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         // console.log('unset options');
       }
     }
-    const filterValue = escapeRegexp(this.inputValue).trim();
-    const parts: string[] = filterValue.split(' ').map((p: string) => p ? `(${p}).*` : '');
-    this.behavior.filter(new RegExp(parts.join(''), 'ig'));
+    this.behavior.filter(createFilterRegexp(this.inputValue));
     this.typed.emit(this.inputValue);
   }
 

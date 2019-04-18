@@ -1,4 +1,6 @@
 import { IsSelectModelConfig } from './is-select.interfaces';
+import { stripTags } from './select-pipes';
+import { stripDiacritics } from './diacritics';
 
 export class SelectItem {
   public ID: string;
@@ -7,6 +9,7 @@ export class SelectItem {
   public parent: SelectItem;
   source: any = {};
   public disabled: boolean = false;
+  FilterValue: string = '';
 
   public constructor(source: any, modelConfig?: IsSelectModelConfig) {
     if (typeof source === 'string') {
@@ -38,6 +41,9 @@ export class SelectItem {
         });
         this.Value = source.Value;
       }
+    }
+    if (this.Value) {
+      this.FilterValue = stripTags(stripDiacritics(this.Value));
     }
   }
 
