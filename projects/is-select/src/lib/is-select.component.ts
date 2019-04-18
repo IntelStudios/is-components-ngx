@@ -38,6 +38,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   @Input() allowClear: boolean = false;
   @Input() placeholder: string = 'None';
+  @Input() searchPlaceholder: string = 'Type to search';
   @Input() isSearch: boolean = true;
 
   /**
