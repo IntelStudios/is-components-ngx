@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { of } from 'rxjs';
+import { of, Observable, Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-demo-select',
@@ -13,7 +13,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.10.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.11.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -24,6 +24,7 @@ export class DemoSelectComponent implements OnInit {
   select3Control: FormControl;
   select4Control: FormControl;
   select5Control: FormControl;
+  select6Control: FormControl;
 
   public items: Array<string> = ['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -65,6 +66,7 @@ export class DemoSelectComponent implements OnInit {
     this.select3Control = new FormControl();
     this.select4Control = new FormControl();
     this.select5Control = new FormControl();
+    this.select6Control = new FormControl();
 
     let item1: any = {
       ID: '1', Value: 'Europe', children:
@@ -134,6 +136,32 @@ export class DemoSelectComponent implements OnInit {
 
   selectGreenModel() {
     this.select4Control.setValue({Data: '2', Name: 'green (model)'});
+  }
+
+  selectFirstModel() {
+    this.select6Control.setValue({ID: 666, Value: 'xxx (unknown model)'});
+  }
+
+  moreOptions$: BehaviorSubject<any[]> = new BehaviorSubject(null);
+
+  onOptionsRequired($event: any) {
+
+    if ($event == null) {
+      console.log('Should cancel loading');
+      return;
+    }
+    console.log(`Loading options filter=${$event}`);
+    setTimeout(() => {
+      this.moreOptions$.next([
+        {ID: 1, Value: 'aaaaa'},
+        {ID: 2, Value: 'aaaab'},
+        {ID: 3, Value: 'aaaac'},
+        {ID: 4, Value: 'aaaad'},
+        {ID: 5, Value: 'aaaba'},
+        {ID: 6, Value: 'aaabb'},
+      ]);
+
+    }, 1000);
   }
 
   private get disabledV(): string {

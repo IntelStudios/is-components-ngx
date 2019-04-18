@@ -48,21 +48,31 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input()
   modelConfig: IsSelectModelConfig = null;
 
+  /**
+   * unset current value in case there is no matching option when options are set
+   */
+  @Input()
+  unsetNoMatch: boolean = false;
+
   @Input()
   set items(value: Array<any>) {
     if (!value) {
-      this._items = this.itemObjects = [];
+      this._items = this.options = [];
     } else {
       this._items = value.filter((item: any) => {
         if ((typeof item === 'string') || (typeof item === 'object' && (item.ID || item.ID === 0) && item.Value)) {
           return item;
         }
       });
-      this.itemObjects = this._items.map((item: any) => new SelectItem(item));
+      this.options = this._items.map((item: any) => new SelectItem(item));
       if (this._value) {
         const prev = this._active;
-        this._active = this.itemObjects.find(o => o.ID === this._value);
-        if (!this._active && prev) {
+        const active = this.options.find(o => o.ID === this._value);
+        if (active) {
+          this._active = active;
+        }
+        if (!active && prev && this.unsetNoMatch) {
+          this._active = active;
           // there was a value, but given options did not contain it
           this.emitChange() // emit change
         }
@@ -71,22 +81,23 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
     // neccessary check if you are using select with groups
     if (this.firstItemHasChildren) {
-      if (this.itemObjects.findIndex((item: SelectItem) => item.children === null || item.children === undefined) > -1) {
+      if (this.options.findIndex((item: SelectItem) => item.children === null || item.children === undefined) > -1) {
         // it is required that every parent must have own child/ren
         console.warn('Every item of the array must have children, filtering items without children...');
-        this.itemObjects = this.itemObjects.filter((item: SelectItem) => item.children);
+        this.options = this.options.filter((item: SelectItem) => item.children);
       }
       this.behavior = new ChildrenBehavior(this);
     } else {
       this.behavior = new GenericBehavior(this);
     }
 
-    if (this.isLoadingOptions && this.inputValue && this.inputValue.length >= this._minLoadChars) {
+    if (value && this.isLoadingOptions && this.inputValue && this.inputValue.length >= this._minLoadChars) {
       const filterValue = escapeRegexp(this.inputValue).trim();
       const parts: string[] = filterValue.split(' ').map((p: string) => p ? `(${p}).*` : '');
       this.behavior.filter(new RegExp(parts.join(''), 'ig'));
       this.isLoadingOptions = false;
     }
+    this.changeDetector.markForCheck();
   }
 
   @Input()
@@ -116,7 +127,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Output() loadOptions: EventEmitter<string> = new EventEmitter<string>();
 
   options: Array<SelectItem> = [];
-  itemObjects: Array<SelectItem> = [];
   inputValue: string = '';
   activeOption: SelectItem;
   isLoadingOptions = false;
@@ -135,7 +145,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   public get firstItemHasChildren(): boolean {
-    return this.itemObjects[0] && this.itemObjects[0].hasChildren();
+    return this.options[0] && this.options[0].hasChildren();
   }
 
   @ContentChild(IsSelectOptionDirective, { read: TemplateRef })
@@ -168,6 +178,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: any): void {
+    console.log('ww', value);
     if (value === null || value === undefined) {
       this._active = null;
       this._value = null;
@@ -178,22 +189,34 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         this._value = String(value);
       }
 
-      if (this.itemObjects && this.itemObjects.length > 0) {
+      if (this.options && this.options.length > 0) {
         const prev = this._active;
+        let active = null;
         if (this.behavior instanceof ChildrenBehavior) {
-          this.itemObjects.forEach((item: SelectItem) => {
+          this.options.forEach((item: SelectItem) => {
             const activeChildren = item.children.find(c => c.ID === this._value);
             if (activeChildren) {
-              this._active = activeChildren;
+              active = activeChildren;
             }
           });
         } else {
-          this._active = this.itemObjects.find(o => o.ID === this._value);
+          active = this.options.find(o => o.ID === this._value);
         }
-        if (!this._active && prev) {
+
+        if (active) {
+          this._active = active;
+        }
+
+        if (!active && prev && this.unsetNoMatch) {
           // there was a value, but given options did not contain it
+          this._active = active;
           this.emitChange(); // emit change
+        } else if (!active && this.modelConfig) {
+          // value was set, we have options, but none matches and we have modelConfig
+          // still set active item to look like the option is set
+          this._active = new SelectItem(value, this.modelConfig);
         }
+
       } else {
         // no options, but if we have modelConfig we must look like the option is set
         if (this.modelConfig) {
@@ -306,7 +329,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   onSearchChange($event: any) {
     this.inputValue = $event;
     if (this._minLoadChars > 0) {
-      if (this.inputValue.length >= this._minLoadChars && !this.isLoadingOptions && (!this.items || !this.items.length)) {
+      if (this.inputValue.length >= this._minLoadChars && !this.isLoadingOptions && (!this._items || !this._items.length)) {
         this.isLoadingOptions = true;
         this.loadOptions.emit(this.inputValue);
       } else if (this.inputValue.length < this._minLoadChars) {
@@ -427,6 +450,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._clickedOutsideListener();
       this._clickedOutsideListener = null;
     }
+    if (this._minLoadChars > 0) {
+      this.items = null; // clear lazy loaded items
+    }
     this.changeDetector.markForCheck();
   }
 
@@ -464,12 +490,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   private open(): void {
-    this.options = this.itemObjects;
 
     if (this.options.length > 0 && (!this.active || !this.activeOption)) {
       this.behavior.first();
     }
-
     this.optionsOpened = true;
     this._clickedOutsideListener = this.renderer.listen('document', 'click', this.clickedOutside.bind(this));
     this.changeDetector.markForCheck();

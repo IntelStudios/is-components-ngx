@@ -22,7 +22,7 @@ export class Behavior {
   public fillOptionsMap(): void {
     this.optionsMap.clear();
     let startPos = 0;
-    this.actor.itemObjects
+    this.actor.options
       .map((item: SelectItem) => {
         startPos = item.fillChildrenHash(this.optionsMap, startPos);
       });
@@ -107,7 +107,7 @@ export class GenericBehavior extends Behavior implements OptionsBehavior {
   }
 
   public filter(query: RegExp): void {
-    let options = this.actor.itemObjects
+    let options = this.actor.options
       .filter((option: SelectItem) => {
         return stripTags(option.Value).match(query);
       });
@@ -251,7 +251,7 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
     let options: Array<SelectItem> = [];
     let optionsMap: Map<string, number> = new Map<string, number>();
     let startPos = 0;
-    for (let si of this.actor.itemObjects) {
+    for (let si of this.actor.options) {
       let children: Array<SelectItem> = si.children.filter((option: SelectItem) => query.test(option.Value));
       startPos = si.fillChildrenHash(optionsMap, startPos);
       if (children.length > 0) {

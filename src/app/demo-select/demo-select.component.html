@@ -62,6 +62,12 @@
     <button class="btn btn-primary" (click)="selectGreenModel()">Select green (model)</button>
     <p>Value: {{select4Control.valueChanges|async|json}}</p>
   </div>
+  <div class="col-sm-6">
+    <h3>Select model (lazy load)</h3>
+    <is-select [allowClear]="true" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)" [items]="moreOptions$ | async" [formControl]="select6Control"  [modelConfig]="{idProp: 'ID', textProp: 'Value'}"></is-select>
+    <button class="btn btn-primary" (click)="selectFirstModel()">Select unknown (model)</button>
+    <p>Value: {{select6Control.valueChanges|async|json}}</p>
+  </div>
 </div>
 
 <div class="row">
