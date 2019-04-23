@@ -339,6 +339,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       }
     }
 
+    this.changed.next(this.values);
     this.changeDetector.markForCheck();
   }
 
