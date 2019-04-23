@@ -74,7 +74,9 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
   }
 
   .filter-bottom-control {
-    margin-top: 10px;
+    .filter-bottom {
+      margin-top: 10px;
+    }
   }
 
   .search-control {
