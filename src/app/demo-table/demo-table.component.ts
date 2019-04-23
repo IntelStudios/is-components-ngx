@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IsTableColumn, IsTableRow } from 'projects/is-table/src/public_api';
+
 @Component({
   selector: 'app-demo-table',
   templateUrl: './demo-table.component.html',
@@ -12,7 +13,7 @@ export class DemoTableComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-table-7.0.9.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-table-7.1.0.tgz
 npm install --save ngx-bootstrap</pre>
 
 <h3>Import Module</h3>
@@ -40,9 +41,11 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
   rows$: Observable<IsTableRow[]>;
   rowsTemplates$: Observable<IsTableRow[]>;
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
+  constructor(private changeDetector: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
+
   }
 
   loadData() {

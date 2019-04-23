@@ -64,17 +64,22 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
     }
   }
 
-
   .status-text {
     padding: 15px 0 0 15px;
     display: inline-block;
   }
 
-  .filter-control {
-    input {
-      width: 250px;
-      float: right;
-    }
+  .filter-default-control {
+    margin-right: 5px;
+  }
+
+  .filter-bottom-control {
+    margin-top: 10px;
+  }
+
+  .search-control {
+    flex: 1;
+    max-width: 250px;
   }
 
   .disabled-cls {
@@ -103,6 +108,8 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
   }
 
   .page-size-control {
+    flex: 1;
+
     is-select {
       width: 80px;
       display: inline-block;
@@ -122,8 +129,13 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
   overflow-y: auto;
 }
 
-.table-toolbar {
+.table-toolbar-wrapper {
   margin-bottom: 10px;
+
+  .table-toolbar {
+    margin-bottom: 0px;
+    display: flex;
+  }
 }
 
 .short-scroll>tr:hover {

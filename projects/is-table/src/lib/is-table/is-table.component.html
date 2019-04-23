@@ -1,15 +1,27 @@
 <div class="table">
-  <div class="row table-toolbar" *ngIf="enableToolbar">
-    <div class="col-sm-6 page-size-control">
-      <is-select [formControl]="pageSizeControl" [items]="pageSizeOptions" [isSearch]="false" [allowClear]="false">
-      </is-select>
-      <span>{{tableConfig.translations.pageSize|translate}}</span>
+  <div class="table-toolbar-wrapper" *ngIf="enableToolbar">
+    <div class="table-toolbar">
+      <div class="page-size-control">
+        <is-select [formControl]="pageSizeControl" [items]="pageSizeOptions" [isSearch]="false" [allowClear]="false">
+        </is-select>
+        <span>{{tableConfig.translations.pageSize|translate}}</span>
+      </div>
+
+      <div class="filter-default-control">
+        <ng-content select=".filter-default"></ng-content>
+      </div>
+
+      <div class="search-control" *ngIf="canSearch">
+        <input class="form-control" [placeholder]="tableConfig.translations.search|translate" type="search" [formControl]="searchControl" />
+      </div>
     </div>
 
-    <div class="col-sm-6 pull-right filter-control" *ngIf="canSearch">
-      <input class="form-control" [placeholder]="tableConfig.translations.search|translate" type="search" [formControl]="searchControl" />
+    <div class="filter-bottom-control">
+      <ng-content select=".filter-bottom"></ng-content>
+      <div class="clearfix"></div>
     </div>
   </div>
+
   <table class="table table-striped table-bordered dataTable" role="grid">
     <thead>
       <tr role="row" class="data-table-header">
@@ -54,6 +66,10 @@
 </div>
 
 <!--Default templates-->
+<ng-template #defaultFilterTemplate>
+
+</ng-template>
+
 <ng-template #defaultTemplateColumn let-item="item" let-col="col" let-row="row">
   <div [innerHTML]="item"></div>
 </ng-template>
