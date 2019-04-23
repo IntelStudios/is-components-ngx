@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IsModalConfig, IsModalComponent } from 'projects/is-modal/src/public_api';
 import { BsModalService } from 'ngx-bootstrap';
@@ -41,7 +41,7 @@ export class DemoBootstrapSwitchComponent implements OnInit {
   control1: FormControl = new FormControl();
   control2: FormControl = new FormControl();
 
-  constructor(private bsModalservice: BsModalService) { }
+  constructor(private bsModalservice: BsModalService, private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.control1 = new FormControl();

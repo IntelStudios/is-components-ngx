@@ -70,6 +70,20 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     margin-top: -5px;
     font-size: 80%;
   }
+  .placeholder {
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    padding-left: 12px;
+  }
 }
 
 :host(.ng-invalid) {

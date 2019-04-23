@@ -1,5 +1,6 @@
 <div class="input-group" [ngClass]="{ 'input-group-xe-style': xeStyle }" (click)="openDropdown()">
-  <div *ngIf="values" [ngClass]="{ 'selectpicker-disabled': disabled, 'container-xe-style': xeStyle, 'overflowed': !xeStyle }" class="form-control">
+  <div [ngClass]="{ 'selectpicker-disabled': disabled, 'container-xe-style': xeStyle, 'overflowed': !xeStyle }" class="form-control">
+    <span *ngIf="values && values.length === 0" class="text-muted placeholder">{{placeholder}}</span>
     <!-- style as Xeelo user - bordered values with fa-times icon -->
     <div *ngIf="xeStyle">
       <div *ngFor="let item of values">
