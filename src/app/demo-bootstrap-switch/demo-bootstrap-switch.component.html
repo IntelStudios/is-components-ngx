@@ -25,7 +25,10 @@
   <is-tabset>
     <is-tab title="Tab 1">
       <ng-template TabContent>
-        <is-bs-switch [formControl]="control2"></is-bs-switch>
+        <is-bs-switch [formControl]="control2" [stringMode]="true"></is-bs-switch>
+        <button class="btn btn-default" (click)="setValue('0')">Set '0'</button>
+        <button class="btn btn-default" (click)="setValue('1')">Set '1'</button>
+        {{control2.value|json}}
       </ng-template>
     </is-tab>
     <is-tab>

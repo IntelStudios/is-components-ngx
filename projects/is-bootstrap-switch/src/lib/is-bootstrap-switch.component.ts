@@ -385,7 +385,16 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
    *
    * @param value
    */
-  writeValue(value: boolean) {
+  writeValue(value: any) {
+    if (!value) {
+      return;
+    }
+
+    if (this.stringMode) {
+      // convert from '0' or '1' to false/true
+      value = !!+value;
+    }
+
     if (value !== this._innerState) {
       this._innerState = value;
       this.stringMode ? this._onChangeCallback(String(Number(value))) : this._onChangeCallback(value);
@@ -449,7 +458,7 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
           this._animate = true;
         }
         // if the value was not provided from outside, set to initValue
-        if(this._innerState === null || typeof this._innerState === 'undefined') {
+        if (this._innerState === null || typeof this._innerState === 'undefined') {
           this.writeValue(this.initValue);
         }
         this.cd.markForCheck();
