@@ -11,6 +11,11 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-timepicker></is-timepicker>
+    <is-timepicker [formControl]="timepickerControl"></is-timepicker>
+    <span>selected value: {{timepickerControl.value}}</span>
   </div>
+  <div class="col-sm-6">
+      <is-timepicker [formControl]="timepickerControl1" [stringMode]="true"></is-timepicker>
+      <span>selected value when stringMode is ON: {{timepickerControl1.value}}</span>
+    </div>
 </div>

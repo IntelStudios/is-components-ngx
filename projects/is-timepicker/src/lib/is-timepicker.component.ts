@@ -15,6 +15,8 @@ import { Subscription } from 'rxjs';
 
 const moment = m;
 
+export const TIME_FORMAT = 'HH:mm:ss';
+
 export const IS_TIMEPICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => IsTimepickerComponent),
@@ -32,7 +34,13 @@ export class IsTimepickerComponent implements OnInit {
 
   @Input('placeholder') placeholder: string = '';
 
-  @Output() changed: EventEmitter<Date> = new EventEmitter<Date>();
+  /**
+   * when stringMode is enabled, expected and emitted date must be in Xeelo time format (HH:mm:ss)
+   */
+  @Input()
+  stringMode: boolean = false;
+
+  @Output() changed: EventEmitter<any> = new EventEmitter<any>();
 
   public isOpened: boolean;
   public timeValue: Date;
@@ -112,10 +120,10 @@ export class IsTimepickerComponent implements OnInit {
 
   private setValue(value: Date): void {
     if (value) {
-      let val = moment(value, 'HH:mm:ss');
-      this.viewValue = val.format('HH:mm:ss');
+      let val = moment(value, TIME_FORMAT);
+      this.viewValue = val.format(TIME_FORMAT);
 
-      this.changed.emit(value);
+      this.changed.emit(this.stringMode ?  moment(value).format(TIME_FORMAT) : value);
 
       this.changeDetector.markForCheck();
     }
