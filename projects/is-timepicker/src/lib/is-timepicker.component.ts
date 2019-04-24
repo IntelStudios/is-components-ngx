@@ -71,9 +71,7 @@ export class IsTimepickerComponent implements OnInit {
       this.viewValue = '';
       return;
     }
-
-    const time = typeof value === 'string' ? new Date(value) : value;
-    this.setValue(time);
+    this.setValue(value);
   }
 
   /**
@@ -118,9 +116,18 @@ export class IsTimepickerComponent implements OnInit {
     this.setValue(this.timeValue);
   }
 
-  private setValue(value: Date): void {
+  private setValue(value: any): void {
     if (value) {
-      let val = moment(value, TIME_FORMAT);
+      if (this.stringMode && typeof value === 'string') {
+        const input = value.split(':');
+        let date = new Date();
+        date.setHours(Number(input[0]));
+        date.setMinutes(Number(input[1]));
+        date.setSeconds(Number(input[2]));
+        value = date;
+      }
+
+      const val = moment(value, TIME_FORMAT);
       this.viewValue = val.format(TIME_FORMAT);
 
       this.changed.emit(this.stringMode ?  moment(value).format(TIME_FORMAT) : value);

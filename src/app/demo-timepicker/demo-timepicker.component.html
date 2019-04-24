@@ -17,5 +17,6 @@
   <div class="col-sm-6">
       <is-timepicker [formControl]="timepickerControl1" [stringMode]="true"></is-timepicker>
       <span>selected value when stringMode is ON: {{timepickerControl1.value}}</span>
+      <button class="btn btn-default" (click)="setValue()">Set 02:00:00</button>
     </div>
 </div>
