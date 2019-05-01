@@ -96,13 +96,13 @@ export class IsTimepickerComponent implements OnInit {
     this.onTouched = fn;
   }
 
-  public closeTimepicker(): void {
+  closeTimepicker() {
     this.setValue(this.timeValue);
     this.isOpened = false;
     this.changeDetector.detectChanges();
   }
 
-  public toggleTimepicker(): void {
+  toggleTimepicker() {
     if (!this.disabled) {
       this.isOpened = !this.isOpened;
       if (!this.isOpened) {
@@ -129,6 +129,7 @@ export class IsTimepickerComponent implements OnInit {
 
       const val = moment(value, TIME_FORMAT);
       this.viewValue = val.format(TIME_FORMAT);
+      this.timeValue = value;
 
       this.changed.emit(this.stringMode ?  moment(value).format(TIME_FORMAT) : value);
 

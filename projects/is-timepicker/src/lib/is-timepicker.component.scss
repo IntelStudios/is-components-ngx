@@ -16,6 +16,14 @@ $color-cls-default-fg: var(--is-color-default, #333);
   }
   /deep/ .btn-link {
     color: #555;
+    &:hover {
+      text-decoration: none;
+      background-color: #eee;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      border-color: #ddd;
+    }
   }
 }
 
