@@ -12,6 +12,12 @@ $color-cls-danger-fg: var(--is-color-danger, red);
 
   &.ng-invalid {
     border: none !important;
+
+    .ui-select-match {
+      .ui-select-toggle {
+        border-color: $color-cls-danger-fg;
+      }
+    }
   }
 
   /* Fix Bootstrap dropdown position when inside a input-group */
@@ -179,15 +185,5 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     right: 9px;
     top: 9px;
     z-index: 20;
-  }
-}
-
-:host(.ng-invalid) {
-  input {
-    border: 1px solid $color-cls-danger-fg;
-    background-color: #fff;
-  }
-  button.dropdown-toggle {
-    border-color: $color-cls-danger-fg;
   }
 }
