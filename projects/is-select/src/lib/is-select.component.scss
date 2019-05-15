@@ -1,13 +1,17 @@
 $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 $color-selected-bg: var(--is-select-color-selected-bg, grey);
 $color-active-bg: var(--is-select-color-active-bg, #428bca);
-
+$color-cls-danger-fg: var(--is-color-danger, red);
 :host {
   *:focus {
       outline: none;
   }
   .ui-select-placeholder {
     float: left;
+  }
+
+  &.ng-invalid {
+    border: none !important;
   }
 
   /* Fix Bootstrap dropdown position when inside a input-group */
@@ -175,5 +179,15 @@ $color-active-bg: var(--is-select-color-active-bg, #428bca);
     right: 9px;
     top: 9px;
     z-index: 20;
+  }
+}
+
+:host(.ng-invalid) {
+  input {
+    border: 1px solid $color-cls-danger-fg;
+    background-color: #fff;
+  }
+  button.dropdown-toggle {
+    border-color: $color-cls-danger-fg;
   }
 }
