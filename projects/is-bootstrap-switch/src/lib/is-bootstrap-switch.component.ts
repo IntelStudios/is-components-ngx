@@ -67,7 +67,7 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
 
   private _focused: boolean = false;
   private _size: any = 'normal';
-  private _animate: boolean = true;
+  private _animate: boolean = false;
   private _innerAnimate: boolean = true;
   private _indeterminate: boolean = false;
   private onColor: string = 'primary';
