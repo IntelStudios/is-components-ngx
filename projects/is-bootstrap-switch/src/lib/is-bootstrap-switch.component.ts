@@ -67,8 +67,9 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
 
   private _focused: boolean = false;
   private _size: any = 'normal';
+  private _initialAnimate: boolean = false;
   private _animate: boolean = false;
-  private _innerAnimate: boolean = true;
+  private _innerAnimate: boolean = false;
   private _indeterminate: boolean = false;
   private onColor: string = 'primary';
   private offColor: string = 'default';
@@ -108,11 +109,6 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
     if (value) {
       this._size = value;
     }
-  }
-
-  @Input('switch-animate') set setAnimate(value: boolean) {
-    this._animate = value;
-    this._innerAnimate = value;
   }
 
   @Input('switch-on-color') set setOnColor(value: string) {
@@ -169,12 +165,21 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
 
 
   @HostListener('click', ['$event']) onClick(e: MouseEvent) {
+
+    if (!this._initialAnimate) {
+      this._initialAnimate = true;
+      this._animate = true;
+      this._innerAnimate = true;
+    }
+
     if ((e.target as HTMLElement).localName === 'is-bs-switch') {
       // ignore when click comes from component but not from inner divs/spans
       return;
     }
     if (!this.disabled && !this.readonly && !this._dragEnd) {
+
       this.setStateValue(!this._innerState);
+
     } else if (this._dragEnd) {
       this._dragEnd = null;
     }
@@ -386,19 +391,25 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
    * @param value
    */
   writeValue(value: any) {
-    if (!value) {
-      return;
-    }
 
-    if (this.stringMode) {
-      // convert from '0' or '1' to false/true
-      value = !!+value;
-    }
+    if (value === true || value === false) {
 
-    if (value !== this._innerState) {
-      this._innerState = value;
-      this.stringMode ? this._onChangeCallback(String(Number(value))) : this._onChangeCallback(value);
-      this.cd.markForCheck();
+      if (this.stringMode) {
+        // convert from '0' or '1' to false/true
+        value = !!+value;
+      }
+
+      if (value !== this._innerState) {
+        this._innerState = value;
+        this.stringMode ? this._onChangeCallback(String(Number(value))) : this._onChangeCallback(value);
+        this.cd.markForCheck();
+
+        if (!this._initialAnimate) {
+          this._initialAnimate = true;
+          this._animate = true;
+          this._innerAnimate = true;
+        }
+      }
     }
   }
 

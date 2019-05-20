@@ -14,7 +14,7 @@ export class DemoBootstrapSwitchComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-bootstrap-switch-7.0.3.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-bootstrap-switch-7.0.4.tgz</pre>
 
 <h3>Import Styles</h3>
 <pre>https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.css</pre>
