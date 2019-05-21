@@ -493,7 +493,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       } else {
         this.changed.emit(null);
       }
-      this.changed.emit(this.active ? this.active.ID : null);
     }
 
   }
