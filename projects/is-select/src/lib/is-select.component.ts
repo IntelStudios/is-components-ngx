@@ -482,6 +482,17 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       }
 
     } else {
+      if (this.active) {
+        // emit ID property from item's source in case it's number
+        // otherwise Item's ID is always string
+        if (this.active.source && !isNaN(Number(this.active.source.ID))) {
+          this.changed.emit(Number(this.active.ID));
+        } else {
+          this.changed.emit(this.active.ID);
+        }
+      } else {
+        this.changed.emit(null);
+      }
       this.changed.emit(this.active ? this.active.ID : null);
     }
 
