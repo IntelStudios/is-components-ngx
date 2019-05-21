@@ -392,12 +392,12 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
    */
   writeValue(value: any) {
 
-    if (value === true || value === false) {
+    if (this.stringMode) {
+      // convert from '0' or '1' to false/true
+      value = !!+value;
+    }
 
-      if (this.stringMode) {
-        // convert from '0' or '1' to false/true
-        value = !!+value;
-      }
+    if (value === true || value === false) {
 
       if (value !== this._innerState) {
         this._innerState = value;
