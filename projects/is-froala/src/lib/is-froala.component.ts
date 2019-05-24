@@ -12,9 +12,10 @@ import {
   OnInit,
   Inject,
   Output,
-  InjectionToken, Optional
+  InjectionToken, Optional, SecurityContext
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable, Subscription } from 'rxjs';
 
 import { IAtJSConfig, FroalaCommand, IntellisenseSuggestion, IsFroalaConfig, IIsFroalaOptions, IsFroalaOptions } from './is-froala.interfaces';
@@ -94,6 +95,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   // jquery wrapped element
   private _$element: any;
 
+  private _html: string;
+
   @Input()
   set options(config: IIsFroalaOptions) {
     if (config) {
@@ -105,7 +108,6 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       }
     }
   }
-
   get options(): IIsFroalaOptions {
     return this._options;
   }
@@ -119,13 +121,25 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   @Input()
   loadOnInit: boolean = true;
 
+  @Input()
+  set html(value: string) {
+    this._html = this.sanitizer.sanitize(SecurityContext.HTML, value);
+  }
+  get html() {
+    return this._html;
+  }
+
   @Output()
   change: EventEmitter<string> = new EventEmitter<string>();
 
   @Output()
   onCommand: EventEmitter<FroalaCommand> = new EventEmitter<FroalaCommand>();
 
-  constructor(@Optional() @Inject(configToken) private froalaConfig: IsFroalaConfig, private changeDetector: ChangeDetectorRef, private el: ElementRef, private zone: NgZone) {
+  constructor(@Optional() @Inject(configToken) private froalaConfig: IsFroalaConfig,
+  private changeDetector: ChangeDetectorRef,
+  private el: ElementRef,
+  private zone: NgZone,
+  private sanitizer: DomSanitizer) {
     if (!froalaConfig) {
       console.warn(`IS-FROALA: Config not provided. Will not load license (use IsFroalaModule.forRoot() )`);
       this.froalaConfig = {
