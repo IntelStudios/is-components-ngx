@@ -394,7 +394,7 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
 
     if (this.stringMode) {
       // convert from '0' or '1' to false/true
-      value = !!+value;
+      value = Number(value) === 1;
     }
 
     if (value === true || value === false) {
