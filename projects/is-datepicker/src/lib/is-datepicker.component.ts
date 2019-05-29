@@ -51,6 +51,9 @@ export class IsDatepickerComponent implements ControlValueAccessor, OnInit {
   @Input('isSOD') isSOD: boolean = false;
   @Input('placeholder') placeholder: string = '';
 
+  @Input()
+  alignment: 'left' | 'center' | 'right' = 'left';
+
   @Output() changed: EventEmitter<Date> = new EventEmitter<Date>();
 
   days: Array<CalendarDate>;

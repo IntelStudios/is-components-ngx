@@ -1,5 +1,5 @@
 <div class="input-group margin-bottom-sm">
-  <input type="text" class="ng-datepicker-input form-control" (click)="toggleDatepicker()" [value]="viewValue" [hidden]="isStatic" [disabled]="disabled" [placeholder]="placeholder" readonly>
+  <input type="text" class="ng-datepicker-input form-control" (click)="toggleDatepicker()" [value]="viewValue" [hidden]="isStatic" [disabled]="disabled" [placeholder]="placeholder"  [style.text-align]="alignment" readonly>
   <span class="input-group-addon ng-datepicker-icon" [class.disabled]="disabled" (click)="toggleDatepicker()"><i class="fa fa-calendar fa-fw"></i></span>
 </div>
 <div class="ng-datepicker" *ngIf="isStatic || isOpened" [ngClass]="{ static: isStatic }">

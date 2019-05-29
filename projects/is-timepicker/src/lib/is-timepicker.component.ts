@@ -40,6 +40,9 @@ export class IsTimepickerComponent implements OnInit {
   @Input()
   stringMode: boolean = false;
 
+  @Input()
+  alignment: 'left' | 'center' | 'right' = 'left';
+
   @Output() changed: EventEmitter<any> = new EventEmitter<any>();
 
   public isOpened: boolean;

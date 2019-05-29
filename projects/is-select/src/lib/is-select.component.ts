@@ -119,6 +119,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     this.writeValue(val);
   }
 
+  @Input()
+  alignment: 'left' | 'center' | 'right' = 'left';
+
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() removed: EventEmitter<any> = new EventEmitter();
   @Output() typed: EventEmitter<string> = new EventEmitter<string>();

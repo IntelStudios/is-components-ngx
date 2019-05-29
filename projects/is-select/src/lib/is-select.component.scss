@@ -6,9 +6,6 @@ $color-cls-danger-fg: var(--is-color-danger, red);
   *:focus {
       outline: none;
   }
-  .ui-select-placeholder {
-    float: left;
-  }
 
   &.ng-invalid {
     border: none !important;
@@ -64,8 +61,16 @@ $color-cls-danger-fg: var(--is-color-danger, red);
   }
 
   .ui-select-match>.btn {
-    /* Instead of center because of .btn */
-    text-align: left !important;
+    &.align-left {
+      text-align: left !important;
+    }
+    &.align-center {
+      text-align: center !important;
+    }
+    &.align-right {
+      text-align: right !important;
+      padding-right: 25px;
+    }
   }
 
   .ui-select-match>.caret {
