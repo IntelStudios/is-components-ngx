@@ -17,7 +17,7 @@
   <!-- options without groups -->
   <div *ngIf="optionsOpened && !firstItemHasChildren" class="ui-select-choices-container dropdown-menu" role="menu">
     <div class="ui-select-search" [class.hidden-input]="!isSearch">
-      <input type="text" autocomplete="false" tabindex="-1" (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" [disabled]="disabled" class="form-control" [placeholder]="searchPlaceholder">
+      <input type="text" autocomplete="false" tabindex="-1" [style.text-align]="alignment" (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" [disabled]="disabled" class="form-control" [placeholder]="searchPlaceholder">
     </div>
     <i *ngIf="isLoadingOptions" class="fa fa-circle-o-notch fa-spin options-loading"></i>
     <ul class="ui-select-choices" *ngIf="options && options.length > 0">
@@ -34,7 +34,7 @@
   <!-- options with groups -->
   <div *ngIf="optionsOpened && firstItemHasChildren" class="ui-select-choices-container dropdown-menu" role="menu">
     <div class="ui-select-search" [class.hidden-input]="!isSearch">
-      <input type="text" autocomplete="false" tabindex="-1" (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" [disabled]="disabled" class="form-control" [placeholder]="searchPlaceholder">
+      <input type="text" autocomplete="false" tabindex="-1" [style.text-align]="alignment" (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" [disabled]="disabled" class="form-control" [placeholder]="searchPlaceholder">
     </div>
     <i *ngIf="isLoadingOptions" class="fa fa-circle-o-notch fa-spin options-loading"></i>
     <ul *ngIf="options && options.length > 0" class="ui-select-choices" role="menu">
