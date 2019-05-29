@@ -21,7 +21,7 @@
     </div>
     <i *ngIf="isLoadingOptions" class="fa fa-circle-o-notch fa-spin options-loading"></i>
     <ul class="ui-select-choices" *ngIf="options && options.length > 0">
-      <li *ngFor="let o of options" role="menuitem">
+      <li *ngFor="let o of options" role="menuitem" [style.text-align]="alignment">
         <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == active?.ID" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
           <a href="javascript:void(0)" class="dropdown-item">
             <ng-container [ngTemplateOutlet]="templateOption || defaultTemplateOption" [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
@@ -38,7 +38,7 @@
     </div>
     <i *ngIf="isLoadingOptions" class="fa fa-circle-o-notch fa-spin options-loading"></i>
     <ul *ngIf="options && options.length > 0" class="ui-select-choices" role="menu">
-      <li *ngFor="let c of options" role="menuitem">
+      <li *ngFor="let c of options" role="menuitem" [style.text-align]="alignment">
         <div class="dropdown-header">{{c.Value}}</div>
         <div *ngFor="let o of c.children" class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == active?.ID" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)" [ngClass]="{'disabled': o.disabled === true}">
           <a href="javascript:void(0)" class="dropdown-item">
