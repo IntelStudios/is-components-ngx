@@ -2,6 +2,8 @@ $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 $color-selected-bg: var(--is-select-color-selected-bg, grey);
 $color-active-bg: var(--is-select-color-active-bg, #428bca);
 $color-cls-danger-fg: var(--is-color-danger, red);
+$color-border-default: var(--is-color-panel-border, #ccc);
+
 :host {
   *:focus {
       outline: none;
@@ -169,7 +171,7 @@ $color-cls-danger-fg: var(--is-color-danger, red);
 
   .ui-select-toggle {
     background-color: #fff;
-    border-color: #ccc;
+    border-color: $color-border-default;
   }
 
   .ui-select-toggle>.dropdown-caret {

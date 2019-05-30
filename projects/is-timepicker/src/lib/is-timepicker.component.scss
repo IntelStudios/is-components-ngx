@@ -1,7 +1,7 @@
 $color-cls-danger-fg: var(--is-color-danger, red);
 $color-disabled-fg: var(--is-color-input-disabled, #efefef);
 $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
-$general-panel-border-color: var(--is-color-panel-border, #eaeaea);
+$general-panel-border-color: var(--is-color-panel-border, #ccc);
 $color-cls-default-fg: var(--is-color-default, #333);
 :host {
   &.ng-invalid {
@@ -35,8 +35,8 @@ $color-cls-default-fg: var(--is-color-default, #333);
 }
 
 .ng-timepicker-icon {
-  border-top: solid 1px #ccc;
-  border-bottom: solid 1px #ccc;
+  border-top: solid 1px $general-panel-border-color;
+  border-bottom: solid 1px $general-panel-border-color;
   cursor: pointer;
   >i {
     color: #333;
