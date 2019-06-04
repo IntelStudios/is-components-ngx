@@ -111,6 +111,12 @@ export class IsTimepickerComponent implements OnInit {
       if (!this.isOpened) {
         this.setValue(this.timeValue);
       }
+      else {
+        if (!this.timeValue) {
+          this.setValue(new Date());
+        }
+      }
+
       this.changeDetector.detectChanges();
     }
   }
