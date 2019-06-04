@@ -476,7 +476,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   private emitChange() {
     if (this.modelConfig) {
       if (this.active) {
-        const obj: any = {};
+        const obj: any = this.modelConfig.baseModel ? {...this.modelConfig.baseModel } : {};
         obj[this.modelConfig.idProp] = this.active.ID;
         obj[this.modelConfig.textProp] = this.active.Value;
         this.changed.emit(obj);
