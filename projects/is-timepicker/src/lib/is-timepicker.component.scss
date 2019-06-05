@@ -1,4 +1,5 @@
 $color-cls-danger-fg: var(--is-color-danger, red);
+$color-cls-danger-bg: var(--is-color-danger-bg, lightpink);
 $color-disabled-fg: var(--is-color-input-disabled, #efefef);
 $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 $general-panel-border-color: var(--is-color-panel-border, #ccc);
@@ -8,6 +9,10 @@ $color-cls-default-fg: var(--is-color-default, #333);
     border: initial;
     input.ng-timepicker-input {
       border: 1px solid $color-cls-danger-fg;
+    }
+    .input-group-addon {
+      border: 1px solid $color-cls-danger-fg;
+      background-color: $color-cls-danger-bg;
     }
   }
   /deep/ .bs-timepicker-field {
@@ -35,6 +40,7 @@ $color-cls-default-fg: var(--is-color-default, #333);
 }
 
 .ng-timepicker-icon {
+  border-left: 0 !important;
   border-top: solid 1px $general-panel-border-color;
   border-bottom: solid 1px $general-panel-border-color;
   cursor: pointer;
