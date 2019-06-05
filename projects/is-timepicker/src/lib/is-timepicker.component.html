@@ -1,6 +1,9 @@
 <div class="input-group margin-bottom-sm">
-  <input type="text" class="ng-timepicker-input form-control" (click)="toggleTimepicker()" [value]="viewValue" [disabled]="disabled" [placeholder]="placeholder" [style.text-align]="alignment" readonly>
+  <input type="text" class="ng-timepicker-input form-control" (click)="toggleTimepicker()" [value]="viewValue" [disabled]="disabled" [placeholder]="placeholder" [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}" readonly>
   <span class="input-group-addon ng-timepicker-icon" [class.disabled]="disabled" (click)="toggleTimepicker()"><i class="fa fa-clock-o fa-fw"></i></span>
+  <a *ngIf="allowClear && timeValue" class="btn-remove" (click)="removeClick($event)">
+    <i class="glyphicon glyphicon-remove"></i>
+  </a>
 </div>
 <div class="ng-timepicker" *ngIf="isOpened">
   <timepicker [(ngModel)]="timeValue" [showSeconds]="true" [showMeridian]="false" (ngModelChange)="onChange($event)"></timepicker>

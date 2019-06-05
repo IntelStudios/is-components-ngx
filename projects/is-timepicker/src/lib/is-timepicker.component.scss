@@ -30,6 +30,26 @@ $color-cls-default-fg: var(--is-color-default, #333);
       border-color: #ddd;
     }
   }
+
+  .btn-remove {
+    position: absolute;
+    right: 50px;
+    top: 8px;
+    z-index: 3;
+  }
+}
+
+.ng-timepicker-input {
+  &.align-left {
+    text-align: left !important;
+  }
+  &.align-center {
+    text-align: center !important;
+  }
+  &.align-right {
+    text-align: right !important;
+    padding-right: 30px;
+  }
 }
 
 .ng-timepicker-input:not([disabled]) {

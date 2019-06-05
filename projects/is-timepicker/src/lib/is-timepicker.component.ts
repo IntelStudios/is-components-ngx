@@ -32,6 +32,7 @@ export const IS_TIMEPICKER_VALUE_ACCESSOR: any = {
 })
 export class IsTimepickerComponent implements OnInit {
 
+  @Input() allowClear: boolean = false;
   @Input('placeholder') placeholder: string = '';
 
   /**
@@ -125,6 +126,11 @@ export class IsTimepickerComponent implements OnInit {
     this.setValue(this.timeValue);
   }
 
+  removeClick(event: any): void {
+    event.stopPropagation();
+    this.setValue(null);
+  }
+
   private setValue(value: any): void {
     if (value) {
       if (this.stringMode && typeof value === 'string') {
@@ -141,9 +147,15 @@ export class IsTimepickerComponent implements OnInit {
       this.timeValue = value;
 
       this.changed.emit(this.stringMode ?  moment(value).format(TIME_FORMAT) : value);
-
-      this.changeDetector.markForCheck();
     }
+    else {
+      this.viewValue = null;
+      this.timeValue = null;
+
+      this.changed.emit(null);
+    }
+
+    this.changeDetector.markForCheck();
   }
 
   private initMouseEvents(): void {
