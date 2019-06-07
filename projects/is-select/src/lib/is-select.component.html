@@ -1,7 +1,7 @@
 <div tabindex="0" (keyup)="mainClick($event)" (click)="scrollToSelected()" class="ui-select-container dropdown open">
   <div [class.ui-disabled]="disabled"></div>
   <div class="ui-select-match">
-    <span tabindex="-1" class="btn btn-secondary form-control ui-select-toggle" [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}" (click)="matchClick($event)" style="outline: 0;">
+    <span tabindex="-1" class="btn btn-secondary form-control ui-select-toggle div-ellipsis" [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}" (click)="matchClick($event)" style="outline: 0;">
         <span *ngIf="!active" class="ui-select-placeholder text-muted">{{placeholder}}</span>
     <span *ngIf="active" class="ui-select-match-text pull-left" [ngClass]="{'ui-select-allow-clear': allowClear && active}">
       <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateSelection" [ngTemplateOutletContext]="{$implicit: active, index: 0, item: active}">
