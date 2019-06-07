@@ -451,6 +451,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._clickedOutsideListener();
       this._clickedOutsideListener = null;
     }
+
     if (this._minLoadChars > 0) {
       this.items = null; // clear lazy loaded items
     }
@@ -501,6 +502,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   private open(): void {
+    this.behavior.reset();
 
     if (this.options.length > 0 && (!this.active || !this.activeOption)) {
       this.behavior.first();

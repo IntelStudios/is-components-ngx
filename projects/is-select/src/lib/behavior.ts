@@ -3,6 +3,7 @@ import { SelectItem } from './select-item';
 import { stripTags } from './select-pipes';
 
 export interface OptionsBehavior {
+  reset(): any;
   first(): any;
   last(): any;
   prev(): any;
@@ -116,6 +117,11 @@ export class GenericBehavior extends Behavior implements OptionsBehavior {
       this.actor.activeOption = this.actor.options[0];
       super.ensureHighlightVisible();
     }
+  }
+
+  public reset() {
+    this.actor.options = this.actor.itemObjects;
+    super.ensureHighlightVisible();
   }
 }
 
@@ -265,5 +271,10 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
       this.actor.activeOption = this.actor.options[0].children[0];
       super.ensureHighlightVisible(optionsMap);
     }
+  }
+
+  public reset() {
+    this.actor.options = this.actor.itemObjects;
+    super.ensureHighlightVisible();
   }
 }
