@@ -41,6 +41,14 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string = 'None';
   @Input() searchPlaceholder: string = 'Type to search';
   @Input() isSearch: boolean = true;
+  @Input() alignItems: 'left' | 'right' = 'left';
+  /**
+   * when set to positive value, search is auto enabled/disabled
+   * based on miminum options. Should NOT be used together with
+   * **minLoadChars** and **isSearch** as this setting sets **isSearch**
+   * based on loaded items
+   */
+  @Input() autoSearchMinOptions: number = 0;
 
   /**
    * when modelConfig is set, component will require model in writeValue
@@ -78,6 +86,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
           this.emitChange() // emit change
         }
       }
+    }
+    if (this.autoSearchMinOptions > 0) {
+      this.isSearch = this._items.length >= this.autoSearchMinOptions;
     }
 
     // neccessary check if you are using select with groups
