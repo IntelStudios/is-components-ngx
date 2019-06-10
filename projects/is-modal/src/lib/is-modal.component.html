@@ -10,7 +10,8 @@
 </div>
 <div class="modal-footer" *ngIf="buttonsLeft || buttonsRight">
   <div class="buttons">
-    <button *ngFor="let b of buttonsLeft" type="button" class="btn pull-left {{b.buttonClass}}" (click)="buttonClick(b)"><i *ngIf="b.icon" [class]="b.icon"></i>{{b.title|translate}}</button>
-    <button *ngFor="let b of buttonsRight" type="button" class="btn pull-right {{b.buttonClass}}" (click)="buttonClick(b)"><i *ngIf="b.icon" [class]="b.icon"></i>{{b.title|translate}}</button>
+    <button *ngFor="let b of buttonsLeft" type="button" class="btn {{b.buttonClass}}" (click)="buttonClick(b)"><i *ngIf="b.icon" [class]="b.icon"></i>{{b.title|translate}}</button>
+    <div class="divider"></div>
+    <button *ngFor="let b of buttonsRight" type="button" class="btn {{b.buttonClass}}" (click)="buttonClick(b)"><i *ngIf="b.icon" [class]="b.icon"></i>{{b.title|translate}}</button>
   </div>
 </div>

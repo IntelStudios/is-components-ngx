@@ -1,5 +1,6 @@
-import { Component, OnInit, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+
 import { IsModalButtonConfig } from './is-modal.interfaces';
 
 @Component({

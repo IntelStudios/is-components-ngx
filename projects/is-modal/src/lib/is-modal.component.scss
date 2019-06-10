@@ -1,11 +1,17 @@
 :host {
   .modal-footer>.buttons {
-    >button>i {
-      margin-right: 3px;
+    display: flex;
+    .divider {
+      flex-grow: 1;
     }
-
     button {
-      margin-left: 5px;
+      margin-left: 4px;
+      &:first-child {
+        margin-left: 0;
+      }
+      >i {
+        margin-right: 4px;
+      }
     }
   }
 
