@@ -80,7 +80,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         if (active) {
           this._active = active;
         }
-        if (!active && prev && this.unsetNoMatch) {
+        if (!active && this.unsetNoMatch) {
           this._active = active;
           // there was a value, but given options did not contain it
           this.emitChange() // emit change
@@ -221,7 +221,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
           this._active = active;
         }
 
-        if (!active && prev && this.unsetNoMatch) {
+        if (!active && this.unsetNoMatch) {
           // there was a value, but given options did not contain it
           this._active = active;
           this.emitChange(); // emit change
