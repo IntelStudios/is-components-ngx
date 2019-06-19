@@ -184,11 +184,17 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit 
   ngAfterContentChecked() {
     // // auto-correct activeId that might have been set incorrectly as input
     let activeTab = this._getTabById(this.activeId);
-    this.activeId = activeTab ? activeTab.id : (this.tabs.length ? this.tabs.first.id : null);
+    if (activeTab) {
+      this.activeId = activeTab.id;
+    } else if (this.tabs.length) {
+      activeTab = this.tabs.first;
+      activeTab.loaded = true;
+      this.activeId = activeTab.id;
+    }
   }
 
   private _getTabById(id: string): IsTabDirective {
-    let tabsWithId: IsTabDirective[] = this.tabs.filter(tab => tab.id === id);
+    const tabsWithId: IsTabDirective[] = this.tabs.filter(tab => tab.id === id);
     return tabsWithId.length ? tabsWithId[0] : null;
   }
 }
