@@ -255,7 +255,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
 
     this.updateValueText();
 
-    this.changeDetector.detectChanges();
+    this.changeDetector.markForCheck();
   }
 
   /**
@@ -361,7 +361,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       this.valueText = '';
     }
 
-    this.changeDetector.detectChanges();
+    this.changeDetector.markForCheck();
   }
 
   private setActiveItem() {

@@ -1,0 +1,27 @@
+:host {
+  .two-digit-number {
+    width: 8ex;
+    display: inline;
+  }
+
+  .four-digit-number {
+    width: 10ex;
+    display: inline;
+  }
+
+  .tab-content {
+    border: 1px solid #ccc;
+    border-top: none;
+    padding: 7px 5px 5px 1.5ex
+  }
+
+  .align-center {
+    text-align: center;
+  }
+}
+
+:host(.ng-invalid) {
+  .cron-expression {
+    border: 1px solid #e43a45;
+  }
+}
