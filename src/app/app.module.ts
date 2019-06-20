@@ -20,6 +20,7 @@ import { IsSelectTreeModule } from 'projects/is-select-tree/src/public_api';
 import { IsSelectModule } from 'projects/is-select/src/public_api';
 import { IsSelectpickerModule } from 'projects/is-selectpicker/src/public_api';
 import { IsTimepickerModule } from 'projects/is-timepicker/src/lib/is-timepicker.module';
+import { IsCronEditorModule } from 'projects/is-cron-editor/src/lib/is-cron-editor.module';
 
 import { AppComponent } from './app.component';
 import { DemoBootstrapSwitchComponent } from './demo-bootstrap-switch/demo-bootstrap-switch.component';
@@ -35,6 +36,7 @@ import { DemoSelectTreeComponent } from './demo-select-tree/demo-select-tree.com
 import { DemoSelectComponent } from './demo-select/demo-select.component';
 import { DemoSelectpickerComponent } from './demo-selectpicker/demo-selectpicker.component';
 import { DemoTimepickerComponent } from './demo-timepicker/demo-timepicker.component';
+import { DemoCronEditorComponent } from './demo-cron-editor/demo-cron-editor.component';
 
 export const routes: Routes = [
   { path: 'select', component: DemoSelectComponent },
@@ -50,7 +52,8 @@ export const routes: Routes = [
   { path: 'modal', component: DemoModalComponent },
   { path: 'grid', component: DemoGridComponent },
   { path: 'table', component: DemoTableComponent },
-  { path: 'timepicker', component: DemoTimepickerComponent }
+  { path: 'timepicker', component: DemoTimepickerComponent },
+  { path: 'croneditor', component: DemoCronEditorComponent }
 ];
 
 @NgModule({
@@ -68,27 +71,33 @@ export const routes: Routes = [
     DemoModalComponent,
     DemoGridComponent,
     DemoTableComponent,
-    DemoTimepickerComponent
+    DemoTimepickerComponent,
+    DemoCronEditorComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
-    RouterModule.forRoot(routes, { useHash: true }),
+    RouterModule.forRoot(routes, {useHash: true}),
     TreeModule.forRoot(),
     ReactiveFormsModule, FormsModule,
     TranslateModule.forRoot(),
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
     IsSelectModule, IsCodemirrorModule, IsFroalaModule,
-    IsMetronicModule.forRoot({ placement: 'right', triggers: 'click', outsideClick: true, container: 'body' }, { delay: 3000, container: 'body', placement: 'right', triggers: 'click'}),
+    IsMetronicModule.forRoot({placement: 'right', triggers: 'click', outsideClick: true, container: 'body'}, {
+      delay: 3000,
+      container: 'body',
+      placement: 'right',
+      triggers: 'click'
+    }),
     IsDatepickerModule,
     IsSelectpickerModule,
-    IsBootstrapSwitchModule.forRoot({ onText: 'bs-switch-on', offText: 'bs-switch-off' }),
+    IsBootstrapSwitchModule.forRoot({onText: 'bs-switch-on', offText: 'bs-switch-off'}),
     IsPasswordModule,
     IsSelectTreeModule,
     IsModalModule,
     IsGridModule,
     IsTableModule,
-    IsTimepickerModule
+    IsTimepickerModule, IsCronEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

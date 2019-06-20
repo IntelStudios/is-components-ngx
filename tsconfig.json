@@ -82,6 +82,12 @@
       "is-timepicker": [
         "dist/is-timepicker"
       ],
+      "is-cron-editor": [
+        "dist/is-cron-editor"
+      ],
+      "is-cron-editor/*": [
+        "dist/is-cron-editor/*"
+      ]
     }
   }
 }

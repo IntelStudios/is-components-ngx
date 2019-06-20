@@ -22,7 +22,8 @@ export class AppComponent {
     { title: 'Modal', route: '/modal' },
     { title: 'Grid', route: '/grid' },
     { title: 'Table', route: '/table' },
-    { title: 'Time Picker', route: '/timepicker' }
+    { title: 'Time Picker', route: '/timepicker' },
+    { title: 'Cron editor', route: '/croneditor'}
   ].sort((a, b) => a.title.localeCompare(b.title));
 
   constructor(private translate: TranslateService) {
