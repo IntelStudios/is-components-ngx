@@ -23,4 +23,14 @@
   .is-caret {
     color: #fff;
   }
+
+  .color-inherit {
+    color: inherit !important;
+  }
+
+  ::ng-deep {
+    .tools {
+      color: #fff;
+    }
+  }
 }

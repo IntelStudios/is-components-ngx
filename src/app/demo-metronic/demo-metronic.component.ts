@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { of } from 'rxjs';
 
-import { FieldErrorService, FieldErrorModel } from '../../../projects/is-metronic/src/public_api';
+import { FieldErrorModel, FieldErrorService } from '../../../projects/is-metronic/src/public_api';
 
 @Component({
   selector: 'app-demo-metronic',
@@ -14,7 +14,7 @@ export class DemoMetronicComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-metronic-7.0.3.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-metronic-7.0.4.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsMetronicModule } from 'is-metronic';</pre>
@@ -29,7 +29,7 @@ export class DemoMetronicComponent implements OnInit {
 @import 'assets/metronic/global/css/components-rounded.css';
 @import 'assets/metronic/global/css/plugins.css';
 @import 'assets/metronic/admin/layout/css/layout.css';</pre>
-  `
+  `;
 
   hint: string = `
     <p>Text</p>
@@ -38,7 +38,7 @@ export class DemoMetronicComponent implements OnInit {
       <li>Item 2</li>
       <li>Item 3</li>
     </ul>
-  `
+  `;
 
   formControl1: FormControl;
   formControl2: FormControl;
@@ -64,7 +64,7 @@ export class DemoMetronicComponent implements OnInit {
       } else {
         return of(invalid);
       }
-    }
+    };
 
     this.formControl2.setAsyncValidators(customValidator);
   }
