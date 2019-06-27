@@ -1,5 +1,5 @@
 <div class="portlet box {{portletClass || 'blue-hoki'}}" [style.border]="borderStyle">
-    <div class="portlet-title {{titleClass}}">
+  <div class="portlet-title {{titleClass}}">
         <ng-container [ngTemplateOutlet]="templateTitle || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
         </ng-container>
         <div class="tools" [ngClass]="{'caret-sm': smallCaret === true}">
@@ -18,7 +18,7 @@
 
 <!--Default templates-->
 <ng-template #defaultTemplateTitle>
-    <div class="caption">
+  <div class="caption color-inherit">
       <i *ngIf="icon" class="{{icon}}" aria-hidden="true" style="margin-top: 3px;"></i>
       <span class="caption-subject">{{heading}}</span>
     </div>
