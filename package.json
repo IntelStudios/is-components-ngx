@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve --port 4201",
     "build": "ng build",
+    "build.local": "node local-deps.js",
     "build.prod": "node local-deps.js && ng build --prod",
     "build.select": "ng build is-select && cd dist/is-select && npm pack --quiet && cp *.tgz ../../package",
     "build.select-tree": "ng build is-select-tree && cd dist/is-select-tree && npm pack --quiet && cp *.tgz ../../package",
