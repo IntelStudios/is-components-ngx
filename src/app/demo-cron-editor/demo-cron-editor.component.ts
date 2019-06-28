@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {cronValidator} from '../../../projects/is-cron-editor/src/lib/is-cron-editor.validator';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-demo-cron-editor',
@@ -23,7 +22,8 @@ export class DemoCronEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cronControl.setValidators(cronValidator());
+    this.cronControl.setValidators(Validators.required);
+    this.runOnChristmas();
   }
 
   runOnChristmas() {

@@ -9,16 +9,16 @@ export function mapNumbers(array: any[]): number[] {
   for (const i of array) {
     const n = Number(i);
     if (isNaN(n)) {
-      throw Error('NaN');
+      throw Error(`'${n}' is not a number`);
     }
     a2.push(n);
   }
   return a2;
 }
 
-export function cronValidator(): ValidatorFn {
+export function cronExpressionValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    if (control.untouched && (!control.value || !control.value.length)) {
+    if (!control.value || !control.value.length) {
       return null;
     }
 

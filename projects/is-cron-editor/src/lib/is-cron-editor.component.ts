@@ -10,7 +10,9 @@ import {
 } from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
-import {cronValidator, mapNumbers} from './is-cron-editor.validator';
+import {cronExpressionValidator, mapNumbers} from './is-cron-editor.validator';
+
+const cronValidator = cronExpressionValidator();
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -189,7 +191,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   private _changeSubscription: Subscription = null;
   private _value: string;
   private _ignore_reading = false;
-  private _on_validator_input_change: Function = null;
+  private validatorOnChangeFn: Function = null;
 
   ngOnInit() {
     for (let i = 0; i < 60; i++) {
@@ -462,8 +464,8 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     this._value = Object.keys(this.cronState).map(k => this.cronState[k]).join(' ');
     if (this._value !== this.cronExpressionControl.value) {
       this.cronExpressionControl.setValue(this._value);
-      if (this._on_validator_input_change) {
-        this._on_validator_input_change();
+      if (this.validatorOnChangeFn) {
+        this.validatorOnChangeFn();
       }
     }
   }
@@ -700,10 +702,10 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
         this.formControl.years.type.setValue(3);
       }
     } catch (e) {
-      console.error((<Error>e).message);
+      console.error(e.message);
     } finally {
-      if (this._on_validator_input_change) {
-        this._on_validator_input_change();
+      if (this.validatorOnChangeFn) {
+        this.validatorOnChangeFn();
       }
     }
     this._ignore_reading = false;
@@ -747,11 +749,11 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   }
 
   registerOnValidatorChange(fn: () => void): void {
-    this._on_validator_input_change = fn;
+    this.validatorOnChangeFn = fn;
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return cronValidator()(control);
+    return cronValidator(control);
   }
 
 }

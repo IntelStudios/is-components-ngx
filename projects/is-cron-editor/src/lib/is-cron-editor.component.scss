@@ -1,27 +1,31 @@
+$color-danger: var(--is-color-danger, #e43a45);
+
 :host {
-  .two-digit-number {
-    width: 8ex;
-    display: inline;
-  }
+    &.ng-invalid {
+        .cron-expression {
+            border: 1px solid $color-danger;
+        }
+    }
 
-  .four-digit-number {
-    width: 10ex;
-    display: inline;
-  }
+    .sub-content {
+      padding: 10px 0px;
+    }
 
-  .tab-content {
-    border: 1px solid #ccc;
-    border-top: none;
-    padding: 7px 5px 5px 1.5ex
-  }
+    .cron-expression {
+        margin-bottom: 5px;
+    }
 
-  .align-center {
-    text-align: center;
-  }
-}
+    .two-digit-number {
+        width: 8ex;
+        display: inline;
+    }
 
-:host(.ng-invalid) {
-  .cron-expression {
-    border: 1px solid #e43a45;
-  }
+    .four-digit-number {
+        width: 10ex;
+        display: inline;
+    }
+
+    .tabbable-custom {
+        overflow: visible;
+    }
 }

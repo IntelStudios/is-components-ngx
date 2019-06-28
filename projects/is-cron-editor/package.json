@@ -9,8 +9,8 @@
     "is-metronic": "^7.0.0"
   },
   "devDependencies": {
-    "is-select": "file:../../package/is-select-7.0.0.tgz",
-    "is-selectpicker": "file:../../package/is-selectpicker-7.1.4.tgz",
-    "is-metronic": "file:../../package/is-metronic-7.0.3.tgz"
+    "is-select": "file:../../package/is-select-7.0.27.tgz",
+    "is-selectpicker": "file:../../package/is-selectpicker-7.1.6.tgz",
+    "is-metronic": "file:../../package/is-metronic-7.0.4.tgz"
   }
 }
