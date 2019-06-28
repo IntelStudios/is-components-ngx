@@ -20,6 +20,7 @@ import { debounceTime } from 'rxjs/operators';
 
 import { IsSelectpickerOptionDirective, IsSelectpickerOptionSelectedDirective } from './is-selectpicker.directives';
 import { SelectPickerItem } from './is-selectpicker.interfaces';
+import { createFilterRegexp, stripDiacritics } from 'is-select';
 
 export const IS_SELECTPICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -377,7 +378,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       this.filteredOptions = [];
     } else {
       this.filteredOptions = this._options.filter(item => {
-        return item.Value.toUpperCase().indexOf(newValue.toUpperCase()) !== -1;
+        return createFilterRegexp(newValue).test(stripDiacritics(item.Value));
       });
     }
     this.setActiveItem();
