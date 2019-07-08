@@ -10,12 +10,9 @@ import {IsSelectpickerModule} from 'is-selectpicker';
   declarations: [IsCronEditorComponent],
   imports: [
     IsMetronicModule,
-    IsSelectModule,
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    IsSelectpickerModule,
-    IsSelectModule,
     IsSelectpickerModule,
     IsSelectModule
   ],

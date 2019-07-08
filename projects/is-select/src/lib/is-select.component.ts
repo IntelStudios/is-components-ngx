@@ -39,6 +39,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   @Input() allowClear: boolean = false;
   @Input() placeholder: string = 'None';
+  @Input() placeholderShow: boolean = true;
   @Input() searchPlaceholder: string = 'Type to search';
   @Input() isSearch: boolean = true;
   @Input() alignItems: 'left' | 'right' = 'left';
