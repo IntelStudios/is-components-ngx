@@ -63,6 +63,9 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
   }
 
   @Input()
+  dropdownContainer: string = undefined;
+
+  @Input()
   useModels: boolean = false;
 
   @Input()
@@ -286,6 +289,10 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       $event.Object = false;
     }
     this.updateValueText();
+    this.emitChange();
+  }
+
+  private emitChange() {
     this.changed.next(this.useModels ? this.values : this.values.map(v => v.ID));
   }
 
@@ -298,7 +305,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       }
     });
     this.updateValueText();
-    this.changed.next(this.values);
+    this.emitChange();
   }
 
   optionsDeselectAll() {
@@ -310,7 +317,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       }
     });
     this.updateValueText();
-    this.changed.next(this.values);
+    this.emitChange();
   }
 
   onOptionsShown() {
@@ -340,7 +347,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
       }
     }
 
-    this.changed.next(this.values);
+    this.emitChange();
     this.changeDetector.markForCheck();
   }
 
