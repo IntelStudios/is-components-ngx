@@ -9,6 +9,7 @@
     "build.prod": "node local-deps.js && ng build --prod",
     "build.select": "ng build is-select && cd dist/is-select && npm pack --quiet && cp *.tgz ../../package",
     "build.select-tree": "ng build is-select-tree && cd dist/is-select-tree && npm pack --quiet && cp *.tgz ../../package",
+    "build.dx-select-tree": "ng build is-dx-select-tree && cd dist/is-dx-select-tree && npm pack --quiet && cp *.tgz ../../package",
     "build.codemirror": "ng build is-codemirror && cd dist/is-codemirror && npm pack --quiet && cp *.tgz ../../package",
     "build.froala": "ng build is-froala && cd dist/is-froala && npm pack --quiet && cp *.tgz ../../package",
     "build.metronic": "ng build is-metronic && cd dist/is-metronic && npm pack --quiet && cp *.tgz ../../package",

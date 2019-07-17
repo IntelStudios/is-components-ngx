@@ -1,0 +1,19 @@
+<div style="position: relative;">
+  <span (click)="toggleExpandNode();">
+        <i *ngIf="!node.isLeaf" class="fa fa-fw fa-angle-right" [class.fa-rotate-90]="node.isExpanded"></i>
+        <i [class]="node.data.icon"></i>
+        <span [title]="node.data.name">{{ node.data.name }}</span>
+  <span class="badge-html" [innerHtml]="sanitize(node.data.badgeHtml)"></span>
+  <i *ngIf="node.data.$isSaving" class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+  </span>
+  <div class="selection-fields" *ngIf="selection.selectionFields.length > 0">
+    <span *ngFor="let f of selection.selectionFields;">
+        <i
+        class="fa fa-fw selection-field"
+        [title]="f.name|translate"
+        [class]="node.data.$classes[f.fieldName]"
+        (click)="toggleSelect($event, node, f)"
+        ></i>
+    </span>
+  </div>
+</div>

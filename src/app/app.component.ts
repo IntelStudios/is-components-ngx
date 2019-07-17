@@ -19,6 +19,7 @@ export class AppComponent {
     { title: 'Bootstrap Switch', route: '/bootstrap-switch' },
     { title: 'Password', route: '/password' },
     { title: 'Select Tree', route: '/select-tree' },
+    { title: 'Select Tree DX', route: '/dx-select-tree' },
     { title: 'Modal', route: '/modal' },
     { title: 'Grid', route: '/grid' },
     { title: 'Table', route: '/table' },

@@ -1,0 +1,5 @@
+<tree-root #tree *ngIf="selection" [nodes]="selection.children" [options]="options" (initialized)="onTreeInitialized()" (onActiveChanged)="onActiveChanged($event)">
+    <ng-template #treeNodeTemplate let-node>
+      <is-dx-select-tree-node [node]="node" [selection]="selection"></is-dx-select-tree-node>
+  </ng-template>
+</tree-root>

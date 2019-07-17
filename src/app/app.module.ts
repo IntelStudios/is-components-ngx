@@ -9,34 +9,36 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { IsBootstrapSwitchModule } from 'projects/is-bootstrap-switch/src/public_api';
 import { IsCodemirrorModule } from 'projects/is-codemirror/src/public_api';
+import { IsCronEditorModule } from 'projects/is-cron-editor/src/lib/is-cron-editor.module';
 import { IsDatepickerModule } from 'projects/is-datepicker/src/public_api';
+import { IsDXSelectTreeModule } from 'projects/is-dx-select-tree/src/public_api';
 import { IsFroalaModule } from 'projects/is-froala/src/public_api';
 import { IsGridModule } from 'projects/is-grid/src/public_api';
-import { IsTableModule } from 'projects/is-table/src/public_api';
 import { IsMetronicModule } from 'projects/is-metronic/src/public_api';
 import { IsModalModule } from 'projects/is-modal/src/public_api';
 import { IsPasswordModule } from 'projects/is-password/src/public_api';
 import { IsSelectTreeModule } from 'projects/is-select-tree/src/public_api';
 import { IsSelectModule } from 'projects/is-select/src/public_api';
 import { IsSelectpickerModule } from 'projects/is-selectpicker/src/public_api';
+import { IsTableModule } from 'projects/is-table/src/public_api';
 import { IsTimepickerModule } from 'projects/is-timepicker/src/lib/is-timepicker.module';
-import { IsCronEditorModule } from 'projects/is-cron-editor/src/lib/is-cron-editor.module';
 
 import { AppComponent } from './app.component';
 import { DemoBootstrapSwitchComponent } from './demo-bootstrap-switch/demo-bootstrap-switch.component';
 import { DemoCodemirrorComponent } from './demo-codemirror/demo-codemirror.component';
+import { DemoCronEditorComponent } from './demo-cron-editor/demo-cron-editor.component';
 import { DemoDatepickerComponent } from './demo-datepicker/demo-datepicker.component';
+import { DemoDXSelectTreeComponent } from './demo-dx-select-tree/demo-dx-select-tree.component';
 import { DemoFroalaComponent } from './demo-froala/demo-froala.component';
 import { DemoGridComponent } from './demo-grid/demo-grid.component';
-import { DemoTableComponent } from './demo-table/demo-table.component';
 import { DemoMetronicComponent } from './demo-metronic/demo-metronic.component';
 import { DemoModalComponent } from './demo-modal/demo-modal.component';
 import { DemoPasswordComponent } from './demo-password/demo-password.component';
 import { DemoSelectTreeComponent } from './demo-select-tree/demo-select-tree.component';
 import { DemoSelectComponent } from './demo-select/demo-select.component';
 import { DemoSelectpickerComponent } from './demo-selectpicker/demo-selectpicker.component';
+import { DemoTableComponent } from './demo-table/demo-table.component';
 import { DemoTimepickerComponent } from './demo-timepicker/demo-timepicker.component';
-import { DemoCronEditorComponent } from './demo-cron-editor/demo-cron-editor.component';
 
 export const routes: Routes = [
   { path: 'select', component: DemoSelectComponent },
@@ -49,6 +51,7 @@ export const routes: Routes = [
   { path: 'bootstrap-switch', component: DemoBootstrapSwitchComponent },
   { path: 'password', component: DemoPasswordComponent },
   { path: 'select-tree', component: DemoSelectTreeComponent },
+  { path: 'dx-select-tree', component: DemoDXSelectTreeComponent },
   { path: 'modal', component: DemoModalComponent },
   { path: 'grid', component: DemoGridComponent },
   { path: 'table', component: DemoTableComponent },
@@ -68,6 +71,7 @@ export const routes: Routes = [
     DemoBootstrapSwitchComponent,
     DemoPasswordComponent,
     DemoSelectTreeComponent,
+    DemoDXSelectTreeComponent,
     DemoModalComponent,
     DemoGridComponent,
     DemoTableComponent,
@@ -94,6 +98,7 @@ export const routes: Routes = [
     IsBootstrapSwitchModule.forRoot({onText: 'bs-switch-on', offText: 'bs-switch-off'}),
     IsPasswordModule,
     IsSelectTreeModule,
+    IsDXSelectTreeModule,
     IsModalModule,
     IsGridModule,
     IsTableModule,

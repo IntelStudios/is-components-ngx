@@ -472,6 +472,41 @@
         }
       }
     },
+    "is-dx-select-tree": {
+      "root": "projects/is-dx-select-tree",
+      "sourceRoot": "projects/is-dx-select-tree/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/is-dx-select-tree/tsconfig.lib.json",
+            "project": "projects/is-dx-select-tree/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/is-dx-select-tree/src/test.ts",
+            "tsConfig": "projects/is-dx-select-tree/tsconfig.spec.json",
+            "karmaConfig": "projects/is-dx-select-tree/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/is-dx-select-tree/tsconfig.lib.json",
+              "projects/is-dx-select-tree/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
     "is-modal": {
       "root": "projects/is-modal",
       "sourceRoot": "projects/is-modal/src",
