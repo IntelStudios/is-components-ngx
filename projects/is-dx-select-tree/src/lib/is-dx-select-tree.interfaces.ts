@@ -4,5 +4,7 @@ export interface IISTreeNode {
   Name: string;
   Values?: { [fieldName: string]: boolean; };
   Children?: IISTreeNode[];
-  CanSelect?: boolean;
+  CanSelect?: boolean;  // if parent or children can be selected
+  Path: string;         // unique value
+  $checked?: boolean;
 }

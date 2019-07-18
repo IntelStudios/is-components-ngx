@@ -6,14 +6,17 @@
   <span class="badge-html" [innerHtml]="sanitize(node.data.badgeHtml)"></span>
   <i *ngIf="node.data.$isSaving" class="fa fa-circle-o-notch fa-spin fa-fw"></i>
   </span>
-  <div class="selection-fields" *ngIf="selection.selectionFields.length > 0">
-    <span *ngFor="let f of selection.selectionFields;">
-        <i
-        class="fa fa-fw selection-field"
-        [title]="f.name|translate"
-        [class]="node.data.$classes[f.fieldName]"
-        (click)="toggleSelect($event, node, f)"
-        ></i>
-    </span>
+  <div class="radio-btn" *ngIf="node.data.canSelect == true">
+    <div class="selection-fields" *ngIf="selection.selectionFields.length > 0">
+      <span *ngFor="let f of selection.selectionFields;" style="height: 100%">
+          <!-- <i
+          class="fa fa-fw selection-field"
+          [title]="f.name|translate"
+          [class]="node.data.$classes[f.fieldName]"
+          (click)="toggleSelect($event, node, f)"
+          ></i> -->
+          <input type="radio" name="group" [title]="f.name|translate" (click)="onSelect()" [checked]="node.data.$checked">
+      </span>
+    </div>
   </div>
 </div>

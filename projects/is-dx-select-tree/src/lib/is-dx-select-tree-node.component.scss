@@ -1,9 +1,24 @@
+$color-node-hover: var(--is-select-tree-item-hover, lighten(#67809F, 10%));
+
 :host {
   > div {
     > span {
       > i, span {
         padding-right: 3px;
       }
+    }
+  }
+
+  input {
+    margin-right: 15px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .radio-btn {
+    &:hover {
+      background-color: $color-node-hover;
     }
   }
 }

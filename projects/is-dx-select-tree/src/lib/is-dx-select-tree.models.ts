@@ -18,22 +18,26 @@ export class IsDXSelectTreeNode {
   badgeHtml: string = '';
   onUpdateView: EventEmitter<any> = new EventEmitter<any>();
   canSelect: boolean;
+  path: string;
+  $checked: boolean;
 
   private Values: { [fieldName: string]: boolean; } = {};
 
-  constructor(id: number, name: string, canSelect: boolean = true) {
+  constructor(id: number, name: string, canSelect: boolean = true, path: string, checked: boolean = false) {
     this.id = id || this.uuid();
     this.name = name;
     this.canSelect = canSelect;
+    this.path = path;
+    this.$checked = checked;
     this.isPropagateValue = false; //this.isVirtual();
   }
 
   static createRoot(): IsDXSelectTreeNode {
-    return new IsDXSelectTreeNode(0, 'All', false).withIcon('fa fa-star-o');
+    return new IsDXSelectTreeNode(0, 'All', false, '').withIcon('fa fa-star-o');
   }
 
   static deserialize(root: IISTreeNode, defaultIcon: string = null, ...fields: IsDXSelectField[]): IsDXSelectTreeNode {
-    const node: IsDXSelectTreeNode = new IsDXSelectTreeNode(root.ID, root.Name, root.CanSelect)
+    const node: IsDXSelectTreeNode = new IsDXSelectTreeNode(root.ID, root.Name, root.CanSelect, root.Path, root.$checked)
       .withIcon(root.Icon ? root.Icon : defaultIcon);
     if (!node.isVirtual() && node.canSelect) {
       const values = root.Values || {};
@@ -193,7 +197,7 @@ export class IsDXSelectTree extends IsDXSelectTreeNode {
   selectionFields: IsDXSelectField[] = [IsDXSelectField.selected()];
 
   constructor() {
-    super(null, 'root', false);
+    super(null, 'root', false, '');
     this.icon = '';
   }
 

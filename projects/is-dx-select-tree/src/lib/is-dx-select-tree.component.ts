@@ -53,6 +53,9 @@ export class IsDXSelectTreeComponent implements OnDestroy {
   @Output()
   change: EventEmitter<IsDXSelectTreeChangeEvent> = new EventEmitter<IsDXSelectTreeChangeEvent>();
 
+  @Output()
+  selected: EventEmitter<IsDXSelectTreeNode> = new EventEmitter<IsDXSelectTreeNode>();
+
   options: any = {
     useVirtualScroll: false,
     nodeHeight: 13
@@ -107,6 +110,10 @@ export class IsDXSelectTreeComponent implements OnDestroy {
 
   onTreeInitialized() {
     this.onInitialized.emit();
+  }
+
+  onSelected(node: IsDXSelectTreeNode) {
+    this.selected.emit(node);
   }
 
   /**

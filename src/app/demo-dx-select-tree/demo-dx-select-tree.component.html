@@ -6,17 +6,11 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <h3>Instant save</h3>
-  </div>
-  <div class="col-sm-6">
-    <h3>Multiple dependent fields</h3>
+    <h3>Tree</h3>
   </div>
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-dx-select-tree [selection]="tree1" (change)="onTreeChangeInstantSave($event)"></is-dx-select-tree>
-  </div>
-  <div class="col-sm-6">
-    <is-dx-select-tree [selection]="tree2" (change)="onTreeChangeInstantSave($event)"></is-dx-select-tree>
+    <is-dx-select-tree [selection]="tree1" [instantSave]="false" (selected)="onSelected($event)"></is-dx-select-tree>
   </div>
 </div>
