@@ -12,7 +12,7 @@ export class DemoDXSelectTreeComponent {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-dx-select-tree-7.0.0.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-dx-select-tree-7.0.1.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsDXSelectTreeModule } from 'is-dx-select-tree';</pre>

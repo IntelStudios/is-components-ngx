@@ -69,8 +69,18 @@ export class IsDXSelectTreeNodeComponent implements OnInit, OnDestroy {
   // }
 
   onSelect() {
-    this.node.data.$checked = !this.node.data.$checked;
-    this.node.data.$checked ? this.selected.emit(this.node.data) : this.selected.emit(null);
+    //this.node.data.$checked = !this.node.data.$checked;
+    //this.node.data.$checked ?  : this.selected.emit(null);
+
+    this.selection.eachNode((node: IsDXSelectTreeNode) => {
+      if (node.id === this.node.id) {
+        node.$checked = !this.node.data.$checked;
+        this.selected.emit(this.node.data);
+      } else {
+        node.$checked = false;
+      }
+    })
+
     this.changeDetector.markForCheck();
   }
 
