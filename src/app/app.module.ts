@@ -9,7 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { IsBootstrapSwitchModule } from 'projects/is-bootstrap-switch/src/public_api';
 import { IsCodemirrorModule } from 'projects/is-codemirror/src/public_api';
-import { IsCronEditorModule } from 'projects/is-cron-editor/src/lib/is-cron-editor.module';
+import { IsCronEditorModule } from 'projects/is-cron-editor/src/public_api';
 import { IsDatepickerModule } from 'projects/is-datepicker/src/public_api';
 import { IsDXSelectTreeModule } from 'projects/is-dx-select-tree/src/public_api';
 import { IsFroalaModule } from 'projects/is-froala/src/public_api';
@@ -21,7 +21,7 @@ import { IsSelectTreeModule } from 'projects/is-select-tree/src/public_api';
 import { IsSelectModule } from 'projects/is-select/src/public_api';
 import { IsSelectpickerModule } from 'projects/is-selectpicker/src/public_api';
 import { IsTableModule } from 'projects/is-table/src/public_api';
-import { IsTimepickerModule } from 'projects/is-timepicker/src/lib/is-timepicker.module';
+import { IsTimepickerModule } from 'projects/is-timepicker/src/public_api';
 
 import { AppComponent } from './app.component';
 import { DemoBootstrapSwitchComponent } from './demo-bootstrap-switch/demo-bootstrap-switch.component';
@@ -56,7 +56,8 @@ export const routes: Routes = [
   { path: 'grid', component: DemoGridComponent },
   { path: 'table', component: DemoTableComponent },
   { path: 'timepicker', component: DemoTimepickerComponent },
-  { path: 'croneditor', component: DemoCronEditorComponent }
+  { path: 'croneditor', component: DemoCronEditorComponent },
+  { path: 'checkmap', loadChildren: './demo-checkmap/demo-checkmap.module#DemoCheckmapRoutingModule' }
 ];
 
 @NgModule({
@@ -76,7 +77,7 @@ export const routes: Routes = [
     DemoGridComponent,
     DemoTableComponent,
     DemoTimepickerComponent,
-    DemoCronEditorComponent
+    DemoCronEditorComponent,
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,

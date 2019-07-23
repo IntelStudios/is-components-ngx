@@ -87,6 +87,12 @@
       ],
       "is-cron-editor/*": [
         "dist/is-cron-editor/*"
+      ],
+      "is-checkmap": [
+        "dist/is-checkmap"
+      ],
+      "is-checkmap/*": [
+        "dist/is-checkmap/*"
       ]
     }
   }
