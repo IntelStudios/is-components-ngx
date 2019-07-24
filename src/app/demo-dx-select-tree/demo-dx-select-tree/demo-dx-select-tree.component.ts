@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { IsDXSelectField, IsDXSelectTree, IsDXSelectTreeChangeEvent, IsDXSelectTreeModule, IsDXSelectTreeNode } from 'projects/is-dx-select-tree/src/public_api';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IsDXSelectField, IsDXSelectTree, IsDXSelectTreeNode } from 'projects/is-dx-select-tree/src/public_api';
 
 @Component({
   selector: 'app-demo-dx-select-tree',
@@ -31,12 +31,14 @@ export class DemoDXSelectTreeComponent {
       Path: '*',
       Children: [
         { ID: 2, Name: 'Node 1', CanSelect: false, Path: '*' },
-        { ID: 3, Name: 'Node 2', Values: { IsSelected: false }, CanSelect: true, Path: '*', Children: [
-          { ID: 4, Name: 'Node 1', CanSelect: false, Path: '*'},
-          { ID: 5, Name: 'Node 2', Path: '*', Values: { IsSelected: false }, CanSelect: false },
-          { ID: 6, Name: 'Node 3', Path: '*', Values: { IsSelected: false }, CanSelect: true, $checked: true },
-          { ID: 7, Name: 'Node 4', Path: '*', Values: { IsSelected: true }, CanSelect: false }
-        ]},
+        {
+          ID: 3, Name: 'Node 2', Values: { IsSelected: false }, CanSelect: true, Path: '*', Children: [
+            { ID: 4, Name: 'Node 1', CanSelect: false, Path: '*' },
+            { ID: 5, Name: 'Node 2', Path: '*', Values: { IsSelected: false }, CanSelect: false },
+            { ID: 6, Name: 'Node 3', Path: '*', Values: { IsSelected: false }, CanSelect: true, $checked: true },
+            { ID: 7, Name: 'Node 4', Path: '*', Values: { IsSelected: true }, CanSelect: false }
+          ]
+        },
         { ID: 8, Name: 'Node 3', Path: '*', Values: { IsSelected: true }, CanSelect: false },
         { ID: 9, Name: 'Node 4', Path: '*', Values: { IsSelected: true }, CanSelect: true }
       ],

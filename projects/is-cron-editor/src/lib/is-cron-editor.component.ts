@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -8,9 +8,9 @@ import {
   ValidationErrors,
   Validator
 } from '@angular/forms';
-import {Subscription} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
-import {cronExpressionValidator, mapNumbers} from './is-cron-editor.validator';
+import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { cronExpressionValidator, mapNumbers } from './is-cron-editor.validator';
 
 const cronValidator = cronExpressionValidator();
 
@@ -24,11 +24,11 @@ const cronValidator = cronExpressionValidator();
     useExisting: IsCronEditorComponent,
     multi: true
   },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: IsCronEditorComponent,
-      multi: true
-    }]
+  {
+    provide: NG_VALIDATORS,
+    useExisting: IsCronEditorComponent,
+    multi: true
+  }]
 })
 export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Validator {
 
@@ -121,25 +121,25 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   cronExpressionControl = new FormControl();
 
   defaultSelectTypeValues = [
-    {ID: 1, Value: 'Every'},
-    {ID: 2, Value: 'Every X'},
-    {ID: 4, Value: 'Every between'},
-    {ID: 3, Value: 'Specific'},
+    { ID: 1, Value: 'Every' },
+    { ID: 2, Value: 'Every X' },
+    { ID: 4, Value: 'Every between' },
+    { ID: 3, Value: 'Specific' },
   ];
 
   daySelectTypeValues = [
-    {ID: 1, Value: 'Every'},
-    {ID: 2, Value: 'Every weekday'},
-    {ID: 3, Value: 'Every X days starting on day of week'},
-    {ID: 4, Value: 'Every X days starting on Yth'},
-    {ID: 5, Value: 'Specific day of week'},
-    {ID: 12, Value: 'Specific day of month'},
-    {ID: 6, Value: 'Any last day of the month'},
-    {ID: 7, Value: 'Last weekday of the month'},
-    {ID: 8, Value: 'Last day of week of the month'},
-    {ID: 9, Value: 'X days before end of the moth'},
-    {ID: 10, Value: 'Nearest weekday to the Xth of the month'},
-    {ID: 11, Value: 'On the Xth day of the month'},
+    { ID: 1, Value: 'Every' },
+    { ID: 2, Value: 'Every weekday' },
+    { ID: 3, Value: 'Every X days starting on day of week' },
+    { ID: 4, Value: 'Every X days starting on Yth' },
+    { ID: 5, Value: 'Specific day of week' },
+    { ID: 12, Value: 'Specific day of month' },
+    { ID: 6, Value: 'Any last day of the month' },
+    { ID: 7, Value: 'Last weekday of the month' },
+    { ID: 8, Value: 'Last day of week of the month' },
+    { ID: 9, Value: 'X days before end of the moth' },
+    { ID: 10, Value: 'Nearest weekday to the Xth of the month' },
+    { ID: 11, Value: 'On the Xth day of the month' },
   ];
 
   values = {
@@ -149,28 +149,28 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     daysOfMonth: [],
 
     daysOfWeek: [
-      {ID: 2, Value: 'Monday'},
-      {ID: 3, Value: 'Tuesday'},
-      {ID: 4, Value: 'Wednesday'},
-      {ID: 5, Value: 'Thursday'},
-      {ID: 6, Value: 'Friday'},
-      {ID: 7, Value: 'Saturday'},
-      {ID: 1, Value: 'Sunday'},
+      { ID: 2, Value: 'Monday' },
+      { ID: 3, Value: 'Tuesday' },
+      { ID: 4, Value: 'Wednesday' },
+      { ID: 5, Value: 'Thursday' },
+      { ID: 6, Value: 'Friday' },
+      { ID: 7, Value: 'Saturday' },
+      { ID: 1, Value: 'Sunday' },
     ],
 
     months: [
-      {ID: 1, Value: 'January'},
-      {ID: 2, Value: 'February'},
-      {ID: 3, Value: 'March'},
-      {ID: 4, Value: 'April'},
-      {ID: 5, Value: 'May'},
-      {ID: 6, Value: 'June'},
-      {ID: 7, Value: 'July'},
-      {ID: 8, Value: 'August'},
-      {ID: 9, Value: 'September'},
-      {ID: 10, Value: 'October'},
-      {ID: 11, Value: 'November'},
-      {ID: 12, Value: 'December'},
+      { ID: 1, Value: 'January' },
+      { ID: 2, Value: 'February' },
+      { ID: 3, Value: 'March' },
+      { ID: 4, Value: 'April' },
+      { ID: 5, Value: 'May' },
+      { ID: 6, Value: 'June' },
+      { ID: 7, Value: 'July' },
+      { ID: 8, Value: 'August' },
+      { ID: 9, Value: 'September' },
+      { ID: 10, Value: 'October' },
+      { ID: 11, Value: 'November' },
+      { ID: 12, Value: 'December' },
     ],
   };
 
@@ -195,16 +195,16 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
   ngOnInit() {
     for (let i = 0; i < 60; i++) {
-      this.values.minutes.push({ID: i, Value: `${i}`});
+      this.values.minutes.push({ ID: i, Value: `${i}` });
     }
     for (let i = 0; i < 24; i++) {
-      this.values.hours.push({ID: i, Value: `${i}`});
+      this.values.hours.push({ ID: i, Value: `${i}` });
     }
     for (let i = 1; i <= 31; i++) {
-      this.values.daysOfMonth.push({ID: i, Value: `${i}`});
+      this.values.daysOfMonth.push({ ID: i, Value: `${i}` });
     }
     for (let i = (new Date()).getFullYear(); i < 2100; i++) {
-      this.values.years.push({ID: i, Value: `${i}`});
+      this.values.years.push({ ID: i, Value: `${i}` });
     }
 
     this.subscribeToForms();

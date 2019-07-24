@@ -1,7 +1,10 @@
 // this script executes ng build for each project we have internal dependency
 // lib gets built into /dist
-
+const modules = ['is-select', 'is-selectpicker','is-metronic'];
 const exec = require('child_process').execSync;
-exec('ng build is-select');
-exec('ng build is-selectpicker');
-exec('ng build is-metronic');
+console.info(`Building local modules ${modules.length}`);
+modules.forEach(m => {
+  console.info(`Building: ${m}`);
+  exec(`ng build ${m}`);
+});
+console.info('Finished');

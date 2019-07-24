@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { of } from 'rxjs';
 
-import { FieldErrorModel, FieldErrorService } from '../../../projects/is-metronic/src/public_api';
+import { FieldErrorModel, FieldErrorService } from 'projects/is-metronic/src/public_api';
 
 @Component({
   selector: 'app-demo-metronic',
