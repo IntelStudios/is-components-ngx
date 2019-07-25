@@ -23,7 +23,7 @@ export class IsModalComponent implements OnInit {
   }
 
   buttonClick(btn: IsModalButtonConfig) {
-    btn.onClick && btn.onClick();
+    btn.onClick && btn.onClick(this.modalRef);
     if (btn.autoClose !== false) {
       this.modalRef.hide();
     }

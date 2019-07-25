@@ -1,4 +1,5 @@
 import { TemplateRef } from '@angular/core';
+import { BsModalRef } from 'ngx-bootstrap';
 
 export interface IsModalButtonConfig {
   /**
@@ -20,7 +21,7 @@ export interface IsModalButtonConfig {
   /**
    * click handler
    */
-  onClick?: () => void
+  onClick?: (modalRef: BsModalRef) => void
 }
 
 export interface IsModalConfig {
