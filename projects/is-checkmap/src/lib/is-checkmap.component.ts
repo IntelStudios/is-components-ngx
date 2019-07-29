@@ -1,9 +1,10 @@
-import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'is-checkmap',
   templateUrl: './is-checkmap.component.html',
-  styleUrls: ['./is-checkmap.component.scss']
+  styleUrls: ['./is-checkmap.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IsCheckmapComponent implements OnInit {
 

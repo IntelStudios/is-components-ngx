@@ -4,8 +4,8 @@ $scroll-width: 15px;
 :host {
   height: 400px;
   display: grid;
-  grid-template-rows: 25% 75% auto;
-  grid-template-columns: 25% 75% auto;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: auto auto auto;
 
   .left {
     grid-area: 2 / 1 / 2 / 1;
