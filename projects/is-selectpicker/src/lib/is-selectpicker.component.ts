@@ -244,7 +244,7 @@ export class IsSelectpickerComponent implements ControlValueAccessor, OnInit, On
           if (this.useModels) {
             throw new Error('[useModels] is enabled, but you are trying to set non-model value: ')
           }
-          return { ID: i, Value: i, Object: null };
+          return { ID: i, Value: this.options.length > 0 ? this.options.find(x=> x.ID == i).Value : i, Object: null };
         }
       })
       if (this.options) {
