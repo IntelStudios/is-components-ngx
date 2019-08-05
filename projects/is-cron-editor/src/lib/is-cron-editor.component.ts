@@ -489,7 +489,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       this.cronState.dayOfMonth = cronParts[3].trim().toUpperCase();
       this.cronState.months = cronParts[4].trim().toUpperCase();
       this.cronState.dayOfWeek = cronParts[5].trim().toUpperCase();
-      this.cronState.years = cronParts[6].trim();
+      this.cronState.years = cronParts.length === 6 ? null : cronParts[6].trim();
 
       // parse seconds
       if (this.cronState.seconds === '*') {
@@ -680,7 +680,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       }
 
       // parse years
-      if (this.cronState.years === '*') {
+      if (this.cronState.years === null ||  this.cronState.years === '' || this.cronState.years === '*') {
         this.formControl.years.type.setValue(1);
       } else if (this.cronState.years.indexOf('/') > -1) {
         const split = mapNumbers(this.cronState.years.split('/'));
