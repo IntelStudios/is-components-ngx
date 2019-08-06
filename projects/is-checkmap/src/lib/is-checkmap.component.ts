@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, Renderer2, ChangeDetectionStrategy } from '@angular/core';
+import { IsCheckmapTreeNode } from './is-checkmap.interfaces';
 
 @Component({
   selector: 'is-checkmap',
@@ -7,6 +8,21 @@ import { Component, OnInit, ElementRef, Renderer2, ChangeDetectionStrategy } fro
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IsCheckmapComponent implements OnInit {
+
+  tree: IsCheckmapTreeNode = {
+    ID: 1, EntityName: 'Root', Children: [
+      {
+        ID: 11, EntityName: '11', Children: [
+          { ID: 21, EntityName: '21 asdfasdfs' },
+          { ID: 22, EntityName: '22ad fadf ' },
+          { ID: 23, EntityName: '23 adsf' },
+        ]
+      },
+      { ID: 12, EntityName: '12  node with quite a long name' },
+      { ID: 13, EntityName: '13' },
+    ]
+  };
+
 
   private elLeft: HTMLDivElement;
   private elTop: HTMLDivElement;

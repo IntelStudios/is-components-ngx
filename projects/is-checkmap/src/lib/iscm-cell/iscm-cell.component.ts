@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'lib-iscm-cell',
+  selector: 'iscm-cell',
   templateUrl: './iscm-cell.component.html',
-  styleUrls: ['./iscm-cell.component.css'],
+  styleUrls: ['./iscm-cell.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IscmCellComponent implements OnInit {
