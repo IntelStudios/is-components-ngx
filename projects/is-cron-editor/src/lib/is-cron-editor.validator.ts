@@ -24,7 +24,7 @@ export function cronExpressionValidator(): ValidatorFn {
 
     try {
       const cronParts = control.value.split(' ');
-      if (cronParts.length !== 7) {
+      if (cronParts.length !== 7 && cronParts.length !== 6) {
         // noinspection ExceptionCaughtLocallyJS
         throw Error('invalid cron expression length');
       }
@@ -36,11 +36,15 @@ export function cronExpressionValidator(): ValidatorFn {
         dayOfMonth: cronParts[3].trim().toUpperCase(),
         months: cronParts[4].trim().toUpperCase(),
         dayOfWeek: cronParts[5].trim().toUpperCase(),
-        years: cronParts[6].trim()
+        years: cronParts.length === 6 ? null : cronParts[6].trim()
       };
 
       for (const k of Object.keys(cronState)) {
-        if (!cronState[k].length) {
+        if (cronState[k] !== null && !cronState[k].length) {
+          if (k === 'years') {
+            cronState.years = null;
+            continue;
+          }
           // noinspection ExceptionCaughtLocallyJS
           throw Error('missing ' + k);
         }
@@ -138,7 +142,7 @@ export function cronExpressionValidator(): ValidatorFn {
       }
 
       // validate years
-      if (cronState.years === '*') {
+      if (cronState.years === null || cronState.years === '*') {
       } else if (cronState.years.indexOf('/') > -1) {
         mapNumbers(cronState.years.split('/'));
       } else if (cronState.years.indexOf('-') > -1) {
