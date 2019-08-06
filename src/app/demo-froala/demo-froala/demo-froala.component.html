@@ -7,19 +7,20 @@
 
 <div class="row">
   <div class="col-sm-12">
-    <is-froala [options]="froalaConfig" (onCommand)="onFroalaCommand($event)"></is-froala>
+    <is-froala [options]="froalaConfig" [formControl]="control" (onCommand)="onFroalaCommand($event)"></is-froala>
   </div>
 </div>
 <div class="row">
   <div class="col-sm-12">
     <button (click)="enableCustomButtons()">Enable Custom Buttons</button>
     <button (click)="disableCustomButtons()">Disable Custom Buttons</button>
+    <button (click)="toggleDisabled()">Toggle Disabled</button>
   </div>
 </div>
 
 <div class="row">
   <div class="col-sm-12">
     <h2>Disabled load on init - click for load</h2>
-    <is-froala [options]="froalaConfig" [loadOnInit]="false" [html]="html" (onCommand)="onFroalaCommand($event)"></is-froala>
+    <is-froala [options]="froalaConfig" [formControl]="control" [loadOnInit]="false" [html]="html" (onCommand)="onFroalaCommand($event)"></is-froala>
   </div>
 </div>

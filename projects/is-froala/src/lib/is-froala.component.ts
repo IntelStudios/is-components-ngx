@@ -6,19 +6,29 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
+  HostBinding,
+  Inject,
+  InjectionToken,
   Input,
   NgZone,
   OnDestroy,
   OnInit,
-  Inject,
+  Optional,
   Output,
-  InjectionToken, Optional, SecurityContext
+  SecurityContext,
+  ViewEncapsulation,
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, Subscription } from 'rxjs';
 
-import { IAtJSConfig, FroalaCommand, IntellisenseSuggestion, IsFroalaConfig, IIsFroalaOptions, IsFroalaOptions } from './is-froala.interfaces';
+import {
+  FroalaCommand,
+  IAtJSConfig,
+  IIsFroalaOptions,
+  IntellisenseSuggestion,
+  IsFroalaConfig,
+} from './is-froala.interfaces';
 
 declare var $: any;
 
@@ -70,7 +80,8 @@ export const configToken = new InjectionToken<IsFroalaConfig>('IsFroalaConfig');
   templateUrl: 'is-froala.component.html',
   providers: [IS_FROALA_EDITOR_VALUE_ACCESSOR, IS_FROALA_EDITOR_VALIDATORS],
   styleUrls: ['./is-froala.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class IsFroalaComponent implements ControlValueAccessor, Validator, OnInit, AfterViewInit, OnDestroy {
 
@@ -96,6 +107,9 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   private _$element: any;
 
   private _html: string;
+
+  @HostBinding('class.disabled')
+  disabled: boolean = false;
 
   @Input()
   set options(config: IIsFroalaOptions) {
@@ -136,10 +150,10 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   onCommand: EventEmitter<FroalaCommand> = new EventEmitter<FroalaCommand>();
 
   constructor(@Optional() @Inject(configToken) private froalaConfig: IsFroalaConfig,
-  private changeDetector: ChangeDetectorRef,
-  private el: ElementRef,
-  private zone: NgZone,
-  private sanitizer: DomSanitizer) {
+    private changeDetector: ChangeDetectorRef,
+    private el: ElementRef,
+    private zone: NgZone,
+    private sanitizer: DomSanitizer) {
     if (!froalaConfig) {
       console.warn(`IS-FROALA: Config not provided. Will not load license (use IsFroalaModule.forRoot() )`);
       this.froalaConfig = {
@@ -199,6 +213,14 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   registerOnValidatorChange(fn: any) {
     this.onValidatorChangeFn = fn;
   }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+    if (this._editor) {
+      this._$element.froalaEditor(this.disabled ? 'edit.off' : 'edit.on');
+    }
+  }
+
   // End Validators methods
 
   private setEditorValue() {
@@ -271,6 +293,9 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
     defaults.events['froalaEditor.initialized'] = ((e, editor) => {
       this.setCustomButtonsVisibility();
+      if (this.disabled) {
+        editor.edit.off();
+      }
     }).bind(this);
 
     // before we use blur event, but it is not fire event when style of content was changed

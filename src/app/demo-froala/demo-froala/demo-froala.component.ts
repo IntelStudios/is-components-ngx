@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-demo-froala',
@@ -11,7 +12,7 @@ export class DemoFroalaComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-froala-7.0.2.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-froala-7.0.3.tgz
 npm install --save froala-editor at.js font-awesome</pre>
 
 <h3>Import Module</h3>
@@ -45,6 +46,8 @@ npm install --save froala-editor at.js font-awesome</pre>
 
   froalaConfig: any = {id: 1};
 
+  control: FormControl = new FormControl();
+
   constructor() { }
 
   html: string = '<p>Hello how are you</p>';
@@ -56,6 +59,13 @@ npm install --save froala-editor at.js font-awesome</pre>
     console.log($event);
   }
 
+  toggleDisabled() {
+    if (this.control.enabled) {
+      this.control.disable();
+    } else {
+      this.control.enable();
+    }
+  }
   enableCustomButtons() {
     this.froalaConfig = {id: this.froalaConfig.id++, intellisenseModal: true};
   }
