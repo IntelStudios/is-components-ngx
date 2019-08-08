@@ -19,7 +19,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable, Subscription } from 'rxjs';
 
 import {
@@ -106,7 +106,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   // jquery wrapped element
   private _$element: any;
 
-  private _html: string;
+  private _html: SafeHtml;
 
   @HostBinding('class.disabled')
   disabled: boolean = false;
@@ -137,9 +137,10 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   @Input()
   set html(value: string) {
-    this._html = this.sanitizer.sanitize(SecurityContext.HTML, value);
+    this._html = this.sanitizer.bypassSecurityTrustHtml(value);
   }
-  get html() {
+
+  get htmlContent(): SafeHtml {
     return this._html;
   }
 
