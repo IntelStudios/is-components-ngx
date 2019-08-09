@@ -12,7 +12,7 @@ export class DemoFroalaComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-froala-7.0.4.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-froala-7.0.5.tgz
 npm install --save froala-editor at.js font-awesome</pre>
 
 <h3>Import Module</h3>
@@ -45,6 +45,7 @@ npm install --save froala-editor at.js font-awesome</pre>
   `
 
   froalaConfig: any = {id: 1};
+  froalaConfigGerman = {id: 2, language: 'de'};
 
   control: FormControl = new FormControl();
 

@@ -270,6 +270,10 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       defaults['toolbarButtons'] = this.froalaConfig.defaultToolbarButtons;
     }
 
+    if (this._options && this._options.language) {
+      defaults.language = this._options.language;
+    }
+
     this.mergeOptions(defaults, this.options);
     // delete observables & atjs config
     // both can fail JSON.stringify(defaults) (internally used in froala)

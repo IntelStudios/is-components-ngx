@@ -20,6 +20,13 @@
 
 <div class="row">
   <div class="col-sm-12">
+    <h2>Localized to German</h2>
+    <is-froala [options]="froalaConfigGerman" [formControl]="control" (onCommand)="onFroalaCommand($event)"></is-froala>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
     <h2>Disabled load on init - click for load</h2>
     <is-froala [options]="froalaConfig" [formControl]="control" [loadOnInit]="false" [html]="html" (onCommand)="onFroalaCommand($event)"></is-froala>
   </div>
