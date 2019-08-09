@@ -37,6 +37,10 @@ export interface IIsFroalaOptions {
   codeMirrorOptions?: any;
   placeholderText?: string;
   charCounterCount?: boolean,
+  /**
+   * Client language
+   */
+  language?: string;
 }
 
 export class IsFroalaOptions {
