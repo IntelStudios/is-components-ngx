@@ -29,6 +29,7 @@ import {
   IntellisenseSuggestion,
   IsFroalaConfig,
 } from './is-froala.interfaces';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var $: any;
 
@@ -154,7 +155,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     private changeDetector: ChangeDetectorRef,
     private el: ElementRef,
     private zone: NgZone,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    private  translate: TranslateService) {
     if (!froalaConfig) {
       console.warn(`IS-FROALA: Config not provided. Will not load license (use IsFroalaModule.forRoot() )`);
       this.froalaConfig = {
@@ -272,6 +274,13 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
     if (this._options && this._options.language) {
       defaults.language = this._options.language;
+    } else {
+      const languageMap = {
+        'pt': 'pt_pt',
+        'zh-cn': 'zh_cn',
+        'zh_tw': 'zh-tw'
+      };
+      defaults.language = languageMap[this.translate.currentLang] || this.translate.currentLang;
     }
 
     this.mergeOptions(defaults, this.options);
