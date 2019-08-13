@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DemoMetronicComponent } from './demo-metronic/demo-metronic.component';
 import { IsMetronicModule } from 'projects/is-metronic/src/public_api';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PopoverModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [DemoMetronicComponent],
@@ -16,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       placement: 'right',
       triggers: 'click'
     }),
+    PopoverModule.forRoot(),
     ReactiveFormsModule,
     RouterModule
   ]

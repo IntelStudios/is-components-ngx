@@ -24,9 +24,9 @@ import { TooltipModule, TooltipConfig } from 'ngx-bootstrap';
     CommonModule, RouterModule, TranslateModule, PopoverModule, TooltipModule
   ],
   declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsSectionComponent, IsSectionTitleDirective, IsTabsetComponent,
-  IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent],
+    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent],
   exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsSectionComponent, IsSectionTitleDirective, IsTabsetComponent,
-  IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent]
+    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent]
 })
 export class IsMetronicModule {
   static forRoot(config: PopoverConfig, tooltipConfig: TooltipConfig): ModuleWithProviders {
@@ -38,4 +38,4 @@ export class IsMetronicModule {
       ]
     }
   }
- }
+}

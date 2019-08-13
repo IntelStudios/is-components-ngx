@@ -1,0 +1,16 @@
+@mixin is-input {
+  border-color: var(--is-control-border-color, #ccc);
+  background-color: var(--is-control-bg-color);
+  color: var(--is-control-fg-color, #fff);
+
+  &:hover {
+    border-color: var(--is-control-border-hover-color, #ccc);
+  }
+
+  &:active, &:focus {
+    border-color: var(--is-control-border-focus-color, #ccc);
+  }
+  &.ng-invalid {
+    border-color: var(--is-control-border-invalid-color, #ccc);
+  }
+}

@@ -1,5 +1,5 @@
 <!--suppress HtmlFormInputWithoutLabel, AngularUndefinedTag, AngularUndefinedBinding -->
-<input [formControl]="cronExpressionControl" class="form-control cron-expression" type="text">
+<input [formControl]="cronExpressionControl" class="form-control is-input cron-expression" type="text">
 
 <is-tabset (click)="onTouched()" class="tabbable-custom">
   <is-tab title="Seconds">
@@ -9,10 +9,10 @@
       <div class="sub-content" *ngIf="formControl.seconds.type.value === 2">
         <label>
           Every
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.seconds.everyX.everyX"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.everyX.everyX"
                  min="0" max="60">
           seconds starting at second
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.seconds.everyX.staringAt"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.everyX.staringAt"
                  min="0" max="59">
         </label>
       </div>
@@ -26,10 +26,10 @@
       <div class="sub-content" *ngIf="formControl.seconds.type.value === 4">
         <label>
           Run every second between
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.seconds.between.start"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.between.start"
                  min="0" max="60">
           and
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.seconds.between.end"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.between.end"
                  min="{{formControl.seconds.between.start.value}}" max="59">
         </label>
       </div>
@@ -42,10 +42,10 @@
       <div class="sub-content" *ngIf="formControl.minutes.type.value === 2">
         <label>
           Every
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.minutes.everyX.everyX"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.everyX.everyX"
                  min="0" max="60">
           minutes starting at minute
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.minutes.everyX.staringAt"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.everyX.staringAt"
                  min="0" max="59">
         </label>
       </div>
@@ -59,10 +59,10 @@
       <div class="sub-content" *ngIf="formControl.minutes.type.value === 4">
         <label>
           Run every minute between
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.minutes.between.start"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.between.start"
                  min="0" max="60">
           and
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.minutes.between.end"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.between.end"
                  min="{{formControl.minutes.between.start.value}}" max="59">
         </label>
       </div>
@@ -75,10 +75,10 @@
       <div class="sub-content" *ngIf="formControl.hours.type.value === 2">
         <label>
           Every
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.hours.everyX.everyX"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.hours.everyX.everyX"
                  min="0" max="23">
           hours starting at hour
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.hours.everyX.staringAt"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.hours.everyX.staringAt"
                  min="0" max="23">
         </label>
       </div>
@@ -92,10 +92,10 @@
       <div class="sub-content" *ngIf="formControl.hours.type.value === 4">
         <label>
           Run every hour between
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.hours.between.start"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.hours.between.start"
                  min="0" max="23">
           and
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.hours.between.end"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.hours.between.end"
                  min="{{formControl.hours.between.start.value}}" max="23">
         </label>
       </div>
@@ -107,7 +107,7 @@
       <div class="sub-content" *ngIf="formControl.days.type.value === 3">
         <label>
           Every
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.days.everyXDay.everyX"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.everyXDay.everyX"
                  min="0" max="7">
           day(s) starting on
         </label>
@@ -145,21 +145,21 @@
       </div>
       <div class="sub-content" *ngIf="formControl.days.type.value === 9">
         <label>Run
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.days.XBeforeEnd"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.XBeforeEnd"
                  min="1" max="31">
           days before the end of the month
         </label>
       </div>
       <div class="sub-content" *ngIf="formControl.days.type.value === 10">
         <label>On nearest weekday to the
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.days.nearestWeekdayTo"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.nearestWeekdayTo"
                  min="1" max="31">th
         </label>
       </div>
       <div class="sub-content" *ngIf="formControl.days.type.value === 11">
         <label>
           Run on
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.days.XthDay.x"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.XthDay.x"
                  min="0" max="5"> th
         </label>
         <is-select [items]="values.daysOfWeek" [formControl]="formControl.days.XthDay.day"></is-select>
@@ -173,7 +173,7 @@
       <div class="sub-content" *ngIf="formControl.months.type.value === 2">
         <label>
           Every
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.months.everyX.everyX"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.months.everyX.everyX"
                  min="1" max="12">
           months starting at
         </label>
@@ -205,10 +205,10 @@
       <div class="sub-content" *ngIf="formControl.years.type.value === 2">
         <label>
           Every
-          <input class="form-control two-digit-number" type="number" [formControl]="formControl.years.everyX.everyX"
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.years.everyX.everyX"
                  min="0" max="100">
           years starting at year
-          <input class="form-control four-digit-number" type="number" [formControl]="formControl.years.everyX.staringAt"
+          <input class="form-control is-input four-digit-number" type="number" [formControl]="formControl.years.everyX.staringAt"
                  min="2016" max="2099">
         </label>
       </div>
@@ -222,10 +222,10 @@
       <div class="sub-content" *ngIf="formControl.years.type.value === 4">
         <label>
           Run every year between
-          <input class="form-control four-digit-number" type="number" [formControl]="formControl.years.between.start"
+          <input class="form-control is-input four-digit-number" type="number" [formControl]="formControl.years.between.start"
                  min="2016" max="2099">
           and
-          <input class="form-control four-digit-number" type="number" [formControl]="formControl.years.between.end"
+          <input class="form-control is-input four-digit-number" type="number" [formControl]="formControl.years.between.end"
                  min="{{formControl.years.between.start.value}}" max="2099">
         </label>
       </div>

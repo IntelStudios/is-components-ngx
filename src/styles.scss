@@ -36,3 +36,77 @@ body {
 .short-scroll {
   @include short-scroll();
 }
+
+// theme styles
+
+.btn-group>.dropdown-menu:after, .dropdown-toggle>.dropdown-menu:after, .dropdown>.dropdown-menu:after {
+  border-bottom-color: var(--is-control-bg-color);
+}
+
+.is-input {
+  border-color: var(--is-control-border-color, #ccc);
+  background-color: var(--is-control-bg-color);
+  color: var(--is-control-fg-color, #fff);
+
+  &:hover {
+    border-color: var(--is-control-border-hover-color, #ccc);
+  }
+
+  &:active, &:focus {
+    border-color: var(--is-control-border-focus-color, #ccc);
+  }
+  &.ng-invalid {
+    border-color: var(--is-control-border-invalid-color, #ccc);
+  }
+}
+
+// END theme styles
+
+
+
+// theme definitions
+
+
+// light (default) theme
+$light-base-color: #333;
+$light-border-color: transparentize($light-base-color, 0.9);
+$light-hover-color: transparentize($light-base-color, 0.7);
+$light-handle-color: transparentize($light-base-color, 0.5);
+
+
+:root {
+  --is-control-bg-color: #fff;
+  --is-control-border-color: #{$light-border-color};
+  --is-control-border-focus-color: #{$light-base-color};
+  --is-control-border-hover-color: #{$light-hover-color};
+  --is-control-border-invalid-color: red;
+  --is-control-border-pending-color: yellow;
+  --is-control-fg-color: #{$light-base-color};
+  --is-control-handle-color: #{$light-handle-color};
+  --is-control-selected-item-bg-color: grey;
+  --is-control-active-item-bg-color: #428bca;
+}
+
+
+// dark theme
+$dark-base-color: #72BCFF;
+$dark-border-color: transparentize($dark-base-color, 0.9);
+$dark-hover-color: transparentize($dark-base-color, 0.7);
+$dark-handle-color: transparentize(#fff, 0.5);
+
+body.is-theme-dark {
+
+  background-color: #2C3E50;
+
+  h1, h2, h3, h4, h5 {
+    color: #fff;
+  }
+
+  --is-control-border-color: #{$dark-border-color};
+  --is-control-bg-color: #374F65;
+  --is-control-fg-color: #fff;
+  --is-control-border-color: #{$dark-border-color};
+  --is-control-border-focus-color: #{$dark-base-color};
+  --is-control-border-hover-color: #{$dark-hover-color};
+  --is-control-handle-color: #{$dark-handle-color};
+}

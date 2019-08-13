@@ -8,6 +8,7 @@ import {
   OnInit,
   Output,
   ViewContainerRef,
+  ViewEncapsulation,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
@@ -28,7 +29,8 @@ export const IS_TIMEPICKER_VALUE_ACCESSOR: any = {
   templateUrl: './is-timepicker.component.html',
   styleUrls: ['./is-timepicker.component.scss'],
   providers: [IS_TIMEPICKER_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class IsTimepickerComponent implements OnInit {
 

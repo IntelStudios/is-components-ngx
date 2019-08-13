@@ -1,12 +1,21 @@
 $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
-$color-selected-bg: var(--is-select-color-selected-bg, grey);
-$color-active-bg: var(--is-select-color-active-bg, #428bca);
-$color-cls-danger-fg: var(--is-color-danger, red);
-$color-border-default: var(--is-color-panel-border, #ccc);
+
+
+
+$color-selected-bg: var( --is-control-selected-item-bg-color, grey);
+$color-active-bg: var(--is-control-active-item-bg-color, #428bca);
+
+$color-handle: var(--is-control-handle-color, #000);
+$color-border: var(--is-control-border-color, #000);
+$color-border-focus: var(--is-control-border-focus-color, #000);
+$color-border-hover: var(--is-control-border-hover-color, #000);
+$color-bg: var(--is-control-bg-color, #fff);
+$color-fg: var(--is-control-fg-color, #fff);
+$color-invalid: var(--is-control-invalid-color, red);
 
 :host {
   *:focus {
-      outline: none;
+    outline: none;
   }
 
   &.ng-invalid {
@@ -14,7 +23,7 @@ $color-border-default: var(--is-color-panel-border, #ccc);
 
     .ui-select-match {
       .ui-select-toggle {
-        border-color: $color-cls-danger-fg;
+        border-color: $color-invalid;
       }
     }
   }
@@ -43,16 +52,20 @@ $color-border-default: var(--is-color-panel-border, #ccc);
   .ui-select-match {
     >.ui-select-toggle {
       position: relative;
+
       >.ui-select-match-text {
         overflow: hidden;
         width: calc(100% - 10px);
         max-width: calc(100% - 10px);
         text-overflow: ellipsis;
+        color: $color-fg;
+
         &.ui-select-allow-clear {
           max-width: calc(100% - 25px);
           width: calc(100% - 25px);
         }
       }
+
       >.btn-remove {
         position: absolute;
         right: 22px;
@@ -66,9 +79,11 @@ $color-border-default: var(--is-color-panel-border, #ccc);
     &.align-left {
       text-align: left !important;
     }
+
     &.align-center {
       text-align: center !important;
     }
+
     &.align-right {
       text-align: right !important;
       padding-right: 30px;
@@ -94,8 +109,17 @@ $color-border-default: var(--is-color-panel-border, #ccc);
     cursor: not-allowed;
   }
 
+  .ui-select-container {
+    &.open {
+      .ui-select-toggle {
+        border-color: $color-border-focus;
+      }
+    }
+  }
+
   .ui-select-choices-container {
     width: 100%;
+    background-color: $color-bg;
 
     >.ui-select-search {
       padding: 3px;
@@ -170,8 +194,16 @@ $color-border-default: var(--is-color-panel-border, #ccc);
   }
 
   .ui-select-toggle {
-    background-color: #fff;
-    border-color: $color-border-default;
+    background-color: $color-bg;
+    border-color: $color-border;
+
+    &:hover {
+      border-color: $color-border-hover;
+    }
+    &:focus,
+    &:active {
+      border-color: $color-border-focus;
+    }
   }
 
   .ui-select-toggle>.dropdown-caret {
@@ -180,7 +212,9 @@ $color-border-default: var(--is-color-panel-border, #ccc);
     right: 7px;
     margin-top: -5px;
     font-size: 80%;
+    color: $color-handle;
   }
+
   .dropdown-header {
     font-weight: bold;
     color: black;
@@ -192,5 +226,6 @@ $color-border-default: var(--is-color-panel-border, #ccc);
     right: 9px;
     top: 9px;
     z-index: 20;
+    color: $color-handle;
   }
 }

@@ -1,22 +1,37 @@
-$color-cls-danger-fg: var(--is-color-danger, red);
+$color-handle: var(--is-control-handle-color, #000);
+$color-border: var(--is-control-border-color, #000);
+$color-border-focus: var(--is-control-border-focus-color, #000);
+$color-border-hover: var(--is-control-border-hover-color, #000);
+$color-bg: var(--is-control-bg-color, #fff);
+$color-fg: var(--is-control-fg-color, #fff);
+$color-invalid: var(--is-control-invalid-color, red);
+$color-selected-item-bg: var(--is-control-selected-item-bg-color, grey);
+$color-active-bg: var(--is-control-active-item-bg-color, #428bca);
+
 :host {
+
   .selectpicker-disabled {
     cursor: not-allowed;
   }
+
   &.ng-invalid {
     border: none !important;
   }
+
   a>i {
     color: #333;
   }
+
   ul>li {
     padding: 1px;
   }
+
   .short-scroll {
     max-height: 250px;
     overflow: auto;
     margin-top: 0px;
   }
+
   .selectpicker-item {
     padding: 3px 5px 3px 18px;
     margin-left: 5px;
@@ -30,7 +45,8 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     color: #333;
     cursor: default;
   }
-  .container-xe-style{
+
+  .container-xe-style {
     position: relative;
     height: auto;
     min-height: 34px; //padding: 6px 0px 2px 0px !important;
@@ -39,37 +55,59 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     padding-top: 5px;
     padding-right: 0px;
   }
+
   .icon-times {
     margin-left: -12px;
     cursor: pointer;
   }
+
   .input-group-xe-style {
     height: auto;
     position: relative;
     cursor: pointer;
     width: 100%;
   }
+
+  .dropdown-toggle {
+    border-left: none;
+    height: 34px;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    &:hover {
+      background-color: $color-bg;
+    }
+  }
+
   .dropdown-toggle-xe-style {
     position: static;
     display: none;
   }
+
   .dropdown-view-xe-style {
     margin-top: 0px;
   }
+
   .icon-times-xe-style {
     padding-right: 5px;
   }
+
   .overflowed {
     overflow: hidden;
     line-height: 23px;
   }
+
+  .btn-caret {
+    color: $color-handle;
+  }
+
   .dropdown-caret {
     position: absolute;
     top: 50%;
     right: 7px;
     margin-top: -5px;
     font-size: 80%;
+    color: $color-handle;
   }
+
   .placeholder {
     text-align: center;
     white-space: nowrap;
@@ -88,20 +126,42 @@ $color-cls-danger-fg: var(--is-color-danger, red);
 
 :host(.ng-invalid) {
   input {
-    border: 1px solid $color-cls-danger-fg;
-    background-color: #fff;
-  }
-  button.dropdown-toggle {
-    border-color: $color-cls-danger-fg;
+    border-color: $color-invalid;
   }
 }
 
-.input-group>input {
-  background-color: #fff;
+.input-group {
+  >input {
+    background-color: #fff;
+  }
+
+  &:hover {
+    .dropdown-toggle {
+      border-color: $color-border-hover;
+    }
+
+    >.is-input {
+      border-color: $color-border-hover;
+    }
+  }
+
+  &.open {
+    .dropdown-toggle {
+      background-color: $color-bg;
+      border-color: $color-border-focus;
+    }
+
+    >.is-input {
+      border-color: $color-border-focus;
+    }
+  }
 }
+
 
 .dropdown-view {
   min-width: 190px;
+  background-color: $color-bg;
+  border-color: $color-border-focus;
 }
 
 .input-search {
@@ -127,35 +187,35 @@ $color-cls-danger-fg: var(--is-color-danger, red);
   font-size: 14px;
   text-align: left;
   background-clip: padding-box;
-}
 
-.dropdown-default>li {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  cursor: pointer;
-  &.active {
-    background-color: #eee;
-    span {
-      // color: #fff;
+
+  >li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+
+    &.active {
+      background-color: $color-selected-item-bg;
+    }
+
+    &:hover {
+      text-decoration: none;
+      outline: 0;
+      background-color: $color-active-bg;
+
+      span {
+        color: $color-fg;
+      }
     }
   }
-}
-
-.dropdown-default>li:hover {
-  text-decoration: none;
-  outline: 0;
-  background-color: #428bca;
-}
-
-.dropdown-default>li:hover span {
-  color: #fff;
 }
 
 .rows {
   padding: 5px 10px !important;
   line-height: 1.2 !important;
+
   >span {
-    color: #333;
+    color: $color-fg;
   }
 }
 
@@ -164,6 +224,7 @@ $color-cls-danger-fg: var(--is-color-danger, red);
   right: 4px;
   top: 9px;
   z-index: 20;
+  color: $color-handle;
 }
 
 .dropdown-button-holder {
