@@ -13,7 +13,7 @@ export class DemoFroalaComponent implements OnInit {
 
 <h3>Installation</h3>
 <pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-froala-7.0.6.tgz
-npm install --save froala-editor at.js font-awesome</pre>
+npm install --save froala-editor font-awesome</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsFroalaModule } from 'is-froala';
@@ -34,26 +34,7 @@ npm install --save froala-editor at.js font-awesome</pre>
 @import '../node_modules/at.js/dist/css/jquery.atwho.css';
 
 @import '../node_modules/font-awesome/css/font-awesome.css';
-
-// add to angular.json
-"scripts": [
-  "node_modules/jquery/dist/jquery.min.js",
-  "node_modules/froala-editor/js/froala_editor.pkgd.min.js",
-  "node_modules/froala-editor/js/plugins/code_view.min.js",
-  "node_modules/at.js/dist/js/jquery.atwho.min.js",
-  "node_modules/froala-editor/js/languages/cs.js",
-  "node_modules/froala-editor/js/languages/de.js",
-  "node_modules/froala-editor/js/languages/es.js",
-  "node_modules/froala-editor/js/languages/fr.js",
-  "node_modules/froala-editor/js/languages/hr.js",
-  "node_modules/froala-editor/js/languages/hu.js",
-  "node_modules/froala-editor/js/languages/nl.js",
-  "node_modules/froala-editor/js/languages/pl.js",
-  "node_modules/froala-editor/js/languages/pt_pt.js",
-  "node_modules/froala-editor/js/languages/sk.js",
-  "node_modules/froala-editor/js/languages/zh_cn.js",
-  "node_modules/froala-editor/js/languages/zh_tw.js"
-]</pre>
+</pre>
   `
 
   froalaConfig: any = {id: 1};

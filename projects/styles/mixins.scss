@@ -14,3 +14,21 @@
     border-color: var(--is-control-border-invalid-color, #ccc);
   }
 }
+
+@mixin short-scroll {
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px; //background: #fff;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgb(187, 187, 187);
+  }
+  &::-webkit-scrollbar-corner {
+    background: #fff;
+  }
+  @media print {
+    &::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+  }
+}

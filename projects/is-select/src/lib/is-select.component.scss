@@ -1,3 +1,5 @@
+@import '../../../styles/mixins';
+
 $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 
 
@@ -136,6 +138,7 @@ $color-invalid: var(--is-control-invalid-color, red);
     margin-top: 0;
     list-style: none;
     padding-left: 0;
+    @include short-scroll;
   }
 
   .ui-select-multiple .ui-select-choices {
@@ -153,7 +156,7 @@ $color-invalid: var(--is-control-invalid-color, red);
     clear: both;
     font-weight: 400;
     line-height: 1.42857143;
-    color: #333;
+    color: $color-fg;
   }
 
   .ui-select-choices-row.selected {

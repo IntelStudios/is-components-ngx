@@ -1,23 +1,5 @@
-@mixin short-scroll {
-  &::-webkit-scrollbar {
-    height: 8px;
-    width: 8px; //background: #fff;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgb(187, 187, 187);
-  }
-
-  &::-webkit-scrollbar-corner {
-    background: #fff;
-  }
-
-  @media print {
-    &::-webkit-scrollbar-thumb {
-      background: transparent;
-    }
-  }
-}
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
 
 $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 
@@ -46,9 +28,33 @@ is-froala {
     @include short-scroll;
   }
 
+  .fr-toolbar {
+    background-color: $color-bg;
+
+    .fr-btn {
+      &:after {
+        border-top-color: $color-fg !important;
+      }
+      svg path {
+        fill: $color-fg !important;
+      }
+    }
+    .fr-dropdown-menu, .fr-sc-container {
+      background-color: $color-bg !important;
+      color: $color-fg;
+      @include short-scroll;
+    }
+  }
+
+  .second-toolbar {
+    display: none;
+  }
+
   .is-button-hidden {
     display: none;
   }
+
+
 
   .CodeMirror {
     height: inherit !important;
