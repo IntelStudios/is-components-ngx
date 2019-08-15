@@ -2,7 +2,8 @@
 
 @mixin is-input-active {
   border-color: $color-border-focus;
-  box-shadow: 0px 0px 2px 0px $color-border-focus !important;
+  //box-shadow: 0px 0px 2px 0px $color-border-focus !important;
+  border-width: 2px;
 }
 
 @mixin is-input {

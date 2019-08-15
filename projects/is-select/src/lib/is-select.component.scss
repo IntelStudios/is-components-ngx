@@ -4,11 +4,6 @@
 $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 
 
-
-$color-selected-bg: var( --is-control-selected-item-bg-color, grey);
-$color-active-bg: var(--is-control-active-item-bg-color, #428bca);
-
-
 :host {
   *:focus {
     outline: none;
@@ -117,7 +112,7 @@ $color-active-bg: var(--is-control-active-item-bg-color, #428bca);
   .ui-select-choices-container {
     width: 100%;
     background-color: $color-bg;
-    margin-top: -1px;
+    margin-top: 0px;
     border-top: none;
     &:before, &:after {
       content: none;
@@ -133,7 +128,7 @@ $color-active-bg: var(--is-control-active-item-bg-color, #428bca);
         border: none;
       }
       > i {
-        color: $color-fg;
+        color: $color-handle;
         align-self: center;
         padding: 8px;
       }
@@ -170,14 +165,14 @@ $color-active-bg: var(--is-control-active-item-bg-color, #428bca);
   }
 
   .ui-select-choices-row.selected {
-    background-color: $color-selected-bg;
+    background-color: $color-selected-item-bg;
   }
 
   .ui-select-choices-row.active>a {
     color: #fff;
     text-decoration: none;
     outline: 0;
-    background-color: $color-active-bg;
+    background-color: $color-active-item-bg;
   }
 
   .ui-select-multiple {
@@ -238,7 +233,7 @@ $color-active-bg: var(--is-control-active-item-bg-color, #428bca);
 
   .options-loading {
     position: absolute;
-    right: 9px;
+    right: 29px;
     top: 9px;
     z-index: 20;
     color: $color-handle;

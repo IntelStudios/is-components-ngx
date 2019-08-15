@@ -81,4 +81,5 @@ body.is-theme-dark {
   --is-control-border-focus-color: #{$dark-base-color};
   --is-control-border-hover-color: #{$dark-hover-color};
   --is-control-handle-color: #{$dark-handle-color};
+  --is-control-active-item-bg-color: #{transparentize(#72BCFF, 0.8)};
 }
