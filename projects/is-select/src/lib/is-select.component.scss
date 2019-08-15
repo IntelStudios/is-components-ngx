@@ -1,4 +1,5 @@
 @import '../../../styles/mixins';
+@import '../../../styles/variables';
 
 $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 
@@ -7,13 +8,6 @@ $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 $color-selected-bg: var( --is-control-selected-item-bg-color, grey);
 $color-active-bg: var(--is-control-active-item-bg-color, #428bca);
 
-$color-handle: var(--is-control-handle-color, #000);
-$color-border: var(--is-control-border-color, #000);
-$color-border-focus: var(--is-control-border-focus-color, #000);
-$color-border-hover: var(--is-control-border-hover-color, #000);
-$color-bg: var(--is-control-bg-color, #fff);
-$color-fg: var(--is-control-fg-color, #fff);
-$color-invalid: var(--is-control-invalid-color, red);
 
 :host {
   *:focus {
@@ -72,6 +66,7 @@ $color-invalid: var(--is-control-invalid-color, red);
         position: absolute;
         right: 22px;
         top: 8px;
+        color: $color-fg;
       }
     }
 
@@ -114,7 +109,7 @@ $color-invalid: var(--is-control-invalid-color, red);
   .ui-select-container {
     &.open {
       .ui-select-toggle {
-        border-color: $color-border-focus;
+        @include is-input-active;
       }
     }
   }
@@ -122,11 +117,26 @@ $color-invalid: var(--is-control-invalid-color, red);
   .ui-select-choices-container {
     width: 100%;
     background-color: $color-bg;
+    margin-top: -1px;
+    border-top: none;
+    &:before, &:after {
+      content: none;
+    }
+    @include is-input-active;
 
     >.ui-select-search {
-      padding: 3px;
-      padding-top: 0px;
-      margin-top: -2px;
+      display: flex;
+
+      > input {
+        background-color: $color-bg;
+        color: $color-fg;
+        border: none;
+      }
+      > i {
+        color: $color-fg;
+        align-self: center;
+        padding: 8px;
+      }
     }
   }
 
@@ -173,18 +183,20 @@ $color-invalid: var(--is-control-invalid-color, red);
   .ui-select-multiple {
     height: auto;
     padding: 3px 3px 0 3px;
+    .ui-select-search {
+      >input {
+        background-color: transparent !important;
+        /* To prevent double background when disabled */
+        border: none;
+        outline: none;
+        box-shadow: none;
+        height: 1.6666em;
+        padding: 0;
+        margin-bottom: 3px;
+      }
+    }
   }
 
-  .ui-select-multiple .ui-select-search>input {
-    background-color: transparent !important;
-    /* To prevent double background when disabled */
-    border: none;
-    outline: none;
-    box-shadow: none;
-    height: 1.6666em;
-    padding: 0;
-    margin-bottom: 3px;
-  }
 
   .ui-select-match .close {
     font-size: 1.6em;

@@ -29,20 +29,7 @@ body {
 }
 
 .is-input {
-  border-color: var(--is-control-border-color, #ccc);
-  background-color: var(--is-control-bg-color);
-  color: var(--is-control-fg-color, #fff);
-
-  &:hover {
-    border-color: var(--is-control-border-hover-color, #ccc);
-  }
-
-  &:active, &:focus {
-    border-color: var(--is-control-border-focus-color, #ccc);
-  }
-  &.ng-invalid {
-    border-color: var(--is-control-border-invalid-color, #ccc);
-  }
+  @include is-input;
 }
 
 // END theme styles
@@ -54,7 +41,7 @@ body {
 
 // light (default) theme
 $light-base-color: #333;
-$light-border-color: transparentize($light-base-color, 0.9);
+$light-border-color: transparentize($light-base-color, 0.5);
 $light-hover-color: transparentize($light-base-color, 0.7);
 $light-handle-color: transparentize($light-base-color, 0.5);
 
@@ -75,8 +62,8 @@ $light-handle-color: transparentize($light-base-color, 0.5);
 
 // dark theme
 $dark-base-color: #72BCFF;
-$dark-border-color: transparentize($dark-base-color, 0.9);
-$dark-hover-color: transparentize($dark-base-color, 0.7);
+$dark-border-color: transparentize($dark-base-color, 0.5);
+$dark-hover-color: transparentize($dark-base-color, 0.3);
 $dark-handle-color: transparentize(#fff, 0.5);
 
 body.is-theme-dark {

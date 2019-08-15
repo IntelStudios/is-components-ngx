@@ -1,19 +1,29 @@
+@import 'variables';
+
+@mixin is-input-active {
+  border-color: $color-border-focus;
+  box-shadow: 0px 0px 2px 0px $color-border-focus !important;
+}
+
 @mixin is-input {
-  border-color: var(--is-control-border-color, #ccc);
-  background-color: var(--is-control-bg-color);
-  color: var(--is-control-fg-color, #fff);
+  border-color:$color-border;
+  background-color: $color-bg;
+  color: $color-fg;
 
   &:hover {
-    border-color: var(--is-control-border-hover-color, #ccc);
+    border-color: $color-border-hover;
   }
 
   &:active, &:focus {
-    border-color: var(--is-control-border-focus-color, #ccc);
+    @include is-input-active;
   }
   &.ng-invalid {
-    border-color: var(--is-control-border-invalid-color, #ccc);
+    border-color: $color-invalid;
   }
 }
+
+
+
 
 @mixin short-scroll {
   &::-webkit-scrollbar {
