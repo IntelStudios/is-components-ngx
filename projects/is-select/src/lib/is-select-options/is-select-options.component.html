@@ -1,0 +1,80 @@
+<div class="ui-select-choices-container" [class.multiple]="multiple" [class.pull-right]="alignItems === 'right'" role="menu">
+  <div class="ui-select-search" [class.hidden-input]="!isSearch">
+    <input type="text" autocomplete="false" tabindex="-1" [style.text-align]="alignment"
+      (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)"
+      class="form-control" [placeholder]="searchPlaceholder">
+    <i class="fa fa-search"></i>
+  </div>
+  <i *ngIf="isLoadingOptions" class="fa fa-circle-o-notch fa-spin options-loading"></i>
+
+  <!-- options without groups -->
+  <ng-container *ngIf="!firstItemHasChildren; else groupOptions">
+    <ul class="ui-select-choices">
+        <li *ngFor="let o of selectedOptions" role="menuitem" [class]="alignment">
+            <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == value?.ID"
+              (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
+              <ng-container [ngTemplateOutlet]="optionMainTemplate"
+                [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
+              </ng-container>
+            </div>
+          </li>
+        <li *ngIf="selectedOptions && selectedOptions.length > 0">
+            <div class="ui-select-choices-row">
+              <div class="dropdown-item divider"></div>
+            </div>
+        </li>
+      <li *ngFor="let o of visibleOptions" role="menuitem" [class]="alignment">
+        <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == value?.ID"
+          (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
+          <ng-container [ngTemplateOutlet]="optionMainTemplate"
+            [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
+          </ng-container>
+        </div>
+      </li>
+    </ul>
+  </ng-container>
+  <!-- options with groups -->
+  <ng-template #groupOptions>
+    <ul *ngIf="visibleOptions && visibleOptions.length > 0" class="ui-select-choices" role="menu">
+      <li *ngFor="let c of options" role="menuitem" [class]="alignment">
+        <div class="dropdown-header">{{c.Value}}</div>
+        <div *ngFor="let o of c.children" class="ui-select-choices-row" [class.active]="isActive(o)"
+          [class.selected]="o.ID == value?.ID" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)"
+          [ngClass]="{'disabled': o.disabled === true}">
+          <ng-container [ngTemplateOutlet]="optionMainTemplate"
+            [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
+          </ng-container>
+        </div>
+      </li>
+    </ul>
+  </ng-template>
+
+</div>
+<!-- option: single-mode -->
+<ng-template #optionSingle let-item="item">
+  <a class="dropdown-item" [class]="item.cssClass">
+    <ng-container [ngTemplateOutlet]="optionTemplate || defaultOptionTemplate"
+      [ngTemplateOutletContext]="{$implicit: item, item: item}">
+    </ng-container>
+  </a>
+</ng-template>
+
+<!-- option: multiple-mode -->
+<ng-template #optionMulti let-item="item">
+  <a class="dropdown-item" [class]="item.cssClass">
+    <div class="pretty p-icon">
+      <input type="checkbox" [checked]="item.Checked" />
+      <div class="state p-success">
+          <i class="icon fa fa-check"></i>
+        <label></label>
+      </div>
+    </div>
+    <ng-container [ngTemplateOutlet]="optionTemplate || defaultOptionTemplate"
+      [ngTemplateOutletContext]="{$implicit: item, item: item}">
+    </ng-container>
+  </a>
+</ng-template>
+
+<ng-template #defaultOptionTemplate let-item="item">
+  <div [innerHtml]="sanitize(item.Value)"></div>
+</ng-template>

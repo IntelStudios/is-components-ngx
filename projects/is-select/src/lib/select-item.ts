@@ -1,15 +1,17 @@
 import { IsSelectModelConfig } from './is-select.interfaces';
 import { stripTags } from './select-pipes';
-import { stripDiacritics } from './diacritics';
+import { stripDiacritics } from 'is-text-utils';
 
 export class SelectItem {
-  public ID: string;
-  public Value: string;
-  public children: Array<SelectItem>;
-  public parent: SelectItem;
+  ID: string;
+  Value: string;
+  children: Array<SelectItem>;
+  parent: SelectItem;
   source: any = {};
-  public disabled: boolean = false;
+  disabled: boolean = false;
   FilterValue: string = '';
+  cssClass: string;
+  Checked: boolean = false;
 
   public constructor(source: any, modelConfig?: IsSelectModelConfig) {
     if (typeof source === 'string') {
@@ -20,6 +22,7 @@ export class SelectItem {
     }
     if (typeof source === 'object') {
       this.source = source;
+      this.cssClass = source.cssClass;
       if (modelConfig) {
         this.ID = String(source[modelConfig.idProp]);
         this.Value = source[modelConfig.textProp];
@@ -35,7 +38,7 @@ export class SelectItem {
       }
       if (source.children && source.Value) {
         this.children = source.children.map((c: any) => {
-          let r: SelectItem = new SelectItem(c, modelConfig);
+          const r: SelectItem = new SelectItem(c, modelConfig);
           r.parent = this;
           return r;
         });

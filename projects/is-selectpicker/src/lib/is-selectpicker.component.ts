@@ -20,7 +20,7 @@ import { debounceTime } from 'rxjs/operators';
 
 import { IsSelectpickerOptionDirective, IsSelectpickerOptionSelectedDirective } from './is-selectpicker.directives';
 import { SelectPickerItem } from './is-selectpicker.interfaces';
-import { createFilterRegexp, stripDiacritics } from 'is-select';
+import { createFilterRegexp, stripDiacritics } from 'is-text-utils';
 
 export const IS_SELECTPICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

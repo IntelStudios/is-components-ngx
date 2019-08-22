@@ -12,6 +12,15 @@
 
 @import '~angular-tree-component/dist/angular-tree-component.css';
 
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+
+@import '../node_modules/pretty-checkbox/src/pretty-checkbox.scss';
+
+
+
+
+
 body {
   background-color: #fff;
 }
@@ -40,27 +49,39 @@ body {
 
 
 // light (default) theme
-$light-base-color: #333;
-$light-border-color: transparentize($light-base-color, 0.5);
-$light-hover-color: transparentize($light-base-color, 0.7);
+$light-base-color: #7D90A3;
+$light-border-color: transparentize($light-base-color, 0.7);
+$light-hover-color: transparentize($light-base-color, 0.5);
 $light-handle-color: transparentize($light-base-color, 0.5);
-
+$light-focused-color: transparentize($light-base-color, 0.1);
 
 :root {
   --is-control-bg-color: #fff;
   --is-control-border-color: #{$light-border-color};
-  --is-control-border-focus-color: #{$light-base-color};
+  --is-control-border-focus-color: #{$light-focused-color};
   --is-control-border-hover-color: #{$light-hover-color};
-  --is-control-border-invalid-color: red;
+  --is-control-border-invalid-color: #D12331;
   --is-control-border-pending-color: yellow;
-  --is-control-fg-color: #{$light-base-color};
-  --is-control-handle-color: #{$light-handle-color};
-  --is-control-selected-item-bg-color: grey;
-  --is-control-active-item-bg-color: #428bca;
+  --is-control-fg-color: #333;
+  --is-control-handle-color: #{transparentize(#000, 0.5)};
+  --is-control-selected-item-color: #{transparentize(#000, 0.5)};
+  --is-control-active-item-bg-color: #{transparentize(#000, 0.9)};
+  --is-control-disabled-bg-color: #{transparentize(#000, 0.95)};
+  --is-control-disabled-fg-color: #{transparentize(#333, 0.7)};
+  --is-select-search-spearator: #939CA5;
+  --is-select-multi-item-bg-color: #a1b1c1;
+  --is-select-multi-item-fg-color: #000;
+  --is-checkbox-color: #{$light-base-color};
+
+  --is-badge-info-color: #72BCFF;
+  --is-badge-warning-color: #F0C330;
+  --is-badge-danger-color: #EB6C77;
+  --is-badge-success-color: #40C6D2;
 }
 
 
 // dark theme
+$dark-background: #2C3E50;
 $dark-base-color: #72BCFF;
 $dark-border-color: transparentize($dark-base-color, 0.5);
 $dark-hover-color: transparentize($dark-base-color, 0.3);
@@ -68,12 +89,11 @@ $dark-handle-color: transparentize(#fff, 0.5);
 
 body.is-theme-dark {
 
-  background-color: #2C3E50;
+  background-color: $dark-background;
 
   h1, h2, h3, h4, h5 {
     color: #fff;
   }
-
   --is-control-border-color: #{$dark-border-color};
   --is-control-bg-color: #374F65;
   --is-control-fg-color: #fff;
@@ -81,5 +101,12 @@ body.is-theme-dark {
   --is-control-border-focus-color: #{$dark-base-color};
   --is-control-border-hover-color: #{$dark-hover-color};
   --is-control-handle-color: #{$dark-handle-color};
+  --is-control-selected-item-color: #{transparentize(#FFF, 0.8)};;
   --is-control-active-item-bg-color: #{transparentize(#72BCFF, 0.8)};
+  --is-control-disabled-bg-color: #304558;
+  --is-control-disabled-fg-color: #{transparentize(#fff, 0.7)};
+  --is-select-search-spearator: #{transparentize($dark-background, 0.5)};
+  --is-select-multi-item-bg-color: #72BCFF;
+  --is-select-multi-item-fg-color: #000;
+  --is-checkbox-color: #{$dark-base-color};
 }

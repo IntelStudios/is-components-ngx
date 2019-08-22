@@ -1,0 +1,6 @@
+<is-select #select [multiple]="multiple" [placeholder]="placeholder" [allowClear]="allowClear" [items]="items"
+  (selected)="valueSelected($event)" (removed)="removed()" [class.disabled]="disabled" [disabled]="disabled">
+  <ng-template is-select-option let-item>
+    <span>{{item.Value}}</span>
+  </ng-template>
+</is-select>

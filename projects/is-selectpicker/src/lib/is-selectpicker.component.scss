@@ -1,12 +1,5 @@
-$color-handle: var(--is-control-handle-color, #000);
-$color-border: var(--is-control-border-color, #000);
-$color-border-focus: var(--is-control-border-focus-color, #000);
-$color-border-hover: var(--is-control-border-hover-color, #000);
-$color-bg: var(--is-control-bg-color, #fff);
-$color-fg: var(--is-control-fg-color, #fff);
-$color-invalid: var(--is-control-invalid-color, red);
-$color-selected-item-bg: var(--is-control-selected-item-bg-color, grey);
-$color-active-bg: var(--is-control-active-item-bg-color, #428bca);
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
 
 :host {
 
@@ -195,13 +188,13 @@ $color-active-bg: var(--is-control-active-item-bg-color, #428bca);
     cursor: pointer;
 
     &.active {
-      background-color: $color-selected-item-bg;
+      color: $color-selected-item;
     }
 
     &:hover {
       text-decoration: none;
       outline: 0;
-      background-color: $color-active-bg;
+      background-color: $color-active-item-bg;
 
       span {
         color: $color-fg;

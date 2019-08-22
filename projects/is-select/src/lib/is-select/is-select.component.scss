@@ -1,0 +1,148 @@
+@import '../../../../styles/mixins';
+@import '../../../../styles/variables';
+
+$color-multi-item-bg: var(--is-select-multi-item-bg-color, #efefef);
+$color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
+
+:host {
+  *:focus {
+    outline: none;
+  }
+
+  &.ng-invalid {
+    border: none !important;
+
+    .ui-select-match {
+      .ui-select-toggle {
+        border-color: $color-invalid;
+      }
+    }
+  }
+
+  .ui-select-container {
+    >.ui-select-match {
+
+      display: flex;
+      align-items: center;
+      @include is-input;
+      padding: 0;
+      border-width: 1px;
+      border-style: solid;
+      height: 34px;
+      cursor: pointer;
+
+      >.btn-remove {
+        flex: 1;
+        align-self: center;
+        color: $color-fg;
+      }
+
+      >.dropdown-caret {
+        flex: 1;
+        align-self: center;
+        margin-left: 4px;
+        margin-right: 8px;
+        color: $color-handle;
+      }
+
+      >.ui-select-toggle {
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 8px;
+        width: 100%;
+        &.align-left {
+          text-align: left !important;
+        }
+
+        &.align-center {
+          text-align: center !important;
+        }
+
+        &.align-right {
+          text-align: right !important;
+        }
+
+        >.ui-select-match-text {
+          color: $color-fg;
+        }
+
+      }
+      &.multiple {
+        height: auto;
+        min-height: 34px;
+        >.ui-select-toggle {
+          display: flex;
+          flex-wrap: wrap;
+          padding: 2px;
+          .ui-select-placeholder {
+            padding: 4px;
+          }
+          > .ui-select-match-text {
+            margin: 4px;
+            background-color: $color-multi-item-bg;
+            position: relative;
+            max-width: 100px;
+            padding-left: 4px;
+            padding-right: 20px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            color: $color-multi-item-fg;
+            border-radius: 2px !important;
+            > span {
+              width: calc(100% - 20px);
+            }
+            .btn-remove {
+              position: absolute;
+              right: 0;
+              top: 0px;
+              padding: 3px;
+              padding-left: 5px;
+              color: $color-multi-item-fg;
+              background: linear-gradient(90deg, transparent 0, $color-multi-item-bg 5px);
+            }
+          }
+        }
+      }
+
+    }
+
+    &.open {
+      >.ui-select-match {
+        @include is-input-active;
+      }
+
+    }
+
+    &.disabled {
+      >.ui-select-match {
+        @include is-input-disabled;
+        >.ui-select-toggle {
+
+          >.ui-select-match-text {
+            color: inherit;
+          }
+        }
+      }
+
+    }
+  }
+
+  .ui-disabled {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    cursor: not-allowed;
+  }
+
+  .ui-select-multiple .ui-select-match-item {
+    outline: 0;
+    margin: 0 3px 3px 0;
+  }
+
+}

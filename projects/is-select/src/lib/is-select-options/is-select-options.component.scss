@@ -1,0 +1,178 @@
+@import '../../../../styles/mixins';
+@import '../../../../styles/variables';
+
+$color-search-separator: var(--is-select-search-spearator, #efefef);
+
+:host {
+  display: block;
+  width: 100%;
+
+  .ui-select-choices-container {
+    width: 100%;
+    background-color: $color-bg;
+    margin-top: 0px;
+    border-top: none;
+    display: block;
+    left: initial;
+    top: initial;
+    position: relative;
+    border-width: 1px;
+    border-style: solid;
+    &:before, &:after {
+      content: none;
+    }
+    @include is-input-active;
+
+    >.ui-select-search {
+      display: flex;
+      border-bottom: 1px solid $color-search-separator;
+      > input {
+        background-color: $color-bg;
+        color: $color-fg;
+        border: none;
+      }
+      > i {
+        color: $color-handle;
+        align-self: center;
+        padding: 8px 13px;
+      }
+    }
+
+    > .ui-select-choices {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      overflow-x: hidden;
+      margin-top: 0;
+      list-style: none;
+      padding-left: 0;
+      @include short-scroll;
+      > li {
+        &.right {
+          text-align: right;
+          .ui-select-choices-row {
+            &.active {
+              a {
+                padding-right: 20px;
+              }
+            }
+          }
+        }
+        &.center {
+          text-align: center;
+        }
+        &.left {
+          .ui-select-choices-row {
+            &.active {
+              a {
+                padding-left: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.multiple {
+      .ui-select-choices-row {
+        > a {
+          display: flex;
+          align-items: center;
+
+          .pretty {
+            margin-right: 0;
+            .state label:before {
+              border-color: $color-checkbox;
+            }
+            input:checked ~ .state.p-success label:after, .p-toggle .state.p-success label:after {
+              background-color: $color-checkbox !important;
+            }
+          }
+        }
+        .divider {
+          margin: 4px 8px;
+          border-bottom: 1px solid $color-search-separator;
+        }
+      }
+    }
+  }
+
+
+
+  .hidden-input {
+    clip: rect(0 0 0 0) !important;
+    width: 1px !important;
+    height: 1px !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    outline: 0 !important;
+    left: 0px !important;
+    top: 0px !important;
+  }
+
+  .ui-select-multiple {
+    .ui-select-choices {
+      margin-top: 1px;
+    }
+  }
+
+
+  .ui-select-choices-row {
+    >a {
+      display: block;
+      padding: 4px 16px;
+      clear: both;
+      font-weight: 400;
+      line-height: 1.42857143;
+      color: $color-fg;
+      text-decoration: none;
+      transition: padding 0.15s
+    }
+    &.selected {
+      > a {
+        color: $color-selected-item;
+      }
+    }
+    &.active {
+      >a {
+        outline: 0;
+        background-color: $color-active-item-bg;
+      }
+    }
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+  }
+
+  .ui-select-multiple {
+    height: auto;
+    padding: 3px 3px 0 3px;
+    .ui-select-search {
+      >input {
+        background-color: transparent !important;
+        /* To prevent double background when disabled */
+        border: none;
+        outline: none;
+        box-shadow: none;
+        height: 1.6666em;
+        padding: 0;
+        margin-bottom: 3px;
+      }
+    }
+  }
+  .options-loading {
+    position: absolute;
+    right: 29px;
+    top: 10px;
+    z-index: 20;
+    color: $color-handle;
+  }
+  .dropdown-header {
+    font-weight: bold;
+    padding: 3px 7px 4px;
+  }
+}
