@@ -5,12 +5,12 @@
     <span tabindex="-1" class="ui-select-toggle"
       [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}"
       >
-      <span *ngIf="!active && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
-      <div *ngFor="let it of active" class="ui-select-match-text {{it.cssClass}}">
+      <span *ngIf="!multiActive && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
+      <div *ngFor="let it of multiActive" class="ui-select-match-text {{it.cssClass}}">
         <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateSelection"
           [ngTemplateOutletContext]="{$implicit: it, index: 0, item: it}">
         </ng-container>
-        <i *ngIf="allowClear && active && !disabled" (click)="unselectClick($event, it)" class="glyphicon glyphicon-remove btn-remove"></i>
+        <i *ngIf="allowClear && !disabled" (click)="unselectClick($event, it)" class="glyphicon glyphicon-remove btn-remove"></i>
       </div>
     </span>
 
@@ -24,15 +24,15 @@
       <span tabindex="-1" class="ui-select-toggle"
         [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}"
         >
-        <span *ngIf="!active && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
-        <span *ngIf="active" class="ui-select-match-text {{active.cssClass}}">
+        <span *ngIf="!singleActive && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
+        <span *ngIf="singleActive" class="ui-select-match-text {{singleActive.cssClass}}">
           <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateSelection"
-            [ngTemplateOutletContext]="{$implicit: active, index: 0, item: active}">
+            [ngTemplateOutletContext]="{$implicit: singleActive, index: 0, item: singleActive}">
           </ng-container>
         </span>
       </span>
 
-      <i *ngIf="allowClear && active && !disabled" (click)="removeClick($event)" class="glyphicon glyphicon-remove btn-remove"></i>
+      <i *ngIf="allowClear && singleActive && !disabled" (click)="removeClick($event)" class="glyphicon glyphicon-remove btn-remove"></i>
       <i class="glyphicon dropdown-caret"
         [ngClass]="{'glyphicon-menu-down': !optionsOpened, 'glyphicon-menu-up': optionsOpened}"></i>
     </div>

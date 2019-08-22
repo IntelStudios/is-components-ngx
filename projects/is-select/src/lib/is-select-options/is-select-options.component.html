@@ -11,7 +11,7 @@
   <ng-container *ngIf="!firstItemHasChildren; else groupOptions">
     <ul class="ui-select-choices">
         <li *ngFor="let o of selectedOptions" role="menuitem" [class]="alignment">
-            <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == value?.ID"
+            <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == singleValue?.ID"
               (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
               <ng-container [ngTemplateOutlet]="optionMainTemplate"
                 [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
@@ -24,7 +24,7 @@
             </div>
         </li>
       <li *ngFor="let o of visibleOptions" role="menuitem" [class]="alignment">
-        <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == value?.ID"
+        <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == singleValue?.ID"
           (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
           <ng-container [ngTemplateOutlet]="optionMainTemplate"
             [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
@@ -39,7 +39,7 @@
       <li *ngFor="let c of options" role="menuitem" [class]="alignment">
         <div class="dropdown-header">{{c.Value}}</div>
         <div *ngFor="let o of c.children" class="ui-select-choices-row" [class.active]="isActive(o)"
-          [class.selected]="o.ID == value?.ID" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)"
+          [class.selected]="o.ID == singleValue?.ID" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)"
           [ngClass]="{'disabled': o.disabled === true}">
           <ng-container [ngTemplateOutlet]="optionMainTemplate"
             [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">

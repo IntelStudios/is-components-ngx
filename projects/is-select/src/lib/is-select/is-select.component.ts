@@ -137,8 +137,25 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   options: Array<SelectItem> = [];
 
+  /**
+   * returns currenly active (selected) item
+   */
   get active(): SelectItem | SelectItem[] {
     return this._active;
+  }
+
+  /**
+   * returns currenly active (selected) item - use when set multiple=true
+   */
+  get multiActive():  SelectItem[] {
+    return this._active as SelectItem[];
+  }
+
+    /**
+   * returns currenly active (selected) item - use when set multiple=false
+   */
+  get singleActive():  SelectItem {
+    return this._active as SelectItem;
   }
 
   get optionsOpened(): boolean {

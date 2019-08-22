@@ -66,6 +66,14 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     return this.options[0] && this.options[0].hasChildren();
   }
 
+  get singleValue(): SelectItem {
+    return this.value as SelectItem;
+  }
+
+  get multiValue(): SelectItem[] {
+    return this.value as SelectItem[];
+  }
+
   constructor(private changeDetector: ChangeDetectorRef, public element: ElementRef) { }
 
 
