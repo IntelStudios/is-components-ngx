@@ -13,7 +13,6 @@ import { AppComponent } from './app.component';
 
 export const routes: Routes = [
   { path: 'select', loadChildren: './demo-select/demo-select.module#DemoSelectRoutingModule' },
-  { path: 'selectpicker', loadChildren: './demo-selectpicker/demo-selectpicker.module#DemoSelectpickerRoutingModule' },
   { path: 'datepicker', loadChildren: './demo-datepicker/demo-datepicker.module#DemoDatepickerRoutingModule' },
   { path: 'codemirror', loadChildren: './demo-codemirror/demo-codemirror.module#DemoCodemirrorRoutingModule' },
   { path: 'froala', loadChildren: './demo-froala/demo-froala.module#DemoFroalaRoutingModule' },
