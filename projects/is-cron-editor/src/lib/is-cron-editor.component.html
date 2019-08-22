@@ -18,10 +18,10 @@
       </div>
       <div class="sub-content" *ngIf="formControl.seconds.type.value === 3">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-selectpicker placeholder="Select seconds at which will this expression run"
+        <is-select [multiple]="true" placeholder="Select seconds at which will this expression run"
                          [formControl]="formControl.seconds.specific"
-                         [options]="values.minutes"
-        ></is-selectpicker>
+                         [items]="values.minutes"
+        ></is-select>
       </div>
       <div class="sub-content" *ngIf="formControl.seconds.type.value === 4">
         <label>
@@ -51,10 +51,10 @@
       </div>
       <div class="sub-content" *ngIf="formControl.minutes.type.value === 3">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-selectpicker placeholder="Select minutes at which will this expression run"
+        <is-select [multiple]="true" placeholder="Select minutes at which will this expression run"
                          [formControl]="formControl.minutes.specific"
-                         [options]="values.minutes"
-        ></is-selectpicker>
+                         [items]="values.minutes"
+        ></is-select>
       </div>
       <div class="sub-content" *ngIf="formControl.minutes.type.value === 4">
         <label>
@@ -84,10 +84,10 @@
       </div>
       <div class="sub-content" *ngIf="formControl.hours.type.value === 3">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-selectpicker placeholder="Select hours at which will this expression run"
+        <is-select [multiple]="true" placeholder="Select hours at which will this expression run"
                          [formControl]="formControl.hours.specific"
-                         [options]="values.hours"
-        ></is-selectpicker>
+                         [items]="values.hours"
+        ></is-select>
       </div>
       <div class="sub-content" *ngIf="formControl.hours.type.value === 4">
         <label>
@@ -125,18 +125,18 @@
       </div>
       <div class="sub-content" *ngIf="formControl.days.type.value === 5">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-selectpicker placeholder="Select days at which will this expression run"
+        <is-select [multiple]="true" placeholder="Select days at which will this expression run"
                          [formControl]="formControl.days.specificDayOfWeek"
-                         [options]="values.daysOfWeek"
+                         [items]="values.daysOfWeek"
                          [useModels]="true"
-        ></is-selectpicker>
+        ></is-select>
       </div>
       <div class="sub-content" *ngIf="formControl.days.type.value === 12">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-selectpicker placeholder="Select days at which will this expression run"
+        <is-select [multiple]="true" placeholder="Select days at which will this expression run"
                          [formControl]="formControl.days.specificDayOfMonth"
-                         [options]="values.daysOfMonth"
-        ></is-selectpicker>
+                         [items]="values.daysOfMonth"
+        ></is-select>
       </div>
       <div class="sub-content" *ngIf="formControl.days.type.value === 8">
         On the last
@@ -181,11 +181,11 @@
       </div>
       <div class="sub-content" *ngIf="formControl.months.type.value === 3">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-selectpicker placeholder="Select months at which will this expression run"
+        <is-select [multiple]="true" placeholder="Select months at which will this expression run"
                          [formControl]="formControl.months.specific"
-                         [options]="values.months"
+                         [items]="values.months"
                          [useModels]="true"
-        ></is-selectpicker>
+        ></is-select>
       </div>
       <div class="sub-content" *ngIf="formControl.months.type.value === 4">
         <label>
@@ -214,10 +214,10 @@
       </div>
       <div class="sub-content" *ngIf="formControl.years.type.value === 3">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-selectpicker placeholder="Select years at which will this expression run"
+        <is-select [multiple]="true" placeholder="Select years at which will this expression run"
                          [formControl]="formControl.years.specific"
-                         [options]="values.years"
-        ></is-selectpicker>
+                         [items]="values.years"
+        ></is-select>
       </div>
       <div class="sub-content" *ngIf="formControl.years.type.value === 4">
         <label>

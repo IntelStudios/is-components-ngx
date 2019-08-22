@@ -10,7 +10,7 @@
         <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateSelection"
           [ngTemplateOutletContext]="{$implicit: it, index: 0, item: it}">
         </ng-container>
-        <i *ngIf="allowClear && !disabled" (click)="unselectClick($event, it)" class="glyphicon glyphicon-remove btn-remove"></i>
+        <i (click)="unselectClick($event, it)" class="glyphicon glyphicon-remove btn-remove"></i>
       </div>
     </span>
 

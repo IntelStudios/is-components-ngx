@@ -49,12 +49,6 @@
       "is-datepicker/*": [
         "dist/is-datepicker/*"
       ],
-      "is-selectpicker": [
-        "dist/is-selectpicker"
-      ],
-      "is-selectpicker/*": [
-        "dist/is-selectpicker/*"
-      ],
       "is-bootstrap-switch": [
         "dist/is-bootstrap-switch"
       ],

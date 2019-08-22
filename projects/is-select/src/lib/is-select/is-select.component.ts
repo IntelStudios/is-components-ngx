@@ -70,6 +70,20 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   modelConfig: IsSelectModelConfig = null;
 
   /**
+   * alternative to modelConfig. Enabling this
+   * will set modelConfig compatible to `SelectItem`
+   */
+  @Input()
+  set useModels(value: boolean) {
+    if (value) {
+      this.modelConfig = {
+        idProp: 'ID',
+        textProp: 'Value'
+      };
+    }
+  }
+
+  /**
    * unset current value in case there is no matching option when options are set
    */
   @Input()
@@ -361,7 +375,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   private multipleEmitChange() {
-    console.log('emit multiple impl')
     const active = this.active as SelectItem[];
     if (this.modelConfig) {
       if (this.active) {

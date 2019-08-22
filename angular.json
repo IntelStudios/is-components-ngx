@@ -328,41 +328,6 @@
         }
       }
     },
-    "is-selectpicker": {
-      "root": "projects/is-selectpicker",
-      "sourceRoot": "projects/is-selectpicker/src",
-      "projectType": "library",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/is-selectpicker/tsconfig.lib.json",
-            "project": "projects/is-selectpicker/ng-package.json"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/is-selectpicker/src/test.ts",
-            "tsConfig": "projects/is-selectpicker/tsconfig.spec.json",
-            "karmaConfig": "projects/is-selectpicker/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/is-selectpicker/tsconfig.lib.json",
-              "projects/is-selectpicker/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "is-bootstrap-switch": {
       "root": "projects/is-bootstrap-switch",
       "sourceRoot": "projects/is-bootstrap-switch/src",
