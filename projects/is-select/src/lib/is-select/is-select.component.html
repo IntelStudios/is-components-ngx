@@ -1,7 +1,7 @@
 <div class="ui-select-container dropdown" [class.open]="optionsOpened" [class.disabled]="disabled">
   <div [class.ui-disabled]="disabled"></div>
 
-  <div *ngIf="multiple; else single" class="ui-select-match multiple" tabindex="0" (keyup)="mainClick($event)" (click)="matchClick($event)">
+  <div *ngIf="multiple; else single" class="ui-select-match multiple" [class.fixed-height]="!resize" tabindex="0" (keyup)="mainClick($event)" (click)="matchClick($event)">
     <span tabindex="-1" class="ui-select-toggle"
       [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}"
       >
@@ -13,8 +13,7 @@
         <i (click)="unselectClick($event, it)" class="glyphicon glyphicon-remove btn-remove"></i>
       </div>
     </span>
-
-
+    <span *ngIf="additionalValues > 0" class="additional-values">+{{additionalValues}}</span>
     <i class="glyphicon dropdown-caret"
       [ngClass]="{'glyphicon-menu-down': !optionsOpened, 'glyphicon-menu-up': optionsOpened}"></i>
   </div>

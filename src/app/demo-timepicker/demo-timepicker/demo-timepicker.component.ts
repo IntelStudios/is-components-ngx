@@ -36,4 +36,8 @@ export class DemoTimepickerComponent implements OnInit {
   setValue() {
     this.timepickerControl1.setValue('02:00:00');
   }
+
+  disableToggle() {
+    this.timepickerControl1.enabled ? this.timepickerControl1.disable() : this.timepickerControl1.enable();
+  }
 }

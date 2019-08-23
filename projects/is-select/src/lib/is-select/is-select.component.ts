@@ -54,6 +54,15 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   get multiple(): boolean {
     return this._multiple;
   }
+
+  /**
+   * When enabled (default) main input is resized based on
+   * selected options. When disabled, main input keeps it's height
+   * Applies only when [multiple]="true"
+   */
+  @Input()
+  resize: boolean = true;
+
   /**
    * when set to positive value, search is auto enabled/disabled
    * based on miminum options. Should NOT be used together with
@@ -175,6 +184,8 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   get optionsOpened(): boolean {
     return !!this.optionsOverlayRef;
   }
+
+  additionalValues: number = 0;
 
   @ContentChild(IsSelectOptionDirective, { read: TemplateRef })
   templateOption: IsSelectOptionDirective;
@@ -323,8 +334,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     if (this.optionsOpened) {
       this.optionsInstanceRef.instance.setValue(this.active);
       setTimeout(() => {
-        this.optionsOverlayRef.updatePosition();
+        this.updatePosition();
       });
+    } else {
+      this.updatePosition();
     }
   }
 
@@ -468,7 +481,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
         setTimeout(() => {
           if (this.optionsOpened) {
-            this.optionsOverlayRef.updatePosition();
+            this.updatePosition();
             this.optionsInstanceRef.instance.setValue(this.active);
           }
         });
@@ -477,7 +490,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         this.unselect(item);
         setTimeout(() => {
           if (this.optionsOpened) {
-            this.optionsOverlayRef.updatePosition();
+            this.updatePosition();
             this.optionsInstanceRef.instance.setValue(this.active);
           }
         });
@@ -600,6 +613,46 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       }
     }
     this.changeDetector.markForCheck();
+    setTimeout(() => {
+      this.updatePosition();
+    })
   }
 
+  private updatePosition() {
+    if (this.optionsOpened) {
+      this.optionsOverlayRef.updatePosition();
+    }
+    if (this.resize === false) {
+      const el = this.element.nativeElement.querySelector('.ui-select-toggle');
+      const rect = el.getBoundingClientRect();
+      if (rect.height < 30) {
+        if (this.additionalValues !== 0) {
+          this.additionalValues = 0;
+          this.changeDetector.markForCheck();
+          return;
+        }
+      }
+      if (rect.height > 33) {
+        // some options got hidden
+        // force rendering hint for additional values
+        this.additionalValues = 1;
+        this.changeDetector.markForCheck();
+
+        // calculate how many additioal options became hidden
+        setTimeout(() => {
+          const opts = el.querySelectorAll('.ui-select-match-text');
+          const firstTop = opts[0].getBoundingClientRect().top;
+          let i = 1;
+          for (; i < opts.length;i++) {
+            const oRect = opts[i].getBoundingClientRect();
+            if (oRect.top > firstTop) {
+              break;
+            }
+          }
+          this.additionalValues = this.multiActive.length - i;
+          this.changeDetector.markForCheck();
+        });
+      }
+    }
+  }
 }

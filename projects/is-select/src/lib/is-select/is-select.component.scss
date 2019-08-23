@@ -39,9 +39,10 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
 
       >.dropdown-caret {
         flex: 1;
-        align-self: center;
+        align-self: baseline;
         margin-left: 4px;
         margin-right: 8px;
+        margin-top: 9px;
         color: $is-color-handle;
       }
 
@@ -72,6 +73,23 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
       &.multiple {
         height: auto;
         min-height: 34px;
+        &.fixed-height {
+          height: 34px;
+          align-items: flex-start;
+          overflow: hidden;
+          >.ui-select-toggle {
+            padding-top: 3px;
+          }
+          > .additional-values {
+            background-color: $is-color-multi-item-bg;
+            padding: 1px 2px;
+            flex: 1;
+            font-size: 11px;
+            color: $is-color-multi-item-fg;
+            border-radius: 2px !important;
+            align-self: center;
+          }
+        }
         >.ui-select-toggle {
           display: flex;
           flex-wrap: wrap;

@@ -19,6 +19,11 @@
     </is-select>
   </div>
   <div class="col-sm-6">
+    <h3>Select multiple cities (fixed height)</h3>
+    <is-select [multiple]="true" [resize]="false" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true" [items]="items" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="0 cities selected">
+    </is-select>
+  </div>
+  <div class="col-sm-6">
     <h3>Select a single city</h3>
     <is-select [allowClear]="true" [formControl]="select2Control" [items]="colors" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No color selected">
       <ng-template is-select-option let-item>
