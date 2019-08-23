@@ -570,6 +570,13 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._active = null;
       this._value = null;
     } else {
+      if (!values.map && this.modelConfig) {
+        throw new Error('Value must be array of objects when in [multiple]="true" mode');
+      }
+      if (!values.map) {
+        // assume string of comma-separated values
+        values = String(values).split(',');
+      }
       if (this.modelConfig) {
         this._value = values.map(v => String(v[this.modelConfig.idProp]));
       } else {
