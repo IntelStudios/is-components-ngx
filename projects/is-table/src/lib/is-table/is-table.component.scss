@@ -1,19 +1,19 @@
-$color-cls-default-bg: var(--is-grid-default-bg, #fafafa);
+$is-color-cls-default-bg: var(--is-grid-default-bg, #fafafa);
 
-$color-cls-danger-bg: var(--is-grid-danger-bg, #f2dede);
-$color-cls-danger-fg: var(--is-grid-danger-fg, #a94442);
+$is-color-cls-danger-bg: var(--is-grid-danger-bg, #f2dede);
+$is-color-cls-danger-fg: var(--is-grid-danger-fg, #a94442);
 
-$color-cls-info-bg: var(--is-grid-info-bg, #d9edf7);
-$color-cls-info-fg: var(--is-grid-info-fg, #31708f);
+$is-color-cls-info-bg: var(--is-grid-info-bg, #d9edf7);
+$is-color-cls-info-fg: var(--is-grid-info-fg, #31708f);
 
-$color-disabled-bg: var(--is-grid-disabled-bg, #e9edef);
-$color-disabled-fg: var(--is-grid-disabled-fg, #80898e);
+$is-color-disabled-bg: var(--is-grid-disabled-bg, #e9edef);
+$is-color-disabled-fg: var(--is-grid-disabled-fg, #80898e);
 
-$color-success-bg: var(--is-grid-success-bg, #abe7ed);
-$color-success-fg: var(--is-grid-success-fg, #27a4b0);
+$is-color-success-bg: var(--is-grid-success-bg, #abe7ed);
+$is-color-success-fg: var(--is-grid-success-fg, #27a4b0);
 
-$color-warning-bg: var(--is-grid-warning-bg, #f9e491);
-$color-warning-fg: var(--is-grid-warning-fg, #c29d0b);
+$is-color-warning-bg: var(--is-grid-warning-bg, #f9e491);
+$is-color-warning-fg: var(--is-grid-warning-fg, #c29d0b);
 
 $general-panel-bg-color: var(--is-grid-panel-bg, #fff);
 $general-panel-border-color: var(--is-grid-border-color, #ccc);
@@ -48,7 +48,7 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
   }
 
   tbody>tr {
-    background-color: $color-cls-default-bg;
+    background-color: $is-color-cls-default-bg;
   }
 
   tbody>tr:last-child>td {
@@ -85,28 +85,28 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
   }
 
   .disabled-cls {
-    color: $color-disabled-fg !important;
-    background-color: $color-disabled-bg !important;
+    color: $is-color-disabled-fg !important;
+    background-color: $is-color-disabled-bg !important;
   }
 
   .warning-cls {
-    color: $color-warning-fg;
-    background-color: $color-warning-bg;
+    color: $is-color-warning-fg;
+    background-color: $is-color-warning-bg;
   }
 
   .success-cls {
-    color: $color-success-fg;
-    background-color: $color-success-bg;
+    color: $is-color-success-fg;
+    background-color: $is-color-success-bg;
   }
 
   .info-cls {
-    color: $color-cls-info-fg;
-    background-color: $color-cls-info-bg;
+    color: $is-color-cls-info-fg;
+    background-color: $is-color-cls-info-bg;
   }
 
   .danger-cls {
-    color: $color-cls-danger-fg;
-    background-color: $color-cls-danger-bg;
+    color: $is-color-cls-danger-fg;
+    background-color: $is-color-cls-danger-bg;
   }
 
   .page-size-control {

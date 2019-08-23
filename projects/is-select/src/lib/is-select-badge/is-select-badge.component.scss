@@ -4,6 +4,8 @@ $info: var(--is-badge-info-color, #72BCFF);
 $warning: var(--is-badge-warning-color, #F0C330);
 $danger: var(--is-badge-danger-color, #EB6C77);
 $success: var(--is-badge-success-color, #40C6D2);
+$default: var(--is-badge-default-color, #40C6D2);
+$primary: var(--is-badge-primary-color, #40C6D2);
 
 is-select-badge {
   &.ng-invalid {
@@ -48,6 +50,20 @@ is-select-badge {
           background: $success !important;
         }
       }
+      &.is-badge-primary {
+        background-color: $primary !important;
+        color: #fff !important;
+        .btn-remove {
+          color: #fff !important;
+          background: $primary !important;
+        }
+      }
+      &.is-badge-default {
+        background-color: $default !important;
+        .btn-remove {
+          background: $default !important;
+        }
+      }
     }
   }
 }
@@ -81,6 +97,17 @@ is-select-options {
   a.is-badge-success {
     >span {
       background-color: $success;
+    }
+  }
+  a.is-badge-primary {
+    >span {
+      background-color: $primary;
+      color: #fff;
+    }
+  }
+  a.is-badge-default {
+    >span {
+      background-color: $default;
     }
   }
 }

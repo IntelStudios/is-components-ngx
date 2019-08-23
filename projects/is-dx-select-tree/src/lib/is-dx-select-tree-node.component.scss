@@ -1,4 +1,4 @@
-$color-node-hover: var(--is-select-tree-item-hover, lighten(#67809F, 10%));
+$is-color-node-hover: var(--is-select-tree-item-hover, lighten(#67809F, 10%));
 
 :host {
   > div {
@@ -18,7 +18,7 @@ $color-node-hover: var(--is-select-tree-item-hover, lighten(#67809F, 10%));
 
   .radio-btn {
     &:hover {
-      background-color: $color-node-hover;
+      background-color: $is-color-node-hover;
     }
   }
 }

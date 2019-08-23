@@ -14,7 +14,7 @@ export class DemoMetronicComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-metronic-7.0.4.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-metronic-7.1.0.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsMetronicModule } from 'is-metronic';</pre>
@@ -29,6 +29,11 @@ export class DemoMetronicComponent implements OnInit {
 @import 'assets/metronic/global/css/components-rounded.css';
 @import 'assets/metronic/global/css/plugins.css';
 @import 'assets/metronic/admin/layout/css/layout.css';</pre>
+
+
+// import IS variables
+@import ~is/metronic/scss/variables;
+@import ~is/metronic/scss/mixins;
   `;
 
   hint: string = `

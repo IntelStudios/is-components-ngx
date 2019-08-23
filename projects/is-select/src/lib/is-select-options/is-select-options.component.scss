@@ -1,7 +1,7 @@
 @import '../../../../styles/mixins';
 @import '../../../../styles/variables';
 
-$color-search-separator: var(--is-select-search-spearator, #efefef);
+$is-color-search-separator: var(--is-select-search-spearator, #efefef);
 
 :host {
   display: block;
@@ -9,7 +9,7 @@ $color-search-separator: var(--is-select-search-spearator, #efefef);
 
   .ui-select-choices-container {
     width: 100%;
-    background-color: $color-bg;
+    background-color: $is-color-bg;
     margin-top: 0px;
     border-top: none;
     display: block;
@@ -25,14 +25,14 @@ $color-search-separator: var(--is-select-search-spearator, #efefef);
 
     >.ui-select-search {
       display: flex;
-      border-bottom: 1px solid $color-search-separator;
+      border-bottom: 1px solid $is-color-search-separator;
       > input {
-        background-color: $color-bg;
-        color: $color-fg;
+        background-color: $is-color-bg;
+        color: $is-color-fg;
         border: none;
       }
       > i {
-        color: $color-handle;
+        color: $is-color-handle;
         align-self: center;
         padding: 8px 13px;
       }
@@ -82,16 +82,16 @@ $color-search-separator: var(--is-select-search-spearator, #efefef);
           .pretty {
             margin-right: 0;
             .state label:before {
-              border-color: $color-checkbox;
+              border-color: $is-color-checkbox;
             }
             input:checked ~ .state.p-success label:after, .p-toggle .state.p-success label:after {
-              background-color: $color-checkbox !important;
+              background-color: $is-color-checkbox !important;
             }
           }
         }
         .divider {
           margin: 4px 8px;
-          border-bottom: 1px solid $color-search-separator;
+          border-bottom: 1px solid $is-color-search-separator;
         }
       }
     }
@@ -127,19 +127,19 @@ $color-search-separator: var(--is-select-search-spearator, #efefef);
       clear: both;
       font-weight: 400;
       line-height: 1.42857143;
-      color: $color-fg;
+      color: $is-color-fg;
       text-decoration: none;
       transition: padding 0.15s
     }
     &.selected {
       > a {
-        color: $color-selected-item;
+        color: $is-color-selected-item;
       }
     }
     &.active {
       >a {
         outline: 0;
-        background-color: $color-active-item-bg;
+        background-color: $is-color-active-item-bg;
       }
     }
     &.disabled {
@@ -169,7 +169,7 @@ $color-search-separator: var(--is-select-search-spearator, #efefef);
     right: 29px;
     top: 10px;
     z-index: 20;
-    color: $color-handle;
+    color: $is-color-handle;
   }
   .dropdown-header {
     font-weight: bold;

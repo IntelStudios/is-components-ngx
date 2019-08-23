@@ -1,11 +1,11 @@
-$color-cls-danger-fg: var(--is-color-danger, red);
+$is-color-cls-danger-fg: var(--is-color-danger, red);
 
 :host {
   i {
-    color: $color-cls-danger-fg;
+    color: $is-color-cls-danger-fg;
   }
   span {
-    color: $color-cls-danger-fg;
+    color: $is-color-cls-danger-fg;
     font-weight: normal;
     font-size: 12px;
     padding-left: 6px;

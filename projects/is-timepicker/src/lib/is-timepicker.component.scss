@@ -1,39 +1,40 @@
 @import '../../../styles/mixins';
 @import '../../../styles/variables';
 
-$color-selected-item-bg: var(--is-control-selected-item-bg-color, grey);
-$color-active-bg: var(--is-control-active-item-bg-color, #428bca);
+$is-color-selected-item-bg: var(--is-control-selected-item-bg-color, grey);
+$is-color-active-bg: var(--is-control-active-item-bg-color, #428bca);
 
 is-timepicker {
   &.ng-invalid {
     input.ng-timepicker-input {
-      border-color: $color-invalid;
+      border-color: $is-color-invalid;
     }
     .input-group-addon {
-      border-color: $color-invalid;
+      border-color: $is-color-invalid;
     }
   }
 
   .input-group {
     &.open {
       .ng-timepicker-input {
-        border-color:  $color-border-focus !important;
+        border-color:  $is-color-border-focus !important;
       }
       .ng-timepicker-icon {
-        border-color:  $color-border-focus !important;
+        border-color:  $is-color-border-focus !important;
       }
     }
     &:hover {
       .ng-timepicker-icon  {
-        border-color: $color-border-hover;
+        border-color: $is-color-border-hover;
       }
 
       .ng-timepicker-input {
-        border-color: $color-border-hover;
+        border-color: $is-color-border-hover;
       }
     }
   }
   .btn-remove {
+    color: $is-color-handle;
     position: absolute;
     right: 50px;
     top: 10px;
@@ -56,18 +57,18 @@ is-timepicker {
     position: relative;
     width: 100%;
     cursor: pointer;
-    background-color: $color-bg;
+    background-color: $is-color-bg;
   }
 }
 
 .ng-timepicker-icon {
   border-left: 0 !important;
-  background-color: $color-bg;
+  background-color: $is-color-bg;
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-  border-color: $color-border;
+  border-color: $is-color-border;
   cursor: pointer;
   >i {
-    color: $color-handle;
+    color: $is-color-handle;
   }
   &.disabled {
     pointer-events: none;
@@ -83,7 +84,7 @@ is-timepicker {
   width: 215px;
   overflow: hidden;
   border-collapse: collapse;
-  background-color: $color-bg;
+  background-color: $is-color-bg;
   font-size: 12px;
   margin: 0;
   padding: 10px 0px 10px 0px;
@@ -92,9 +93,9 @@ is-timepicker {
   }
   .btn {
     border: none;
-    color: $color-handle;
+    color: $is-color-handle;
     &:hover {
-      background-color: $color-bg;
+      background-color: $is-color-bg;
     }
   }
   input {

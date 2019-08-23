@@ -1,15 +1,15 @@
 
-$color-cls-danger-fg: var(--is-color-danger, red);
-$color-disabled-fg: var(--is-color-input-disabled, #efefef);
-$color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
+$is-color-cls-danger-fg: var(--is-color-danger, red);
+$is-color-disabled-fg: var(--is-color-input-disabled, #efefef);
+$is-color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 $general-panel-border-color: var(--is-color-panel-border, #eaeaea);
-$color-cls-default-fg: var(--is-color-default, #333);
+$is-color-cls-default-fg: var(--is-color-default, #333);
 
 :host {
     &.ng-invalid {
         border: initial;
         input.ng-datepicker-input {
-            border: 1px solid $color-cls-danger-fg;
+            border: 1px solid $is-color-cls-danger-fg;
         }
     }
 }
@@ -36,7 +36,7 @@ $color-cls-default-fg: var(--is-color-default, #333);
     }
     &.disabled {
         pointer-events: none;
-        background-color: $color-disabled-bg;
+        background-color: $is-color-disabled-bg;
         cursor: not-allowed;
     }
 }
@@ -119,7 +119,7 @@ $color-cls-default-fg: var(--is-color-default, #333);
             width: 160px;
             text-align: center;
             font-size: 14px;
-            color: $color-cls-default-fg;
+            color: $is-color-cls-default-fg;
             font-weight: bold;
             float: left;
             padding: 3px 0 0 0;
@@ -150,7 +150,7 @@ $color-cls-default-fg: var(--is-color-default, #333);
         > span {
             width: 35px;
             text-align: center;
-            color: $color-cls-default-fg;
+            color: $is-color-cls-default-fg;
             float: left;
             display: inline-block;
         }
@@ -169,7 +169,7 @@ $color-cls-default-fg: var(--is-color-default, #333);
                 border-collapse: collapse;
                 float: left;
                 display: block;
-                color: $color-cls-default-fg;
+                color: $is-color-cls-default-fg;
                 text-align: center;
                 font-weight: bold;
                 line-height: 35px;
@@ -183,7 +183,7 @@ $color-cls-default-fg: var(--is-color-default, #333);
                     pointer-events: none;
                 }
                 &:hover {
-                    background: $color-cls-default-fg !important;
+                    background: $is-color-cls-default-fg !important;
                     color: #fff;
                 }
                 &.selected {
@@ -191,7 +191,7 @@ $color-cls-default-fg: var(--is-color-default, #333);
                     color: #fff;
                 }
                 &.today {
-                  background-color: $color-disabled-fg;
+                  background-color: $is-color-disabled-fg;
                 }
             }
         }

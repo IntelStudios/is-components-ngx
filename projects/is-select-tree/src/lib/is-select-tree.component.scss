@@ -1,8 +1,8 @@
-$color-success-fg: var(--is-color-success, green);
+$is-color-success-fg: var(--is-color-success, green);
 
-$color-node-hover: var(--is-select-tree-item-hover, lighten(#67809F, 10%));
-$color-node-active: var(--is-select-tree-item-active, #fff);
-$color-node-focus: var(--is-select-tree-item-focus, #fff);
+$is-color-node-hover: var(--is-select-tree-item-hover, lighten(#67809F, 10%));
+$is-color-node-active: var(--is-select-tree-item-active, #fff);
+$is-color-node-focus: var(--is-select-tree-item-focus, #fff);
 
 :host {
 
@@ -26,12 +26,12 @@ $color-node-focus: var(--is-select-tree-item-focus, #fff);
     }
 
     .node-content-wrapper-active, .node-content-wrapper.node-content-wrapper-active:hover, .node-content-wrapper-active.node-content-wrapper-focused {
-      background: $color-node-active;
+      background: $is-color-node-active;
     }
 
-    .node-content-wrapper:hover { background: $color-node-hover; }
+    .node-content-wrapper:hover { background: $is-color-node-hover; }
 
-    .node-content-wrapper-focused { background: $color-node-focus; }
+    .node-content-wrapper-focused { background: $is-color-node-focus; }
 
     .node-content-wrapper {
       display: block !important;
@@ -45,7 +45,7 @@ $color-node-focus: var(--is-select-tree-item-focus, #fff);
       cursor: default;
     }
     .fa-circle-o-notch {
-      color: $color-success-fg;
+      color: $is-color-success-fg;
     }
     .selection-fields {
       position: absolute;

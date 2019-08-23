@@ -1,8 +1,8 @@
 @import '../../../../styles/mixins';
 @import '../../../../styles/variables';
 
-$color-multi-item-bg: var(--is-select-multi-item-bg-color, #efefef);
-$color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
+$is-color-multi-item-bg: var(--is-select-multi-item-bg-color, #efefef);
+$is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
 
 :host {
   *:focus {
@@ -14,7 +14,7 @@ $color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
 
     .ui-select-match {
       .ui-select-toggle {
-        border-color: $color-invalid;
+        border-color: $is-color-invalid;
       }
     }
   }
@@ -34,7 +34,7 @@ $color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
       >.btn-remove {
         flex: 1;
         align-self: center;
-        color: $color-fg;
+        color: $is-color-fg;
       }
 
       >.dropdown-caret {
@@ -42,7 +42,7 @@ $color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         align-self: center;
         margin-left: 4px;
         margin-right: 8px;
-        color: $color-handle;
+        color: $is-color-handle;
       }
 
       >.ui-select-toggle {
@@ -65,7 +65,7 @@ $color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         }
 
         >.ui-select-match-text {
-          color: $color-fg;
+          color: $is-color-fg;
         }
 
       }
@@ -81,7 +81,7 @@ $color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
           }
           > .ui-select-match-text {
             margin: 4px;
-            background-color: $color-multi-item-bg;
+            background-color: $is-color-multi-item-bg;
             position: relative;
             max-width: 100px;
             padding-left: 4px;
@@ -89,7 +89,7 @@ $color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
             display: flex;
             align-items: center;
             overflow: hidden;
-            color: $color-multi-item-fg;
+            color: $is-color-multi-item-fg;
             border-radius: 2px !important;
             > span {
               width: calc(100% - 20px);
@@ -100,8 +100,8 @@ $color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
               top: 0px;
               padding: 3px;
               padding-left: 5px;
-              color: $color-multi-item-fg;
-              background: linear-gradient(90deg, transparent 0, $color-multi-item-bg 5px);
+              color: $is-color-multi-item-fg;
+              background: linear-gradient(90deg, transparent 0, $is-color-multi-item-bg 5px);
             }
           }
         }

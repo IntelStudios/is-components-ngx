@@ -13,7 +13,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.29.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.1.0.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -48,11 +48,12 @@ export class DemoSelectComponent implements OnInit {
   colors$ = undefined;
 
   itemsBadges = [
-    { ID: 0, Value: '[default_Unknown]' },
-    { ID: 1, Value: '[danger_High]' },
-    { ID: 2, Value: '[warning_Medium]' },
-    { ID: 3, Value: '[info_Low]' },
-    { ID: 4, Value: '[success_Success]' }
+    { ID: 0, Value: '[default_Default]' },
+    { ID: 1, Value: '[danger_Danger]' },
+    { ID: 2, Value: '[warning_Warning]' },
+    { ID: 3, Value: '[info_Info]' },
+    { ID: 4, Value: '[success_Success]' },
+    { ID: 5, Value: '[primary_Primary]' }
   ];
 
   itemsGrouped: any[] = [];

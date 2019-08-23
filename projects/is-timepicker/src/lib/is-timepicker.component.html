@@ -1,5 +1,5 @@
 <div class="input-group margin-bottom-sm" [class.open]="isOpened">
-  <input type="text" class="ng-timepicker-input form-control is-input" (click)="toggleTimepicker()" [value]="viewValue" [disabled]="disabled" [placeholder]="placeholder" [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}" readonly>
+  <input type="text" class="ng-timepicker-input form-control" (click)="toggleTimepicker()" [value]="viewValue" [disabled]="disabled" [placeholder]="placeholder" [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}" readonly>
   <span class="input-group-addon ng-timepicker-icon" [class.disabled]="disabled" (click)="toggleTimepicker()"><i class="fa fa-clock-o fa-fw"></i></span>
   <a *ngIf="allowClear && timeValue && !disabled" class="btn-remove" (click)="removeClick($event)">
     <i class="glyphicon glyphicon-remove"></i>

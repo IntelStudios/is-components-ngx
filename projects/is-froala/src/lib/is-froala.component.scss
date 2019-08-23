@@ -1,7 +1,7 @@
 @import '../../../styles/mixins';
 @import '../../../styles/variables';
 
-$color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
+$is-color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 
 is-froala {
   min-height: 189px;
@@ -11,7 +11,7 @@ is-froala {
   &.disabled {
 
     .view-border {
-      background-color: $color-disabled-bg;
+      background-color: $is-color-disabled-bg;
     }
 
     .icon-load {
@@ -29,19 +29,19 @@ is-froala {
   }
 
   .fr-toolbar {
-    background-color: $color-bg;
+    background-color: $is-color-bg;
 
     .fr-btn {
       &:after {
-        border-top-color: $color-fg !important;
+        border-top-color: $is-color-fg !important;
       }
       svg path {
-        fill: $color-fg !important;
+        fill: $is-color-fg !important;
       }
     }
     .fr-dropdown-menu, .fr-sc-container {
-      background-color: $color-bg !important;
-      color: $color-fg;
+      background-color: $is-color-bg !important;
+      color: $is-color-fg;
       @include short-scroll;
     }
   }
