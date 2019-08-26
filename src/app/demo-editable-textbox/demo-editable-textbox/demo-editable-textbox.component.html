@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Usage</h2>
+    <div [innerHTML]="usage"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Click on the pen to edit the value</h3>
+    <is-editable-textbox [formControl]="control" [autocomplete]="'off'" [placeholder]="'This is placeholder...'"></is-editable-textbox>
+  </div>
+  <div class="col-sm-6">
+    <button class="btn btn-primary" (click)="writeMyName()">Write my name</button>
+  </div>
+  <div class="col-sm-6">
+    <button class="btn btn-primary" (click)="makeInvalid()">Make invalid</button>
+  </div>
+</div>

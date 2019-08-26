@@ -1,0 +1,48 @@
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
+
+:host {
+  .input-group {
+    &.input-group-text {
+      display: block;
+      > input {
+        @include is-input;
+      }
+      .input-group-addon {
+        border: none;
+        position: absolute;
+        right: 3px;
+        padding-right: 20px;
+        bottom: -30px;
+        z-index: 300;
+        cursor: pointer;
+        background-color: transparent;
+        color: $is-color-handle;
+      }
+    }
+  }
+
+  &.ng-invalid {
+    border: none !important;
+  }
+
+  .text-mode {
+    color: $is-color-fg;
+    font-size: 22px;
+    font-weight: bold;
+
+    .edit-btn {
+      cursor: pointer;
+      margin-left: 5px;
+      z-index: 300;
+      color: $is-color-handle;
+      background-color: transparent;
+    }
+  }
+}
+
+:host(.ng-invalid) {
+  .input-group-text > input {
+    @include is-input-invalid;
+  }
+}
