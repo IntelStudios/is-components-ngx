@@ -1,21 +1,22 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   forwardRef,
   Input,
+  OnDestroy,
   Output,
   ViewChild,
-  AfterViewInit,
-  OnDestroy,
+  ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-
-import { IsSelectComponent } from './is-select.component';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IsColorItem } from './is-select.interfaces';
+
+import { IsColorItem } from '../is-select.interfaces';
+import { IsSelectComponent } from '../is-select/is-select.component';
+
 
 const NONE_COLOR = { 'ID': null, 'Value': 'None', Object: '#fff' };
 
@@ -32,7 +33,8 @@ export const IS_SELECT_COLOR_CONTROL_VALUE_ACCESSOR: any = {
   templateUrl: './is-select-color.component.html',
   providers: [IS_SELECT_COLOR_CONTROL_VALUE_ACCESSOR],
   styleUrls: ['./is-select-color.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class IsSelectColorComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
 

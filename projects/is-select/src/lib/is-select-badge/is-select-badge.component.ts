@@ -1,20 +1,21 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   forwardRef,
   Input,
+  OnDestroy,
   Output,
   ViewChild,
-  AfterViewInit,
-  OnDestroy,
+  ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import { SelectItem } from './select-item';
-import { IsSelectComponent } from './is-select.component';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import { IsSelectComponent } from '../is-select/is-select.component';
+import { SelectItem } from '../select-item';
 
 export const IS_SELECT_BADGE_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -22,12 +23,15 @@ export const IS_SELECT_BADGE_CONTROL_VALUE_ACCESSOR: any = {
   multi: true
 };
 
+export const BADGE_PATTERN: RegExp = new RegExp(/\[(\w+)_(.+?)\]/g);
+
 @Component({
   selector: 'is-select-badge',
   templateUrl: './is-select-badge.component.html',
   providers: [IS_SELECT_BADGE_CONTROL_VALUE_ACCESSOR],
   styleUrls: ['./is-select-badge.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
 
@@ -36,6 +40,12 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
 
   @Input()
   allowClear: boolean;
+
+  @Input()
+  multiple: boolean;
+
+  @Input()
+  useModels: boolean;
 
   @Input()
   placeholder: string = 'None';
@@ -54,7 +64,7 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
     if (!items || items.length === 0) {
       return;
     }
-    this._items = items;
+    this._items = this.parseItems(items);
     if (String(this._value)) {
       this.setValue();
     }
@@ -74,8 +84,6 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
 
   private _value: any;
 
-  private badgePattern: RegExp = new RegExp(/\[(\w+)_(.+?)\]/, 'g');
-
   private _changeSubscription: { unsubscribe: () => any } = null;
   /** Called when the combo is blurred. Needed to properly implement ControlValueAccessor. */
   onTouched: () => any = () => { return; };
@@ -94,12 +102,14 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
     return;
   }
 
-  parseBadge(value: string) {
-    value = value.replace(this.badgePattern, (match: string, css: string, text: string) => {
-      return `<span class="badge badge-${css.toLowerCase()} badge-roundless">${text}</span>`;
-    });
-
-    return value;
+  private parseItems(items: SelectItem[]): SelectItem[] {
+    return items.map((it: SelectItem) => {
+      const result = new RegExp(/\[(\w+)_(.+?)\]/g).exec(it.Value);
+      if (result) {
+        return new SelectItem({...it, cssClass: `is-badge is-badge-${result[1]}`, Value: result[2]});
+      }
+      return it;
+    })
   }
 
   /**

@@ -13,18 +13,20 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.0.29.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.1.0.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
 `
 
-  select1Control: FormControl;
-  select2Control: FormControl;
-  select3Control: FormControl;
-  select4Control: FormControl;
-  select5Control: FormControl;
-  select6Control: FormControl;
+  select1Control: FormControl = new FormControl();
+  select2Control: FormControl = new FormControl();
+  select3Control: FormControl = new FormControl();
+  select4Control: FormControl = new FormControl();
+  select4ControlMulti: FormControl = new FormControl();
+  select5Control: FormControl = new FormControl();
+  select6Control: FormControl = new FormControl();
+  select6ControlMulti: FormControl = new FormControl();
 
   public items: Array<string> = ['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -45,11 +47,13 @@ export class DemoSelectComponent implements OnInit {
   colors = undefined;
   colors$ = undefined;
 
-  public itemsBadges = [
-    { ID: 0, Value: '0 - [default_Unknown]' },
-    { ID: 1, Value: '1 - [danger_High]' },
-    { ID: 2, Value: '2 - [warning_Medium]' },
-    { ID: 3, Value: '3 - [info_Low]' }
+  itemsBadges = [
+    { ID: 0, Value: '[default_Default]' },
+    { ID: 1, Value: '[danger_Danger]' },
+    { ID: 2, Value: '[warning_Warning]' },
+    { ID: 3, Value: '[info_Info]' },
+    { ID: 4, Value: '[success_Success]' },
+    { ID: 5, Value: '[primary_Primary]' }
   ];
 
   itemsGrouped: any[] = [];
@@ -61,14 +65,8 @@ export class DemoSelectComponent implements OnInit {
   constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.select1Control = new FormControl();
-    this.select2Control = new FormControl();
-    this.select3Control = new FormControl();
-    this.select4Control = new FormControl();
-    this.select5Control = new FormControl();
-    this.select6Control = new FormControl();
 
-    let item1: any = {
+    const item1: any = {
       ID: '1', Value: 'Europe', children:
         [
           { ID: '11', Value: 'Czech' },
@@ -76,13 +74,13 @@ export class DemoSelectComponent implements OnInit {
           { ID: '13', Value: 'Nederlands', Disabled: true }
         ]
     };
-    let item2: any = { ID: '2', Value: 'Asia', children: [
+    const item2: any = { ID: '2', Value: 'Asia', children: [
       { ID: '111', Value: 'China' },
       { ID: '112', Value: 'Thailand' },
       { ID: '113', Value: 'Malaysia', Disabled: true },
       { ID: '114', Value: 'Russia', Disabled: true }
     ]};
-    let item3: any = {
+    const item3: any = {
       ID: '3', Value: 'USA', children:
         [
           { ID: '1111', Value: 'Miami' },
@@ -93,6 +91,18 @@ export class DemoSelectComponent implements OnInit {
 
     this.itemsGrouped.push(item1, item2, item3);
     this.changeDetector.markForCheck();
+  }
+
+  toggleInvalid(ctrl: FormControl) {
+    if (ctrl.errors) {
+      ctrl.setErrors(null);
+    } else {
+      ctrl.setErrors({invalid: true});
+    }
+  }
+
+  toggleDisable() {
+    this.select1Control.enabled ? this.select1Control.disable() : this.select1Control.enable();
   }
 
   selectLondon() {
@@ -138,8 +148,16 @@ export class DemoSelectComponent implements OnInit {
     this.select4Control.setValue({Data: '2', Name: 'green (model)'});
   }
 
+  selectGreenModelMulti() {
+    this.select4ControlMulti.setValue([{Data: '2', Name: 'green (model)'}]);
+  }
+
   selectFirstModel() {
     this.select6Control.setValue({ID: 666, Value: 'xxx (unknown model)'});
+  }
+
+  selectFirstModelMulti() {
+    this.select6ControlMulti.setValue([{ID: 666, Value: 'xxx (unknown model)'}]);
   }
 
   moreOptions$: BehaviorSubject<any[]> = new BehaviorSubject(null);

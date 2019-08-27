@@ -1,9 +1,9 @@
-$color-danger: var(--is-color-danger, #e43a45);
+$is-color-danger: var(--is-color-danger, #e43a45);
 
 :host {
     &.ng-invalid {
         .cron-expression {
-            border: 1px solid $color-danger;
+            border: 1px solid $is-color-danger;
         }
     }
 

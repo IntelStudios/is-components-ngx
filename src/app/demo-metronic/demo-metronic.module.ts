@@ -6,16 +6,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { DemoMetronicComponent } from './demo-metronic/demo-metronic.component';
 import { IsMetronicModule } from 'projects/is-metronic/src/public_api';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [DemoMetronicComponent],
   imports: [
-    CommonModule, IsMetronicModule.forRoot({ placement: 'right', triggers: 'click', outsideClick: true, container: 'body' }, {
-      delay: 3000,
-      container: 'body',
-      placement: 'right',
-      triggers: 'click'
-    }),
+    CommonModule, IsMetronicModule.forRoot(),
+    PopoverModule.forRoot(),
+    TooltipModule.forRoot(),
     ReactiveFormsModule,
     RouterModule
   ]

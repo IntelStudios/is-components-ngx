@@ -55,23 +55,7 @@
               "node_modules/codemirror/mode/powershell/powershell.js",
               "node_modules/codemirror/addon/hint/show-hint.js",
               "node_modules/codemirror/addon/hint/javascript-hint.js",
-              "node_modules/codemirror/mode/xml/xml.js",
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/froala-editor/js/froala_editor.pkgd.min.js",
-              "node_modules/froala-editor/js/plugins/code_view.min.js",
-              "node_modules/froala-editor/js/languages/cs.js",
-              "node_modules/froala-editor/js/languages/de.js",
-              "node_modules/froala-editor/js/languages/es.js",
-              "node_modules/froala-editor/js/languages/fr.js",
-              "node_modules/froala-editor/js/languages/hr.js",
-              "node_modules/froala-editor/js/languages/hu.js",
-              "node_modules/froala-editor/js/languages/nl.js",
-              "node_modules/froala-editor/js/languages/pl.js",
-              "node_modules/froala-editor/js/languages/pt_pt.js",
-              "node_modules/froala-editor/js/languages/sk.js",
-              "node_modules/froala-editor/js/languages/zh_cn.js",
-              "node_modules/froala-editor/js/languages/zh_tw.js",
-              "node_modules/at.js/dist/js/jquery.atwho.min.js"
+              "node_modules/codemirror/mode/xml/xml.js"
             ]
           },
           "configurations": {
@@ -336,41 +320,6 @@
             "tsConfig": [
               "projects/is-datepicker/tsconfig.lib.json",
               "projects/is-datepicker/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "is-selectpicker": {
-      "root": "projects/is-selectpicker",
-      "sourceRoot": "projects/is-selectpicker/src",
-      "projectType": "library",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/is-selectpicker/tsconfig.lib.json",
-            "project": "projects/is-selectpicker/ng-package.json"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/is-selectpicker/src/test.ts",
-            "tsConfig": "projects/is-selectpicker/tsconfig.spec.json",
-            "karmaConfig": "projects/is-selectpicker/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/is-selectpicker/tsconfig.lib.json",
-              "projects/is-selectpicker/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

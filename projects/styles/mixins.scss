@@ -1,0 +1,50 @@
+@import 'variables';
+
+@mixin is-input-active {
+  border-color: $is-color-border-focus;
+  box-shadow: 0px 0px 0px 1px $is-color-border-focus !important;
+  //border-width: 2px;
+}
+
+@mixin is-input-disabled {
+  background-color: $is-color-disabled-bg;
+  color: $is-color-disabled-fg;
+}
+
+@mixin is-input {
+  border-color:$is-color-border;
+  background-color: $is-color-bg;
+  color: $is-color-fg;
+  padding: 8px;
+  font-size: 13px;
+
+  &:hover {
+    border-color: $is-color-border-hover;
+  }
+
+  &:active, &:focus {
+    @include is-input-active;
+  }
+}
+
+@mixin is-input-invalid {
+  border-color: $is-color-invalid;
+}
+
+@mixin short-scroll {
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px; //background: #fff;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgb(187, 187, 187);
+  }
+  &::-webkit-scrollbar-corner {
+    background: #fff;
+  }
+  @media print {
+    &::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+  }
+}

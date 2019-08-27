@@ -1,9 +1,9 @@
 
-$color-cls-danger-fg: var(--is-color-danger, red);
+$is-color-cls-danger-fg: var(--is-color-danger, red);
 $brand-warning: var(--is-color-warning, yellow);
 $input-color: var(--is-color-input, black);
 $input-border: var(--is-color-border, gray);
-$color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
+$is-color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 
 :host {
   display: block;
@@ -21,7 +21,7 @@ $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
       width: 100%;
       height: 100%;
       display: block;
-      background-color: $color-disabled-bg;
+      background-color: $is-color-disabled-bg;
     }
   }
   &.ng-invalid,
@@ -61,7 +61,7 @@ $color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 
 :host(.ng-invalid) {
   /deep/ .CodeMirror {
-    border: 1px solid $color-cls-danger-fg;
+    border: 1px solid $is-color-cls-danger-fg;
   }
 }
 

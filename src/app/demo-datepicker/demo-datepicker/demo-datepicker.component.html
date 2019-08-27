@@ -11,8 +11,9 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-datepicker [formControl]="control" [alignment]="'right'"></is-datepicker>
+    <is-datepicker [formControl]="control" [alignment]="'right'" [allowClear]="true"></is-datepicker>
     <button class="btn btn-primary pull-right" (click)="onClearDate()" style="margin-top: 5px;">Clear date</button>
+    <button class="btn btn-primary" (click)="toggleInvalid()">Invalid</button>
   </div>
   <div class="col-sm-6 datepicker-colors">
     <is-datepicker viewFormat="DD-MM-YYYY"></is-datepicker>

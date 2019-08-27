@@ -1,0 +1,78 @@
+@import '../../../../styles/mixins';
+@import '../../../../styles/variables';
+
+
+is-datepicker {
+  &.ng-invalid {
+    .datepicker-input {
+      @include is-input-invalid;
+    }
+  }
+
+
+  .datepicker-input {
+    border-width: 1px;
+    border-style: solid;
+    @include is-input;
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    padding-bottom: 0px;
+
+    &.open {
+      @include is-input-active;
+    }
+
+    &.disabled {
+      @include is-input-disabled;
+      cursor: not-allowed;
+    }
+
+    > input.datepicker-value {
+      color: $is-color-fg;
+      border:0;
+      width: 100%;
+      outline: 0;
+      padding-bottom: 8px;
+      background: transparent;
+      &.align-left {
+        text-align: left !important;
+      }
+      &.align-center {
+        text-align: center !important;
+      }
+      &.align-right {
+        text-align: right !important;
+      }
+    }
+    > .btn-remove {
+      flex: 1;
+      color: $is-color-handle;
+    }
+  }
+
+  .datepicker-icon {
+    >i {
+      color: $is-color-handle;
+    }
+    &.disabled {
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+  }
+
+}
+// dropdown container style
+.bs-datepicker.is-datepicker {
+  box-shadow: none;
+  border-width: 1px;
+  border-style: solid;
+  border-top: 0;
+  @include is-input-active;
+  .bs-datepicker-head {
+    background: $is-color-border-focus;
+  }
+  > .bs-datepicker-container {
+    padding: 0;
+  }
+}

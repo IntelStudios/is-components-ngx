@@ -3,16 +3,27 @@
     <div class="navbar-header">
       <a class="navbar-brand" routerLink="/">IS Components</a>
     </div>
-     <ul class="nav navbar-nav navbar-right">
-        <li><a href="/docs/index.html" target="_blank"><i class="fa fa-book"></i> Documentation</a></li>
-        <li><a href="https://github.com/IntelStudios/is-components-ngx" target="_blank"><i class="fa fa-github"></i> Github</a></li>
-      </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <a>
+          Theme:
+          <select [value]="theme" (change)="onThemeChange($event.target.value)">
+            <option value="is-theme-light">Light</option>
+            <option value="is-theme-dark">Dark</option>
+          </select>
+        </a>
+
+      </li>
+      <li><a href="/docs/index.html" target="_blank"><i class="fa fa-book"></i> Documentation</a></li>
+      <li><a href="https://github.com/IntelStudios/is-components-ngx" target="_blank"><i class="fa fa-github"></i>
+          Github</a></li>
+    </ul>
   </div>
 </nav>
-<div class="row">
+<div class="">
   <div class="col-sm-3">
     <ul class="nav nav-pills nav-stacked">
-      <li *ngFor=" let demo of demos" routerLinkActive="active"><a [routerLink]="demo.route">{{demo.title}}</a></li>
+      <li *ngFor="let demo of demos" routerLinkActive="active"><a [routerLink]="demo.route">{{demo.title}}</a></li>
     </ul>
   </div>
   <div class="col-sm-9" style="padding: 30px;">

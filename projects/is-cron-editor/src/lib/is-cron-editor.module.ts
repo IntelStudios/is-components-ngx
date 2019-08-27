@@ -4,7 +4,6 @@ import { IsMetronicModule } from 'is-metronic';
 import { IsSelectModule } from 'is-select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IsSelectpickerModule } from 'is-selectpicker';
 
 @NgModule({
   declarations: [IsCronEditorComponent],
@@ -12,7 +11,6 @@ import { IsSelectpickerModule } from 'is-selectpicker';
     IsMetronicModule,
     ReactiveFormsModule,
     CommonModule,
-    IsSelectpickerModule,
     IsSelectModule
   ],
   exports: [IsCronEditorComponent]

@@ -1,11 +1,10 @@
 {
   "name": "is-cron-editor",
-  "version": "7.0.2",
+  "version": "7.1.0",
   "peerDependencies": {
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0",
-    "is-select": "^7.0.0",
-    "is-selectpicker": "^7.0.0",
-    "is-metronic": "^7.0.0"
+    "is-select": "^7.1.0",
+    "is-metronic": "^7.1.0"
   }
 }

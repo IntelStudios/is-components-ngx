@@ -1,25 +1,7 @@
-@mixin short-scroll {
-  &::-webkit-scrollbar {
-    height: 8px;
-    width: 8px; //background: #fff;
-  }
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
 
-  &::-webkit-scrollbar-thumb {
-    background: rgb(187, 187, 187);
-  }
-
-  &::-webkit-scrollbar-corner {
-    background: #fff;
-  }
-
-  @media print {
-    &::-webkit-scrollbar-thumb {
-      background: transparent;
-    }
-  }
-}
-
-$color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
+$is-color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 
 is-froala {
   min-height: 189px;
@@ -29,11 +11,20 @@ is-froala {
   &.disabled {
 
     .view-border {
-      background-color: $color-disabled-bg;
+      background-color: $is-color-disabled-bg;
     }
 
     .icon-load {
       display: none;
+    }
+  }
+
+  &.ng-invalid {
+    > .fr-wrapper {
+      border-color: $is-color-invalid !important;
+    }
+    > .fr-toolbar {
+      border-color: $is-color-invalid;
     }
   }
 
@@ -42,13 +33,43 @@ is-froala {
     min-height: 189px;
   }
 
-  .fr-wrapper {
+  > .fr-wrapper {
     @include short-scroll;
+    border-color: $is-color-border !important;
+  }
+
+  > .fr-toolbar {
+    background-color: $is-color-bg;
+    border-color: $is-color-border;
+
+    .fr-newline:last-of-type {
+      display: none;
+    }
+
+    .fr-btn {
+      &:after {
+        border-top-color: $is-color-fg !important;
+      }
+      svg path {
+        fill: $is-color-fg !important;
+      }
+    }
+    .fr-dropdown-menu, .fr-sc-container {
+      background-color: $is-color-bg !important;
+      color: $is-color-fg;
+      @include short-scroll;
+    }
+  }
+
+  .second-toolbar {
+    display: none;
   }
 
   .is-button-hidden {
     display: none;
   }
+
+
 
   .CodeMirror {
     height: inherit !important;

@@ -1,9 +1,0 @@
-<is-select #select [placeholder]="placeholder" [allowClear]="allowClear" [items]="items"
-  (selected)="valueSelected($event)" (removed)="removed()" [class.disabled]="disabled" [disabled]="disabled">
-  <ng-template is-select-option let-item>
-    <span [innerHTML]="parseBadge(item.Value)"></span>
-  </ng-template>
-  <ng-template is-select-selection let-item>
-    <span [innerHTML]="parseBadge(item.Value)"></span>
-  </ng-template>
-</is-select>

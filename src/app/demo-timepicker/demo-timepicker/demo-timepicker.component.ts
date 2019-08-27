@@ -11,7 +11,7 @@ export class DemoTimepickerComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-timepicker-7.0.11.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-timepicker-7.1.0.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsTimepickerModule } from 'is-timepicker';</pre>
@@ -35,5 +35,9 @@ export class DemoTimepickerComponent implements OnInit {
 
   setValue() {
     this.timepickerControl1.setValue('02:00:00');
+  }
+
+  disableToggle() {
+    this.timepickerControl1.enabled ? this.timepickerControl1.disable() : this.timepickerControl1.enable();
   }
 }

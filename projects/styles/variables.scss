@@ -1,0 +1,12 @@
+$is-color-handle: var(--is-control-handle-color, #000);
+$is-color-border: var(--is-control-border-color, #000);
+$is-color-border-focus: var(--is-control-border-focus-color, #000);
+$is-color-border-hover: var(--is-control-border-hover-color, #000);
+$is-color-bg: var(--is-control-bg-color, #fff);
+$is-color-fg: var(--is-control-fg-color, #fff);
+$is-color-invalid: var(--is-control-invalid-color, red);
+$is-color-selected-item: var(--is-control-selected-item-color, grey);
+$is-color-active-item-bg: var(--is-control-active-item-bg-color, #428bca);
+$is-color-disabled-bg: var(--is-control-disabled-bg-color, #efefef);
+$is-color-disabled-fg: var(--is-control-disabled-fg-color, #333);
+$is-color-checkbox: var(--is-checkbox-color, #333);

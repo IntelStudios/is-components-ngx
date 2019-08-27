@@ -24,7 +24,7 @@ interface CalendarDate {
 
 export const IS_DATEPICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => IsDatepickerComponent),
+  useExisting: forwardRef(() => IsDatepicker2Component),
   multi: true
 };
 
@@ -35,7 +35,7 @@ export const IS_DATEPICKER_VALUE_ACCESSOR: any = {
   providers: [IS_DATEPICKER_VALUE_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IsDatepickerComponent implements ControlValueAccessor, OnInit {
+export class IsDatepicker2Component implements ControlValueAccessor, OnInit {
   public isOpened: boolean;
   public dateValue: string;
   public viewValue: string = '';

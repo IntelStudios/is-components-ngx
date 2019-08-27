@@ -1,17 +1,20 @@
+import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { IsSelectComponent } from './is-select.component';
+import { IsSelectBadgeComponent } from './is-select-badge/is-select-badge.component';
+import { IsSelectColorComponent } from './is-select-color/is-select-color.component';
+import { IsSelectOptionsComponent } from './is-select-options/is-select-options.component';
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-select.directives';
+import { IsSelectComponent } from './is-select/is-select.component';
 import { HighlightPipe } from './select-pipes';
-import { IsSelectColorComponent } from './is-select-color.component';
-import { IsSelectBadgeComponent } from './is-select-badge.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule, OverlayModule
   ],
-  declarations: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent],
-  exports: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent]
+  declarations: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent, IsSelectOptionsComponent],
+  exports: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent],
+  entryComponents: [IsSelectOptionsComponent]
 })
 export class IsSelectModule { }

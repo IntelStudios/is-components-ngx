@@ -1,23 +1,10 @@
-$color-cls-danger-fg: var(--is-color-danger, red);
-:host {
+
+is-select-color {
   &.ng-invalid {
     border: none !important;
-
-    /deep/ .ui-select-match {
-      .ui-select-toggle {
-        border-color: $color-cls-danger-fg;
-      }
-    }
   }
 
-  .preview {
-    width: 16px;
-    height: 16px;
-    margin-right: 3px;
-    margin-top: 2px;
-    border: 1px solid #eaeaea;
-    float: left;
-  }
+
   .preview-full {
     border: 1px solid #eaeaea;
   }
@@ -36,5 +23,16 @@ $color-cls-danger-fg: var(--is-color-danger, red);
     max-height: 250px;
     overflow: auto;
     margin-top: 0px;
+  }
+}
+
+is-select-options, is-select-color {
+  .preview {
+    width: 16px;
+    height: 16px;
+    margin-right: 3px;
+    margin-top: 2px;
+    border: 1px solid #eaeaea;
+    float: left;
   }
 }

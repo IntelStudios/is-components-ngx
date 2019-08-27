@@ -8,6 +8,9 @@ import {
   OnInit,
   Output,
   ViewContainerRef,
+  ViewEncapsulation,
+  Renderer2,
+  OnDestroy,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
@@ -28,9 +31,10 @@ export const IS_TIMEPICKER_VALUE_ACCESSOR: any = {
   templateUrl: './is-timepicker.component.html',
   styleUrls: ['./is-timepicker.component.scss'],
   providers: [IS_TIMEPICKER_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
-export class IsTimepickerComponent implements OnInit {
+export class IsTimepickerComponent implements OnInit, OnDestroy {
 
   @Input() allowClear: boolean = false;
   @Input('placeholder') placeholder: string = '';
@@ -55,15 +59,19 @@ export class IsTimepickerComponent implements OnInit {
   private el: any;
   private onTouched: Function;
   private _changeSubscription: Subscription = null;
+  private _clickedOutsideListener = null;
 
-  constructor(public viewContainer: ViewContainerRef, private changeDetector: ChangeDetectorRef) {
+  constructor(public viewContainer: ViewContainerRef, private renderer: Renderer2, private changeDetector: ChangeDetectorRef) {
     this.viewContainer = viewContainer;
     this.el = viewContainer.element.nativeElement;
   }
 
   ngOnInit() {
     this.isOpened = false;
-    this.initMouseEvents();
+  }
+
+  ngOnDestroy() {
+    this.unregisterOutsideClick();
   }
 
   /**
@@ -103,6 +111,7 @@ export class IsTimepickerComponent implements OnInit {
   closeTimepicker() {
     this.setValue(this.timeValue);
     this.isOpened = false;
+    this.unregisterOutsideClick();
     this.changeDetector.detectChanges();
   }
 
@@ -111,8 +120,10 @@ export class IsTimepickerComponent implements OnInit {
       this.isOpened = !this.isOpened;
       if (!this.isOpened) {
         this.setValue(this.timeValue);
+        this.unregisterOutsideClick();
       }
       else {
+        this.registerOutsideClick();
         if (!this.timeValue) {
           this.setValue(new Date());
         }
@@ -158,14 +169,16 @@ export class IsTimepickerComponent implements OnInit {
     this.changeDetector.markForCheck();
   }
 
-  private initMouseEvents(): void {
-    let body = document.getElementsByTagName('body')[0];
-
-    body.addEventListener('click', (e) => {
+  private registerOutsideClick() {
+    this._clickedOutsideListener = this.renderer.listen('document', 'click', (e: MouseEvent) => {
       if (!this.isOpened || !e.target) return;
       if (this.el !== e.target && !this.el.contains(e.target)) {
         this.closeTimepicker();
       }
-    }, false);
+    });
+  }
+
+  private unregisterOutsideClick() {
+    this._clickedOutsideListener && this._clickedOutsideListener();
   }
 }

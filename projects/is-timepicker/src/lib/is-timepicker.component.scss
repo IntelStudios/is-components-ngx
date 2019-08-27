@@ -1,100 +1,92 @@
-$color-cls-danger-fg: var(--is-color-danger, red);
-$color-cls-danger-bg: var(--is-color-danger-bg, lightpink);
-$color-disabled-fg: var(--is-color-input-disabled, #efefef);
-$color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
-$general-panel-border-color: var(--is-color-panel-border, #ccc);
-$color-cls-default-fg: var(--is-color-default, #333);
-:host {
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
+
+$is-color-selected-item-bg: var(--is-control-selected-item-bg-color, grey);
+$is-color-active-bg: var(--is-control-active-item-bg-color, #428bca);
+
+is-timepicker {
   &.ng-invalid {
-    border: initial;
-    input.ng-timepicker-input {
-      border: 1px solid $color-cls-danger-fg;
-    }
-    .input-group-addon {
-      border: 1px solid $color-cls-danger-fg;
-      background-color: $color-cls-danger-bg;
-    }
-  }
-  /deep/ .bs-timepicker-field {
-    border: 0px;
-    color: #000;
-  }
-  /deep/ .btn-link {
-    color: #555;
-    &:hover {
-      text-decoration: none;
-      background-color: #eee;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      border-radius: 4px;
-      border-color: #ddd;
+    .timepicker-input {
+      @include is-input-invalid;
     }
   }
 
-  .btn-remove {
-    position: absolute;
-    right: 50px;
-    top: 10px;
-    z-index: 3;
-  }
-}
+  .timepicker-input {
+    border-width: 1px;
+    border-style: solid;
+    @include is-input;
+    display: flex;
+    position: relative;
+    cursor: pointer;
 
-.ng-timepicker-input {
-  &.align-left {
-    text-align: left !important;
-  }
-  &.align-center {
-    text-align: center !important;
-  }
-  &.align-right {
-    text-align: right !important;
-    padding-right: 30px;
-  }
-}
+    &.open {
+      @include is-input-active;
+    }
 
-.ng-timepicker-input:not([disabled]) {
-  position: relative;
-  width: 100%;
-  cursor: pointer;
-  background-color: white;
-}
+    &.disabled {
+      @include is-input-disabled;
+      cursor: not-allowed;
+    }
+
+    > .timepicker-value {
+      color: $is-color-fg;
+      width: 100%;
+      &.align-left {
+        text-align: left !important;
+      }
+      &.align-center {
+        text-align: center !important;
+      }
+      &.align-right {
+        text-align: right !important;
+      }
+    }
+    > .btn-remove {
+      flex: 1;
+      color: $is-color-handle;
+    }
+  }
 
 .ng-timepicker-icon {
-  border-left: 0 !important;
-  border-top: solid 1px $general-panel-border-color;
-  border-bottom: solid 1px $general-panel-border-color;
-  cursor: pointer;
   >i {
-    color: #333;
-  }
-  &:hover {
-    >i {
-      color: #333;
-    }
-    background-color: lightgray;
+    color: $is-color-handle;
   }
   &.disabled {
     pointer-events: none;
-    background-color: $color-disabled-bg;
     cursor: not-allowed;
   }
 }
 
 .ng-timepicker {
-  right: 16px;
+  right: 15px;
   position: absolute;
   z-index: 99;
-  width: 215px;
+  width: 192px;
   overflow: hidden;
   border-collapse: collapse;
-  background: #fff;
+  background-color: $is-color-bg;
   font-size: 12px;
-  color: #565a5c;
-  border: 1px solid $general-panel-border-color;
-  border-radius: 2px;
   margin: 0;
-  padding: 10px 0px 10px 0px;
-  /deep/ table {
+  padding: 4px 0px 4px 0px;
+  border-width: 1px;
+  border-style: solid;
+  @include is-input-active;
+
+  table {
     margin: 0 auto !important;
+    color: $is-color-fg;
   }
+
+  .btn {
+    border: none;
+    color: $is-color-handle;
+    &:hover {
+      background-color: $is-color-bg;
+    }
+  }
+  input {
+    @include is-input;
+  }
+}
+
 }

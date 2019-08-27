@@ -32,4 +32,12 @@ export class DemoDatepickerComponent implements OnInit {
     this.control.setValue(null);
   }
 
+  toggleInvalid(ctrl: FormControl = this.control) {
+    if (ctrl.errors) {
+      ctrl.setErrors(null);
+    } else {
+      ctrl.setErrors({invalid: true});
+    }
+  }
+
 }
