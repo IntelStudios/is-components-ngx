@@ -1,0 +1,15 @@
+<div *ngIf="edit" class="input-group input-group-text">
+  <input #textInput
+         type="text"
+         class="form-control"
+         [autocomplete]="autocomplete"
+         [disabled]="disabled"
+         [placeholder]="placeholder"
+         (change)="onChange($event)"
+         (keyup)="onChange($event)"
+         (keyup.enter)="toggleEdit()"
+         [value]="value"
+  >
+  <i class="input-group-addon fa fa-check" (click)="toggleEdit()"></i>
+</div>
+<div class="text-mode" *ngIf="!edit">{{value}} <i class="fa fa-pencil edit-btn" (click)="toggleEdit()"></i></div>

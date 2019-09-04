@@ -677,6 +677,41 @@
           }
         }
       }
+    },
+    "is-editable-textbox": {
+      "root": "projects/is-editable-textbox",
+      "sourceRoot": "projects/is-editable-textbox/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/is-editable-textbox/tsconfig.lib.json",
+            "project": "projects/is-editable-textbox/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/is-editable-textbox/src/test.ts",
+            "tsConfig": "projects/is-editable-textbox/tsconfig.spec.json",
+            "karmaConfig": "projects/is-editable-textbox/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/is-editable-textbox/tsconfig.lib.json",
+              "projects/is-editable-textbox/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "is-components-ngx"

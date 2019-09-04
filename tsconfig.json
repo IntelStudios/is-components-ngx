@@ -87,6 +87,12 @@
       ],
       "is-checkmap/*": [
         "dist/is-checkmap/*"
+      ],
+      "is-editable-textbox": [
+        "dist/is-editable-textbox"
+      ],
+      "is-editable-textbox/*": [
+        "dist/is-editable-textbox/*"
       ]
     }
   }

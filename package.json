@@ -21,6 +21,7 @@
     "build.table": "ng build is-table && cd dist/is-table && npm pack --quiet && cp *.tgz ../../package",
     "build.timepicker": "ng build is-timepicker && cd dist/is-timepicker && npm pack --quiet && cp *.tgz ../../package",
     "build.cron": "ng build is-cron-editor && cd dist/is-cron-editor && npm pack --quiet && cp *.tgz ../../package",
+    "build.editable-textbox": "ng build is-editable-textbox && cd dist/is-editable-textbox && npm pack --quiet && cp *.tgz ../../package",
     "build.checkmap": "ng build is-checkmap && cd dist/is-checkmap && npm pack --quiet && cp *.tgz ../../package",
     "docs": "./node_modules/.bin/compodoc -p tsconfig.json -d dist/app/docs --silent --theme readthedocs --disableCoverage --disableGraph --disablePrivate",
     "test": "ng test",
