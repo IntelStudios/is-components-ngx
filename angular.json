@@ -678,6 +678,41 @@
         }
       }
     },
+    "is-input-mapping": {
+      "root": "projects/is-input-mapping",
+      "sourceRoot": "projects/is-input-mapping/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/is-input-mapping/tsconfig.lib.json",
+            "project": "projects/is-input-mapping/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/is-input-mapping/src/test.ts",
+            "tsConfig": "projects/is-input-mapping/tsconfig.spec.json",
+            "karmaConfig": "projects/is-input-mapping/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/is-input-mapping/tsconfig.lib.json",
+              "projects/is-input-mapping/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
     "is-editable-textbox": {
       "root": "projects/is-editable-textbox",
       "sourceRoot": "projects/is-editable-textbox/src",

@@ -22,6 +22,7 @@ export const routes: Routes = [
   { path: 'editable-textbox', loadChildren: './demo-editable-textbox/demo-editable-textbox.module#DemoEditableTextboxRoutingModule' },
   { path: 'select-tree', loadChildren: './demo-select-tree/demo-select-tree.module#DemoSelectTreeRoutingModule' },
   { path: 'dx-select-tree', loadChildren: './demo-dx-select-tree/demo-dx-select-tree.module#DemoDxSelectTreeRoutingModule' },
+  { path: 'input-mapping', loadChildren: './demo-input-mapping/demo-input-mapping.module#DemoInputMappingRoutingModule' },
   { path: 'modal', loadChildren: './demo-modal/demo-modal.module#DemoModalRoutingModule' },
   { path: 'grid', loadChildren: './demo-grid/demo-grid.module#DemoGridRoutingModule' },
   { path: 'table', loadChildren: './demo-table/demo-table.module#DemoTableRoutingModule'},
