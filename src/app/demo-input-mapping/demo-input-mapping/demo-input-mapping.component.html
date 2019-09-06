@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Usage</h2>
+    <div [innerHTML]="usage"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+  <is-input-mapping [data]="mock_tree_data" [formControl]="formControl"></is-input-mapping>
+</div>
+<div class="col-sm-6">
+  <span>Value: {{currentValue}}</span>
+</div>
+  <div class="col-sm-6">
+  <button class="btn btn-primary" (click)="nullIt()">Select nothing</button>
+    <button class="btn btn-primary" (click)="modified2Created()">Modified to Created</button>
+</div>
+</div>

@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
     { title: 'Editable textbox', route: '/editable-textbox' },
     { title: 'Select Tree', route: '/select-tree' },
     { title: 'Select Tree DX', route: '/dx-select-tree' },
+    { title: 'Input Mapping Tree', route: '/input-mapping' },
     { title: 'Modal', route: '/modal' },
     { title: 'Grid', route: '/grid' },
     { title: 'Table', route: '/table' },
