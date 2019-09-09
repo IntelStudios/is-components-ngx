@@ -12,23 +12,23 @@ import { AppComponent } from './app.component';
 
 
 export const routes: Routes = [
-  { path: 'select', loadChildren: './demo-select/demo-select.module#DemoSelectRoutingModule' },
-  { path: 'datepicker', loadChildren: './demo-datepicker/demo-datepicker.module#DemoDatepickerRoutingModule' },
-  { path: 'codemirror', loadChildren: './demo-codemirror/demo-codemirror.module#DemoCodemirrorRoutingModule' },
-  { path: 'froala', loadChildren: './demo-froala/demo-froala.module#DemoFroalaRoutingModule' },
-  { path: 'metronic', loadChildren: './demo-metronic/demo-metronic.module#DemoMetronicRoutingModule' },
-  { path: 'bootstrap-switch', loadChildren: './demo-bootstrap-switch/demo-bootstrap-switch.module#DemoBootstrapSwitchRoutingModule' },
-  { path: 'password', loadChildren: './demo-password/demo-password.module#DemoPasswordRoutingModule' },
-  { path: 'editable-textbox', loadChildren: './demo-editable-textbox/demo-editable-textbox.module#DemoEditableTextboxRoutingModule' },
-  { path: 'select-tree', loadChildren: './demo-select-tree/demo-select-tree.module#DemoSelectTreeRoutingModule' },
-  { path: 'dx-select-tree', loadChildren: './demo-dx-select-tree/demo-dx-select-tree.module#DemoDxSelectTreeRoutingModule' },
-  { path: 'input-mapping', loadChildren: './demo-input-mapping/demo-input-mapping.module#DemoInputMappingRoutingModule' },
-  { path: 'modal', loadChildren: './demo-modal/demo-modal.module#DemoModalRoutingModule' },
-  { path: 'grid', loadChildren: './demo-grid/demo-grid.module#DemoGridRoutingModule' },
-  { path: 'table', loadChildren: './demo-table/demo-table.module#DemoTableRoutingModule'},
-  { path: 'timepicker', loadChildren: './demo-timepicker/demo-timepicker.module#DemoTimepickerRoutingModule' },
-  { path: 'croneditor', loadChildren: './demo-cron-editor/demo-cron-editor.module#DemoCronEditorRoutingModule' },
-  { path: 'checkmap', loadChildren: './demo-checkmap/demo-checkmap.module#DemoCheckmapRoutingModule' }
+  { path: 'select', loadChildren: () => import('./demo-select/demo-select.module').then(m => m.DemoSelectRoutingModule) },
+  { path: 'datepicker', loadChildren: () => import('./demo-datepicker/demo-datepicker.module').then(m => m.DemoDatepickerRoutingModule) },
+  { path: 'codemirror', loadChildren: () => import('./demo-codemirror/demo-codemirror.module').then(m => m.DemoCodemirrorRoutingModule) },
+  { path: 'froala', loadChildren: () => import('./demo-froala/demo-froala.module').then(m => m.DemoFroalaRoutingModule) },
+  { path: 'metronic', loadChildren: () => import('./demo-metronic/demo-metronic.module').then(m => m.DemoMetronicRoutingModule) },
+  { path: 'bootstrap-switch', loadChildren: () => import('./demo-bootstrap-switch/demo-bootstrap-switch.module').then(m => m.DemoBootstrapSwitchRoutingModule) },
+  { path: 'password', loadChildren: () => import('./demo-password/demo-password.module').then(m => m.DemoPasswordRoutingModule) },
+  { path: 'editable-textbox', loadChildren: () => import('./demo-editable-textbox/demo-editable-textbox.module').then(m => m.DemoEditableTextboxRoutingModule) },
+  { path: 'select-tree', loadChildren: () => import('./demo-select-tree/demo-select-tree.module').then(m => m.DemoSelectTreeRoutingModule) },
+  { path: 'dx-select-tree', loadChildren: () => import('./demo-dx-select-tree/demo-dx-select-tree.module').then(m => m.DemoDxSelectTreeRoutingModule) },
+  { path: 'input-mapping', loadChildren: () => import('./demo-input-mapping/demo-input-mapping.module').then(m => m.DemoInputMappingRoutingModule) },
+  { path: 'modal', loadChildren: () => import('./demo-modal/demo-modal.module').then(m => m.DemoModalRoutingModule) },
+  { path: 'grid', loadChildren: () => import('./demo-grid/demo-grid.module').then(m => m.DemoGridRoutingModule) },
+  { path: 'table', loadChildren: () => import('./demo-table/demo-table.module').then(m => m.DemoTableRoutingModule)},
+  { path: 'timepicker', loadChildren: () => import('./demo-timepicker/demo-timepicker.module').then(m => m.DemoTimepickerRoutingModule) },
+  { path: 'croneditor', loadChildren: () => import('./demo-cron-editor/demo-cron-editor.module').then(m => m.DemoCronEditorRoutingModule) },
+  { path: 'checkmap', loadChildren: () => import('./demo-checkmap/demo-checkmap.module').then(m => m.DemoCheckmapRoutingModule) }
 ];
 
 @NgModule({

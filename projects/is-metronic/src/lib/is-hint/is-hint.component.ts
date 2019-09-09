@@ -22,7 +22,7 @@ export class IsHintComponent implements OnInit, OnDestroy {
   @Input()
   icon: string = 'fa fa-info-circle';
 
-  @ViewChild('popover')
+  @ViewChild('popover', { static: false })
   popover: PopoverDirective;
 
   private _documentClickListener: Function = null;

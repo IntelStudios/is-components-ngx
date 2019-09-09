@@ -34,7 +34,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 `;
 
 
-  @ViewChild('modalContent')
+  @ViewChild('modalContent', { static: true })
   template: TemplateRef<any>;
 
   constructor(private bsModalservice: BsModalService) { }

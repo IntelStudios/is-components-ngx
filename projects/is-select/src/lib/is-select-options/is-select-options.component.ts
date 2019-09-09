@@ -29,10 +29,10 @@ export interface ISelectOptionsControl {
 })
 export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('optionSingle')
+  @ViewChild('optionSingle', { static: true })
   optionSingleTemplate: TemplateRef<any>;
 
-  @ViewChild('optionMulti')
+  @ViewChild('optionMulti', { static: true })
   optionMultiTemplate: TemplateRef<any>;
 
   optionMainTemplate: TemplateRef<any>;

@@ -1,6 +1,6 @@
 <div class="timepicker-input form-control align-{{alignment}}" (click)="toggleTimepicker()"  [class.open]="isOpened" [class.disabled]="disabled">
   <span class="timepicker-value">{{viewValue}}</span>
-  <i *ngIf="allowClear && timeValue && !disabled" class="glyphicon glyphicon-remove btn-remove" (click)="removeClick($event)"></i>
+  <i *ngIf="allowClear && timeValue && !disabled" class="fa fa-times btn-remove" (click)="removeClick($event)"></i>
   <span class="ng-timepicker-icon" [class.disabled]="disabled"><i class="fa fa-clock-o fa-fw"></i></span>
 </div>
 <div class="ng-timepicker" *ngIf="isOpened">

@@ -10,12 +10,12 @@
         <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateSelection"
           [ngTemplateOutletContext]="{$implicit: it, index: 0, item: it}">
         </ng-container>
-        <i (click)="unselectClick($event, it)" class="glyphicon glyphicon-remove btn-remove"></i>
+        <i (click)="unselectClick($event, it)" class="fa fa-times btn-remove"></i>
       </div>
     </span>
     <span *ngIf="additionalValues > 0" class="additional-values">+{{additionalValues}}</span>
-    <i class="glyphicon dropdown-caret"
-      [ngClass]="{'glyphicon-menu-down': !optionsOpened, 'glyphicon-menu-up': optionsOpened}"></i>
+    <i class="fa dropdown-caret"
+      [ngClass]="{'fa-chevron-down': !optionsOpened, 'fa-chevron-up': optionsOpened}"></i>
   </div>
 
   <ng-template #single>
@@ -31,9 +31,9 @@
         </span>
       </span>
 
-      <i *ngIf="allowClear && singleActive && !disabled" (click)="removeClick($event)" class="glyphicon glyphicon-remove btn-remove"></i>
-      <i class="glyphicon dropdown-caret"
-        [ngClass]="{'glyphicon-menu-down': !optionsOpened, 'glyphicon-menu-up': optionsOpened}"></i>
+      <i *ngIf="allowClear && singleActive && !disabled" (click)="removeClick($event)" class="fa fa-times btn-remove"></i>
+      <i class="fa dropdown-caret"
+        [ngClass]="{'fa-chevron-down': !optionsOpened, 'fa-chevron-up': optionsOpened}"></i>
     </div>
   </ng-template>
 

@@ -61,8 +61,8 @@ export class IsTabDirective {
    */
   @Input() load: 'always' | 'activeOnly' | 'selected' = 'always';
 
-  @ContentChild(IsTabContentDirective) contentTpl: IsTabContentDirective;
-  @ContentChild(IsTabTitleDirective) titleTpl: IsTabTitleDirective;
+  @ContentChild(IsTabContentDirective,  {static: true}) contentTpl: IsTabContentDirective;
+  @ContentChild(IsTabTitleDirective, {static: true}) titleTpl: IsTabTitleDirective;
 
   loaded: boolean = false;
 }

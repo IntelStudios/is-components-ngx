@@ -52,7 +52,7 @@ export class IsSectionComponent {
     }
   }
 
-  @ContentChild(IsSectionTitleDirective, { read: TemplateRef })
+  @ContentChild(IsSectionTitleDirective, { read: TemplateRef, static: true })
   templateTitle: IsSectionTitleDirective;
 
   collapse: string = 'open';

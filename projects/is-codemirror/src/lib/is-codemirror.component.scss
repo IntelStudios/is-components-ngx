@@ -1,20 +1,19 @@
-
 $is-color-cls-danger-fg: var(--is-color-danger, red);
 $brand-warning: var(--is-color-warning, yellow);
 $input-color: var(--is-color-input, black);
 $input-border: var(--is-color-border, gray);
 $is-color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 
-:host {
+is-codemirror {
   display: block;
   position: relative;
 
-  > .disabled-overlay {
+  >.disabled-overlay {
     display: none;
   }
 
   &.is-cm-disabled {
-    > .disabled-overlay {
+    >.disabled-overlay {
       position: absolute;
       top: 0;
       left: 0;
@@ -24,26 +23,31 @@ $is-color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
       background-color: $is-color-disabled-bg;
     }
   }
+
   &.ng-invalid,
   &.ng-pending {
     border: none !important;
   }
+
   &.single-line {
-    /deep/ .CodeMirror-scroll {
+    .CodeMirror-scroll {
       overflow: hidden;
     }
-    /deep/ .CodeMirror {
+
+    .CodeMirror {
       min-height: 28px;
       max-height: 28px;
       line-height: 18px;
       font-family: "Helvetica Neue", Helvetica;
     }
-    /deep/ .CodeMirror-hscrollbar {
+
+    .CodeMirror-hscrollbar {
       display: none !important;
     }
   }
+
   &.cm-large {
-    /deep/ .CodeMirror-scroll {
+    .CodeMirror-scroll {
       min-height: 300px;
       max-height: initial;
     }
@@ -60,25 +64,25 @@ $is-color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 }
 
 :host(.ng-invalid) {
-  /deep/ .CodeMirror {
+  .CodeMirror {
     border: 1px solid $is-color-cls-danger-fg;
   }
 }
 
 :host(.ng-pending) {
-  /deep/ .CodeMirror {
+  .CodeMirror {
     border: 1px solid $brand-warning;
   }
 }
 
-/deep/ .CodeMirror {
+.CodeMirror {
   height: auto !important;
   border-radius: 4px;
   color: $input-color;
   border: 1px solid $input-border;
 }
 
-/deep/ .CodeMirror-scroll {
+.CodeMirror-scroll {
   min-height: 70px;
   max-height: 600px;
 }

@@ -81,7 +81,7 @@ export class IsSelectColorComponent implements AfterViewInit, OnDestroy, Control
   valueChange: EventEmitter<any> = new EventEmitter<any>();
 
 
-  @ViewChild('select')
+  @ViewChild('select', { static: true })
   select: IsSelectComponent;
 
   @Input()

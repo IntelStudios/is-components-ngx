@@ -8,7 +8,8 @@ import {
   OnDestroy,
   Output,
   ViewChild,
-  HostBinding
+  HostBinding,
+  ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -30,7 +31,8 @@ declare var CodeMirror: any;
       {{translation}}
     </span>`,
   styleUrls: ['./is-codemirror.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class IsCodemirrorComponent implements ControlValueAccessor, OnDestroy {
 
@@ -67,7 +69,7 @@ export class IsCodemirrorComponent implements ControlValueAccessor, OnDestroy {
   @Output() focus = new EventEmitter();
   @Output() blur = new EventEmitter();
 
-  @ViewChild('host') host;
+  @ViewChild('host', { static: true }) host;
 
   @Output() instance = null;
 

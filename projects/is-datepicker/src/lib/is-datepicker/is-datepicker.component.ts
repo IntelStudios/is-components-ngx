@@ -69,7 +69,7 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('dp')
+  @ViewChild('dp', { static: true })
   datepicker: BsDatepickerDirective;
 
   dateFormat: string = DATE_FORMAT;

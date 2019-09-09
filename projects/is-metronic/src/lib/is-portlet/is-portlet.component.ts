@@ -59,7 +59,7 @@ export class IsPortletComponent implements OnInit {
   @Input()
   smallCaret: boolean = false;
 
-  @ContentChild(IsPortletTitleDirective, { read: TemplateRef })
+  @ContentChild(IsPortletTitleDirective, { read: TemplateRef, static: true })
   templateTitle: IsPortletTitleDirective;
 
   collapse: string = 'open';

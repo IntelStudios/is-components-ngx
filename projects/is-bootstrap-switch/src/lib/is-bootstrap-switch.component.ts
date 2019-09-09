@@ -158,10 +158,10 @@ export class IsBootstrapSwitchComponent implements AfterViewInit, ControlValueAc
   @Output() changeState: EventEmitter<any> = new EventEmitter<any>();
 
   // Defining DOM Elements
-  @ViewChild('container') container: ElementRef;
-  @ViewChild('on') on: ElementRef;
-  @ViewChild('label') label: ElementRef;
-  @ViewChild('off') off: ElementRef;
+  @ViewChild('container', { static: true }) container: ElementRef;
+  @ViewChild('on', { static: true }) on: ElementRef;
+  @ViewChild('label', { static: true }) label: ElementRef;
+  @ViewChild('off', { static: true }) off: ElementRef;
 
 
   @HostListener('click', ['$event']) onClick(e: MouseEvent) {

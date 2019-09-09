@@ -61,7 +61,7 @@ export class IsSelectTreeComponent implements OnDestroy {
     nodeHeight: 13
   };
 
-  @ViewChild('tree')
+  @ViewChild('tree', { static: false })
   tree: TreeComponent;
 
   isExpanded: boolean = true;

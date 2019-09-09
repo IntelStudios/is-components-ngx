@@ -130,10 +130,10 @@ export class IsTableComponent implements OnInit, OnDestroy {
 
   private _subs: Subscription[] = [];
 
-  @ContentChild(IsTableColumnDirective, { read: TemplateRef })
+  @ContentChild(IsTableColumnDirective, { read: TemplateRef, static: true })
   templateColumn: IsTableColumnDirective;
 
-  @ContentChild(IsTableActionsColumnDirective, { read: TemplateRef })
+  @ContentChild(IsTableActionsColumnDirective, { read: TemplateRef, static: true })
   templateActionsColumn: IsTableActionsColumnDirective;
 
   constructor(

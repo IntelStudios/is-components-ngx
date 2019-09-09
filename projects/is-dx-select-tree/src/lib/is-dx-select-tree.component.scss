@@ -9,10 +9,10 @@ $is-color-node-focus: var(--is-select-tree-item-focus, #fff);
   display: block;
   height: 200px;
 
-  /deep/ tree-viewport {
+ tree-viewport {
     //@include short-scroll;
   }
-  /deep/ .angular-tree-component {
+  .angular-tree-component {
     display: block !important;
     .undetermined {
       color: #999;

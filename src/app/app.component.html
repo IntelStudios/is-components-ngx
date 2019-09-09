@@ -1,32 +1,38 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" routerLink="/">IS Components</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li>
-        <a>
-          Theme:
-          <select [value]="theme" (change)="onThemeChange($event.target.value)">
-            <option value="is-theme-light">Light</option>
-            <option value="is-theme-dark">Dark</option>
-          </select>
-        </a>
+<nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
+  <a class="navbar-brand" routerLink="/">IS Components</a>
+  <button class="navbar-toggler" type="button">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a>
+              Theme:
+              <select [value]="theme" (change)="onThemeChange($event.target.value)">
+                <option value="is-theme-light">Light</option>
+                <option value="is-theme-dark">Dark</option>
+              </select>
+            </a>
 
+          </li>
+      <li class="nav-item">
+        <a class="nav-link" target="_blank" href="/docs/index.html"><i class="fa fa-book"></i> Documentation</a>
       </li>
-      <li><a href="/docs/index.html" target="_blank"><i class="fa fa-book"></i> Documentation</a></li>
-      <li><a href="https://github.com/IntelStudios/is-components-ngx" target="_blank"><i class="fa fa-github"></i>
-          Github</a></li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/IntelStudios/is-components-ngx" target="_blank"><i class="fa fa-github"></i> Github</a>
+      </li>
     </ul>
   </div>
 </nav>
-<div class="">
-  <div class="col-sm-3">
-    <ul class="nav nav-pills nav-stacked">
-      <li *ngFor="let demo of demos" routerLinkActive="active"><a [routerLink]="demo.route">{{demo.title}}</a></li>
+<div class="row">
+  <div class="col-3">
+    <ul class="nav flex-column">
+      <li *ngFor="let demo of demos" class="nav-item">
+        <a class="nav-link" [routerLink]="demo.route" routerLinkActive="active">{{demo.title}}</a>
+      </li>
     </ul>
   </div>
-  <div class="col-sm-9" style="padding: 30px;">
+  <div class="col-9" style="padding: 30px;">
     <router-outlet></router-outlet>
   </div>
 </div>
