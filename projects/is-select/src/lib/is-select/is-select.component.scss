@@ -35,7 +35,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
       >.btn-remove {
         flex: 1;
         align-self: center;
-        color: $is-color-fg;
+        color: $is-control-fg-color;
       }
 
       >.dropdown-caret {
@@ -44,7 +44,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         margin-left: 4px;
         margin-right: 8px;
         margin-top: 9px;
-        color: $is-color-handle;
+        color: $is-control-handle-color;
       }
 
       >.ui-select-toggle {
@@ -67,7 +67,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         }
 
         >.ui-select-match-text {
-          color: $is-color-fg;
+          color: $is-control-fg-color;
         }
 
       }

@@ -29,7 +29,7 @@ is-datepicker {
     }
 
     > input.datepicker-value {
-      color: $is-color-fg;
+      color: $is-control-fg-color;
       border:0;
       width: 100%;
       outline: 0;
@@ -47,13 +47,13 @@ is-datepicker {
     }
     > .btn-remove {
       flex: 1;
-      color: $is-color-handle;
+      color: $is-control-handle-color;
     }
   }
 
   .datepicker-icon {
     >i {
-      color: $is-color-handle;
+      color: $is-control-handle-color;
     }
     &.disabled {
       pointer-events: none;
@@ -70,7 +70,7 @@ is-datepicker {
   border-top: 0;
   @include is-input-active;
   .bs-datepicker-head {
-    background: $is-color-border-focus;
+    background: $is-control-boder-focus-color;
   }
   > .bs-datepicker-container {
     padding: 0;

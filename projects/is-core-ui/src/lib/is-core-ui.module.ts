@@ -10,8 +10,6 @@ import { IsFieldErrorComponent } from './is-field-error/is-field-error.component
 import { IsHintComponent } from './is-hint/is-hint.component';
 import { IsPortletComponent } from './is-portlet/is-portlet.component';
 import { IsPortletTitleDirective } from './is-portlet/is-portlet.directives';
-import { IsSectionComponent } from './is-section/is-section.component';
-import { IsSectionTitleDirective } from './is-section/is-section.directives';
 import {
   IsTabContentDirective,
   IsTabDirective,
@@ -23,15 +21,15 @@ import {
   imports: [
     CommonModule, RouterModule, TranslateModule, PopoverModule, TooltipModule
   ],
-  declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsSectionComponent, IsSectionTitleDirective, IsTabsetComponent,
+  declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent,
     IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent],
-  exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsSectionComponent, IsSectionTitleDirective, IsTabsetComponent,
+  exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent,
     IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent]
 })
-export class IsMetronicModule {
+export class IsCoreUIModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: IsMetronicModule
+      ngModule: IsCoreUIModule
     }
   }
 }

@@ -16,7 +16,7 @@ export const routes: Routes = [
   { path: 'datepicker', loadChildren: () => import('./demo-datepicker/demo-datepicker.module').then(m => m.DemoDatepickerRoutingModule) },
   { path: 'codemirror', loadChildren: () => import('./demo-codemirror/demo-codemirror.module').then(m => m.DemoCodemirrorRoutingModule) },
   { path: 'froala', loadChildren: () => import('./demo-froala/demo-froala.module').then(m => m.DemoFroalaRoutingModule) },
-  { path: 'metronic', loadChildren: () => import('./demo-metronic/demo-metronic.module').then(m => m.DemoMetronicRoutingModule) },
+  { path: 'core-ui', loadChildren: () => import('./demo-core-ui/demo-core-ui.module').then(m => m.DemoCoreUIRoutingModule) },
   { path: 'bootstrap-switch', loadChildren: () => import('./demo-bootstrap-switch/demo-bootstrap-switch.module').then(m => m.DemoBootstrapSwitchRoutingModule) },
   { path: 'password', loadChildren: () => import('./demo-password/demo-password.module').then(m => m.DemoPasswordRoutingModule) },
   { path: 'editable-textbox', loadChildren: () => import('./demo-editable-textbox/demo-editable-textbox.module').then(m => m.DemoEditableTextboxRoutingModule) },

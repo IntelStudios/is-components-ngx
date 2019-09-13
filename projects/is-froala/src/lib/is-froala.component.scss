@@ -21,10 +21,10 @@ is-froala {
 
   &.ng-invalid {
     > .fr-wrapper {
-      border-color: $is-color-invalid !important;
+      border-color: $is-control-invalid-color !important;
     }
     > .fr-toolbar {
-      border-color: $is-color-invalid;
+      border-color: $is-control-invalid-color;
     }
   }
 
@@ -35,12 +35,12 @@ is-froala {
 
   > .fr-wrapper {
     @include short-scroll;
-    border-color: $is-color-border !important;
+    border-color: $is-control-boder-color !important;
   }
 
   > .fr-toolbar {
-    background-color: $is-color-bg;
-    border-color: $is-color-border;
+    background-color: $is-control-bg-color;
+    border-color: $is-control-boder-color;
 
     .fr-newline:last-of-type {
       display: none;
@@ -48,15 +48,15 @@ is-froala {
 
     .fr-btn {
       &:after {
-        border-top-color: $is-color-fg !important;
+        border-top-color: $is-control-fg-color !important;
       }
       svg path {
-        fill: $is-color-fg !important;
+        fill: $is-control-fg-color !important;
       }
     }
     .fr-dropdown-menu, .fr-sc-container {
-      background-color: $is-color-bg !important;
-      color: $is-color-fg;
+      background-color: $is-control-bg-color !important;
+      color: $is-control-fg-color;
       @include short-scroll;
     }
   }

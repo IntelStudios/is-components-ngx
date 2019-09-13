@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     { title: 'Select', route: '/select' },
     { title: 'Codemirror', route: '/codemirror' },
     { title: 'Froala', route: '/froala' },
-    { title: 'Metronic', route: '/metronic' },
+    { title: 'Core UI', route: '/core-ui' },
     { title: 'Date Picker', route: '/datepicker' },
     { title: 'Bootstrap Switch', route: '/bootstrap-switch' },
     { title: 'Password', route: '/password' },

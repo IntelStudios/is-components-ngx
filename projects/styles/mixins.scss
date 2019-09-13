@@ -1,34 +1,36 @@
 @import 'variables';
 
 @mixin is-input-active {
-  border-color: $is-color-border-focus;
-  box-shadow: 0px 0px 0px 1px $is-color-border-focus !important;
+  border-color: $is-control-boder-focus-color;
+  box-shadow: 0px 0px 0px 1px $is-control-boder-focus-color !important;
   //border-width: 2px;
 }
 
 @mixin is-input-disabled {
-  background-color: $is-color-disabled-bg;
-  color: $is-color-disabled-fg;
+  background-color: $is-control-disabled-bg-color;
+  color: $is-control-disabled-fg-color;
 }
 
 @mixin is-input {
-  border-color:$is-color-border;
-  background-color: $is-color-bg;
-  color: $is-color-fg;
+  border-color:$is-control-boder-color;
+  background-color: $is-control-bg-color;
+  color: $is-control-fg-color;
   padding: 8px;
   font-size: 13px;
 
   &:hover {
-    border-color: $is-color-border-hover;
+    border-color: $is-control-boder-hover-color;
   }
 
   &:active, &:focus {
+    background-color: $is-control-bg-color;
+    color: $is-control-fg-color;
     @include is-input-active;
   }
 }
 
 @mixin is-input-invalid {
-  border-color: $is-color-invalid;
+  border-color: $is-control-invalid-color;
 }
 
 @mixin short-scroll {

@@ -38,11 +38,11 @@
       "is-froala/*": [
         "dist/is-froala/*"
       ],
-      "is-metronic": [
-        "dist/is-metronic"
+      "is-core-ui": [
+        "dist/is-core-ui"
       ],
-      "is-metronic/*": [
-        "dist/is-metronic/*"
+      "is-core-ui/*": [
+        "dist/is-core-ui/*"
       ],
       "is-datepicker": [
         "dist/is-datepicker"

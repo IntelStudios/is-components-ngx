@@ -2,33 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { of } from 'rxjs';
 
-import { FieldErrorModel, FieldErrorService } from 'projects/is-metronic/src/public_api';
+import { FieldErrorModel, FieldErrorService } from 'projects/is-core-ui/src/public_api';
 
 @Component({
-  selector: 'app-demo-metronic',
-  templateUrl: './demo-metronic.component.html',
-  styleUrls: ['./demo-metronic.component.scss']
+  selector: 'app-demo-core-ui',
+  templateUrl: './demo-core-ui.component.html',
+  styleUrls: ['./demo-core-ui.component.scss']
 })
-export class DemoMetronicComponent implements OnInit {
+export class DemoCoreUIComponent implements OnInit {
 
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-metronic-7.1.0.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/8.x/package/is-core-ui-8.0.0.tgz</pre>
 
 <h3>Import Module</h3>
-<pre>import { IsMetronicModule } from 'is-metronic';</pre>
+<pre>import { IsCoreUIModule } from 'is-core-ui';</pre>
 
 <h3>Import Styles</h3>
 <pre>
-// add Metronic styles
-@import 'assets/metronic/admin/layout/css/layout.css';
-@import 'assets/metronic/admin/layout/css/custom.css';
-@import 'assets/metronic/admin/layout/css/themes/darkblue.css';
-@import 'assets/metronic/admin/pages/css/profile.css';
-@import 'assets/metronic/global/css/components-rounded.css';
-@import 'assets/metronic/global/css/plugins.css';
-@import 'assets/metronic/admin/layout/css/layout.css';</pre>
 
 
 // import IS variables

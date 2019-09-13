@@ -3,30 +3,30 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 
-import { DemoMetronicComponent } from './demo-metronic/demo-metronic.component';
-import { IsMetronicModule } from 'projects/is-metronic/src/public_api';
+import { DemoCoreUIComponent } from './demo-core-ui/demo-core-ui.component';
+import { IsCoreUIModule } from 'projects/is-core-ui/src/public_api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 
 @NgModule({
-  declarations: [DemoMetronicComponent],
+  declarations: [DemoCoreUIComponent],
   imports: [
-    CommonModule, IsMetronicModule.forRoot(),
+    CommonModule, IsCoreUIModule.forRoot(),
     PopoverModule.forRoot(),
     TooltipModule.forRoot(),
     ReactiveFormsModule,
     RouterModule
   ]
 })
-export class DemoMetronicModule { }
+export class DemoCoreUIModule { }
 
 const routes: Routes = [
-  { path: '', component: DemoMetronicComponent }
+  { path: '', component: DemoCoreUIComponent }
 ];
 
 @NgModule({
-  imports: [DemoMetronicModule, RouterModule.forChild(routes)],
+  imports: [DemoCoreUIModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DemoMetronicRoutingModule { }
+export class DemoCoreUIRoutingModule { }
 

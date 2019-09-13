@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IsCronEditorComponent } from './is-cron-editor.component';
-import { IsMetronicModule } from 'is-metronic';
+import { IsCoreUIModule } from 'is-core-ui';
 import { IsSelectModule } from 'is-select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [IsCronEditorComponent],
   imports: [
-    IsMetronicModule,
+    IsCoreUIModule,
     ReactiveFormsModule,
     CommonModule,
     IsSelectModule

@@ -1,7 +1,7 @@
 @import '../../../styles/mixins';
 @import '../../../styles/variables';
 
-$is-color-selected-item-bg: var(--is-control-selected-item-bg-color, grey);
+$is-control-selected-item-color-bg: var(--is-control-selected-item-bg-color, grey);
 $is-color-active-bg: var(--is-control-active-item-bg-color, #428bca);
 
 is-timepicker {
@@ -29,7 +29,7 @@ is-timepicker {
     }
 
     > .timepicker-value {
-      color: $is-color-fg;
+      color: $is-control-fg-color;
       width: 100%;
       &.align-left {
         text-align: left !important;
@@ -43,13 +43,13 @@ is-timepicker {
     }
     > .btn-remove {
       flex: 1;
-      color: $is-color-handle;
+      color: $is-control-handle-color;
     }
   }
 
 .ng-timepicker-icon {
   >i {
-    color: $is-color-handle;
+    color: $is-control-handle-color;
   }
   &.disabled {
     pointer-events: none;
@@ -64,7 +64,7 @@ is-timepicker {
   width: 192px;
   overflow: hidden;
   border-collapse: collapse;
-  background-color: $is-color-bg;
+  background-color: $is-control-bg-color;
   font-size: 12px;
   margin: 0;
   padding: 4px 0px 4px 0px;
@@ -74,14 +74,14 @@ is-timepicker {
 
   table {
     margin: 0 auto !important;
-    color: $is-color-fg;
+    color: $is-control-fg-color;
   }
 
   .btn {
     border: none;
-    color: $is-color-handle;
+    color: $is-control-handle-color;
     &:hover {
-      background-color: $is-color-bg;
+      background-color: $is-control-bg-color;
     }
   }
   input {

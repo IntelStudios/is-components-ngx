@@ -17,7 +17,7 @@
         z-index: 300;
         cursor: pointer;
         background-color: transparent;
-        color: $is-color-handle;
+        color: $is-control-handle-color;
       }
     }
   }
@@ -27,7 +27,7 @@
   }
 
   .text-mode {
-    color: $is-color-fg;
+    color: $is-control-fg-color;
     font-size: 22px;
     font-weight: bold;
 
@@ -35,7 +35,7 @@
       cursor: pointer;
       margin-left: 5px;
       z-index: 300;
-      color: $is-color-handle;
+      color: $is-control-handle-color;
       background-color: transparent;
     }
   }

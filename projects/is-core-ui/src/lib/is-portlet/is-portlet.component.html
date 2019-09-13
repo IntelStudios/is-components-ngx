@@ -1,0 +1,24 @@
+<div class="portlet" [class.section]="isSection">
+    <div class="portlet-title {{titleClass}}" [ngClass]="{'collapsed-closed': collapse==='closed'}">
+        <ng-container [ngTemplateOutlet]="templateTitle || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
+        </ng-container>
+        <ng-content select=".actions"></ng-content>
+        <div class="tools">
+            <a *ngIf="enableCollapse" class="is-caret" (click)="toggleCollapse()">
+              <i class=" fa" [class.fa-angle-up]="collapse==='open'" [class.fa-angle-down]="collapse==='closed'"></i>
+            </a>
+        </div>
+    </div>
+    <ng-content select=".alerts"></ng-content>
+    <div [@collapseInOut]="collapse">
+        <ng-content select=".portlet-body"></ng-content>
+    </div>
+</div>
+
+<!--Default templates-->
+<ng-template #defaultTemplateTitle>
+  <div class="caption {{fontColor}}">
+    <i *ngIf="icon" class="{{icon}} {{fontColor}}" aria-hidden="true"></i>
+    <span class="caption-subject" [class.bold]="headingBold" [class.uppercase]="headingUpprcase">{{heading|translate}}</span>
+  </div>
+</ng-template>

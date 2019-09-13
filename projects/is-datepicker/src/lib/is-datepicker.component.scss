@@ -1,6 +1,6 @@
 
 $is-color-cls-danger-fg: var(--is-color-danger, red);
-$is-color-disabled-fg: var(--is-color-input-disabled, #efefef);
+$is-control-disabled-fg-color: var(--is-color-input-disabled, #efefef);
 $is-color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
 $general-panel-border-color: var(--is-color-panel-border, #eaeaea);
 $is-color-cls-default-fg: var(--is-color-default, #333);
@@ -191,7 +191,7 @@ $is-color-cls-default-fg: var(--is-color-default, #333);
                     color: #fff;
                 }
                 &.today {
-                  background-color: $is-color-disabled-fg;
+                  background-color: $is-control-disabled-fg-color;
                 }
             }
         }

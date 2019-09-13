@@ -7,15 +7,18 @@ import {
   Input,
   OnInit,
   TemplateRef,
+  ViewEncapsulation,
+  ElementRef,
 } from '@angular/core';
 
 import { IsPortletTitleDirective } from './is-portlet.directives';
 
 @Component({
-  selector: 'is-portlet',
+  selector: 'is-portlet, is-section',
   templateUrl: './is-portlet.component.html',
   styleUrls: ['./is-portlet.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('collapseInOut', [
       state('open', style({
@@ -48,6 +51,9 @@ export class IsPortletComponent implements OnInit {
   heading: string;
 
   @Input()
+  titleClass: string = '';
+
+  @Input()
   headingUpprcase: boolean = true;
 
   @Input()
@@ -56,19 +62,19 @@ export class IsPortletComponent implements OnInit {
   @Input()
   enableCollapse: boolean = false;
 
-  @Input()
-  smallCaret: boolean = false;
-
   @ContentChild(IsPortletTitleDirective, { read: TemplateRef, static: true })
   templateTitle: IsPortletTitleDirective;
 
   collapse: string = 'open';
 
-  constructor(private changeDetector: ChangeDetectorRef) {
+  isSection: boolean;
+
+  constructor(private changeDetector: ChangeDetectorRef, private el: ElementRef) {
 
   }
 
   ngOnInit() {
+    this.isSection = this.el.nativeElement.localName === 'is-section';
     if (this.id) {
       const setting = localStorage.getItem(`is-portlet:${this.id}`);
       this.collapse = ['open', 'closed'].indexOf(setting) < 0 ? 'open' : setting;

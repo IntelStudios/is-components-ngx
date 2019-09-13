@@ -4,7 +4,7 @@ const path = require("path");
 async function copyAssets() {
   try {
     const sourceFile = path.join(__dirname, "projects/styles");
-    const destPath = path.join(__dirname, "dist/is-metronic/scss");
+    const destPath = path.join(__dirname, "dist/is-core-ui/scss");
     await fse.copy(sourceFile, destPath);
     console.log("Styles has been copied");
   } catch (err) {

@@ -1,0 +1,65 @@
+@import '../../../../styles/variables';
+
+is-portlet, is-section {
+  .portlet {
+    border: 1px solid $is-portlet-border-color;
+    border-radius: $is-portlet-border-radius;
+    margin-bottom: 5px;
+    padding: 10px 10px 5px 10px;
+    display: flex;
+    flex-flow: column nowrap;
+
+    >.portlet-title {
+      flex: 1;
+      display: flex;
+      padding: 10px 0px;
+      align-items: center;
+
+      >.caption {
+        width: 100%;
+        font-size: 18px;
+        line-height: 18px;
+      }
+
+      >.tools,
+      .actions {
+        flex: 1;
+
+        > a.is-caret {
+          color: $is-control-handle-color;
+          cursor: pointer;
+        }
+
+        >.btn {
+          display: flex;
+          align-items: center;
+          border-radius: 16px;
+
+          >i {
+            padding-right: 4px;
+          }
+        }
+      }
+    }
+
+    > div >.portlet-body {
+      border-top: 1px solid $is-portlet-border-color;
+    }
+
+    &.section {
+      padding: 0;
+      > .portlet-title {
+        border-radius: $is-portlet-border-radius;
+        background-color: #ccc;
+      }
+      > div >.portlet-body {
+        border: none;
+      }
+    }
+  }
+
+
+
+
+
+}

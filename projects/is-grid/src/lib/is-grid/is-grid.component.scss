@@ -7,7 +7,7 @@ $is-color-cls-info-bg: var(--is-grid-info-bg, #d9edf7);
 $is-color-cls-info-fg: var(--is-grid-info-fg, #31708f);
 
 $is-color-disabled-bg: var(--is-grid-disabled-bg, #e9edef);
-$is-color-disabled-fg: var(--is-grid-disabled-fg, #80898e);
+$is-control-disabled-fg-color: var(--is-grid-disabled-fg, #80898e);
 
 $is-color-success-bg: var(--is-grid-success-bg, #abe7ed);
 $is-color-success-fg: var(--is-grid-success-fg, #27a4b0);
@@ -128,7 +128,7 @@ $general-panel-border-color: var(--is-grid-border-color, #ccc);
   }
 
   .disabled-cls {
-    color: $is-color-disabled-fg !important;
+    color: $is-control-disabled-fg-color !important;
     background-color: $is-color-disabled-bg !important;
   }
 

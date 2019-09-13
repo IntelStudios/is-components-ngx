@@ -13,7 +13,7 @@
     "build.input-mapping": "ng build is-input-mapping && cd dist/is-input-mapping && npm pack --quiet && cp *.tgz ../../package",
     "build.codemirror": "ng build is-codemirror && cd dist/is-codemirror && npm pack --quiet && cp *.tgz ../../package",
     "build.froala": "ng build is-froala && cd dist/is-froala && npm pack --quiet && cp *.tgz ../../package",
-    "build.metronic": "ng build is-metronic && node copy-styles.js && cd dist/is-metronic && npm pack --quiet && cp *.tgz ../../package",
+    "build.core-ui": "ng build is-core-ui && node copy-styles.js && cd dist/is-core-ui && npm pack --quiet && cp *.tgz ../../package",
     "build.datepicker": "ng build is-datepicker && cd dist/is-datepicker && npm pack --quiet && cp *.tgz ../../package",
     "build.bootstrap-switch": "ng build is-bootstrap-switch && cd dist/is-bootstrap-switch && npm pack --quiet && cp *.tgz ../../package",
     "build.password": "ng build is-password && cd dist/is-password && npm pack --quiet && cp *.tgz ../../package",

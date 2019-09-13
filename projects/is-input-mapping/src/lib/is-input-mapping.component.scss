@@ -3,10 +3,10 @@
 :host {
   .node {
     margin-bottom: 5px;
-    color: $is-color-fg;
+    color: $is-control-fg-color;
 
     &.disabled {
-      color: $is-color-disabled-fg;
+      color: $is-control-disabled-fg-color;
     }
 
     .node-icon {
@@ -33,8 +33,8 @@
     }
 
     .assigned-item {
-      background: $is-color-active-item-bg;
-      color: $is-color-selected-item;
+      background: $is-control-active-item-color;
+      color: $is-control-selected-item-color;
       border-radius: 2px !important;
       padding: 3px;
       margin-left: 7px;
@@ -58,7 +58,7 @@
         top: -10px;
         box-shadow: 0 3px 6px #00000029;
         border: 1px solid #707070;
-        background: $is-color-bg;
+        background: $is-control-bg-color;
         border-radius: 3px !important;
         z-index: 1000 !important;
         padding: 11px 8px;

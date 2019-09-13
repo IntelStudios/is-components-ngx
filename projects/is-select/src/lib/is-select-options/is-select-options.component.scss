@@ -9,7 +9,7 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
 
   .ui-select-choices-container {
     width: 100%;
-    background-color: $is-color-bg;
+    background-color: $is-control-bg-color;
     margin-top: 0px;
     border-top: none;
     display: block;
@@ -27,12 +27,12 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
       display: flex;
       border-bottom: 1px solid $is-color-search-separator;
       > input {
-        background-color: $is-color-bg;
-        color: $is-color-fg;
+        background-color: $is-control-bg-color;
+        color: $is-control-fg-color;
         border: none;
       }
       > i {
-        color: $is-color-handle;
+        color: $is-control-handle-color;
         align-self: center;
         padding: 8px 13px;
       }
@@ -82,10 +82,10 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
           .pretty {
             margin-right: 0;
             .state label:before {
-              border-color: $is-color-checkbox;
+              border-color: $is-checkbox-color;
             }
             input:checked ~ .state.p-success label:after, .p-toggle .state.p-success label:after {
-              background-color: $is-color-checkbox !important;
+              background-color: $is-checkbox-color !important;
             }
           }
         }
@@ -127,19 +127,19 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
       clear: both;
       font-weight: 400;
       line-height: 1.42857143;
-      color: $is-color-fg;
+      color: $is-control-fg-color;
       text-decoration: none;
       transition: padding 0.15s
     }
     &.selected {
       > a {
-        color: $is-color-selected-item;
+        color: $is-control-selected-item-color;
       }
     }
     &.active {
       >a {
         outline: 0;
-        background-color: $is-color-active-item-bg;
+        background-color: $is-control-active-item-color;
       }
     }
     &.disabled {
@@ -169,7 +169,7 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
     right: 29px;
     top: 10px;
     z-index: 20;
-    color: $is-color-handle;
+    color: $is-control-handle-color;
   }
   .dropdown-header {
     font-weight: bold;
