@@ -17,8 +17,16 @@ is-portlet, is-section {
 
       >.caption {
         width: 100%;
-        font-size: 18px;
-        line-height: 18px;
+        font-size: 20px;
+        line-height: 20px;
+        .caption-subject {
+          &.bold {
+            font-weight: bold;
+          }
+          &.uppercase {
+            text-transform: uppercase;
+          }
+        }
       }
 
       >.tools,
@@ -51,6 +59,22 @@ is-portlet, is-section {
       > .portlet-title {
         border-radius: $is-portlet-border-radius;
         background-color: #ccc;
+        color: #fff;
+        > .caption {
+          font-size: 16px;
+          line-height: 16px;
+          >a {
+            color: #fff;
+            &:hover{
+              text-decoration: none;
+            }
+          }
+        }
+        > .tools {
+          > a.is-caret {
+            color: #fff;
+          }
+        }
       }
       > div >.portlet-body {
         border: none;
