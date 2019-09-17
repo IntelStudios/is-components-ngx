@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
-import { DataStructure, InputSchema, IsInputMappingInput } from './is-input-mapping.interface';
+import { AssignStatus, DataStructure, InputSchema, IsInputMappingInput } from './is-input-mapping.interface';
 import { IsInputMappingService } from './is-input-mapping.service';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -73,7 +73,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   private _subscriptions: Subscription[] = [];
-  private _on_changes: Function;
+  private _on_changes: Function = () => {};
 
   constructor(private elRef: ElementRef, private serviceRoot: IsInputMappingService) {
   }
@@ -105,6 +105,8 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.inputsAssignable = this.data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
       this.inputsAssignableFiltered = this.inputsAssignable.slice();
       this.icon = this.getTypeIcon(this.paintedStructure.DataType);
+
+      this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
     } else {
       this.icon = 'fa-folder-open'; // folder
     }
@@ -113,26 +115,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this._subscriptions.push(this.mouseoverSubject.asObservable().pipe(debounceTime(20)).subscribe(value => this._mouseover = value));
 
     // subscribe to assigning items
-    this._subscriptions.push(this.service.itemAssigned$.subscribe(data => {
-      if (data.Path === this.paintedStructure.Path) {
-        // assign this item here if it was meant for us
-        this.inputsAssigned.push(data.Item);
-      }
-
-      this.inputsAssignableFiltered = this.inputsAssignableFiltered.filter(input => input.Name !== data.Item.Name);
-      this.inputsFilled.push(data.Item);
-
-      // disable if item was selected inside another level 1 tree
-      if (!this.disabled && this.level === 1 && this.collapsible && data.PaintedPath[0] !== this.paintedPath[0]) {
-        this.disabled = true;
-      }
-
-      // root element saves the selection state into value
-      if (this.level === 0) {
-        this.inputSchemaMap.set(data.Item.Name, data.Path);
-        this._on_changes(this.inputSchemaMap);
-      }
-    }));
+    this._subscriptions.push(this.service.itemAssigned$.subscribe(item => this.assignCallback(item)));
 
     // subscribe to releasing items
     this._subscriptions.push(this.service.itemReleased$.subscribe(data => {
@@ -192,6 +175,27 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   assign(item: InputSchema) {
     this.service.assignItem({Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path});
+  }
+
+  private assignCallback(status: AssignStatus) {
+    if (status.Path === this.paintedStructure.Path) {
+      // assign this item here if it was meant for us
+      this.inputsAssigned.push(status.Item);
+    }
+
+    this.inputsAssignableFiltered = this.inputsAssignableFiltered.filter(input => input.Name !== status.Item.Name);
+    this.inputsFilled.push(status.Item);
+
+    // disable if item was selected inside another level 1 tree
+    if (!this.disabled && this.level === 1 && this.collapsible && status.PaintedPath[0] !== this.paintedPath[0]) {
+      this.disabled = true;
+    }
+
+    // root element saves the selection state into value
+    if (this.level === 0) {
+      this.inputSchemaMap.set(status.Item.Name, status.Path);
+      this._on_changes(this.inputSchemaMap);
+    }
   }
 
   release(item: InputSchema) {
