@@ -5,14 +5,13 @@ is-portlet, is-section {
     border: 1px solid $is-portlet-border-color;
     border-radius: $is-portlet-border-radius;
     margin-bottom: 5px;
-    padding: 10px 10px 5px 10px;
     display: flex;
     flex-flow: column nowrap;
 
     >.portlet-title {
       flex: 1;
       display: flex;
-      padding: 10px 0px;
+      padding: 8px 16px;
       align-items: center;
 
       >.caption {
@@ -36,6 +35,7 @@ is-portlet, is-section {
         > a.is-caret {
           color: $is-control-handle-color;
           cursor: pointer;
+          font-size: 22px;
         }
 
         >.btn {
@@ -73,6 +73,7 @@ is-portlet, is-section {
         > .tools {
           > a.is-caret {
             color: #fff;
+            font-size: 14px;
           }
         }
       }

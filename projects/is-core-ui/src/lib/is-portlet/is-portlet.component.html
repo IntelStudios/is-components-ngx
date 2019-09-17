@@ -5,7 +5,7 @@
         <ng-content select=".actions"></ng-content>
         <div class="tools">
             <a *ngIf="enableCollapse" class="is-caret" (click)="toggleCollapse()">
-              <i class=" fa" [class.fa-angle-up]="collapse==='open'" [class.fa-angle-down]="collapse==='closed'"></i>
+              <i class=" fa" [class.fa-chevron-up]="collapse==='open'" [class.fa-chevron-down]="collapse==='closed'"></i>
             </a>
         </div>
     </div>
