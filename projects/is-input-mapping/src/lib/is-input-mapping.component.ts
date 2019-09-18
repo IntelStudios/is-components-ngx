@@ -127,8 +127,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.inputsFilled = this.inputsFilled.filter(input => input.Name !== data.Item.Name);
 
       // re-enable if everything in another level 1 tree was releases
-      if (this.disabled && this.level === 1 && this.collapsible && this.inputsFilled.length === 0) {
-        this.disabled = false;
+      if (this.disabled && this.collapsible && this.inputsFilled.length === 0) {
+        if (this.level === 1) {
+          this.disabled = false;
+        }
+        this.collapsed = true;
       }
 
       // add released item back to available items
