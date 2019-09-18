@@ -55,7 +55,23 @@
               "node_modules/codemirror/mode/powershell/powershell.js",
               "node_modules/codemirror/addon/hint/show-hint.js",
               "node_modules/codemirror/addon/hint/javascript-hint.js",
-              "node_modules/codemirror/mode/xml/xml.js"
+              "node_modules/codemirror/mode/xml/xml.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/froala-editor/js/froala_editor.pkgd.min.js",
+              "node_modules/froala-editor/js/plugins/code_view.min.js",
+              "node_modules/froala-editor/js/languages/cs.js",
+              "node_modules/froala-editor/js/languages/de.js",
+              "node_modules/froala-editor/js/languages/es.js",
+              "node_modules/froala-editor/js/languages/fr.js",
+              "node_modules/froala-editor/js/languages/hr.js",
+              "node_modules/froala-editor/js/languages/hu.js",
+              "node_modules/froala-editor/js/languages/nl.js",
+              "node_modules/froala-editor/js/languages/pl.js",
+              "node_modules/froala-editor/js/languages/pt_pt.js",
+              "node_modules/froala-editor/js/languages/sk.js",
+              "node_modules/froala-editor/js/languages/zh_cn.js",
+              "node_modules/froala-editor/js/languages/zh_tw.js",
+              "node_modules/at.js/dist/js/jquery.atwho.min.js"
             ]
           },
           "configurations": {

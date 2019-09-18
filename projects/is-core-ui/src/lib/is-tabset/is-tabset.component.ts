@@ -95,17 +95,18 @@ export interface TabChangeEvent {
  */
 @Component({
   selector: 'is-tabset',
+  styleUrls: ['is-tabset.component.scss'],
   template: `
     <ul class="nav nav-tabs" role="tablist">
-      <li class="nav-item" *ngFor="let tab of tabs" [class.active]="tab.id === activeId" [class.disabled]="tab.disabled">
-        <a [id]="tab.id" class="nav-link {{tab.titleClass}}" [class.active]="tab.id === activeId" (click)="select(tab.id)">
+      <li class="nav-item" *ngFor="let tab of tabs" [class.disabled]="tab.disabled">
+        <a [id]="tab.id" class="nav-link {{tab.titleClass}}" [ngClass]="{'active show' : tab.id === activeId}" (click)="select(tab.id)">
           {{tab.title}}<ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
         </a>
       </li>
     </ul>
     <div class="tab-content" *ngIf="tabs.length > 0">
       <ng-template ngFor let-tab [ngForOf]="tabs">
-        <div class="tab-pane" [class.active]="tab.id === activeId" *ngIf="tab.loaded || tab.id === activeId" role="tabpanel" [attr.aria-labelledby]="tab.id">
+        <div class="tab-pane" [ngClass]="{'active show' : tab.id === activeId}" *ngIf="tab.loaded || tab.id === activeId" role="tabpanel" [attr.aria-labelledby]="tab.id">
           <ng-template [ngTemplateOutlet]="tab.contentTpl.templateRef"></ng-template>
         </div>
       </ng-template>

@@ -30,37 +30,8 @@ import {
   IsFroalaConfig,
 } from './is-froala.interfaces';
 import { TranslateService } from '@ngx-translate/core';
-import FroalaEditor from 'froala-editor';
 
-// froala plugins
-import 'froala-editor/js/plugins/table.min';
-import 'froala-editor/js/plugins/code_view.min';
-import 'froala-editor/js/plugins/font_size.min';
-import 'froala-editor/js/plugins/font_family.min';
-import 'froala-editor/js/plugins/fullscreen.min';
-import 'froala-editor/js/plugins/image.min';
-import 'froala-editor/js/plugins/url.min';
-import 'froala-editor/js/plugins/link.min';
-import 'froala-editor/js/plugins/help.min';
-import 'froala-editor/js/plugins/lists.min';
-import 'froala-editor/js/plugins/video.min';
-import 'froala-editor/js/plugins/print.min';
-import 'froala-editor/js/plugins/colors.min';
-import 'froala-editor/js/plugins/special_characters.min';
-
-// froala languages
-import 'froala-editor/js/languages/cs';
-import 'froala-editor/js/languages/de';
-import 'froala-editor/js/languages/es';
-import 'froala-editor/js/languages/fr';
-import 'froala-editor/js/languages/hr';
-import 'froala-editor/js/languages/hu';
-import 'froala-editor/js/languages/nl';
-import 'froala-editor/js/languages/pl';
-import 'froala-editor/js/languages/pt_pt';
-import 'froala-editor/js/languages/sk';
-import 'froala-editor/js/languages/zh_cn';
-import 'froala-editor/js/languages/zh_tw';
+declare var $: any;
 
 // enable/disable component debug logging
 const DEBUG = false;
@@ -130,10 +101,11 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   private _options: IIsFroalaOptions = null;
   // froala editor instance
-  private _editor: FroalaEditor;
+  private _editor: any;
 
   private _eventListeners: string[] = [];
-
+  // jquery wrapped element
+  private _$element: any;
 
   private _html: SafeHtml;
 
@@ -196,7 +168,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   }
 
   ngOnInit() {
-
+    // jquery wrap and store element
+    this._$element = (<any>$(this.el.nativeElement));
   }
 
   ngOnDestroy() {
@@ -247,11 +220,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
     if (this._editor) {
-      if (this.disabled) {
-        this._editor.edit.off();
-      } else {
-        this._editor.edit.on();
-      }
+      this._$element.froalaEditor(this.disabled ? 'edit.off' : 'edit.on');
     }
   }
 
@@ -260,11 +229,10 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   private setEditorValue() {
     if (this._editor) {
       time('set value');
-      console.log(this._editor);
-      this._editor.html.set(this.value);
+      this._$element.froalaEditor('html.set', this.value);
       // reset undo/history when value is set externally
-      this._editor.undo.reset();
-      this._editor.undo.saveStep();
+      this._$element.froalaEditor('undo.reset');
+      this._$element.froalaEditor('undo.saveStep');
       timeEnd('set value');
     }
   }
@@ -283,8 +251,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       quickInsertTags: [''],      // disable quick insert button on the left edge of editor
       placeholderText: '',        // disable placeholder
       toolbarSticky: false,       // when scrolling toolbar does not appear on the top of the screen
-      toolbarButtons: ['undo', 'redo', '|', 'paragraphFormat', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|',
-        'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'paragraphStyle', '|', 'align', 'formatOL',
+      toolbarButtons: ['paragraphFormat', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|',
+        'fontFamily', 'fontSize', 'color', 'paragraphStyle', '|', 'align', 'formatOL',
         'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly',
         'insertTable', '|', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|',
         'print', 'spellChecker', 'help', 'html', '|', 'fullscreen', '|', BTN_INTELLISENSE],    // list of toolbar buttons
@@ -322,8 +290,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     delete defaults.atjs;
 
     // TODO add config option for this custom button
-    FroalaEditor.DefineIcon(BTN_INTELLISENSE, { NAME: 'intellisense', SVG_KEY: 'star' });
-    FroalaEditor.RegisterCommand(BTN_INTELLISENSE, {
+    $.FroalaEditor.DefineIcon(BTN_INTELLISENSE, { NAME: 'hand-o-up' });
+    $.FroalaEditor.RegisterCommand(BTN_INTELLISENSE, {
       title: 'Intellisense',
       focus: false,
       undo: false,
@@ -350,7 +318,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       this.zone.run(() => {
         time('updateModel');
         time('getHTML')
-        const html = this._editor.html.get();
+        const html = this._$element.froalaEditor('html.get');
         timeEnd('getHTML');
         if (html !== this.value) {
           debug('trigger onChange');
@@ -390,7 +358,6 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
         this.emitChange();
       }
     }
-    console.log('config', defaults);
     return defaults;
   }
 
@@ -464,7 +431,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
         })
 
       this._editor.events.on('keydown', (e) => {
-        if (e.which == FroalaEditor.KEYCODE.ENTER && this._editor.$el.atwho('isSelecting')) {
+        if (e.which == $.FroalaEditor.KEYCODE.ENTER && this._editor.$el.atwho('isSelecting')) {
           return false;
         }
       }, true);
@@ -481,38 +448,35 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     // get default config
     this._froalaConfig = this.createFroalaConfig();
     debug('OPTIONS', this._froalaConfig);
-    // time('registerEvents');
+    time('registerEvents');
 
-    // for (const e in this._froalaConfig.events) {
-    //   if (this._froalaConfig.events.hasOwnProperty(e)) {
-    //     debug(`Register event ${e}`);
-    //     this._eventListeners.push(e);
-    //     this._$element.on(e, this._froalaConfig.events[e]);
-    //   }
-    // }
-    // timeEnd('registerEvents');
+    for (const e in this._froalaConfig.events) {
+      if (this._froalaConfig.events.hasOwnProperty(e)) {
+        debug(`Register event ${e}`);
+        this._eventListeners.push(e);
+        this._$element.on(e, this._froalaConfig.events[e]);
+      }
+    }
+    timeEnd('registerEvents');
 
     // init editor
     time('runOutsideAngular')
     this.zone.runOutsideAngular(() => {
-      const editor = new FroalaEditor(this.el.nativeElement, this._froalaConfig, () => {
-        // initialized
-        this._editor = editor;
+      this._editor = this._$element.froalaEditor(this._froalaConfig).data('froala.editor');
+      debug('editor created', this._editor);
+      this.setEditorValue();
+      this.initAutocomplete();
 
-        debug('editor created', this._editor);
-        this.setEditorValue();
-        this.initAutocomplete();
-
-        // TODO add config option for this custom button
-        // intellisense command
-        const cmd: FroalaCommand = FroalaCommand.create('froala-intellisense', (data: any) => {
-          console.log(`comand success, result`, data);
-          this._editor.html.insert(data, true);
-          this._editor.events.trigger('contentChanged', [], true);
-        });
-        this._editor.cmdIntellisense = cmd;
-        this._editor.onCommand = this.onCommand;
+      // TODO add config option for this custom button
+      // intellisense command
+      const cmd: FroalaCommand = FroalaCommand.create('froala-intellisense', (data: any) => {
+        console.log(`comand success, result`, data);
+        this._$element.froalaEditor('html.insert', data, true);
+        this._$element.froalaEditor('events.trigger', 'contentChanged', [], true);
       });
+      this._editor.cmdIntellisense = cmd;
+      this._editor.onCommand = this.onCommand;
+
     });
     timeEnd('runOutsideAngular')
 
@@ -546,8 +510,9 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   private destroyEditor() {
     if (this._editor) {
       debug('Destroy editor');
+      this._$element.off(this._eventListeners.join(' '));
       this._editor.$el.off('keyup');
-      this._editor.destroy();
+      this._$element.froalaEditor('destroy');
       this._eventListeners = [];
       this._editor = null;
     }
