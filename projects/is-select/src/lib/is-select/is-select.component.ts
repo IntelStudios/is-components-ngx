@@ -457,7 +457,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       }
     );
     this.optionsInstanceRef = this.optionsOverlayRef.attach(new ComponentPortal(IsSelectOptionsComponent));
-
+    // copy/inherit classes from is-select and add them to is-select-options element, but ignore ng-*
+    const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim();
+    this.renderer.setAttribute(this.optionsInstanceRef.location.nativeElement, 'class', classes);
     this.optionsInstanceRef.instance.control = {
       active: this.active,
       options: this.options,
