@@ -2,7 +2,7 @@
 
 @mixin is-input-active {
   border-color: $is-control-boder-focus-color;
-  box-shadow: 0px 0px 0px 1px $is-control-boder-focus-color !important;
+  box-shadow: 0px 0px 0px 1px $is-control-boder-focus-color;
   //border-width: 2px;
 }
 
