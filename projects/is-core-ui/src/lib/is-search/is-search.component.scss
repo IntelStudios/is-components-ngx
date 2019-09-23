@@ -1,0 +1,31 @@
+@import '../../../../styles/mixins';
+@import '../../../../styles/variables';
+
+:host {
+   .input-group-search {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    background-color: $is-search-bg-color;
+    border-color: $is-search-bg-color;
+
+    > input {
+      color: $is-search-fg-color;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      background-color: transparent;
+    }
+    .input-group-addon {
+      padding-right: 8px;
+
+      >i {
+        font-size: 14px;
+        border: none;
+        padding-right: 8px;
+        background-color: transparent;
+        color: $is-search-icon-color;
+      }
+    }
+  }
+}

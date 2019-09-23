@@ -72,6 +72,10 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --is-select-multi-item-fg-color: #000;
   --is-checkbox-color: #{$light-base-color};
 
+  --is-search-bg-color: #EDEEEF;
+  --is-search-fg-color: #777E85;
+  --is-search-icon-color: #2B3642;
+
   --is-badge-info-color: #72BCFF;
   --is-badge-warning-color: #F0C330;
   --is-badge-danger-color: #EB6C77;
