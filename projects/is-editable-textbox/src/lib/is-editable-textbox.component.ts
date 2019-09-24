@@ -1,15 +1,23 @@
 import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, AbstractControl } from '@angular/forms';
+
+const IS_EDITABLE_TEXTBOX_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => IsEditableTextboxComponent),
+  multi: true
+};
+
+const IS_EDITABLE_TEXTBOX_VALIDATORS: any = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => IsEditableTextboxComponent),
+  multi: true
+}
 
 @Component({
   selector: 'is-editable-textbox',
   templateUrl: 'is-editable-textbox.component.html',
   styleUrls: ['is-editable-textbox.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => IsEditableTextboxComponent),
-    multi: true,
-  }],
+  providers: [IS_EDITABLE_TEXTBOX_VALUE_ACCESSOR, IS_EDITABLE_TEXTBOX_VALIDATORS],
 })
 export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor {
   @Input()
@@ -21,6 +29,9 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   @Input()
   edit = false;
 
+  @Input()
+  validator: any = { valid: false };
+
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
 
@@ -31,6 +42,9 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   // the method set in registerOnChange to emit changes back to the form
   private _onChangeCallback = (_: any) => { };
   private _onTouchedCallback = (_: any) => { };
+
+  // validation change function
+  onValidatorChangeFn: Function = null;
 
   constructor(private changeDetector: ChangeDetectorRef) { }
 
@@ -78,5 +92,14 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
    */
   registerOnTouched(fn: (_: any) => {}): void {
     this._onTouchedCallback = fn;
+  }
+
+  // Begin Validators methods
+  validate(c: AbstractControl) {
+    return c.valid ? null : this.validator;
+  }
+
+  registerOnValidatorChange(fn: any) {
+    this.onValidatorChangeFn = fn;
   }
 }
