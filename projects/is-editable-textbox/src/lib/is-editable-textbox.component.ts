@@ -33,7 +33,7 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   validator: any = { valid: false };
 
   @Output()
-  changed: EventEmitter<any> = new EventEmitter<any>();
+  changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public value = '';
 
@@ -53,6 +53,7 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
 
   toggleEdit() {
     this.edit = !this.edit;
+    this.changed.emit(this.edit);
     this.changeDetector.markForCheck();
   }
 
