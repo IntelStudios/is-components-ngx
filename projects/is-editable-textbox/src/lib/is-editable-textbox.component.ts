@@ -27,12 +27,7 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   placeholder = '';
 
   @Input()
-  set edit(value: boolean) {
-    this._edit = value;
-  }
-  get edit(): boolean {
-    return this._edit;
-  }
+  edit: boolean = false;
 
   @Input()
   validator: any = { valid: false };
@@ -47,8 +42,6 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   // the method set in registerOnChange to emit changes back to the form
   private _onChangeCallback = (_: any) => { };
   private _onTouchedCallback = (_: any) => { };
-
-  private _edit: boolean = false;
 
   // validation change function
   onValidatorChangeFn: Function = null;
