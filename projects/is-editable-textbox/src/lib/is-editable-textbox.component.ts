@@ -53,6 +53,9 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
 
   toggleEdit() {
     const el: HTMLElement = this.elRef.nativeElement;
+    console.log('edit ', this.edit);
+    console.log('this.el ', el);
+    console.log('el.classList.contains ', el.classList.contains('ng-invalid'))
     if (this.edit && el.classList.contains('ng-invalid')) {
       // do not let user escape from editing mode when the input is invalid
       return;
