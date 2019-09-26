@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, AbstractControl } from '@angular/forms';
 
 const IS_EDITABLE_TEXTBOX_VALUE_ACCESSOR: any = {
@@ -46,12 +46,17 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   // validation change function
   onValidatorChangeFn: Function = null;
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
+  constructor(private changeDetector: ChangeDetectorRef, private elRef: ElementRef) { }
 
   ngOnInit() {
   }
 
   toggleEdit() {
+    const el: HTMLElement = this.elRef.nativeElement;
+    if (this.edit && el.classList.contains('ng-invalid')) {
+      // do not let user escape from editing mode when the input is invalid
+      return;
+    }
     this.edit = !this.edit;
     this.changed.emit(this.edit);
     this.changeDetector.markForCheck();
