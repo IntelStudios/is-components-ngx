@@ -109,6 +109,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
     } else {
       this.icon = 'fa-folder-open'; // folder
+      if (this.level === 1) {
+        this.disabled = !this.service.isAssignable(this.paintedPath);
+      }
     }
 
     // debounce quick changes in mouseover states
