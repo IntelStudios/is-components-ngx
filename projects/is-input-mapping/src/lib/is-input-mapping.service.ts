@@ -33,4 +33,14 @@ export class IsInputMappingService {
   getAssignedItems(path: string): AssignStatus[] {
     return path in this.assignedCache ? this.assignedCache[path] : [];
   }
+
+  isAssignable(paintedPath: number[]): boolean {
+    if (Object.keys(this.assignedCache).length === 0) {
+      return false;
+    }
+    const assignedItem: AssignStatus = this.assignedCache[Object.keys(this.assignedCache)[0]][0];
+    console.log('assigned item');
+    console.log(assignedItem);
+    return paintedPath[0] === assignedItem.PaintedPath[0];
+  }
 }
