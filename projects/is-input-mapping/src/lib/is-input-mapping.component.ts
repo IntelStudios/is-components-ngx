@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { AssignStatus, DataStructure, InputSchema, IsInputMappingInput } from './is-input-mapping.interface';
 import { IsInputMappingService } from './is-input-mapping.service';
 import { Subject, Subscription } from 'rxjs';
@@ -15,17 +15,30 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       provide: NG_VALUE_ACCESSOR,
       useExisting: IsInputMappingComponent,
       multi: true
-    }]
+    }],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   inputSchemaMap: Map<string, string>;  // the value of this element, only used in the root instance
 
-  level = 0;
+  level: number = null;
   collapsible = false;
 
+  private _data: IsInputMappingInput;
   @Input()
-  data: IsInputMappingInput;
+  set data(value: IsInputMappingInput) {
+    this._data = value;
+    if (this.level === 0) {
+      this.service.clearInvalidAssigns(this.data.DataStructure);
+      this.cd.detectChanges();
+      this.paintedStructure = this._data.DataStructure;
+    }
+  }
+
+  get data(): IsInputMappingInput {
+    return this._data;
+  }
 
   @Input()
   paintedPath: number[] = null; // taken from root element
@@ -58,24 +71,12 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     return this._mouseover;
   }
 
-  private _disabled = false;
-
-  set disabled(value: boolean) {
-    this._disabled = value;
-
-    if (value && this.level > 0) {
-      this.collapsed = false;
-    }
-  }
-
-  get disabled(): boolean {
-    return this._disabled;
-  }
+  disabled = false;
 
   private _subscriptions: Subscription[] = [];
   private _on_changes: Function = () => {};
 
-  constructor(private elRef: ElementRef, private serviceRoot: IsInputMappingService) {
+  constructor(private elRef: ElementRef, private serviceRoot: IsInputMappingService, private cd: ChangeDetectorRef) {
   }
 
   @HostListener('document:click', ['$event'])
@@ -87,12 +88,13 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   ngOnInit() {
     if (!this.paintedPath) { // root element
-      this.paintedStructure = this.data.DataStructure;
+      this.level = 0;
+      this.paintedStructure = this._data.DataStructure;
       this.paintedPath = [];
       this.service = this.serviceRoot;
       this.inputSchemaMap = new Map<string, string>();
     } else { // no root
-      let paintedData: DataStructure = this.data.DataStructure;
+      let paintedData: DataStructure = this._data.DataStructure;
       for (const pathIndex of this.paintedPath) {
         paintedData = paintedData.Children[pathIndex];
       }
@@ -102,16 +104,14 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
 
     if (!this.collapsible) { // node that can have attached items
-      this.inputsAssignable = this.data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
+      this.inputsAssignable = this._data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
       this.inputsAssignableFiltered = this.inputsAssignable.slice();
       this.icon = this.getTypeIcon(this.paintedStructure.DataType);
 
       this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
     } else {
       this.icon = 'fa-folder-open'; // folder
-      if (this.level === 1) {
-        this.disabled = !this.service.isAssignable(this.paintedPath);
-      }
+      this.disabled = !this.service.isAssignable(this.paintedPath);
     }
 
     // debounce quick changes in mouseover states
@@ -130,11 +130,8 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.inputsFilled = this.inputsFilled.filter(input => input.Name !== data.Item.Name);
 
       // re-enable if everything in another level 1 tree was releases
-      if (this.disabled && this.collapsible && this.inputsFilled.length === 0) {
-        if (this.level === 1) {
-          this.disabled = false;
-        }
-        this.collapsed = true;
+      if (this.disabled && this.inputsFilled.length === 0) {
+        this.disabled = false;
       }
 
       // add released item back to available items
@@ -193,7 +190,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.inputsFilled.push(status.Item);
 
     // disable if item was selected inside another level 1 tree
-    if (!this.disabled && this.level === 1 && this.collapsible && status.PaintedPath[0] !== this.paintedPath[0]) {
+    if (!this.disabled && status.PaintedPath[0] !== this.paintedPath[0]) {
       this.disabled = true;
     }
 
@@ -257,7 +254,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     };
 
     const findItemByName = (name): InputSchema => {
-      for (const schema of this.data.InputSchema) {
+      for (const schema of this._data.InputSchema) {
         if (schema.Name === name) {
           return schema;
         }
@@ -267,7 +264,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
     // clear all previous values
     this.inputSchemaMap.forEach((path, itemName) => {
-      const nodePaintedPath = findNodePaintedPathByPath(path, this.data.DataStructure, []);
+      const nodePaintedPath = findNodePaintedPathByPath(path, this._data.DataStructure, []);
       const item = findItemByName(itemName);
 
       if (!nodePaintedPath || !item) {
@@ -281,7 +278,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       return;
     }
     value.forEach((path, itemName) => {
-      const nodePaintedPath = findNodePaintedPathByPath(path, this.data.DataStructure, []);
+      const nodePaintedPath = findNodePaintedPathByPath(path, this._data.DataStructure, []);
       const item = findItemByName(itemName);
 
       if (!nodePaintedPath || !item) {

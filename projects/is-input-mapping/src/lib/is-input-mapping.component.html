@@ -11,7 +11,7 @@
 
   <span *ngIf="paintedStructure.Children.length === 0">
     <span class="assigned-item" *ngFor="let item of inputsAssigned">{{item.Name}} <i class="fa fa-times btn-release-item" (click)="release(item)"></i></span>
-    <i *ngIf="inputsAssignableFiltered.length > 0 && (mouseover || dropdownVisible)" class="fa fa-plus-square btn-attach-item" (click)="dropdownShown()"></i>
+    <i *ngIf="!disabled && inputsAssignableFiltered.length > 0 && (mouseover || dropdownVisible)" class="fa fa-plus-square btn-attach-item" (click)="dropdownShown()"></i>
   </span>
 
   <div class="dropdown" *ngIf="dropdownVisible">

@@ -11,13 +11,13 @@ export class DemoInputMappingComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.1.3.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.1.4.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsInputMappingModule } from 'is-input-mapping';</pre>
 `;
 
-  mock_tree_data: IsInputMappingInput = {
+  MOCK_DATA: IsInputMappingInput = {
   'InputSchema': [
     {
       'Name': 'Name',
@@ -170,7 +170,7 @@ export class DemoInputMappingComponent implements OnInit {
             'Children': [
               {
                 'Children': [],
-                'Path': 'Convert to text.Text',
+                'Path': 'Load files.Third level.Text',
                 'Name': 'Text',
                 'Type': 0,
                 'DataType': 2,
@@ -226,8 +226,174 @@ export class DemoInputMappingComponent implements OnInit {
   }
 };
 
+  MOCK_DATA_LITTLE: IsInputMappingInput = {
+    'InputSchema': [
+      {
+        'Name': 'Name',
+        'DataType': 2,
+        'AllowNull': false,
+        'IsComplex': false
+      },
+      {
+        'Name': 'Directory',
+        'DataType': 2,
+        'AllowNull': false,
+        'IsComplex': false
+      },
+      {
+        'Name': 'FullPath',
+        'DataType': 2,
+        'AllowNull': false,
+        'IsComplex': false
+      },
+      {
+        'Name': 'Extension',
+        'DataType': 2,
+        'AllowNull': false,
+        'IsComplex': false
+      },
+      {
+        'Name': 'Data',
+        'DataType': 4,
+        'AllowNull': false,
+        'IsComplex': false
+      },
+      {
+        'Name': 'Size',
+        'DataType': 1,
+        'AllowNull': true,
+        'IsComplex': false
+      },
+      {
+        'Name': 'Created',
+        'DataType': 5,
+        'AllowNull': true,
+        'IsComplex': false
+      },
+      {
+        'Name': 'Modified',
+        'DataType': 5,
+        'AllowNull': true,
+        'IsComplex': false
+      }
+    ],
+    'DataStructure': {
+      'Children': [
+        {
+          'Children': [
+            {
+              'Children': [],
+              'Path': 'Load files.Name',
+              'Name': 'Name',
+              'Type': 0,
+              'DataType': 2,
+              'InputColumns': [
+                'Name',
+                'Directory',
+                'FullPath',
+                'Extension'
+              ]
+            },
+            {
+              'Children': [],
+              'Path': 'Load files.Directory',
+              'Name': 'Directory',
+              'Type': 0,
+              'DataType': 2,
+              'InputColumns': [
+                'Name',
+                'Directory',
+                'FullPath',
+                'Extension'
+              ]
+            },
+            {
+              'Children': [],
+              'Path': 'Load files.FullPath',
+              'Name': 'FullPath',
+              'Type': 0,
+              'DataType': 2,
+              'InputColumns': [
+                'Name',
+                'Directory',
+                'FullPath',
+                'Extension'
+              ]
+            },
+            {
+              'Children': [],
+              'Path': 'Load files.Extension',
+              'Name': 'Extension',
+              'Type': 0,
+              'DataType': 2,
+              'InputColumns': [
+                'Name',
+                'Directory',
+                'FullPath',
+                'Extension'
+              ]
+            },
+            {
+              'Children': [],
+              'Path': 'Load files.Data',
+              'Name': 'Data',
+              'Type': 0,
+              'DataType': 4,
+              'InputColumns': [
+                'Data'
+              ]
+            },
+            {
+              'Children': [],
+              'Path': 'Load files.Size',
+              'Name': 'Size',
+              'Type': 0,
+              'DataType': 1,
+              'InputColumns': [
+                'Size'
+              ]
+            },
+            {
+              'Children': [],
+              'Path': 'Load files.Created',
+              'Name': 'Created',
+              'Type': 0,
+              'DataType': 5,
+              'InputColumns': [
+                'Created',
+                'Modified'
+              ]
+            },
+            {
+              'Children': [],
+              'Path': 'Load files.Modified',
+              'Name': 'Modified',
+              'Type': 0,
+              'DataType': 5,
+              'InputColumns': [
+                'Created',
+                'Modified'
+              ]
+            }
+          ],
+          'Path': 'Load files',
+          'Name': 'Load files',
+          'Type': 2,
+          'DataType': 7,
+          'InputColumns': []
+        }
+      ],
+      'Path': '*',
+      'Name': 'All',
+      'Type': 2,
+      'DataType': 7,
+      'InputColumns': []
+    }
+  };
+
   formControl = new FormControl();
   currentValue = '';
+  currentDataset = this.MOCK_DATA;
 
   constructor() { }
 
@@ -251,5 +417,9 @@ export class DemoInputMappingComponent implements OnInit {
     const map = new Map<string, string>();
     map.set('Modified', 'Load files.Created');
     this.formControl.setValue(map);
+  }
+
+  switchDataset() {
+    this.currentDataset = this.currentDataset === this.MOCK_DATA_LITTLE ? this.MOCK_DATA : this.MOCK_DATA_LITTLE;
   }
 }
