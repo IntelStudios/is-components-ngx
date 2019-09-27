@@ -16,7 +16,7 @@
       text-align: center;
     }
 
-    &.folder {
+    &.folder:not(.disabled) {
       font-weight: bold;
       cursor: pointer;
     }

@@ -6,13 +6,14 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-  <is-input-mapping [data]="mock_tree_data" [formControl]="formControl"></is-input-mapping>
+  <is-input-mapping [data]="currentDataset" [formControl]="formControl"></is-input-mapping>
 </div>
 <div class="col-sm-6">
   <span>Value: {{currentValue}}</span>
 </div>
-  <div class="col-sm-6">
-  <button class="btn btn-primary" (click)="nullIt()">Select nothing</button>
+    <div class="col-sm-6">
+    <button class="btn btn-primary" (click)="nullIt()">Select nothing</button>
     <button class="btn btn-primary" (click)="modified2Created()">Modified to Created</button>
+    <button class="btn btn-primary" (click)="switchDataset()">Switch dataset</button>
 </div>
 </div>
