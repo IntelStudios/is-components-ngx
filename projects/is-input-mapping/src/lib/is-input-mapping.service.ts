@@ -17,21 +17,21 @@ export class IsInputMappingService {
   itemReleased$ = this.releaseSource.asObservable();
 
   assignItem(data: AssignStatus) {
-    this.assignSource.next(data);
     if (!(data.Path in this.assignedCache)) {
       this.assignedCache[data.Path] = [];
     }
     this.assignedCache[data.Path].push(data);
+    this.assignSource.next(data);
   }
 
   releaseItem(data: AssignStatus) {
-    this.releaseSource.next(data);
     if (data.Path in this.assignedCache) {
       this.assignedCache[data.Path] = this.assignedCache[data.Path].filter(assign => assign.Item.Name !== data.Item.Name);
       if (this.assignedCache[data.Path].length === 0) {
         delete this.assignedCache[data.Path];
       }
     }
+    this.releaseSource.next(data);
   }
 
   getAssignedItems(path: string): AssignStatus[] {
@@ -44,12 +44,26 @@ export class IsInputMappingService {
     return names;
   }
 
-  isAssignable(paintedPath: number[]): boolean {
+  isAssignable(paintedPath: number[], isCollapsible: boolean): boolean {
     if (Object.keys(this.assignedCache).length === 0) {
       return true;
     }
-    const assignedItem: AssignStatus = this.assignedCache[Object.keys(this.assignedCache)[0]][0];
-    return paintedPath[0] === assignedItem.PaintedPath[0];
+
+    if (isCollapsible) {
+      paintedPath = paintedPath.slice();
+      paintedPath.push(0);
+    }
+
+    for (const items of Object.keys(this.assignedCache).map(key => this.assignedCache[key])) {
+      for (const item of items) {
+        for (let i = 0; i < Math.min(paintedPath.length, item.PaintedPath.length) - 1; i++) {
+          if (paintedPath[i] !== item.PaintedPath[i]) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 
   clearInvalidAssigns(validStructure: DataStructure) {
