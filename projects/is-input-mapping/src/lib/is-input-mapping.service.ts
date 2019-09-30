@@ -7,6 +7,10 @@ export class IsInputMappingService {
 
   private assignSource = new Subject<AssignStatus>();
   private releaseSource = new Subject<AssignStatus>();
+  /*
+  key: path of item that has assigns
+  value: list of assigned AssignStatus
+   */
   private assignedCache = {};
 
   itemAssigned$ = this.assignSource.asObservable();
@@ -32,6 +36,12 @@ export class IsInputMappingService {
 
   getAssignedItems(path: string): AssignStatus[] {
     return path in this.assignedCache ? this.assignedCache[path] : [];
+  }
+
+  getAssignedItemNames(): string[] {
+    const names = [];
+    Object.keys(this.assignedCache).map(key => this.assignedCache[key]).forEach(items => items.forEach(item => names.push(item.Item.Name)));
+    return names;
   }
 
   isAssignable(paintedPath: number[]): boolean {

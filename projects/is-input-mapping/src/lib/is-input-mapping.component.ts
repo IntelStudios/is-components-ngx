@@ -105,7 +105,8 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
     if (!this.collapsible) { // node that can have attached items
       this.inputsAssignable = this._data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
-      this.inputsAssignableFiltered = this.inputsAssignable.slice();
+      const alreadyAssignedNames = this.service.getAssignedItemNames();
+      this.inputsAssignableFiltered = this.inputsAssignable.slice().filter(item => alreadyAssignedNames.indexOf(item.Name) === -1);
       this.icon = this.getTypeIcon(this.paintedStructure.DataType);
 
       this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
