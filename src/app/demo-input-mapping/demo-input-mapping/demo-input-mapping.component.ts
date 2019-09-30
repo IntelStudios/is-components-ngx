@@ -11,7 +11,7 @@ export class DemoInputMappingComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.1.5.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.1.6.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsInputMappingModule } from 'is-input-mapping';</pre>
@@ -407,6 +407,10 @@ export class DemoInputMappingComponent implements OnInit {
       val.forEach((v, k) => dict[k] = v);
       this.currentValue = JSON.stringify(dict);
     });
+/*
+    const setupValue = new Map<string, string>();
+    setupValue.set('Name', 'Load files.Directory');
+    this.formControl.setValue(setupValue);*/
   }
 
   nullIt() {
