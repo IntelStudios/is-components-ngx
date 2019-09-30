@@ -114,7 +114,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.icon = 'fa-folder-open'; // folder
     }
 
-    this.disabled = !this.service.isAssignable(this.paintedPath);
+    this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
 
     // debounce quick changes in mouseover states
     this._subscriptions.push(this.mouseoverSubject.asObservable().pipe(debounceTime(20)).subscribe(value => this._mouseover = value));
@@ -131,10 +131,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
       this.inputsFilled = this.inputsFilled.filter(input => input.Name !== data.Item.Name);
 
-      // re-enable if everything in another level 1 tree was releases
-      if (this.disabled && this.inputsFilled.length === 0) {
-        this.disabled = false;
-      }
+      this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
 
       // add released item back to available items
       for (const item of this.inputsAssignable) {
@@ -191,10 +188,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.inputsAssignableFiltered = this.inputsAssignableFiltered.filter(input => input.Name !== status.Item.Name);
     this.inputsFilled.push(status.Item);
 
-    // disable if item was selected inside another level 1 tree
-    if (!this.disabled && status.PaintedPath[0] !== this.paintedPath[0]) {
-      this.disabled = true;
-    }
+    this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
 
     // root element saves the selection state into value
     if (this.level === 0) {

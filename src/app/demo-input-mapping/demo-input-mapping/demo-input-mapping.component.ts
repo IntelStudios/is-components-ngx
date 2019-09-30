@@ -180,10 +180,45 @@ export class DemoInputMappingComponent implements OnInit {
                   'FullPath',
                   'Extension'
                 ]
+              },
+              {
+                'Children': [],
+                'Path': 'Load files.Third level.Word',
+                'Name': 'Word',
+                'Type': 0,
+                'DataType': 2,
+                'InputColumns': [
+                  'Name',
+                  'Directory',
+                  'FullPath',
+                  'Extension'
+                ]
               }
             ],
             'Path': 'Load files.Third level',
             'Name': 'Third level',
+            'Type': 2,
+            'DataType': 7,
+            'InputColumns': []
+          },
+          {
+            'Children': [
+              {
+                'Children': [],
+                'Path': 'Load files.Third level second.Text',
+                'Name': 'Text',
+                'Type': 0,
+                'DataType': 2,
+                'InputColumns': [
+                  'Name',
+                  'Directory',
+                  'FullPath',
+                  'Extension'
+                ]
+              }
+            ],
+            'Path': 'Load files.Third level second',
+            'Name': 'Third level second',
             'Type': 2,
             'DataType': 7,
             'InputColumns': []
@@ -209,6 +244,28 @@ export class DemoInputMappingComponent implements OnInit {
               'FullPath',
               'Extension'
             ]
+          },
+          {
+            'Children': [
+              {
+                'Children': [],
+                'Path': 'Load files.Third level third.Text',
+                'Name': 'Text',
+                'Type': 0,
+                'DataType': 2,
+                'InputColumns': [
+                  'Name',
+                  'Directory',
+                  'FullPath',
+                  'Extension'
+                ]
+              }
+            ],
+            'Path': 'Load files.Third level third',
+            'Name': 'Third level third',
+            'Type': 2,
+            'DataType': 7,
+            'InputColumns': []
           }
         ],
         'Path': 'Convert to text',
@@ -407,9 +464,8 @@ export class DemoInputMappingComponent implements OnInit {
       val.forEach((v, k) => dict[k] = v);
       this.currentValue = JSON.stringify(dict);
     });
-/*
-    const setupValue = new Map<string, string>();
-    setupValue.set('Name', 'Load files.Directory');
+    /*const setupValue = new Map<string, string>();
+    setupValue.set('Name', 'Load files.Third level.Text');
     this.formControl.setValue(setupValue);*/
   }
 
