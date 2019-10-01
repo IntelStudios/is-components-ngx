@@ -40,6 +40,9 @@ export class DemoCoreUIComponent implements OnInit {
   formControl1: FormControl;
   formControl2: FormControl;
   passwordControl: FormControl;
+  checkboxControl: FormControl = new FormControl();
+  checkboxIndeterminate = false;
+  radioGroupControl: FormControl = new FormControl();
 
   constructor() {
     this.formControl1 = new FormControl();
@@ -77,5 +80,27 @@ export class DemoCoreUIComponent implements OnInit {
     } else {
       ctrl.setErrors(null);
     }
+  }
+
+  toggleDisabled(ctrl: FormControl) {
+    if (ctrl.enabled) {
+      ctrl.disable();
+    } else {
+      ctrl.enable();
+    }
+  }
+
+  toggleCheckboxValue() {
+    const val = this.checkboxControl.value;
+    this.checkboxControl.setValue(!val);
+  }
+
+  intermediateCheckboxValue() {
+    this.checkboxIndeterminate = !this.checkboxIndeterminate;
+  }
+
+  toggleRadioValue() {
+    const val = this.radioGroupControl.value;
+    this.radioGroupControl.setValue(val === '1' ? '2' : '1');
   }
 }

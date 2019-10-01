@@ -18,15 +18,16 @@ import {
 } from './is-tabset/is-tabset.component';
 import { IsSearchComponent } from './is-search/is-search.component';
 import { IsPasswordComponent } from './is-password/is-password.component';
+import { IsCheckboxComponent, IsRadioGroupDirective } from './is-checkbox/is-checkbox.component';
 
 @NgModule({
   imports: [
     CommonModule, RouterModule, TranslateModule, PopoverModule, TooltipModule
   ],
   declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent],
+    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective],
   exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent]
+    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective]
 })
 export class IsCoreUIModule {
   static forRoot(): ModuleWithProviders {

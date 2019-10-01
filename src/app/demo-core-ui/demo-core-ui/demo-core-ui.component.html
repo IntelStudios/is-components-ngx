@@ -5,15 +5,46 @@
   </div>
 </div>
 <div class="row">
-    <div class="col-sm-12">
-      <h2>Input</h2>
-    </div>
-
-    <div class="col-sm-12">
-        <input type="text" class="form-control is-input" />
-      </div>
+  <div class="col-sm-12">
+    <h2>Input</h2>
   </div>
 
+  <div class="col-sm-12">
+    <input type="text" class="form-control is-input" />
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Checkbox</h2>
+  </div>
+  <div class="col-sm-12">
+    <is-checkbox [formControl]="checkboxControl" [indeterminate]="checkboxIndeterminate">
+      Checkbox value
+    </is-checkbox>
+    <button (click)="toggleCheckboxValue()">Toggle Value</button>
+    <button (click)="intermediateCheckboxValue()">Intermediate</button>
+    <button (click)="toggleDisabled(checkboxControl)">Disabled</button>
+    <p>{{checkboxControl.valueChanges|async}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Radio</h2>
+  </div>
+  <div class="col-sm-12">
+    <is-radio-group [formControl]="radioGroupControl">
+      <is-radio value="1">
+        Radio 1
+      </is-radio>
+      <is-radio value="2">
+        Radio 2
+      </is-radio>
+    </is-radio-group>
+    <button (click)="toggleRadioValue()">Toggle Value</button>
+    <button (click)="toggleDisabled(radioGroupControl)">Disabled</button>
+    <p>{{radioGroupControl.valueChanges|async}}</p>
+  </div>
+</div>
 <div class="row">
   <div class="col-sm-12">
     <h2>Search</h2>
@@ -26,7 +57,8 @@
 <div class="row">
   <div class="col-sm-12">
     <h3>Type password and click on the eye</h3>
-    <is-password [formControl]="passwordControl" [autocomplete]="'off'" [placeholder]="'This is placeholder...'"></is-password>
+    <is-password [formControl]="passwordControl" [autocomplete]="'off'" [placeholder]="'This is placeholder...'">
+    </is-password>
     <button (click)="toggleInvalid(passwordControl)">Toggle Invalid</button>
   </div>
 </div>
@@ -39,9 +71,12 @@
   <div class="col-sm-12 tiles">
     <!-- breadcrumbs MUST be rendered within parent having "tiles" class -->
     <is-breadcrumb-box [breadcrumb]="{id:'1', icon:'fa fa-user', name: 'breadcrumb'}"></is-breadcrumb-box>
-    <is-breadcrumb-box bgClass="bg-red-thunderbird" [breadcrumb]="{id:'1', icon:'fa fa-user', name: 'breadcrumb'}"></is-breadcrumb-box>
-    <is-breadcrumb-box [count]="666" [breadcrumb]="{id:'2', icon:'fa fa-home', name: 'breadcrumb', route:['/']}"></is-breadcrumb-box>
-    <is-breadcrumb-box [count]="123" [breadcrumb]="{id:'3', name: 'Breadcrumb without icon', route:['/']}"></is-breadcrumb-box>
+    <is-breadcrumb-box bgClass="bg-red-thunderbird" [breadcrumb]="{id:'1', icon:'fa fa-user', name: 'breadcrumb'}">
+    </is-breadcrumb-box>
+    <is-breadcrumb-box [count]="666" [breadcrumb]="{id:'2', icon:'fa fa-home', name: 'breadcrumb', route:['/']}">
+    </is-breadcrumb-box>
+    <is-breadcrumb-box [count]="123" [breadcrumb]="{id:'3', name: 'Breadcrumb without icon', route:['/']}">
+    </is-breadcrumb-box>
   </div>
 </div>
 <div class="row">
@@ -52,40 +87,41 @@
 <div class="row">
   <div class="col-sm-6">
     <is-portlet [enableCollapse]="true" heading="Collapsible Portlet">
-        <div class="portlet-body">
-          Collapsible portlet body<br />
-          Collapsible portlet body<br />
-          Collapsible portlet body<br />
-          Collapsible portlet body<br />
-          Collapsible portlet body<br />
-          Collapsible portlet body<br />
-          Collapsible portlet body<br />
-          Collapsible portlet body<br />
-          Collapsible portlet body<br />
-          Collapsible portlet body<br />
-        </div>
+      <div class="portlet-body">
+        Collapsible portlet body<br />
+        Collapsible portlet body<br />
+        Collapsible portlet body<br />
+        Collapsible portlet body<br />
+        Collapsible portlet body<br />
+        Collapsible portlet body<br />
+        Collapsible portlet body<br />
+        Collapsible portlet body<br />
+        Collapsible portlet body<br />
+        Collapsible portlet body<br />
+      </div>
     </is-portlet>
   </div>
   <div class="col-sm-6">
-    <is-portlet heading="Colored portlet with actions" [headingUpprcase]="false" [headingBold]="false" icon="fa fa-user" fontColor="font-blue-madison">
-        <div class="actions">
-          <a class="btn btn-circle btn-default btn-sm"><i class="fa fa-angle-up"></i> Close</a>
-        </div>
-        <div class="portlet-body">
-          Portlet body
-        </div>
+    <is-portlet heading="Colored portlet with actions" [headingUpprcase]="false" [headingBold]="false" icon="fa fa-user"
+      fontColor="font-blue-madison">
+      <div class="actions">
+        <a class="btn btn-circle btn-default btn-sm"><i class="fa fa-angle-up"></i> Close</a>
+      </div>
+      <div class="portlet-body">
+        Portlet body
+      </div>
     </is-portlet>
   </div>
   <div class="col-sm-6">
     <is-portlet>
-        <ng-template is-portlet-title>
-          <div class="caption">
-            <a href="#" [routerLink]="['/']">Portlet with title template</a>
-          </div>
-        </ng-template>
-        <div class="portlet-body">
-          Portlet body
+      <ng-template is-portlet-title>
+        <div class="caption">
+          <a href="#" [routerLink]="['/']">Portlet with title template</a>
         </div>
+      </ng-template>
+      <div class="portlet-body">
+        Portlet body
+      </div>
     </is-portlet>
   </div>
 </div>
@@ -97,36 +133,36 @@
 <div class="row">
   <div class="col-sm-6">
     <is-section heading="Section" [enableCollapse]="true" icon="fa fa-user">
-        <div class="portlet-body">
-          Section body<br />
-          Section body<br />
-          Section body<br />
-          Section body<br />
-          Section body<br />
-          Section body<br />
-        </div>
+      <div class="portlet-body">
+        Section body<br />
+        Section body<br />
+        Section body<br />
+        Section body<br />
+        Section body<br />
+        Section body<br />
+      </div>
     </is-section>
   </div>
   <div class="col-sm-6">
     <is-section heading="Section with tools" portletClass="red-thunderbird" titleClass="font-yellow-lemon">
-        <div class="tools">
-          <i class="fa fa-close"></i>
-        </div>
-        <div class="portlet-body">
-          Section body
-        </div>
+      <div class="tools">
+        <i class="fa fa-close"></i>
+      </div>
+      <div class="portlet-body">
+        Section body
+      </div>
     </is-section>
   </div>
   <div class="col-sm-6">
     <is-section>
-        <ng-template is-section-title>
-          <div class="caption">
-            <a href="#" style="color: white;" [routerLink]="['/']">Section with title template</a>
-          </div>
-        </ng-template>
-        <div class="portlet-body">
-          Section body
+      <ng-template is-section-title>
+        <div class="caption">
+          <a href="#" style="color: white;" [routerLink]="['/']">Section with title template</a>
         </div>
+      </ng-template>
+      <div class="portlet-body">
+        Section body
+      </div>
     </is-section>
   </div>
 </div>
@@ -190,8 +226,8 @@
 <input type="text" [formControl]="formControl1">
 <br>
 <p>You can use predefined validators from is-field-error.service or you can define custom.</p>
-<label>Custom validator, input must contain word 'custom': <is-field-error [field]="formControl2"></is-field-error></label>
+<label>Custom validator, input must contain word 'custom': <is-field-error [field]="formControl2"></is-field-error>
+</label>
 <br>
-  <input type="text" [formControl]="formControl2">
+<input type="text" [formControl]="formControl2">
 <br>
-

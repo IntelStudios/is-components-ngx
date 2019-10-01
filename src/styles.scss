@@ -40,7 +40,15 @@ body {
   @include is-input;
 }
 
-// END theme styles
+
+// override font-family for is-check/radio to font-awesome free
+is-checkbox, is-radio {
+  > label {
+    > input {
+      font-family: 'Font Awesome 5 Free' !important;
+    }
+  }
+}
 
 
 

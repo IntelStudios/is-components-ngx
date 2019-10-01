@@ -1,0 +1,7 @@
+<label>
+  <input #inputEl [type]="type" [name]="_name" [checked]="checked" [value]="value" [disabled]="disabled"
+    (change)="_onChange($event, inputEl.checked, inputEl.value)" />
+  <span>
+    <ng-content></ng-content>
+  </span>
+</label>

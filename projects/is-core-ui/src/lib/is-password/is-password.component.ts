@@ -82,7 +82,7 @@ export class IsPasswordComponent {
     this.changeDetector.markForCheck();
   }
 
-  /**
+  /**`
    * Implemented as part of ControlValueAccessor.
    */
   registerOnTouched(fn: () => {}): void {
