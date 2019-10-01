@@ -18,7 +18,6 @@ export const routes: Routes = [
   { path: 'froala', loadChildren: () => import('./demo-froala/demo-froala.module').then(m => m.DemoFroalaRoutingModule) },
   { path: 'core-ui', loadChildren: () => import('./demo-core-ui/demo-core-ui.module').then(m => m.DemoCoreUIRoutingModule) },
   { path: 'bootstrap-switch', loadChildren: () => import('./demo-bootstrap-switch/demo-bootstrap-switch.module').then(m => m.DemoBootstrapSwitchRoutingModule) },
-  { path: 'password', loadChildren: () => import('./demo-password/demo-password.module').then(m => m.DemoPasswordRoutingModule) },
   { path: 'editable-textbox', loadChildren: () => import('./demo-editable-textbox/demo-editable-textbox.module').then(m => m.DemoEditableTextboxRoutingModule) },
   { path: 'select-tree', loadChildren: () => import('./demo-select-tree/demo-select-tree.module').then(m => m.DemoSelectTreeRoutingModule) },
   { path: 'dx-select-tree', loadChildren: () => import('./demo-dx-select-tree/demo-dx-select-tree.module').then(m => m.DemoDxSelectTreeRoutingModule) },

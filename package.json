@@ -16,7 +16,6 @@
     "build.core-ui": "ng build is-core-ui && node copy-styles.js && cd dist/is-core-ui && npm pack --quiet && cp *.tgz ../../package",
     "build.datepicker": "ng build is-datepicker && cd dist/is-datepicker && npm pack --quiet && cp *.tgz ../../package",
     "build.bootstrap-switch": "ng build is-bootstrap-switch && cd dist/is-bootstrap-switch && npm pack --quiet && cp *.tgz ../../package",
-    "build.password": "ng build is-password && cd dist/is-password && npm pack --quiet && cp *.tgz ../../package",
     "build.modal": "ng build is-modal && cd dist/is-modal && npm pack --quiet && cp *.tgz ../../package",
     "build.grid": "ng build is-grid && cd dist/is-grid && npm pack --quiet && cp *.tgz ../../package",
     "build.table": "ng build is-table && cd dist/is-table && npm pack --quiet && cp *.tgz ../../package",

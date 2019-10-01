@@ -39,10 +39,12 @@ export class DemoCoreUIComponent implements OnInit {
 
   formControl1: FormControl;
   formControl2: FormControl;
+  passwordControl: FormControl;
 
   constructor() {
     this.formControl1 = new FormControl();
     this.formControl2 = new FormControl();
+    this.passwordControl = new FormControl();
 
     let inputRequiredValidator = (control: AbstractControl) => {
       let invalid = FieldErrorService.requiredError();
@@ -69,4 +71,11 @@ export class DemoCoreUIComponent implements OnInit {
   ngOnInit() {
   }
 
+  toggleInvalid(ctrl: FormControl) {
+    if (ctrl.valid) {
+      ctrl.setErrors({invalid: true})
+    } else {
+      ctrl.setErrors(null);
+    }
+  }
 }

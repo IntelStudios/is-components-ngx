@@ -379,41 +379,6 @@
         }
       }
     },
-    "is-password": {
-      "root": "projects/is-password",
-      "sourceRoot": "projects/is-password/src",
-      "projectType": "library",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/is-password/tsconfig.lib.json",
-            "project": "projects/is-password/ng-package.json"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/is-password/src/test.ts",
-            "tsConfig": "projects/is-password/tsconfig.spec.json",
-            "karmaConfig": "projects/is-password/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/is-password/tsconfig.lib.json",
-              "projects/is-password/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "is-select-tree": {
       "root": "projects/is-select-tree",
       "sourceRoot": "projects/is-select-tree/src",

@@ -17,14 +17,15 @@ import {
   IsTabTitleDirective,
 } from './is-tabset/is-tabset.component';
 import { IsSearchComponent } from './is-search/is-search.component';
+import { IsPasswordComponent } from './is-password/is-password.component';
 
 @NgModule({
   imports: [
     CommonModule, RouterModule, TranslateModule, PopoverModule, TooltipModule
   ],
-  declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent,
+  declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
     IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent],
-  exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent,
+  exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
     IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent]
 })
 export class IsCoreUIModule {

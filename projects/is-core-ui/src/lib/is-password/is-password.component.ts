@@ -33,13 +33,13 @@ export class IsPasswordComponent {
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
 
-  public value: string = '';
+  value: string = '';
 
   disabled: boolean;
 
   // the method set in registerOnChange to emit changes back to the form
   private _onChangeCallback = (_: any) => { };
-  private _onTouchedCallback = (_: any) => { };
+  onTouched = () => { };
 
   constructor(private changeDetector: ChangeDetectorRef) {
 
@@ -85,7 +85,7 @@ export class IsPasswordComponent {
   /**
    * Implemented as part of ControlValueAccessor.
    */
-  registerOnTouched(fn: (_: any) => {}): void {
-    this._onTouchedCallback = fn;
+  registerOnTouched(fn: () => {}): void {
+    this.onTouched = fn;
   }
 }

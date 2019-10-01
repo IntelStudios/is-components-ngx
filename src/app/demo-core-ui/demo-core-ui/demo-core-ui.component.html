@@ -25,6 +25,13 @@
 </div>
 <div class="row">
   <div class="col-sm-12">
+    <h3>Type password and click on the eye</h3>
+    <is-password [formControl]="passwordControl" [autocomplete]="'off'" [placeholder]="'This is placeholder...'"></is-password>
+    <button (click)="toggleInvalid(passwordControl)">Toggle Invalid</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
     <h2>Breadcrumb Box</h2>
   </div>
 </div>
