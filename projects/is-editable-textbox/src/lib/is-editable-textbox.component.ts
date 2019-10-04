@@ -1,15 +1,17 @@
-import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, AbstractControl } from '@angular/forms';
+
+const IS_EDITABLE_TEXTBOX_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => IsEditableTextboxComponent),
+  multi: true
+};
 
 @Component({
   selector: 'is-editable-textbox',
   templateUrl: 'is-editable-textbox.component.html',
   styleUrls: ['is-editable-textbox.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => IsEditableTextboxComponent),
-    multi: true,
-  }],
+  providers: [IS_EDITABLE_TEXTBOX_VALUE_ACCESSOR],
 })
 export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor {
   @Input()
@@ -22,7 +24,7 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   edit = false;
 
   @Output()
-  changed: EventEmitter<any> = new EventEmitter<any>();
+  changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public value = '';
 
@@ -32,13 +34,19 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   private _onChangeCallback = (_: any) => { };
   private _onTouchedCallback = (_: any) => { };
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
+  constructor(private changeDetector: ChangeDetectorRef, private elRef: ElementRef) { }
 
   ngOnInit() {
   }
 
   toggleEdit() {
+    const el: HTMLElement = this.elRef.nativeElement;
+    if (this.edit && el.classList.contains('ng-invalid')) {
+      // do not let user escape from editing mode when the input is invalid
+      return;
+    }
     this.edit = !this.edit;
+    this.changed.emit(this.edit);
     this.changeDetector.markForCheck();
   }
 
