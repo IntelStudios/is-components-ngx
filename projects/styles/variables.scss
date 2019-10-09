@@ -1,3 +1,5 @@
+$is-general-text-default-color: var(--is-general-text-default-color, #333);
+
 $is-control-handle-color: var(--is-control-handle-color, #000);
 $is-control-boder-color: var(--is-control-border-color, #000);
 $is-control-boder-focus-color: var(--is-control-border-focus-color, #000);
@@ -17,3 +19,9 @@ $is-search-icon-color: var(--is-search-icon-color, #2B3642);
 
 $is-portlet-border-color: var(--is-portlet-border-color, #ccc);
 $is-portlet-border-radius: var(--is-portlet-border-radius, 4px);
+
+$is-tabset-border-color: var(--is-tabset-border-color, #ccc);
+$is-tabset-item-fg-color: var(--is-tabset-item-fg-color, #ddd);
+$is-tabset-item-hover-border-color: var(--is-tabset-item-hover-border-color, #ccc);
+$is-tabset-item-hover-fg-color: var(--is-tabset-item-hover-fg-color, #ccc);
+$is-tabset-item-active-border-color: var(--is-tabset-item-active-border-color, #333);

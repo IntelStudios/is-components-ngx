@@ -171,29 +171,41 @@
   <div class="col-sm-12">
     <h2>Tabs</h2>
   </div>
+  <div class="col-sm-6">
+    <is-tabset>
+      <is-tab title="Tab 1">
+        <ng-template TabContent>
+          First tab content
+        </ng-template>
+      </is-tab>
+      <is-tab>
+        <ng-template TabTitle>
+          Advanced tab title <i class="fa fa-home"></i>
+        </ng-template>
+        <ng-template TabContent>
+          Second tab content
+        </ng-template>
+      </is-tab>
+      <is-tab>
+        <ng-template TabTitle>
+          Advanced tab title with quite long text <i class="fa fa-home"></i>
+        </ng-template>
+        <ng-template TabContent>
+          Second tab content
+        </ng-template>
+      </is-tab>
+    </is-tabset>
+  </div>
 </div>
-<is-tabset>
-  <is-tab title="Tab 1">
-    <ng-template TabContent>
-      First tab content
-    </ng-template>
-  </is-tab>
-  <is-tab>
-    <ng-template TabTitle>
-      Advanced tab title <i class="fa fa-home"></i>
-    </ng-template>
-    <ng-template TabContent>
-      Second tab content
-    </ng-template>
-  </is-tab>
-</is-tabset>
+
 
 <div class="row">
   <div class="col-sm-12">
-    <h2>Tabs (lazy-loaded</h2>
+    <h2>Tabs (lazy-loaded) + stretched</h2>
   </div>
 </div>
-<is-tabset>
+
+<is-tabset [stretched]="true">
   <is-tab title="Tab 1" load="selected">
     <ng-template TabContent>
       ....
