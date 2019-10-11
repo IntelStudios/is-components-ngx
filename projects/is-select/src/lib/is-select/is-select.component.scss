@@ -42,6 +42,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         flex: 1;
         align-self: center;
         color: $is-control-handle-color;
+        margin-right: 4px;
       }
 
       >.dropdown-caret {
