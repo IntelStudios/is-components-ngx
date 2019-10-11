@@ -5,13 +5,18 @@ $is-control-boder-color: var(--is-control-border-color, #000);
 $is-control-boder-focus-color: var(--is-control-border-focus-color, #000);
 $is-control-boder-hover-color: var(--is-control-border-hover-color, #000);
 $is-control-bg-color: var(--is-control-bg-color, #fff);
-$is-control-fg-color: var(--is-control-fg-color, #fff);
-$is-control-invalid-color: var(--is-control-invalid-color, red);
+$is-control-fg-color: var(--is-control-fg-color, #333);
+$is-control-placeholder-color: var(--is-control-placeholder-color, #333);
+
+$is-control-invalid-fg-color: var(--is-control-invalid-fg-color);
+$is-control-invalid-border-color: var(--is-control-invalid-border-color);
+
 $is-control-selected-item-color: var(--is-control-selected-item-color, grey);
 $is-control-active-item-color: var(--is-control-active-item-bg-color, #428bca);
 $is-control-disabled-bg-color: var(--is-control-disabled-bg-color, #efefef);
 $is-control-disabled-fg-color: var(--is-control-disabled-fg-color, #333);
-$is-checkbox-color: var(--is-checkbox-color, #333);
+
+$is-select-search-bg-color: var(--is-select-search-bg-color, #efefef);
 
 $is-search-bg-color: var(--is-search-bg-color, #EDEEEF);
 $is-search-fg-color: var(--is-search-fg-color, #777E85);

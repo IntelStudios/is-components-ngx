@@ -1,7 +1,7 @@
 @import '../../../../styles/mixins';
 @import '../../../../styles/variables';
 
-$is-color-search-separator: var(--is-select-search-spearator, #efefef);
+
 
 :host {
   display: block;
@@ -11,24 +11,27 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
     width: 100%;
     background-color: $is-control-bg-color;
     margin-top: 0px;
-    border-top: none;
+
     display: block;
     left: initial;
     top: initial;
     position: relative;
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
     &:before, &:after {
       content: none;
     }
-    @include is-input-active;
+    border-color: var(--is-control-border-focus-color);
+    border-top: none;
+    padding: 8px 0px;
 
     >.ui-select-search {
       display: flex;
-      border-bottom: 1px solid $is-color-search-separator;
+      margin: 0px 8px;
+      background-color: $is-select-search-bg-color;
       > input {
-        background-color: $is-control-bg-color;
         color: $is-control-fg-color;
+        background-color: $is-select-search-bg-color;
         border: none;
       }
       > i {
@@ -43,7 +46,8 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
       height: auto;
       max-height: 200px;
       overflow-x: hidden;
-      margin-top: 0;
+      margin-top: 8px;
+      margin-bottom: 0;
       list-style: none;
       padding-left: 0;
       @include short-scroll;
@@ -53,7 +57,7 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
           .ui-select-choices-row {
             &.active {
               a {
-                padding-right: 20px;
+                padding-right: 12px;
               }
             }
           }
@@ -65,7 +69,7 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
           .ui-select-choices-row {
             &.active {
               a {
-                padding-left: 20px;
+                padding-left: 12px;
               }
             }
           }
@@ -78,26 +82,14 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
         > a {
           display: flex;
           align-items: center;
-
-          .pretty {
-            margin-right: 0;
-            .state label:before {
-              border-color: $is-checkbox-color;
-            }
-            input:checked ~ .state.p-success label:after, .p-toggle .state.p-success label:after {
-              background-color: $is-checkbox-color !important;
-            }
-          }
         }
         .divider {
           margin: 4px 8px;
-          border-bottom: 1px solid $is-color-search-separator;
+          border-bottom: 1px solid $is-select-search-bg-color;
         }
       }
     }
   }
-
-
 
   .hidden-input {
     clip: rect(0 0 0 0) !important;
@@ -121,15 +113,17 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
 
 
   .ui-select-choices-row {
+    padding: 0px 8px;
     >a {
       display: block;
-      padding: 4px 16px;
+      padding: 4px 8px;
       clear: both;
       font-weight: 400;
       line-height: 1.42857143;
       color: $is-control-fg-color;
       text-decoration: none;
-      transition: padding 0.15s
+      transition: padding 0.15s;
+      cursor: pointer;
     }
     &.selected {
       > a {

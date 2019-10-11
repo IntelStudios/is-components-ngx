@@ -41,7 +41,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input() allowClear: boolean = false;
   @Input() placeholder: string = 'None';
   @Input() placeholderShow: boolean = true;
-  @Input() searchPlaceholder: string = 'Type to search';
+  @Input() searchPlaceholder: string = 'Search a name or keyword';
   @Input() isSearch: boolean = true;
   @Input() alignItems: 'left' | 'right' = 'left';
 
@@ -190,10 +190,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   additionalValues: number = 0;
 
-  @ContentChild(IsSelectOptionDirective, { read: TemplateRef, static: true })
+  @ContentChild(IsSelectOptionDirective, { read: TemplateRef, static: false })
   templateOption: IsSelectOptionDirective;
 
-  @ContentChild(IsSelectOptionSelectedDirective, { read: TemplateRef, static: true })
+  @ContentChild(IsSelectOptionSelectedDirective, { read: TemplateRef, static: false })
   templateOptionSelected: IsSelectOptionSelectedDirective;
 
   private _multiple: boolean = false;
@@ -446,11 +446,12 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     const rect: DOMRect = this.element.nativeElement.getBoundingClientRect();
     const positionStrategy = this.overlay.position().flexibleConnectedTo(this.element)
       .withPositions([{ originY: 'bottom', originX: 'start', overlayX: 'start', overlayY: 'top' }])
+      .withDefaultOffsetX(-1)
       .withPush(true);
 
     this.optionsOverlayRef = this.overlay.create(
       {
-        width: `${rect.width}px`,
+        width: `${rect.width+2}px`,
         minHeight: '34px',
         positionStrategy: positionStrategy,
         scrollStrategy: this.overlay.scrollStrategies.reposition()

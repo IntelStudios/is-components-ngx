@@ -8,10 +8,11 @@ import { IsSelectOptionsComponent } from './is-select-options/is-select-options.
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-select.directives';
 import { IsSelectComponent } from './is-select/is-select.component';
 import { HighlightPipe } from './select-pipes';
+import { IsCoreUIModule } from 'is-core-ui';
 
 @NgModule({
   imports: [
-    CommonModule, OverlayModule
+    CommonModule, OverlayModule, IsCoreUIModule
   ],
   declarations: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent, IsSelectOptionsComponent],
   exports: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent],

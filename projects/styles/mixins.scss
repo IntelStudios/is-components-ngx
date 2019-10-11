@@ -18,6 +18,9 @@
   padding: 8px;
   font-size: 13px;
 
+  &::placeholder {
+    color: $is-control-placeholder-color;
+  }
   &:hover {
     border-color: $is-control-boder-hover-color;
   }
@@ -30,7 +33,8 @@
 }
 
 @mixin is-input-invalid {
-  border-color: $is-control-invalid-color;
+  border-color: $is-control-invalid-border-color;
+  color: $is-control-invalid-fg-color;
 }
 
 @mixin short-scroll {

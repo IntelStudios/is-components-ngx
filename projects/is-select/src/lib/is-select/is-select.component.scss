@@ -15,6 +15,12 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
     >.ui-select-container {
       >.ui-select-match {
         @include is-input-invalid;
+        >.ui-select-toggle {
+          >.ui-select-match-text {
+            color: $is-control-invalid-fg-color;
+          }
+        }
+
       }
     }
 
@@ -35,15 +41,14 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
       >.btn-remove {
         flex: 1;
         align-self: center;
-        color: $is-control-fg-color;
+        color: $is-control-handle-color;
       }
 
       >.dropdown-caret {
         flex: 1;
-        align-self: baseline;
+        align-self: center;
         margin-left: 4px;
         margin-right: 8px;
-        margin-top: 9px;
         color: $is-control-handle-color;
       }
 
@@ -54,6 +59,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         text-overflow: ellipsis;
         padding: 8px;
         width: 100%;
+
         &.align-left {
           text-align: left !important;
         }
@@ -71,17 +77,21 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         }
 
       }
+
       &.multiple {
         height: auto;
         min-height: 34px;
+
         &.fixed-height {
           height: 34px;
           align-items: flex-start;
           overflow: hidden;
+
           >.ui-select-toggle {
             padding-top: 3px;
           }
-          > .additional-values {
+
+          >.additional-values {
             background-color: $is-color-multi-item-bg;
             padding: 1px 2px;
             flex: 1;
@@ -91,14 +101,17 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
             align-self: center;
           }
         }
+
         >.ui-select-toggle {
           display: flex;
           flex-wrap: wrap;
           padding: 2px;
+
           .ui-select-placeholder {
             padding: 4px;
           }
-          > .ui-select-match-text {
+
+          >.ui-select-match-text {
             margin: 4px;
             background-color: $is-color-multi-item-bg;
             position: relative;
@@ -110,17 +123,18 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
             overflow: hidden;
             color: $is-color-multi-item-fg;
             border-radius: 2px !important;
-            > span {
+
+            >span {
               width: calc(100% - 20px);
             }
+
             .btn-remove {
               position: absolute;
               right: 0;
               top: 0px;
-              padding: 3px;
-              padding-left: 5px;
+              padding: 3px 5px;
               color: $is-color-multi-item-fg;
-              background: linear-gradient(90deg, transparent 0, $is-color-multi-item-bg 5px);
+              background: $is-color-multi-item-bg;
             }
           }
         }
@@ -131,6 +145,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
     &.open {
       >.ui-select-match {
         @include is-input-active;
+        border-bottom-color: $is-select-search-bg-color;
       }
 
     }
@@ -138,6 +153,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
     &.disabled {
       >.ui-select-match {
         @include is-input-disabled;
+
         >.ui-select-toggle {
 
           >.ui-select-match-text {
