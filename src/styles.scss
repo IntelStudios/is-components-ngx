@@ -51,8 +51,18 @@ is-checkbox, is-radio {
   }
 }
 
+button {
+  margin: 5px;
+}
 
+h3 {
+  margin-top:  1rem;
+  font-size: 1.25rem;
+}
 
+.tab-content {
+  padding: 16px;
+}
 
 
 
@@ -189,6 +199,12 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --is-badge-success-color: var(--xe-green-24);
   --is-badge-default-color: var(--xe-dark-24);
   --is-badge-primary-color: #374F65;
+
+  --is-tabset-border-color: var(--xe-dark-08);
+  --is-tabset-item-fg-color: var(--xe-dark-64);
+  --is-tabset-item-hover-fg-color: var(--xe-dark-88);
+  --is-tabset-item-hover-border-color: var(--xe-dark-32);
+  --is-tabset-item-active-border-color: var(--xe-dark-100);
 
 }
 

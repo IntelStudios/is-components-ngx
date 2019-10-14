@@ -4,112 +4,148 @@
     <div [innerHTML]="usage"></div>
   </div>
 </div>
-<div class="row">
-  <div class="col-sm-6">
-    <h3>Select a single city align right</h3>
-    <is-select #select1 [alignment]="'right'" class="select-with-some-class" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true" [items]="items" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected">
-    </is-select>
-    <button class="btn btn-primary" (click)="selectLondon()">Select London</button>
-    <button class="btn btn-primary" (click)="selectUnknown()">Select Unknown</button>
-    <button class="btn btn-primary" (click)="toggleDisable()">Disable</button>
-    <button class="btn btn-primary" (click)="toggleInvalid(select1Control)">Invalid</button>
-  </div>
-  <div class="col-sm-6">
-    <h3>Select multiple cities</h3>
-    <is-select [multiple]="true" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true" [items]="items" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="0 cities selected">
-    </is-select>
-  </div>
-  <div class="col-sm-6">
-    <h3>Select multiple cities (fixed height)</h3>
-    <is-select [multiple]="true" [resize]="false" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true" [items]="items" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" placeholder="0 cities selected">
-    </is-select>
-  </div>
-  <div class="col-sm-6">
-    <h3>Select a single city</h3>
-    <is-select [allowClear]="true" [formControl]="select2Control" [items]="colors" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No color selected">
-      <ng-template is-select-option let-item>
-        <div [style.background]="item.source.background">{{item.Value}} (option)</div>
-      </ng-template>
-      <ng-template is-select-selection let-item>
-        <div [style.background]="item.source.background">{{item.Value}} (selected)</div>
-      </ng-template>
-    </is-select>
-    <button class="btn btn-primary" (click)="selectGreen()">Select green</button>
-    <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
-  </div>
-  <div class="col-sm-6">
-    <h3>Select a single color (lazy load search)</h3>
-    <is-select [allowClear]="true" [minLoadChars]="2" [items]="colors$ | async" (loadOptions)="loadMoreAsync()" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No color selected">
-      <ng-template is-select-option let-item>
-        <div [style.background]="item.source.background">{{item.Value}} (option)</div>
-      </ng-template>
-      <ng-template is-select-selection let-item>
-        <div [style.background]="item.source.background">{{item.Value}} (selected)</div>
-      </ng-template>
-    </is-select>
-  </div>
-  <div class="col-sm-6">
-    <h3>Select with groups including disabled items</h3>
-    <is-select #select3 [formControl]="select3Control" [allowClear]="true" [items]="itemsGrouped" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No item selected"></is-select>
-    <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
-  </div>
-
-</div>
-<div class="row">
-  <div class="col-sm-6">
-    <h3>Select Color</h3>
-    <is-select-color [allowClear]="true"></is-select-color>
-  </div>
-  <div class="col-sm-6">
-    <h3>Select Color (no lables)</h3>
-    <is-select-color [allowClear]="true" [showLabel]="false" [isSearch]="false"></is-select-color>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-6">
-    <h3>Select model (colors)</h3>
-    <is-select [allowClear]="true" [items]="colors" [formControl]="select4Control"  [modelConfig]="{idProp: 'Data', textProp: 'Name', 'baseModel':{'baseModelProp':'baseModelPropValue'}}"></is-select>
-    <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
-    <button class="btn btn-primary" (click)="selectGreenModel()">Select green (model)</button>
-    <p>Value: {{select4Control.valueChanges|async|json}}</p>
-  </div>
-  <div class="col-sm-6">
-      <h3>Select multiple model (colors)</h3>
-      <is-select [allowClear]="true" [multiple]="true" [items]="colors" [formControl]="select4ControlMulti" [modelConfig]="{idProp: 'Data', textProp: 'Name', 'baseModel':{'baseModelProp':'baseModelPropValue'}}"></is-select>
-      <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
-      <button class="btn btn-primary" (click)="selectGreenModelMulti()">Select green (model)</button>
-      <p>Value: {{select4Control.valueChanges|async|json}}</p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-6">
-        <h3>Select model (lazy load)</h3>
-        <is-select [allowClear]="true" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)" [items]="moreOptions$ | async" [formControl]="select6Control"  [modelConfig]="{idProp: 'ID', textProp: 'Value'}"></is-select>
-        <button class="btn btn-primary" (click)="selectFirstModel()">Select unknown (model)</button>
-        <p>Value: {{select6Control.valueChanges|async|json}}</p>
+<is-tabset>
+  <is-tab title="Single Select">
+    <ng-template TabContent>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Select a single city align right</h3>
+          <is-select #select1 [alignment]="'right'" class="select-with-some-class" [formControl]="select1Control"
+            [placeholderShow]="false" [allowClear]="true" [items]="items" (changed)="changed($event)"
+            placeholder="No city selected">
+          </is-select>
+          <button class="btn btn-primary" (click)="selectLondon()">Select London</button>
+          <button class="btn btn-primary" (click)="selectUnknown()">Select Unknown</button>
+          <button class="btn btn-primary" (click)="toggleDisable()">Disable</button>
+          <button class="btn btn-primary" (click)="toggleInvalid(select1Control)">Invalid</button>
+        </div>
+        <div class="col-sm-6">
+          <h3>Select color - load items</h3>
+          <is-select [allowClear]="true" [formControl]="select2Control" [items]="colors" (changed)="changed($event)"
+            placeholder="No color selected">
+            <ng-template is-select-option let-item>
+              <div [style.background]="item.source.background">{{item.Value}} (option)</div>
+            </ng-template>
+            <ng-template is-select-selection let-item>
+              <div [style.background]="item.source.background">{{item.Value}} (selected)</div>
+            </ng-template>
+          </is-select>
+          <button class="btn btn-primary" (click)="selectGreen()">Select green</button>
+          <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
+        </div>
+        <div class="col-sm-6">
+          <h3>Select a single color (lazy load search)</h3>
+          <is-select [allowClear]="true" [minLoadChars]="2" [items]="colors$ | async" (loadOptions)="loadMoreAsync()"
+            (changed)="changed($event)" placeholder="No color selected">
+            <ng-template is-select-option let-item>
+              <div [style.background]="item.source.background">{{item.Value}} (option)</div>
+            </ng-template>
+            <ng-template is-select-selection let-item>
+              <div [style.background]="item.source.background">{{item.Value}} (selected)</div>
+            </ng-template>
+          </is-select>
+        </div>
+        <div class="col-sm-6">
+          <h3>Select model (lazy load)</h3>
+          <is-select [allowClear]="true" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)"
+            [items]="moreOptions$ | async" [formControl]="select6Control"
+            [modelConfig]="{idProp: 'ID', textProp: 'Value'}">
+          </is-select>
+          <button class="btn btn-primary" (click)="selectFirstModel()">Select unknown (model)</button>
+          <p>Value: {{select6Control.valueChanges|async|json}}</p>
+        </div>
       </div>
-      <div class="col-sm-6">
+
+    </ng-template>
+  </is-tab>
+
+  <is-tab title="Multi Select">
+    <ng-template TabContent>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Select multiple cities</h3>
+          <is-select [multiple]="true" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true"
+            [items]="items" (changed)="changed($event)" placeholder="0 cities selected">
+          </is-select>
+        </div>
+        <div class="col-sm-6">
+          <h3>Select multiple cities (fixed height)</h3>
+          <is-select [multiple]="true" [resize]="false" [formControl]="select1Control" [placeholderShow]="false"
+            [allowClear]="true" [items]="items" (changed)="changed($event)" placeholder="0 cities selected">
+          </is-select>
+        </div>
+        <div class="col-sm-6">
           <h3>Select multiple model (lazy load)</h3>
-          <is-select [allowClear]="true" [multiple]="true" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)" [items]="moreOptions$ | async" [formControl]="select6ControlMulti"  [modelConfig]="{idProp: 'ID', textProp: 'Value'}"></is-select>
+          <is-select [allowClear]="true" [multiple]="true" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)"
+            [items]="moreOptions$ | async" [formControl]="select6ControlMulti"
+            [modelConfig]="{idProp: 'ID', textProp: 'Value'}"></is-select>
           <button class="btn btn-primary" (click)="selectFirstModelMulti()">Select unknown (model)</button>
           <p>Value: {{select6Control.valueChanges|async|json}}</p>
         </div>
-  </div>
+      </div>
+    </ng-template>
+  </is-tab>
 
 
-<div class="row">
-  <div class="col-sm-6">
-    <h3>Select (with badges)</h3>
-    <is-select-badge [formControl]="select5Control" [allowClear]="true" [items]="itemsBadges"> </is-select-badge>
-  </div>
-  <div class="col-sm-6">
-      <h3>Select multiple (with badges)</h3>
-      <is-select-badge [formControl]="select5Control" [multiple]="true"  [allowClear]="true" [items]="itemsBadges"> </is-select-badge>
-    </div>
-</div>
-<div class="row">
-  <div class="col-sm-6" style="height: 250px">
-  </div>
-</div>
+  <is-tab title="Item Groups">
+    <ng-template TabContent>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Groups including disabled items</h3>
+          <is-select #select3 [formControl]="select3Control" [allowClear]="true" [items]="itemsGrouped"
+            (changed)="changed($event)" placeholder="No item selected"></is-select>
+          <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
+        </div>
+      </div>
+    </ng-template>
+  </is-tab>
+
+  <is-tab title="Select Color component">
+    <ng-template TabContent>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Select Color</h3>
+          <is-select-color [allowClear]="true"></is-select-color>
+        </div>
+        <div class="col-sm-6">
+          <h3>Select Color (no lables)</h3>
+          <is-select-color [allowClear]="true" [showLabel]="false" [isSearch]="false"></is-select-color>
+        </div>
+        <div class="col-sm-6">
+          <h3>Select model (colors)</h3>
+          <is-select [allowClear]="true" [items]="colors" [formControl]="select4Control"
+            [modelConfig]="{idProp: 'Data', textProp: 'Name', 'baseModel':{'baseModelProp':'baseModelPropValue'}}">
+          </is-select>
+          <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
+          <button class="btn btn-primary" (click)="selectGreenModel()">Select green (model)</button>
+          <p>Value: {{select4Control.valueChanges|async|json}}</p>
+        </div>
+        <div class="col-sm-6">
+          <h3>Select multiple model (colors)</h3>
+          <is-select [allowClear]="true" [multiple]="true" [items]="colors" [formControl]="select4ControlMulti"
+            [modelConfig]="{idProp: 'Data', textProp: 'Name', 'baseModel':{'baseModelProp':'baseModelPropValue'}}">
+          </is-select>
+          <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
+          <button class="btn btn-primary" (click)="selectGreenModelMulti()">Select green (model)</button>
+          <p>Value: {{select4Control.valueChanges|async|json}}</p>
+        </div>
+      </div>
+    </ng-template>
+  </is-tab>
+
+  <is-tab title="Select Badge Component">
+    <ng-template TabContent>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Select (with badges)</h3>
+          <is-select-badge [formControl]="select5Control" [allowClear]="true" [items]="itemsBadges"> </is-select-badge>
+        </div>
+        <div class="col-sm-6">
+          <h3>Select multiple (with badges)</h3>
+          <is-select-badge [formControl]="select5Control" [multiple]="true" [allowClear]="true" [items]="itemsBadges">
+          </is-select-badge>
+        </div>
+      </div>
+    </ng-template>
+  </is-tab>
+</is-tabset>

@@ -142,7 +142,12 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
     this.changeDetector.markForCheck();
   }
 
-  valueSelected($event: any) {
+  onValueChanged($event: any) {
+    if ($event === null) {
+      this._value = null;
+      this.valueChange.next(this.value);
+      return;
+    }
     this._value = $event.ID;
     if ($event === []) {
       this.valueChange.next(null);
@@ -154,14 +159,6 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
       }
     }
     this.changeDetector.markForCheck();
-  }
-
-  removed() {
-    if (this.select) {
-      this._value = null;
-      this.valueChange.next(this.value);
-      setTimeout(() => this.select.hideOptions());
-    }
   }
 
   private setValue() {

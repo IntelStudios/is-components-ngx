@@ -155,8 +155,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input()
   alignment: 'left' | 'center' | 'right' = 'left';
 
-  @Output() selected: EventEmitter<any> = new EventEmitter();
-  @Output() removed: EventEmitter<any> = new EventEmitter();
   @Output() opened: EventEmitter<any> = new EventEmitter();
   @Output() changed: EventEmitter<any> = new EventEmitter();
   @Output() loadOptions: EventEmitter<string> = new EventEmitter<string>();
@@ -274,7 +272,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this._active = null;
       this._value = null;
       this.changed.emit(null);
-      this.removed.emit(current);
       if (this.optionsInstanceRef) {
         this.optionsInstanceRef.instance.setValue(null);
       }

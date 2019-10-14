@@ -36,7 +36,7 @@
   <!-- options with groups -->
   <ng-template #groupOptions>
     <ul *ngIf="visibleOptions && visibleOptions.length > 0" class="ui-select-choices" role="menu">
-      <li *ngFor="let c of options" role="menuitem" [class]="alignment">
+      <li *ngFor="let c of visibleOptions" role="menuitem" [class]="alignment">
         <div class="dropdown-header">{{c.Value}}</div>
         <div *ngFor="let o of c.children" class="ui-select-choices-row" [class.active]="isActive(o)"
           [class.selected]="o.ID == singleValue?.ID" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)"

@@ -5,12 +5,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { IsSelectModule } from 'projects/is-select/src/public_api';
 
 import { DemoSelectComponent } from './demo-select/demo-select.component';
+import { IsCoreUIModule } from 'projects/is-core-ui/src/public_api';
 
 
 @NgModule({
   declarations: [DemoSelectComponent],
   imports: [
-    CommonModule, IsSelectModule, ReactiveFormsModule
+    CommonModule, IsSelectModule, ReactiveFormsModule, IsCoreUIModule
   ]
 })
 export class DemoSelectModule { }

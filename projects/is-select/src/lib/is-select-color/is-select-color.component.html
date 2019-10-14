@@ -1,6 +1,6 @@
 <div [innerHtml]="styleContent()"></div>
 <is-select #select [placeholder]="placeholder" [allowClear]="allowClear" [items]="items"
-  (selected)="valueSelected($event)" (removed)="removed()" [class.disabled]="disabled" [disabled]="disabled"
+  (changed)="onValueChanged($event)" [class.disabled]="disabled" [disabled]="disabled"
   [isSearch]="isSearch">
   <ng-template is-select-option let-item *ngIf="showLabel">
     <span class="preview option is-bg-{{item.ID}}"></span> {{item.source.Value}}
