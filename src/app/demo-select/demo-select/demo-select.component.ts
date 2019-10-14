@@ -57,7 +57,7 @@ export class DemoSelectComponent implements OnInit {
   ];
 
   itemsGrouped: any[] = [];
-
+  itemsGrouped$: Observable<any[]>;
   private value: any = {};
   private _disabledV: string = '0';
   private disabled: boolean = false;
@@ -99,6 +99,11 @@ export class DemoSelectComponent implements OnInit {
     } else {
       ctrl.setErrors({invalid: true});
     }
+  }
+
+  loadItemsGrouped() {
+    this.itemsGrouped$ = of(this.itemsGrouped);
+    this.changeDetector.markForCheck();
   }
 
   toggleDisable() {

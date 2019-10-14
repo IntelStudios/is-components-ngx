@@ -151,7 +151,7 @@ export class IsSelectColorComponent implements AfterViewInit, OnDestroy, Control
       this.valueChange.next(this.value);
       return;
     }
-    this._value = $event.ID;
+    this._value = $event;
     if (this.multiple) {
       this.valueChange.next($event.map((i: any) => i.ID));
     } else if ($event === []) {

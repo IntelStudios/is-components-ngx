@@ -96,24 +96,31 @@
             (changed)="changed($event)" placeholder="No item selected"></is-select>
           <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
         </div>
+        <div class="col-sm-6">
+          <h3>Delayed load</h3>
+          <is-select #select3 [formControl]="select3Control" [allowClear]="true" [items]="itemsGrouped$ | async"
+            (changed)="changed($event)" placeholder="No item selected"></is-select>
+          <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
+          <button class="btn btn-primary" (click)="loadItemsGrouped()">Load Items</button>
+        </div>
       </div>
     </ng-template>
   </is-tab>
 
-  <is-tab title="Select Color component">
+  <is-tab title="Select Color">
     <ng-template TabContent>
       <div class="row">
         <div class="col-sm-6">
           <h3>Select Color</h3>
-          <is-select-color [allowClear]="true"></is-select-color>
+          <is-select-color [allowClear]="true" (valueChange)="changed($event)"></is-select-color>
         </div>
         <div class="col-sm-6">
           <h3>Select Color (no lables)</h3>
-          <is-select-color [allowClear]="true" [showLabel]="false" [isSearch]="false"></is-select-color>
+          <is-select-color [allowClear]="true" [showLabel]="false" [isSearch]="false" (valueChange)="changed($event)"></is-select-color>
         </div>
         <div class="col-sm-6">
           <h3>Select model (colors)</h3>
-          <is-select [allowClear]="true" [items]="colors" [formControl]="select4Control"
+          <is-select [allowClear]="true" [items]="colors" [formControl]="select4Control" (changed)="changed($event)"
             [modelConfig]="{idProp: 'Data', textProp: 'Name', 'baseModel':{'baseModelProp':'baseModelPropValue'}}">
           </is-select>
           <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
@@ -122,7 +129,7 @@
         </div>
         <div class="col-sm-6">
           <h3>Select multiple model (colors)</h3>
-          <is-select [allowClear]="true" [multiple]="true" [items]="colors" [formControl]="select4ControlMulti"
+          <is-select [allowClear]="true" [multiple]="true" [items]="colors" [formControl]="select4ControlMulti"  (valueChange)="changed($event)"
             [modelConfig]="{idProp: 'Data', textProp: 'Name', 'baseModel':{'baseModelProp':'baseModelPropValue'}}">
           </is-select>
           <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
@@ -133,16 +140,16 @@
     </ng-template>
   </is-tab>
 
-  <is-tab title="Select Badge Component">
+  <is-tab title="Select Badge">
     <ng-template TabContent>
       <div class="row">
         <div class="col-sm-6">
           <h3>Select (with badges)</h3>
-          <is-select-badge [formControl]="select5Control" [allowClear]="true" [items]="itemsBadges"> </is-select-badge>
+          <is-select-badge [formControl]="select5Control" [allowClear]="true" [items]="itemsBadges" (valueChange)="changed($event)"> </is-select-badge>
         </div>
         <div class="col-sm-6">
           <h3>Select multiple (with badges)</h3>
-          <is-select-badge [formControl]="select5Control" [multiple]="true" [allowClear]="true" [items]="itemsBadges">
+          <is-select-badge [formControl]="select5Control" [multiple]="true" [allowClear]="true" [items]="itemsBadges" (valueChange)="changed($event)">
           </is-select-badge>
         </div>
       </div>
