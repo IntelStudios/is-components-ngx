@@ -1,7 +1,7 @@
 <!--suppress HtmlFormInputWithoutLabel, AngularUndefinedTag, AngularUndefinedBinding -->
 <input [formControl]="cronExpressionControl" class="form-control is-input cron-expression" type="text">
 
-<is-tabset (click)="onTouched()" class="tabbable-custom">
+<is-tabset (click)="onTouched()">
   <is-tab title="Seconds">
     <ng-template TabContent>
       <is-select [formControl]="formControl.seconds.type" [items]="defaultSelectTypeValues"

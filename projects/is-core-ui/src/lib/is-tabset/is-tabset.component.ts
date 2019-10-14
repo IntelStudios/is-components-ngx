@@ -111,8 +111,8 @@ export interface TabChangeEvent {
       </li>
     </ul>
 
-    <div class="scroll-btn left"><i class="fas fa-chevron-circle-left" (click)="scrollTabRight()"></i></div>
-    <div class="scroll-btn right"><i class="fas fa-chevron-circle-right" (click)="scrollTabLeft()"></i></div>
+    <div class="scroll-btn left"><i class="fas fa-chevron-left" (click)="scrollTabRight()"></i></div>
+    <div class="scroll-btn right"><i class="fas fa-chevron-right" (click)="scrollTabLeft()"></i></div>
 
     <div class="tab-content" *ngIf="tabs.length > 0">
       <ng-template ngFor let-tab [ngForOf]="tabs">

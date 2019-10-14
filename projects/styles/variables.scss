@@ -26,7 +26,8 @@ $is-portlet-border-color: var(--is-portlet-border-color, #ccc);
 $is-portlet-border-radius: var(--is-portlet-border-radius, 4px);
 
 $is-tabset-border-color: var(--is-tabset-border-color, #ccc);
-$is-tabset-item-fg-color: var(--is-tabset-item-fg-color, #ddd);
+$is-tabset-nav-bg-color: var(--is-tabset-nav-bg-color, transparent);
+$is-tabset-item-fg-color: var(--is-tabset-item-fg-color, rgb(2, 2, 2));
 $is-tabset-item-hover-border-color: var(--is-tabset-item-hover-border-color, #ccc);
 $is-tabset-item-hover-fg-color: var(--is-tabset-item-hover-fg-color, #ccc);
 $is-tabset-item-active-border-color: var(--is-tabset-item-active-border-color, #333);
