@@ -11,3 +11,4 @@ export * from './lib/is-field-error/is-field-error.service';
 export * from './lib/is-field-error/is-field-error.model';
 export * from './lib/is-checkbox/is-checkbox.interfaces';
 export * from './lib/is-checkbox/is-checkbox.component';
+export * from './lib/is-search/is-search.component';

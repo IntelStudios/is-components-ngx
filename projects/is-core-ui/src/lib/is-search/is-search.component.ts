@@ -1,7 +1,9 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
+  ElementRef,
   forwardRef,
   Input,
   Output,
@@ -34,13 +36,15 @@ export class IsSearchComponent {
   private _onChangeCallback = (_: any) => { };
   private _onTouchedCallback = (_: any) => { };
 
-  constructor() {
+  constructor(public el: ElementRef, private changeDetector: ChangeDetectorRef) {
 
   }
 
   // change events from the input
   onChange(event: any) {
     if (event) {
+      this.value = event.target.value;
+      this.changed.next(event.target.value);
       this._onChangeCallback(event.target.value);
     }
   }
@@ -49,11 +53,8 @@ export class IsSearchComponent {
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: string): void {
-    if (!value) {
-      return;
-    }
-
     this.value = value;
+    this.changeDetector.markForCheck();
   }
 
   /**

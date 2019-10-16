@@ -267,16 +267,16 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
     }
 
     if (this.elUL.scrollLeft === 0) {
-      this.renderer.setStyle(this.elBtnLeft, 'display', 'none');
-    } else {
       this.renderer.removeStyle(this.elBtnLeft, 'display');
+    } else {
+      this.renderer.setStyle(this.elBtnLeft, 'display', 'flex');
       this.renderer.setStyle(this.elBtnLeft, 'height', `${this.elUL.clientHeight}px`);
     }
 
     if (this.elUL.scrollLeft === this.elUL.scrollWidth - this.elUL.clientWidth) {
-      this.renderer.setStyle(this.elBtnRight, 'display', 'none');
-    } else {
       this.renderer.removeStyle(this.elBtnRight, 'display');
+    } else {
+      this.renderer.setStyle(this.elBtnRight, 'display', 'flex');
       this.renderer.setStyle(this.elBtnRight, 'height', `${this.elUL.clientHeight}px`);
     }
   }
