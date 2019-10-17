@@ -1,5 +1,5 @@
-<div class="datepicker-input form-control" (click)="openDatepicker()"  [class.open]="isOpen" [class.disabled]="disabled">
-  <input type="text" class="datepicker-value align-{{alignment}}" [(ngModel)]="datepickerModel" [placeholder]="placeholder" bsDatepicker #dp="bsDatepicker" [bsConfig]="{ adaptivePosition: false, customTodayClass: 'today', containerClass: 'is-datepicker', dateInputFormat: dateFormat }" [disabled]="disabled" (ngModelChange)="onChange()" (onShown)="onShown($event)">
-  <i *ngIf="allowClear && !disabled && datepickerModel" class="fa fa-times btn-remove" (click)="onRemove($event)"></i>
-  <span class="datepicker-icon" [class.disabled]="disabled"><i class="fa fa-calendar fa-fw"></i></span>
+<div class="datepicker-input form-control" (click)="openDatepicker()" [class.open]="isOpen" [class.disabled]="disabled">
+  <input type="text" class="datepicker-value align-{{alignment}}" [(ngModel)]="datepickerModel" [placeholder]="placeholder" bsDatepicker #dp="bsDatepicker" [bsConfig]="{ adaptivePosition: false, customTodayClass: 'today', containerClass: 'is-datepicker', dateInputFormat: dateFormat }" [disabled]="disabled" (ngModelChange)="onChange()" (onShown)="onShown($event)" (onHidden)="onHidden($event)">
+  <i *ngIf="allowClear && !disabled && datepickerModel" class="fas fa-times btn-remove" (click)="onRemove($event)"></i>
+  <span class="datepicker-icon" [class.disabled]="disabled"><i class="fas fa-calendar fa-fw"></i></span>
 </div>

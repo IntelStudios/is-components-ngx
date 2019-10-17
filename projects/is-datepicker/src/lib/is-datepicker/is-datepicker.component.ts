@@ -117,6 +117,9 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
     }
   }
 
+  onHidden($event) {
+  }
+
   onRemove($event: MouseEvent) {
     $event.preventDefault();
     $event.stopPropagation();
@@ -214,7 +217,6 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
     if (wouldOverflowLeft) {
       this.renderer.setStyle(dp, 'left', `0px`);
     } else {
-      console.log(dpDim.width,inputDim.width, inputDim.left);
       let addConst: number = 15;
       if (this.allowClear) {
         addConst += 9;
