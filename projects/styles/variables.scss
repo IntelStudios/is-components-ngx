@@ -1,4 +1,7 @@
 $is-general-text-default-color: var(--is-general-text-default-color, #333);
+$is-general-border-radius: var(--is-general-border-radius, 4px);
+$is-general-padding: var(--is-general-padding, 16px);
+$is-general-padding-small: var(--is-general-padding-small, 8px);
 
 $is-control-handle-color: var(--is-control-handle-color, #000);
 $is-control-boder-color: var(--is-control-border-color, #000);
@@ -31,3 +34,18 @@ $is-tabset-item-fg-color: var(--is-tabset-item-fg-color, rgb(2, 2, 2));
 $is-tabset-item-hover-border-color: var(--is-tabset-item-hover-border-color, #ccc);
 $is-tabset-item-hover-fg-color: var(--is-tabset-item-hover-fg-color, #ccc);
 $is-tabset-item-active-border-color: var(--is-tabset-item-active-border-color, #333);
+
+$is-datepicker-fg-color: var(--is-datepicker-fg-color, #000);
+$is-datepicker-bg-color: var(--is-datepicker-bg-color, #fff);
+$is-datepicker-hover-bg-color: var(--is-datepicker-hover-bg-color, #ccc);
+$is-datepicker-border-color: var(--is-datepicker-border-color, #ccc);
+$is-datepicker-border-radius: var(--is-datepicker-border-radius, 4px);
+$is-datepicker-day-fg-color: var(--is-datepicker-day-fg-color, #333);
+$is-datepicker-day-active-fg-color: var(--is-datepicker-day-active-fg-color, #fff);
+$is-datepicker-day-active-bg-color: var(--is-datepicker-day-active-bg-color, #000);
+$is-datepicker-day-today-fg-color: var(--is-datepicker-day-today-fg-color, #333);
+$is-datepicker-day-outside-fg-color: var(--is-datepicker-day-outside-fg-color, #ccc);
+
+$is-timepicker-fg-color: var(--is-timepicker-fg-color, #333);
+$is-timepicker-hover-fg-color: var(--is-timepicker-hover-fg-color, #000);
+$is-timepicker-bg-color: var(--is-timepicker-bg-color, #ccc);

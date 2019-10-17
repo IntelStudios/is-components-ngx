@@ -1,7 +1,6 @@
 @import '../../../../styles/mixins';
 @import '../../../../styles/variables';
 
-
 is-datepicker {
   &.ng-invalid {
     .datepicker-input {
@@ -9,15 +8,14 @@ is-datepicker {
     }
   }
 
-
   .datepicker-input {
     border-width: 1px;
     border-style: solid;
     @include is-input;
     display: flex;
+    align-items: center;
     position: relative;
     cursor: pointer;
-    padding-bottom: 0px;
 
     &.open {
       @include is-input-active;
@@ -31,10 +29,10 @@ is-datepicker {
     > input.datepicker-value {
       color: $is-control-fg-color;
       border:0;
-      width: 100%;
+      flex: 1;
       outline: 0;
-      padding-bottom: 8px;
       background: transparent;
+
       &.align-left {
         text-align: left !important;
       }
@@ -46,12 +44,14 @@ is-datepicker {
       }
     }
     > .btn-remove {
-      flex: 1;
+      margin-left: #{$is-general-padding-small};
       color: $is-control-handle-color;
     }
   }
 
   .datepicker-icon {
+    margin-left: #{$is-general-padding-small};
+
     >i {
       color: $is-control-handle-color;
     }
@@ -68,11 +68,71 @@ is-datepicker {
   border-width: 1px;
   border-style: solid;
   border-top: 0;
+  border-radius: $is-general-border-radius;
   @include is-input-active;
-  .bs-datepicker-head {
-    background: $is-control-boder-focus-color;
-  }
+
   > .bs-datepicker-container {
     padding: 0;
+
+    .bs-datepicker-head {
+      background-color: $is-datepicker-bg-color;
+
+      bs-datepicker-navigation-view {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+      }
+
+      button {
+        color: $is-datepicker-fg-color;
+
+        &:hover {
+          background-color: $is-datepicker-hover-bg-color;
+          border-radius: $is-general-border-radius;
+        }
+
+        &.next span, &.previous span {
+          line-height: 22px;
+        }
+      }
+    }
+    .bs-datepicker-body {
+      border: 1px solid $is-datepicker-border-color;
+
+      table.days {
+        > thead > tr > th {
+          font-size: 12px;
+          font-weight: bold;
+          color: $is-datepicker-fg-color;
+        }
+
+        > tbody > tr > td {
+          > span {
+            color: $is-datepicker-day-fg-color;
+
+            &:hover {
+              background-color: $is-datepicker-hover-bg-color;
+              border-radius: $is-general-border-radius;
+            }
+
+            &.is-other-month {
+              color: $is-datepicker-day-outside-fg-color;
+            }
+
+            &.today {
+              font-weight: bolder;
+              color: $is-datepicker-day-today-fg-color;
+            }
+
+            &.selected {
+              font-weight: bold;
+              color: $is-datepicker-day-active-fg-color;
+              background-color: $is-datepicker-day-active-bg-color;
+              border-radius: $is-general-border-radius;
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -201,7 +201,7 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
     // this code is highly based on experiments, calculations does not have anything common with math or geometry
     // as a side effect there is (either on left or righ) a space, which does not work as close trigger on outside click
 
-    const input = this.el.nativeElement.querySelector('input');
+    const input = this.el.nativeElement.querySelector('.datepicker-input');
     const dp = document.querySelector('bs-datepicker-container > .bs-datepicker');
     //const igb = this.el.nativeElement.querySelector('.input-group-btn');
     const inputDim: DOMRect = input.getBoundingClientRect();
@@ -210,11 +210,16 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
     const elDim: DOMRect = this.el.nativeElement.getBoundingClientRect();
     const wouldOverflowLeft = dpDim.width - inputDim.width > inputDim.left;
     this.renderer.setStyle(dp, 'position', 'absolute');
-    this.renderer.setStyle(dp, 'top', '2px');
+    this.renderer.setStyle(dp, 'top', '8px');
     if (wouldOverflowLeft) {
       this.renderer.setStyle(dp, 'left', `0px`);
     } else {
-      this.renderer.setStyle(dp, 'right', `-${26 + (inputDim.width / 2)}px`);
+      console.log(dpDim.width,inputDim.width, inputDim.left);
+      let addConst: number = 15;
+      if (this.allowClear) {
+        addConst += 9;
+      }
+      this.renderer.setStyle(dp, 'right', `-${addConst + (inputDim.width / 2)}px`);
     }
   }
 

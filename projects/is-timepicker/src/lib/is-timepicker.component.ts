@@ -5,16 +5,17 @@ import {
   EventEmitter,
   forwardRef,
   Input,
-  OnInit,
   Output,
-  ViewContainerRef,
-  ViewEncapsulation,
   Renderer2,
-  OnDestroy,
+  ComponentRef,
+  ElementRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { Subscription } from 'rxjs';
+import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
 
 const moment = m;
 
@@ -31,10 +32,9 @@ export const IS_TIMEPICKER_VALUE_ACCESSOR: any = {
   templateUrl: './is-timepicker.component.html',
   styleUrls: ['./is-timepicker.component.scss'],
   providers: [IS_TIMEPICKER_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IsTimepickerComponent implements OnInit, OnDestroy {
+export class IsTimepickerComponent {
 
   @Input() allowClear: boolean = false;
   @Input('placeholder') placeholder: string = '';
@@ -48,30 +48,31 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   @Input()
   alignment: 'left' | 'center' | 'right' = 'left';
 
+  get pickerOpened(): boolean {
+    return !!this.pickerOverlayRef;
+  }
+
+  private pickerOverlayRef: OverlayRef;
+  private pickerInstanceRef: ComponentRef<IsTimepickerPickerComponent>;
+
   @Output() changed: EventEmitter<any> = new EventEmitter<any>();
 
-  public isOpened: boolean;
   public timeValue: Date;
   public viewValue: string = '';
 
   disabled: boolean;
+  active: boolean;
 
-  private el: any;
   private onTouched: Function;
   private _changeSubscription: Subscription = null;
   private _clickedOutsideListener = null;
 
-  constructor(public viewContainer: ViewContainerRef, private renderer: Renderer2, private changeDetector: ChangeDetectorRef) {
-    this.viewContainer = viewContainer;
-    this.el = viewContainer.element.nativeElement;
-  }
-
-  ngOnInit() {
-    this.isOpened = false;
-  }
-
-  ngOnDestroy() {
-    this.unregisterOutsideClick();
+  constructor(
+    private element: ElementRef,
+    private renderer: Renderer2,
+    private overlay: Overlay,
+    private changeDetector: ChangeDetectorRef)
+  {
   }
 
   /**
@@ -108,33 +109,72 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
     this.onTouched = fn;
   }
 
-  closeTimepicker() {
-    this.setValue(this.timeValue);
-    this.isOpened = false;
-    this.unregisterOutsideClick();
-    this.changeDetector.detectChanges();
-  }
+  hidePicker() {
+    if (this.pickerInstanceRef) {
+      this.pickerInstanceRef.destroy();
+      this.pickerOverlayRef.detach();
+      this.pickerOverlayRef.dispose();
+      this.pickerOverlayRef = undefined;
+      this.pickerInstanceRef = undefined;
 
-  toggleTimepicker() {
-    if (!this.disabled) {
-      this.isOpened = !this.isOpened;
-      if (!this.isOpened) {
-        this.setValue(this.timeValue);
-        this.unregisterOutsideClick();
-      }
-      else {
-        this.registerOutsideClick();
-        if (!this.timeValue) {
-          this.setValue(new Date());
-        }
+      if (this._clickedOutsideListener) {
+        this._clickedOutsideListener();
+        this._clickedOutsideListener = null;
       }
 
-      this.changeDetector.detectChanges();
+      this.changeDetector.markForCheck();
     }
   }
 
-  onChange($event: any) {
-    this.setValue(this.timeValue);
+  onPickerShown() {
+    if (this.disabled) {
+      return;
+    }
+
+    if (this.pickerOpened) {
+      this.hidePicker();
+
+      return;
+    }
+
+    let positions: any = [{ originX: 'end', originY: 'bottom',  overlayX: 'end', overlayY: 'top' }];
+
+    const positionStrategy = this.overlay.position().flexibleConnectedTo(this.element)
+      .withPositions(positions)
+      .withPush(true);
+
+    this.pickerOverlayRef = this.overlay.create(
+      {
+        minWidth: '180px',
+        minHeight: '84px',
+        positionStrategy: positionStrategy,
+        scrollStrategy: this.overlay.scrollStrategies.reposition()
+      }
+    );
+    this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsTimepickerPickerComponent));
+
+    this.pickerInstanceRef.instance.control = {
+      timeValue: this.timeValue,
+      onChange: (value: Date) => {
+        this.setValue(value);
+      }
+    }
+
+    this._clickedOutsideListener = this.renderer.listen('document', 'click', ($event: MouseEvent) => {
+      if (this.pickerOpened) {
+        let el: HTMLElement = <HTMLElement>$event.target;
+        let isThisEl = false;
+        while (el.parentElement && !isThisEl) {
+          isThisEl = this.element.nativeElement === el || this.pickerInstanceRef.location.nativeElement === el;
+          el = el.parentElement;
+        }
+        if (!isThisEl) {
+          this.hidePicker();
+        }
+      }
+    });
+
+    this.changeDetector.markForCheck();
   }
 
   removeClick(event: any): void {
@@ -167,18 +207,5 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
     }
 
     this.changeDetector.markForCheck();
-  }
-
-  private registerOutsideClick() {
-    this._clickedOutsideListener = this.renderer.listen('document', 'click', (e: MouseEvent) => {
-      if (!this.isOpened || !e.target) return;
-      if (this.el !== e.target && !this.el.contains(e.target)) {
-        this.closeTimepicker();
-      }
-    });
-  }
-
-  private unregisterOutsideClick() {
-    this._clickedOutsideListener && this._clickedOutsideListener();
   }
 }

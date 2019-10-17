@@ -167,6 +167,9 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --xe-purple-16: #F0DBFB;
   --xe-purple-08: #F7EDFD;
 
+  --is-general-border-radius: 4px;
+  --is-general-padding: 16px;
+  --is-general-padding-small: 8px;
 
   --is-control-bg-color: var(--xe-white);
   --is-control-border-color: var(--xe-dark-32);
@@ -207,6 +210,19 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --is-tabset-item-hover-border-color: var(--xe-dark-32);
   --is-tabset-item-active-border-color: var(--xe-dark-100);
 
+  --is-datepicker-fg-color: var(--xe-dark-100);
+  --is-datepicker-bg-color: var(--xe-white);
+  --is-datepicker-hover-bg-color: var(--xe-dark-08);
+  --is-datepicker-border-color: var(--xe-dark-08);
+  --is-datepicker-day-fg-color: var(--xe-dark-88);
+  --is-datepicker-day-active-fg-color: var(--xe-white);
+  --is-datepicker-day-active-bg-color: var(--xe-dark-100);
+  --is-datepicker-day-today-fg-color: var(--xe-dark-88);
+  --is-datepicker-day-outside-fg-color: var(--xe-dark-32);
+
+  --is-timepicker-fg-color: var(--xe-dark-64);
+  --is-timepicker-hover-fg-color: var(--xe-dark-88);
+  --is-timepicker-bg-color: var(--xe-dark-08);
 }
 
 

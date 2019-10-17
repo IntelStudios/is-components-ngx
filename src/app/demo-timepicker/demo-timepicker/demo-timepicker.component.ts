@@ -29,6 +29,10 @@ export class DemoTimepickerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.timepickerControl.valueChanges.subscribe(item=> {
+      console.log('change :', item, typeof item);
+    });
+
     this.timepickerControl2.setValue('03:00:00');
     this.timepickerControl2.disable();
   }

@@ -1,0 +1,43 @@
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
+
+is-timepicker-picker {
+  .ng-timepicker {
+    background-color: $is-control-bg-color;
+    padding: $is-general-padding;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: $is-general-border-radius;
+
+    @include is-input-active;
+
+    table {
+      margin: 0 auto !important;
+      color: $is-control-fg-color;
+    }
+
+    .btn {
+      border: none;
+      color: $is-timepicker-fg-color;
+      &:hover {
+        color: $is-timepicker-hover-fg-color;
+        cursor: pointer;
+      }
+    }
+    input {
+      color: $is-timepicker-fg-color;
+      background-color: $is-timepicker-bg-color;
+      border: 1px solid $is-timepicker-bg-color;
+      font-size: 14px;
+      font-weight: bold;
+      height: 32px;
+      width: 72px;
+
+      &:focus, &:active {
+        background-color: $is-control-bg-color;
+        color: $is-control-fg-color;
+        @include is-input-active;
+      }
+    }
+  }
+}
