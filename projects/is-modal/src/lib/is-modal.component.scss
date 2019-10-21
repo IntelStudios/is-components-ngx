@@ -1,17 +1,22 @@
+@import '../../../styles/variables';
+
 :host {
   .modal-footer>.buttons {
     display: flex;
+
     .divider {
       flex-grow: 1;
     }
+
     button {
-      margin-left: 4px;
-      &:first-child {
-        margin-left: 0;
+      &.is-btn-right {
+        margin-left: $is-general-padding;
       }
-      >i {
-        margin-right: 4px;
+
+      &.is-btn-left {
+        margin-right: $is-general-padding;
       }
+
     }
   }
 
