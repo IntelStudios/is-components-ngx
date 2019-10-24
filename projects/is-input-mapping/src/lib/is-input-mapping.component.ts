@@ -35,17 +35,21 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   level: number = null;
   collapsible = false;
 
-  private _data: IsInputMappingInput;
+  private _data: IsInputMappingInput = null;
 
   @Input()
   set data(value: IsInputMappingInput) {
+    if (typeof (value) === 'undefined') {
+      value = null;
+    }
+
     this._data = value;
 
     if (this.data) {
       if (this.level === 0) {
         this.service.clearInvalidAssigns(this.data.DataStructure);
-        this.cd.detectChanges();
         this.paintedStructure = this._data.DataStructure;
+        this.cd.detectChanges();
       }
     }
   }
@@ -103,10 +107,13 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   ngOnInit() {
     if (!this.paintedPath) { // root element
       this.level = 0;
-      this.paintedStructure = this._data.DataStructure;
       this.paintedPath = [];
       this.service = this.serviceRoot;
       this.inputSchemaMap = new Map<string, string>();
+      this.collapsible = true;
+      if (this._data) {
+        this.paintedStructure = this._data.DataStructure;
+      }
     } else { // no root
       let paintedData: DataStructure = this._data.DataStructure;
       for (const pathIndex of this.paintedPath) {
