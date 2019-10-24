@@ -39,15 +39,14 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   @Input()
   set data(value: IsInputMappingInput) {
-    if (!value) {
-      return;
-    }
-
     this._data = value;
-    if (this.level === 0) {
-      this.service.clearInvalidAssigns(this.data.DataStructure);
-      this.cd.detectChanges();
-      this.paintedStructure = this._data.DataStructure;
+
+    if (this.data) {
+      if (this.level === 0) {
+        this.service.clearInvalidAssigns(this.data.DataStructure);
+        this.cd.detectChanges();
+        this.paintedStructure = this._data.DataStructure;
+      }
     }
   }
 
