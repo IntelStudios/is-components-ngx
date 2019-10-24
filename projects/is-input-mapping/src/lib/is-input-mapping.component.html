@@ -1,4 +1,4 @@
-<div *ngIf="level > 0"
+<div *ngIf="level > 0 && paintedStructure"
      class="node"
      [class.folder]="paintedStructure.Children.length > 0"
      [class.disabled]="disabled"
