@@ -26,7 +26,7 @@
 <div class="children" [class.left-line]="level > 0" *ngIf="collapsed"
      [ngStyle]="{marginLeft: (level * 5) + 'px'}"
 >
-  <is-input-mapping *ngFor="let child of paintedStructure.Children; let i = index"
+  <is-input-mapping *ngFor="let child of paintedStructure?.Children; let i = index"
                         [data]="data"
                         [paintedPath]="getChildPath(i)"
                         [service]="service"
