@@ -187,6 +187,10 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
    */
 
   writeValue(value: Map<string, string>): void {
+    if (!this.data) {
+      return;
+    }
+
     const findNodePaintedPathByPath = (rootPath: string, struct: DataStructure, paintedPath: number[]): number[] => {
       if (struct.Path === rootPath) {
         return paintedPath;
