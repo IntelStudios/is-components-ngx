@@ -1,9 +1,19 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
-import { AssignStatus, DataStructure, InputSchema, IsInputMappingInput } from './is-input-mapping.interface';
-import { IsInputMappingService } from './is-input-mapping.service';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+import { AssignStatus, DataStructure, InputSchema, IsInputMappingInput } from './is-input-mapping.interface';
+import { IsInputMappingService } from './is-input-mapping.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -26,8 +36,13 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   collapsible = false;
 
   private _data: IsInputMappingInput;
+
   @Input()
   set data(value: IsInputMappingInput) {
+    if (!value) {
+      return;
+    }
+
     this._data = value;
     if (this.level === 0) {
       this.service.clearInvalidAssigns(this.data.DataStructure);
@@ -74,7 +89,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   disabled = false;
 
   private _subscriptions: Subscription[] = [];
-  private _on_changes: Function = () => {};
+  private _on_changes: Function = () => { };
 
   constructor(private elRef: ElementRef, private serviceRoot: IsInputMappingService, private cd: ChangeDetectorRef) {
   }
@@ -176,7 +191,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   assign(item: InputSchema) {
-    this.service.assignItem({Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path});
+    this.service.assignItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
   }
 
   private assignCallback(status: AssignStatus) {
@@ -198,7 +213,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   release(item: InputSchema) {
-    this.service.releaseItem({Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path});
+    this.service.releaseItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
   }
 
   getChildPath(i: number): number[] {
@@ -267,7 +282,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
         return;
       }
 
-      this.service.releaseItem({Item: item, Path: path, PaintedPath: nodePaintedPath});
+      this.service.releaseItem({ Item: item, Path: path, PaintedPath: nodePaintedPath });
     });
 
     if (!value) {
@@ -281,7 +296,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
         return;
       }
 
-      this.service.assignItem({Item: item, Path: path, PaintedPath: nodePaintedPath});
+      this.service.assignItem({ Item: item, Path: path, PaintedPath: nodePaintedPath });
     });
   }
   registerOnChange(fn: Function): void {
