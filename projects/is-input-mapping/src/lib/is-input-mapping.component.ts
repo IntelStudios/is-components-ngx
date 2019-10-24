@@ -42,6 +42,8 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this._data = value;
 
     if (this.data) {
+      this._load();
+
       if (this.level === 0) {
         this.service.clearInvalidAssigns(this.data.DataStructure);
         this.cd.detectChanges();
@@ -101,67 +103,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   ngOnInit() {
-    if (!this.paintedPath) { // root element
-      this.level = 0;
-      this.paintedStructure = this._data.DataStructure;
-      this.paintedPath = [];
-      this.service = this.serviceRoot;
-      this.inputSchemaMap = new Map<string, string>();
-    } else { // no root
-      let paintedData: DataStructure = this._data.DataStructure;
-      for (const pathIndex of this.paintedPath) {
-        paintedData = paintedData.Children[pathIndex];
-      }
-      this.paintedStructure = paintedData;
-      this.level = this.paintedPath.length;
-      this.collapsible = this.paintedStructure.Children.length > 0;
-    }
 
-    if (!this.collapsible) { // node that can have attached items
-      this.inputsAssignable = this._data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
-      const alreadyAssignedNames = this.service.getAssignedItemNames();
-      this.inputsAssignableFiltered = this.inputsAssignable.slice().filter(item => alreadyAssignedNames.indexOf(item.Name) === -1);
-      this.icon = this.getTypeIcon(this.paintedStructure.DataType);
-
-      this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
-    } else {
-      this.icon = 'fa-folder-open'; // folder
-    }
-
-    this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
-
-    // debounce quick changes in mouseover states
-    this._subscriptions.push(this.mouseoverSubject.asObservable().pipe(debounceTime(20)).subscribe(value => this._mouseover = value));
-
-    // subscribe to assigning items
-    this._subscriptions.push(this.service.itemAssigned$.subscribe(item => this.assignCallback(item)));
-
-    // subscribe to releasing items
-    this._subscriptions.push(this.service.itemReleased$.subscribe(data => {
-      if (data.Path === this.paintedStructure.Path) {
-        // release the item if it was taken by us
-        this.inputsAssigned = this.inputsAssigned.filter(input => input.Name !== data.Item.Name);
-      }
-
-      this.inputsFilled = this.inputsFilled.filter(input => input.Name !== data.Item.Name);
-
-      this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
-
-      // add released item back to available items
-      for (const item of this.inputsAssignable) {
-        if ((item.Name === data.Item.Name) && (this.inputsAssignableFiltered.filter(input => input.Name === item.Name).length === 0)) {
-          this.inputsAssignableFiltered.push(item);
-          this.inputsAssignableFiltered.sort();
-          break;
-        }
-      }
-
-      // root element saves the selection state into value
-      if (this.level === 0) {
-        this.inputSchemaMap.delete(data.Item.Name);
-        this._on_changes(this.inputSchemaMap);
-      }
-    }));
   }
 
   ngOnDestroy(): void {
@@ -298,12 +240,79 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.service.assignItem({ Item: item, Path: path, PaintedPath: nodePaintedPath });
     });
   }
+
   registerOnChange(fn: Function): void {
     this._on_changes = fn;
   }
+
   registerOnTouched(fn: any): void {
   }
+
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  private _load() {
+    if (!this.paintedPath) { // root element
+      this.level = 0;
+      this.paintedStructure = this._data.DataStructure;
+      this.paintedPath = [];
+      this.service = this.serviceRoot;
+      this.inputSchemaMap = new Map<string, string>();
+    } else { // no root
+      let paintedData: DataStructure = this._data.DataStructure;
+      for (const pathIndex of this.paintedPath) {
+        paintedData = paintedData.Children[pathIndex];
+      }
+      this.paintedStructure = paintedData;
+      this.level = this.paintedPath.length;
+      this.collapsible = this.paintedStructure.Children.length > 0;
+    }
+
+    if (!this.collapsible) { // node that can have attached items
+      this.inputsAssignable = this._data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
+      const alreadyAssignedNames = this.service.getAssignedItemNames();
+      this.inputsAssignableFiltered = this.inputsAssignable.slice().filter(item => alreadyAssignedNames.indexOf(item.Name) === -1);
+      this.icon = this.getTypeIcon(this.paintedStructure.DataType);
+
+      this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
+    } else {
+      this.icon = 'fa-folder-open'; // folder
+    }
+
+    this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
+
+    // debounce quick changes in mouseover states
+    this._subscriptions.push(this.mouseoverSubject.asObservable().pipe(debounceTime(20)).subscribe(value => this._mouseover = value));
+
+    // subscribe to assigning items
+    this._subscriptions.push(this.service.itemAssigned$.subscribe(item => this.assignCallback(item)));
+
+    // subscribe to releasing items
+    this._subscriptions.push(this.service.itemReleased$.subscribe(data => {
+      if (data.Path === this.paintedStructure.Path) {
+        // release the item if it was taken by us
+        this.inputsAssigned = this.inputsAssigned.filter(input => input.Name !== data.Item.Name);
+      }
+
+      this.inputsFilled = this.inputsFilled.filter(input => input.Name !== data.Item.Name);
+
+      this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
+
+      // add released item back to available items
+      for (const item of this.inputsAssignable) {
+        if ((item.Name === data.Item.Name) && (this.inputsAssignableFiltered.filter(input => input.Name === item.Name).length === 0)) {
+          this.inputsAssignableFiltered.push(item);
+          this.inputsAssignableFiltered.sort();
+          break;
+        }
+      }
+
+      // root element saves the selection state into value
+      if (this.level === 0) {
+        this.inputSchemaMap.delete(data.Item.Name);
+        this._on_changes(this.inputSchemaMap);
+      }
+    }));
   }
 }
