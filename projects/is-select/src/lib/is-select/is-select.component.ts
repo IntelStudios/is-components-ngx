@@ -194,6 +194,12 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     return !!this.optionsOverlayRef;
   }
 
+  get optionsDropup(): boolean {
+    return this.optionsOpened && this._optionsDropup;
+  }
+
+  private _optionsDropup: boolean = false;
+
   additionalValues: number = 0;
 
   @ContentChild(IsSelectOptionDirective, { read: TemplateRef, static: false })
@@ -450,11 +456,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
     const rect: DOMRect = this.element.nativeElement.getBoundingClientRect();
     const optionsHeight = this.isSearch ? 264 : 200;
-    const isDropup = rect.bottom + optionsHeight > window.innerHeight;
-    const dropUpClass = isDropup ? ' is-select-options-dropup' : '';
-    const position: ConnectedPosition = isDropup ?
+    this._optionsDropup = rect.bottom + optionsHeight > window.innerHeight;
+    const dropUpClass = this._optionsDropup ? ' is-select-options-dropup' : '';
+    const position: ConnectedPosition = this._optionsDropup ?
       { originY: 'top', originX: 'start', overlayX: 'start', overlayY: 'bottom' }
-      : { originY: isDropup ? 'top' : 'bottom', originX: 'start', overlayX: 'start', overlayY: 'top' };
+      : { originY: 'bottom', originX: 'start', overlayX: 'start', overlayY: 'top' };
     const positionStrategy = this.overlay.position().flexibleConnectedTo(this.element)
       .withPositions([position])
       .withDefaultOffsetX(-1);
