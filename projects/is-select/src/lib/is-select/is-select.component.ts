@@ -1,4 +1,4 @@
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, ConnectedPosition } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ChangeDetectionStrategy,
@@ -179,14 +179,14 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   /**
    * returns currenly active (selected) item - use when set multiple=true
    */
-  get multiActive():  SelectItem[] {
+  get multiActive(): SelectItem[] {
     return this._active as SelectItem[];
   }
 
-    /**
-   * returns currenly active (selected) item - use when set multiple=false
-   */
-  get singleActive():  SelectItem {
+  /**
+ * returns currenly active (selected) item - use when set multiple=false
+ */
+  get singleActive(): SelectItem {
     return this._active as SelectItem;
   }
 
@@ -221,7 +221,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     private overlay: Overlay,
     private renderer: Renderer2,
     private changeDetector: ChangeDetectorRef) {
-      this.multiple = false;
+    this.multiple = false;
   }
 
   ngOnInit() {
@@ -236,7 +236,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: any) {
-  // this method's body is set by runtime to single/multiple prefixed version
+    // this method's body is set by runtime to single/multiple prefixed version
   }
 
   /**
@@ -451,16 +451,17 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     const rect: DOMRect = this.element.nativeElement.getBoundingClientRect();
     const optionsHeight = this.isSearch ? 264 : 200;
     const isDropup = rect.bottom + optionsHeight > window.innerHeight;
-    const yOffset = isDropup ? -optionsHeight : 0;
     const dropUpClass = isDropup ? ' is-select-options-dropup' : '';
+    const position: ConnectedPosition = isDropup ?
+      { originY: 'top', originX: 'start', overlayX: 'start', overlayY: 'bottom' }
+      : { originY: isDropup ? 'top' : 'bottom', originX: 'start', overlayX: 'start', overlayY: 'top' };
     const positionStrategy = this.overlay.position().flexibleConnectedTo(this.element)
-      .withPositions([{ originY: isDropup ? 'top': 'bottom', originX: 'start', overlayX: 'start', overlayY: 'top' }])
-      .withDefaultOffsetX(-1)
-      .withDefaultOffsetY(yOffset)
+      .withPositions([position])
+      .withDefaultOffsetX(-1);
 
     this.optionsOverlayRef = this.overlay.create(
       {
-        width: `${rect.width+2}px`,
+        width: `${rect.width + 2}px`,
         minHeight: '34px',
         positionStrategy: positionStrategy,
         scrollStrategy: this.overlay.scrollStrategies.reposition()
@@ -666,7 +667,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
           const opts = el.querySelectorAll('.ui-select-match-text');
           const firstTop = opts[0].getBoundingClientRect().top;
           let i = 1;
-          for (; i < opts.length;i++) {
+          for (; i < opts.length; i++) {
             const oRect = opts[i].getBoundingClientRect();
             if (oRect.top > firstTop) {
               break;

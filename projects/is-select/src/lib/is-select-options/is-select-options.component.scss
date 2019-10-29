@@ -2,7 +2,6 @@
 @import '../../../../styles/variables';
 
 
-
 :host {
   display: block;
   width: 100%;
@@ -11,6 +10,13 @@
     >.ui-select-choices-container {
       border-bottom: none;
       border-top: 2px solid;
+      > .ui-select-search {
+        order: 1;
+      }
+      > .ui-select-choices {
+        margin-bottom: $is-general-padding-small;
+        margin-top: 0px;
+      }
     }
   }
   .ui-select-choices-container {
@@ -18,7 +24,8 @@
     background-color: $is-control-bg-color;
     margin-top: 0px;
 
-    display: block;
+    display: flex;
+    flex-flow: column;
     left: initial;
     top: initial;
     position: relative;
@@ -29,11 +36,11 @@
     }
     border-color: var(--is-control-border-focus-color);
     border-top: none;
-    padding: 8px 0px;
+    padding: $is-general-padding-small 0px;
 
     >.ui-select-search {
       display: flex;
-      margin: 0px 8px;
+      margin: 0px $is-general-padding-small;
       background-color: $is-select-search-bg-color;
       > input {
         color: $is-control-fg-color;
@@ -43,7 +50,7 @@
       > i {
         color: $is-control-handle-color;
         align-self: center;
-        padding: 8px 13px;
+        padding: $is-general-padding-small 13px;
       }
     }
 
@@ -52,7 +59,7 @@
       height: auto;
       max-height: 200px;
       overflow-x: hidden;
-      margin-top: 8px;
+      margin-top: $is-general-padding-small;
       margin-bottom: 0;
       list-style: none;
       padding-left: 0;
@@ -90,7 +97,7 @@
           align-items: center;
         }
         .divider {
-          margin: 4px 8px;
+          margin: 4px $is-general-padding-small;
           border-bottom: 1px solid $is-select-search-bg-color;
         }
       }
@@ -119,10 +126,10 @@
 
 
   .ui-select-choices-row {
-    padding: 0px 8px;
+    padding: 0px $is-general-padding-small;
     >a {
       display: block;
-      padding: 4px 8px;
+      padding: 4px $is-general-padding-small;
       clear: both;
       font-weight: 400;
       line-height: 1.42857143;
