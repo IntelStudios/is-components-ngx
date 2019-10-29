@@ -449,10 +449,14 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   showOptions() {
 
     const rect: DOMRect = this.element.nativeElement.getBoundingClientRect();
+    const optionsHeight = this.isSearch ? 264 : 200;
+    const isDropup = rect.bottom + optionsHeight > window.innerHeight;
+    const yOffset = isDropup ? -optionsHeight : 0;
+    const dropUpClass = isDropup ? ' is-select-options-dropup' : '';
     const positionStrategy = this.overlay.position().flexibleConnectedTo(this.element)
-      .withPositions([{ originY: 'bottom', originX: 'start', overlayX: 'start', overlayY: 'top' }])
+      .withPositions([{ originY: isDropup ? 'top': 'bottom', originX: 'start', overlayX: 'start', overlayY: 'top' }])
       .withDefaultOffsetX(-1)
-      .withPush(true);
+      .withDefaultOffsetY(yOffset)
 
     this.optionsOverlayRef = this.overlay.create(
       {
@@ -464,7 +468,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     );
     this.optionsInstanceRef = this.optionsOverlayRef.attach(new ComponentPortal(IsSelectOptionsComponent));
     // copy/inherit classes from is-select and add them to is-select-options element, but ignore ng-*
-    const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim();
+    const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass;
     this.renderer.setAttribute(this.optionsInstanceRef.location.nativeElement, 'class', classes);
     this.optionsInstanceRef.instance.control = {
       active: this.active,

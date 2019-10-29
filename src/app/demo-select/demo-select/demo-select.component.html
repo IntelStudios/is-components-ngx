@@ -116,7 +116,8 @@
         </div>
         <div class="col-sm-6">
           <h3>Select Color (no lables)</h3>
-          <is-select-color [allowClear]="true" [showLabel]="false" [isSearch]="false" (valueChange)="changed($event)"></is-select-color>
+          <is-select-color [allowClear]="true" [showLabel]="false" [isSearch]="false" (valueChange)="changed($event)">
+          </is-select-color>
         </div>
         <div class="col-sm-6">
           <h3>Select model (colors)</h3>
@@ -129,7 +130,8 @@
         </div>
         <div class="col-sm-6">
           <h3>Select multiple model (colors)</h3>
-          <is-select [allowClear]="true" [multiple]="true" [items]="colors" [formControl]="select4ControlMulti"  (valueChange)="changed($event)"
+          <is-select [allowClear]="true" [multiple]="true" [items]="colors" [formControl]="select4ControlMulti"
+            (valueChange)="changed($event)"
             [modelConfig]="{idProp: 'Data', textProp: 'Name', 'baseModel':{'baseModelProp':'baseModelPropValue'}}">
           </is-select>
           <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
@@ -145,14 +147,27 @@
       <div class="row">
         <div class="col-sm-6">
           <h3>Select (with badges)</h3>
-          <is-select-badge [formControl]="select5Control" [allowClear]="true" [items]="itemsBadges" (valueChange)="changed($event)"> </is-select-badge>
+          <is-select-badge [formControl]="select5Control" [allowClear]="true" [items]="itemsBadges"
+            (valueChange)="changed($event)"> </is-select-badge>
         </div>
         <div class="col-sm-6">
           <h3>Select multiple (with badges)</h3>
-          <is-select-badge [formControl]="select5Control" [multiple]="true" [allowClear]="true" [items]="itemsBadges" (valueChange)="changed($event)">
+          <is-select-badge [formControl]="select5Control" [multiple]="true" [allowClear]="true" [items]="itemsBadges"
+            (valueChange)="changed($event)">
           </is-select-badge>
         </div>
       </div>
     </ng-template>
   </is-tab>
 </is-tabset>
+
+<div style="height: 100vh;"></div>
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Select on page bottom</h3>
+    <is-select class="select-with-some-class" [formControl]="select1Control" [placeholderShow]="false"
+      [allowClear]="true" [items]="items" (changed)="changed($event)" placeholder="No city selected">
+    </is-select>
+  </div>
+
+</div>
