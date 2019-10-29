@@ -450,16 +450,20 @@ export class DemoInputMappingComponent implements OnInit {
 
   formControl = new FormControl();
   currentValue = '';
+  val: Map<string, string>;
   currentDataset = this.MOCK_DATA;
 
   constructor() { }
 
   ngOnInit() {
     this.formControl.valueChanges.subscribe((val: Map<string, string>) => {
+      console.log('val ', val);
+
       if (!val) {
         this.currentValue = 'null';
         return;
       }
+      this.val = val;
       const dict = {};
       val.forEach((v, k) => dict[k] = v);
       this.currentValue = JSON.stringify(dict);
@@ -481,6 +485,7 @@ export class DemoInputMappingComponent implements OnInit {
 
   switchDataset() {
     this.currentDataset = this.currentDataset === this.MOCK_DATA_LITTLE ? this.MOCK_DATA : this.MOCK_DATA_LITTLE;
+    this.formControl.setValue(this.val);
   }
 
   deleteDataset() {
