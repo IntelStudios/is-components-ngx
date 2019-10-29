@@ -1,9 +1,19 @@
+@import '../../../../styles/mixins';
+@import '../../../../styles/variables';
 
 is-select-color {
   &.ng-invalid {
     border: none !important;
-  }
 
+    is-select {
+      >.ui-select-container {
+        >.ui-select-match {
+          --is-control-border-color: #{$is-control-invalid-fg-color};
+          --is-control-fg-color: #{$is-control-invalid-fg-color};
+        }
+      }
+    }
+  }
 
   .preview-full {
     border: 1px solid #eaeaea;

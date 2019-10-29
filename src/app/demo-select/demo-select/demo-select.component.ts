@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { of, Observable, Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -27,6 +27,8 @@ export class DemoSelectComponent implements OnInit {
   select5Control: FormControl = new FormControl();
   select6Control: FormControl = new FormControl();
   select6ControlMulti: FormControl = new FormControl();
+
+  selectColorControl: FormControl = new FormControl();
 
   public items: Array<string> = ['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -62,7 +64,9 @@ export class DemoSelectComponent implements OnInit {
   private _disabledV: string = '0';
   private disabled: boolean = false;
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
+  constructor(private changeDetector: ChangeDetectorRef) {
+    this.selectColorControl.setValidators(Validators.required);
+  }
 
   ngOnInit() {
 
