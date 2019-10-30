@@ -1,0 +1,54 @@
+@import '../projects/styles/variables';
+
+$btn-padding-y: 0.282rem;
+$btn-padding-x: 1rem;
+
+$font-family-base: 'Open Sans';
+$font-size-base: 0.875rem;
+$btn-box-shadow: none;
+$btn-focus-box-shadow: none;
+$enable-caret: false;
+
+$grid-gutter-width: 24px;
+
+// override bootstrap
+
+$dropdown-spacer: .25rem;
+$dropdown-padding-y: 0px;
+$dropdown-item-padding-y: .594rem;
+$dropdown-item-padding-x: 1rem;
+$dropdown-divider-margin-y: 0.25rem;
+$dropdown-min-width: 207px;
+
+$input-box-shadow: none;
+$input-focus-box-shadow: none;
+
+
+$input-padding-y: 0.2815rem;
+$input-padding-x: 1rem;
+$input-padding-y-sm: $input-padding-y;
+$input-padding-x-sm:$input-padding-x;
+$input-padding-y-lg: $input-padding-y;
+$input-padding-x-lg:$input-padding-x;
+
+$modal-inner-padding: 0.75rem 1rem;
+$modal-header-padding-y: 0.75rem;
+$modal-title-line-height: 2rem;
+$modal-content-border-radius: #{$is-general-padding-small / 2};
+$modal-content-border-color: transparent;
+$modal-header-border-color: var(--xe-general-border-color);
+$modal-backdrop-bg: #bbb;
+$modal-backdrop-opacity: .88;
+
+// colors
+$success: #158915;
+$info: #4674BE;
+$warning: #E87E04;
+$danger: #DF303E;
+
+// tooltips
+$tooltip-font-size: 0.5625rem;
+// $tooltip-bg: $xe-general-tooltip-bg-color;
+$tooltip-border-radius: #{$is-general-padding-small / 4};
+
+@import '../node_modules/bootstrap/scss/bootstrap';

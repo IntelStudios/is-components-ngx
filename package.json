@@ -42,6 +42,7 @@
     "@ngx-translate/core": "^11.0.1",
     "angular-tree-component": "^8.2.0",
     "at.js": "^1.5.4",
+    "bootstrap": "^4.3.1",
     "codemirror": "^5.43.0",
     "core-js": "^2.6.5",
     "froala-editor": "^2.9.5",
