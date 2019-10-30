@@ -192,6 +192,7 @@ export class IsCheckboxComponent implements ControlValueAccessor {
     event.stopPropagation();
     // emit true/false in case of checkbox,
     // value in case of radio button
+    this.checked = checked;
     this.type === 'checkbox' ? this._onChangeCallback(checked) : this._onChangeCallback(value);
     this.change.emit({ value, checked, event });
     if (this.radioGroup && checked) {
