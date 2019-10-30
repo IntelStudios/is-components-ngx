@@ -15,8 +15,8 @@
   border-color:$is-control-boder-color;
   background-color: $is-control-bg-color;
   color: $is-control-fg-color;
-  padding: 8px;
-  font-size: 13px;
+  padding: $is-general-padding-small;
+  font-size: 14px;
 
   &::placeholder {
     color: $is-control-placeholder-color;
@@ -39,8 +39,8 @@
 
 @mixin short-scroll {
   &::-webkit-scrollbar {
-    height: 8px;
-    width: 8px; //background: #fff;
+    height: $is-general-padding-small;
+    width:  $is-general-padding-small; //background: #fff;
   }
   &::-webkit-scrollbar-thumb {
     background: rgb(187, 187, 187);
