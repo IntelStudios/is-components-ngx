@@ -11,15 +11,19 @@ const IS_EDITABLE_TEXTBOX_VALIDATORS: any = {
   provide: NG_VALIDATORS,
   useExisting: forwardRef(() => IsEditableTextboxComponent),
   multi: true
-}
+};
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'is-editable-textbox',
   templateUrl: 'is-editable-textbox.component.html',
   styleUrls: ['is-editable-textbox.component.scss'],
   providers: [IS_EDITABLE_TEXTBOX_VALUE_ACCESSOR, IS_EDITABLE_TEXTBOX_VALIDATORS],
 })
 export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor {
+
+  constructor(private changeDetector: ChangeDetectorRef, private elRef: ElementRef) { }
+
   @Input()
   autocomplete: any;
 
@@ -27,7 +31,7 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   placeholder = '';
 
   @Input()
-  edit: boolean = false;
+  edit = false;
 
   @Input()
   validator: any = { valid: false };
@@ -39,14 +43,12 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
 
   disabled: boolean;
 
-  // the method set in registerOnChange to emit changes back to the form
-  private _onChangeCallback = (_: any) => { };
-  private _onTouchedCallback = (_: any) => { };
-
   // validation change function
   onValidatorChangeFn: Function = null;
 
-  constructor(private changeDetector: ChangeDetectorRef, private elRef: ElementRef) { }
+  // the method set in registerOnChange to emit changes back to the form
+  private _onChangeCallback = (_: any) => { };
+  private _onTouchedCallback = (_: any) => { };
 
   ngOnInit() {
   }
@@ -64,9 +66,10 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
 
   // change events from the input
   onChange(event: any) {
-    if (event) {
+    if (event && event.key !== 'Enter') {
       this._onChangeCallback(event.target.value);
       this.value = event.target.value;
+      this.changeDetector.markForCheck();
     }
   }
 
