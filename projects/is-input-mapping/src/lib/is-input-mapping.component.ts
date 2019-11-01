@@ -166,7 +166,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       // root element saves the selection state into value
       if (this.level === 0) {
         this.inputSchemaMap.delete(data.Item.Name);
-        this._on_changes(this.inputSchemaMap);
+        if (!data.hasOwnProperty('EmmitChange') || data.EmmitChange) {
+          this._on_changes(this.inputSchemaMap);
+        }
       }
     }));
   }
@@ -214,7 +216,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     // root element saves the selection state into value
     if (this.level === 0) {
       this.inputSchemaMap.set(status.Item.Name, status.Path);
-      this._on_changes(this.inputSchemaMap);
+      if (!status.hasOwnProperty('EmmitChange') || status.EmmitChange) {
+        this._on_changes(this.inputSchemaMap);
+      }
     }
   }
 
@@ -252,6 +256,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
    */
 
   writeValue(value: Map<string, string>): void {
+    value = new Map(value);
     if (!this.data) {
       return;
     }
@@ -292,7 +297,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
         return;
       }
 
-      this.service.releaseItem({ Item: item, Path: path, PaintedPath: nodePaintedPath });
+      this.service.releaseItem({ Item: item, Path: path, PaintedPath: nodePaintedPath, EmmitChange: false });
     });
 
     if (!value) {
@@ -306,7 +311,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
         return;
       }
 
-      this.service.assignItem({ Item: item, Path: path, PaintedPath: nodePaintedPath });
+      this.service.assignItem({ Item: item, Path: path, PaintedPath: nodePaintedPath, EmmitChange: false });
     });
   }
 

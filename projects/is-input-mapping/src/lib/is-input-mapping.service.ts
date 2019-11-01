@@ -20,7 +20,15 @@ export class IsInputMappingService {
     if (!(data.Path in this.assignedCache)) {
       this.assignedCache[data.Path] = [];
     }
-    this.assignedCache[data.Path].push(data);
+
+    if (data.hasOwnProperty('EmmitChange')) {
+      // remove EmmitChange signature from data
+      const dataCopy = Object.assign({}, data);
+      delete dataCopy['EmmitChange'];
+      this.assignedCache[data.Path].push(dataCopy);
+    } else {
+      this.assignedCache[data.Path].push(data);
+    }
     this.assignSource.next(data);
   }
 

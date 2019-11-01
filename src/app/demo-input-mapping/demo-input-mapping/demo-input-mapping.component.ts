@@ -11,7 +11,7 @@ export class DemoInputMappingComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.5.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.6.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsInputMappingModule } from 'is-input-mapping';</pre>
@@ -457,33 +457,42 @@ export class DemoInputMappingComponent implements OnInit {
 
   ngOnInit() {
     this.formControl.valueChanges.subscribe((val: Map<string, string>) => {
-      console.log('val ', val);
-
+      this.val = val;
+      console.log('val', val);
       if (!val) {
         this.currentValue = 'null';
         return;
       }
-      this.val = val;
       const dict = {};
       val.forEach((v, k) => dict[k] = v);
       this.currentValue = JSON.stringify(dict);
     });
-    /*const setupValue = new Map<string, string>();
-    setupValue.set('Name', 'Load files.Third level.Text');
-    this.formControl.setValue(setupValue);*/
+    this.val = this.formControl.value;
   }
 
   nullIt() {
+    // this example does emit value change event
+    // it will be cached in the valueChanges subscription
     this.formControl.setValue(null);
   }
 
   modified2Created() {
+    // this example does NOT emit value change event
+    // we have to cache current value by ourselves
     const map = new Map<string, string>();
     map.set('Modified', 'Load files.Created');
-    this.formControl.setValue(map);
+
+    this.val = map;
+    const dict = {};
+    map.forEach((v, k) => dict[k] = v);
+    this.currentValue = JSON.stringify(dict);
+
+    this.formControl.setValue(map, {emitEvent: false});
   }
 
   switchDataset() {
+    // this example does emit value change event
+    // it will be cached in the valueChanges subscription
     this.currentDataset = this.currentDataset === this.MOCK_DATA_LITTLE ? this.MOCK_DATA : this.MOCK_DATA_LITTLE;
     this.formControl.setValue(this.val);
   }

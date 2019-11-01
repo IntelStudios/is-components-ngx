@@ -23,4 +23,5 @@ export interface AssignStatus {
   Item: InputSchema;
   PaintedPath: number[];
   Path: string;
+  EmmitChange?: boolean;
 }
