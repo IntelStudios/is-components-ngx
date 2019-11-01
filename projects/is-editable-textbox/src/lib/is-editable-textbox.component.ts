@@ -52,9 +52,10 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
 
   // change events from the input
   onChange(event: any) {
-    if (event) {
+    if (event && event.key !== 'Enter') {
       this._onChangeCallback(event.target.value);
       this.value = event.target.value;
+      this.changeDetector.markForCheck();
     }
   }
 
