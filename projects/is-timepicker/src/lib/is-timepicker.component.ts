@@ -79,11 +79,6 @@ export class IsTimepickerComponent {
   * Implemented as part of ControlValueAccessor.
   */
   writeValue(value: string | Date): void {
-    if (!value) {
-      this.timeValue = null;
-      this.viewValue = '';
-      return;
-    }
     this.setValue(value);
   }
 
@@ -200,7 +195,7 @@ export class IsTimepickerComponent {
       this.changed.emit(this.stringMode ?  moment(value).format(TIME_FORMAT) : value);
     }
     else {
-      this.viewValue = null;
+      this.viewValue = '';
       this.timeValue = null;
 
       this.changed.emit(null);
