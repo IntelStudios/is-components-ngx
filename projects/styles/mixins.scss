@@ -54,3 +54,22 @@
     }
   }
 }
+
+@mixin modal-footer-buttons {
+  display: flex;
+  width: 100%;
+  .divider {
+    flex-grow: 1;
+  }
+
+  button {
+    &.is-btn-right {
+      margin-left: $is-general-padding;
+    }
+
+    &.is-btn-left {
+      margin-right: $is-general-padding;
+    }
+
+  }
+}
