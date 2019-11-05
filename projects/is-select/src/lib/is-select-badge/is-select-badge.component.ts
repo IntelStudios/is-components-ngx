@@ -106,7 +106,7 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
     return items.map((it: SelectItem) => {
       const result = new RegExp(/\[(\w+)_(.+?)\]/g).exec(it.Value);
       if (result) {
-        return new SelectItem({...it, cssClass: `is-badge is-badge-${result[1]}`, Value: result[2]});
+        return new SelectItem({...it, cssClass: `is-badge is-badge-${result[1].toLowerCase()}`, Value: result[2]});
       }
       return it;
     })
