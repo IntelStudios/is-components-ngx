@@ -102,8 +102,7 @@
     </is-portlet>
   </div>
   <div class="col-sm-6">
-    <is-portlet heading="Colored portlet with actions" [headingUpprcase]="false" [headingBold]="false" icon="fa fa-user"
-      fontColor="font-blue-madison">
+    <is-portlet heading="Colored portlet with actions" icon="fa fa-user">
       <div class="actions">
         <a class="btn btn-circle btn-default btn-sm"><i class="fa fa-angle-up"></i> Close</a>
       </div>
@@ -144,8 +143,8 @@
     </is-section>
   </div>
   <div class="col-sm-6">
-    <is-section heading="Section with tools" portletClass="red-thunderbird" titleClass="font-yellow-lemon">
-      <div class="tools">
+    <is-section heading="Section with actions">
+      <div class="actions">
         <i class="fa fa-close"></i>
       </div>
       <div class="portlet-body">
@@ -155,7 +154,7 @@
   </div>
   <div class="col-sm-6">
     <is-section>
-      <ng-template is-section-title>
+      <ng-template is-portlet-title>
         <div class="caption">
           <a href="#" style="color: white;" [routerLink]="['/']">Section with title template</a>
         </div>
@@ -220,6 +219,37 @@
     </ng-template>
   </is-tab>
 </is-tabset>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Tabs (pills style)</h2>
+  </div>
+  <div class="col-sm-12">
+    <is-tabset [pills]="true">
+      <is-tab title="Tab 1">
+        <ng-template TabContent>
+          First tab content
+        </ng-template>
+      </is-tab>
+      <is-tab>
+        <ng-template TabTitle>
+          Advanced tab title <i class="fa fa-home"></i>
+        </ng-template>
+        <ng-template TabContent>
+          Second tab content
+        </ng-template>
+      </is-tab>
+      <is-tab>
+        <ng-template TabTitle>
+          Advanced tab title with quite long text <i class="fa fa-home"></i>
+        </ng-template>
+        <ng-template TabContent>
+          Second tab content
+        </ng-template>
+      </is-tab>
+    </is-tabset>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-sm-12">

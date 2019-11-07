@@ -13,7 +13,8 @@ is-portlet, is-section {
       display: flex;
       padding: 8px 16px;
       align-items: center;
-
+      background-color: $is-portlet-header-bg-color;
+      color: $is-portlet-header-fg-color;
       >.caption {
         width: 100%;
         font-size: 20px;
@@ -25,6 +26,9 @@ is-portlet, is-section {
           &.uppercase {
             text-transform: uppercase;
           }
+        }
+        >a {
+          color: $is-portlet-header-fg-color;
         }
       }
 
@@ -56,15 +60,15 @@ is-portlet, is-section {
 
     &.section {
       padding: 0;
+
       > .portlet-title {
         border-radius: $is-portlet-border-radius;
-        background-color: #ccc;
-        color: #fff;
+        --is-portlet-header-fg-color: #{$is-section-header-fg-color};
+        --is-portlet-header-bg-color: #{$is-section-header-bg-color};
         > .caption {
           font-size: 16px;
           line-height: 16px;
           >a {
-            color: #fff;
             &:hover{
               text-decoration: none;
             }
@@ -72,7 +76,6 @@ is-portlet, is-section {
         }
         > .tools {
           > a.is-caret {
-            color: #fff;
             font-size: 14px;
           }
         }

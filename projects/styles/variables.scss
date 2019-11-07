@@ -26,7 +26,11 @@ $is-search-fg-color: var(--is-search-fg-color, #777E85);
 $is-search-icon-color: var(--is-search-icon-color, #2B3642);
 
 $is-portlet-border-color: var(--is-portlet-border-color, #ccc);
+$is-portlet-header-fg-color: var(--is-portlet-header-fg-color);
+$is-portlet-header-bg-color: var(--is-portlet-header-bg-color);
 $is-portlet-border-radius: var(--is-portlet-border-radius, 4px);
+$is-section-header-fg-color: var(--is-section-header-fg-color);
+$is-section-header-bg-color: var(--is-section-header-bg-color);
 
 $is-tabset-border-color: var(--is-tabset-border-color, #ccc);
 $is-tabset-nav-bg-color: var(--is-tabset-nav-bg-color, transparent);

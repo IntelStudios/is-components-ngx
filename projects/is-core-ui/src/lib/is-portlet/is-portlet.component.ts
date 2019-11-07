@@ -42,22 +42,13 @@ export class IsPortletComponent implements OnInit {
   id: string;
 
   @Input()
-  icon: string;
-
-  @Input()
-  fontColor: string = 'font-green-seagreen';
-
-  @Input()
   heading: string;
 
   @Input()
-  titleClass: string = '';
+  headingClass: string = '';
 
   @Input()
-  headingUpprcase: boolean = true;
-
-  @Input()
-  headingBold: boolean = true;
+  icon: string;
 
   @Input()
   enableCollapse: boolean = false;

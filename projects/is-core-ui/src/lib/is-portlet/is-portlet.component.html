@@ -1,5 +1,5 @@
 <div class="portlet" [class.section]="isSection">
-    <div class="portlet-title {{titleClass}}" [ngClass]="{'collapsed-closed': collapse==='closed'}">
+    <div class="portlet-title {{headingClass}}" [ngClass]="{'collapsed-closed': collapse==='closed'}">
         <ng-container [ngTemplateOutlet]="templateTitle || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
         </ng-container>
         <ng-content select=".actions"></ng-content>
@@ -17,8 +17,8 @@
 
 <!--Default templates-->
 <ng-template #defaultTemplateTitle>
-  <div class="caption {{fontColor}}">
-    <i *ngIf="icon" class="{{icon}} {{fontColor}}" aria-hidden="true"></i>
-    <span class="caption-subject" [class.bold]="headingBold" [class.uppercase]="headingUpprcase">{{heading|translate}}</span>
+  <div class="caption">
+    <i *ngIf="icon" [class]="icon" aria-hidden="true"></i>
+    <span class="caption-subject">{{heading|translate}}</span>
   </div>
 </ng-template>

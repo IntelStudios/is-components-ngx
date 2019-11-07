@@ -195,7 +195,12 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --is-search-icon-color: var(--xe-dark-64);
 
   --is-portlet-border-color: var(--xe-dark-08);
+  --is-portlet-header-bg-color: transparent;
+  --is-portlet-header-fg-color: var(--xe-dark-100);
   --is-select-search-bg-color: var(--xe-dark-08);
+
+  --is-section-header-fg-color: var(--xe-white);
+  --is-section-header-bg-color: var(--xe-dark-72);
 
   --is-badge-info-color: var(--xe-blue-24);
   --is-badge-warning-color: var(--xe-orange-24);
