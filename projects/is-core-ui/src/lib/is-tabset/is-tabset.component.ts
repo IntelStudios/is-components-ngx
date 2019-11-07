@@ -103,7 +103,7 @@ export interface TabChangeEvent {
   selector: 'is-tabset',
   styleUrls: ['is-tabset.component.scss'],
   template: `
-    <ul class="nav nav-tabs" role="tablist" [class.stretched]="stretched">
+    <ul [class]="tabClass" role="tablist" [class.stretched]="stretched">
       <li class="nav-item" *ngFor="let tab of tabs" [class.disabled]="tab.disabled">
         <a [id]="tab.id" class="nav-link {{tab.titleClass}}" [ngClass]="{'active show' : tab.id === activeId}" (click)="select(tab.id)">
           {{tab.title}}<ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
@@ -114,7 +114,7 @@ export interface TabChangeEvent {
     <div class="scroll-btn left"><i class="fas fa-chevron-left" (click)="scrollTabRight()"></i></div>
     <div class="scroll-btn right"><i class="fas fa-chevron-right" (click)="scrollTabLeft()"></i></div>
 
-    <div class="tab-content" *ngIf="tabs.length > 0">
+    <div class="tab-content" [class.pills]="pills" *ngIf="tabs.length > 0">
       <ng-template ngFor let-tab [ngForOf]="tabs">
         <div class="tab-pane" [ngClass]="{'active show' : tab.id === activeId}" *ngIf="tab.loaded || tab.id === activeId" role="tabpanel" [attr.aria-labelledby]="tab.id">
           <ng-template [ngTemplateOutlet]="tab.contentTpl.templateRef"></ng-template>
@@ -136,6 +136,21 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   @Input() stretched: boolean = false;
 
   @Input() enableRouting: boolean;
+
+  /**
+   * enable to change from (default) tab style to pills style
+   */
+  @Input()
+  set pills(pills: boolean) {
+    this._pills = pills;
+    this.tabClass = pills ? 'nav nav-pills' : 'nav nav-tabs';
+  }
+  get pills(): boolean {
+    return this._pills;
+  }
+
+  private _pills: boolean = false;
+  tabClass: string = 'nav nav-tabs';
 
   /**
    * Enable / disable tab wrap feature. If enabled, tab titles will remain in a single row with

@@ -59,6 +59,25 @@
     @include hide-scroll();
     background-color: $is-tabset-nav-bg-color;
 
+    &.nav-pills {
+      padding: $is-general-padding;
+      border-bottom: none;
+      > .nav-item {
+        > .nav-link {
+          &:hover {
+            &::before {
+              content: none;
+            }
+          }
+          &.active {
+            &::before {
+              content: none;
+            }
+          }
+        }
+      }
+    }
+
     >.nav-item {
       text-align: center;
       cursor: pointer;
@@ -109,7 +128,12 @@
 
   .tab-content {
     position: relative;
-    padding: 16px;
+    padding: $is-general-padding;
+    &.pills {
+      &:after {
+        content: none;
+      }
+    }
     &:after {
       content: ' ';
       position: absolute;
