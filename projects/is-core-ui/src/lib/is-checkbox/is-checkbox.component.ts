@@ -159,7 +159,7 @@ export class IsCheckboxComponent implements ControlValueAccessor {
  * Implemented as part of ControlValueAccessor.
  */
   writeValue(value: any): void {
-    this.checked = value === true;
+    this.checked = value === true || value === '1';
     this.changeDetector.markForCheck();
   }
 
