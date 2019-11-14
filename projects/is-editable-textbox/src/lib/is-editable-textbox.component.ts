@@ -1,5 +1,15 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, AbstractControl } from '@angular/forms';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 const IS_EDITABLE_TEXTBOX_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -22,8 +32,6 @@ const IS_EDITABLE_TEXTBOX_VALIDATORS: any = {
 })
 export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor {
 
-  constructor(private changeDetector: ChangeDetectorRef, private elRef: ElementRef) { }
-
   @Input()
   autocomplete: any;
 
@@ -39,6 +47,9 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   @Output()
   changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @ViewChild('textInput')
+  input: ElementRef<any>;
+
   public value = '';
 
   disabled: boolean;
@@ -49,6 +60,10 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   // the method set in registerOnChange to emit changes back to the form
   private _onChangeCallback = (_: any) => { };
   private _onTouchedCallback = (_: any) => { };
+
+  constructor(private changeDetector: ChangeDetectorRef, private elRef: ElementRef) {
+
+  }
 
   ngOnInit() {
   }
@@ -62,6 +77,12 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
     this.edit = !this.edit;
     this.changed.emit(this.edit);
     this.changeDetector.markForCheck();
+  }
+
+  focus() {
+    if (this.edit) {
+      this.input.nativeElement.focus();
+    }
   }
 
   // change events from the input

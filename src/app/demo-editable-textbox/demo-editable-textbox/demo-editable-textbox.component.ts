@@ -11,7 +11,7 @@ export class DemoEditableTextboxComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-editable-textbox-7.1.9.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-editable-textbox-7.2.0.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsEditableTextboxModule } from 'is-editable-textbox';</pre>`;
