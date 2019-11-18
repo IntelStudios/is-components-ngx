@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { of } from 'rxjs';
 
-import { FieldErrorModel, FieldErrorService } from 'projects/is-core-ui/src/public_api';
+import { IsFieldError, IsFieldErrorFactory } from 'projects/is-core-ui/src/public_api';
 
 @Component({
   selector: 'app-demo-core-ui',
@@ -50,7 +50,7 @@ export class DemoCoreUIComponent implements OnInit {
     this.passwordControl = new FormControl();
 
     let inputRequiredValidator = (control: AbstractControl) => {
-      let invalid = FieldErrorService.requiredError();
+      let invalid = IsFieldErrorFactory.requiredError();
       return control.value !== '' ? of(null) : of(invalid);
     };
 
@@ -58,7 +58,7 @@ export class DemoCoreUIComponent implements OnInit {
 
     let customValidator = (control: AbstractControl) => {
       let invalid = {
-        custom: new FieldErrorModel('custom', false).setPriority(10).withMessage('This is custom validator, input does not contain word "custom"')
+        custom: new IsFieldError('custom', false).withPriority(10).withMessage('This is custom validator, input does not contain word "custom"')
       };
 
       if (control.value && control.value.indexOf('custom') > -1) {

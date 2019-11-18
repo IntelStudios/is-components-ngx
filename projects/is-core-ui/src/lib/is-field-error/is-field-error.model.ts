@@ -1,4 +1,4 @@
-export class FieldErrorModel {
+export class IsFieldError {
   key: string;
   priority: number;
   valid: boolean;
@@ -10,14 +10,13 @@ export class FieldErrorModel {
     this.valid = valid;
   }
 
-  withMessage(message: string): FieldErrorModel {
+  withMessage(message: string): IsFieldError {
     this.message = message;
     return this;
   }
 
-  setPriority(priority: number): FieldErrorModel {
+  withPriority(priority: number): IsFieldError {
     this.priority = priority;
-
     return this;
   }
 }

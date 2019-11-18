@@ -1,0 +1,2 @@
+<i *ngIf="isShown" class="fas fa-fw fa-exclamation-triangle" [placement]="tooltipPlacement" [adaptivePosition]="false" [tooltip]="error" container="body" containerClass="tooltip-is-field-error"></i>
+<span *ngIf="isShown && !iconOnly">{{error}}</span>

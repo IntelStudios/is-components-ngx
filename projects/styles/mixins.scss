@@ -33,17 +33,17 @@
 }
 
 @mixin is-input-invalid {
-  border-color: $is-control-invalid-border-color;
-  color: $is-control-invalid-fg-color;
+  // border-color: $is-control-invalid-border-color;
+  // color: $is-control-invalid-fg-color;
 }
 
-@mixin short-scroll {
+@mixin short-scroll($color: rgb(187, 187, 187)) {
   &::-webkit-scrollbar {
     height: $is-general-padding-small;
     width:  $is-general-padding-small; //background: #fff;
   }
   &::-webkit-scrollbar-thumb {
-    background: rgb(187, 187, 187);
+    background: $color;
   }
   &::-webkit-scrollbar-corner {
     background: #fff;

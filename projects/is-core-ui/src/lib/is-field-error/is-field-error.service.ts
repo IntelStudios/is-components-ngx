@@ -1,16 +1,23 @@
-import { FieldErrorModel } from './is-field-error.model';
+import { IsFieldError } from './is-field-error.model';
 
-export class FieldErrorService {
+export class IsFieldErrorFactory {
 
   static requiredError() {
-    const error = new FieldErrorModel('required', false).setPriority(0);
+    const error = new IsFieldError('required', false).withPriority(0);
     error.message = 'Field is required';
 
     return { required: error };
   }
 
+  static inputMaskMatchError(mask: string) {
+    const error = new IsFieldError('maskDoesNotMatch', false).withPriority(0);
+    error.message = 'Value does not match required mask';
+    error.params = { mask: mask };
+    return { maskDoesNotMatch: error };
+  }
+
   static maxLengthError(maxLength: number, actualLength: number) {
-    const error: FieldErrorModel = new FieldErrorModel('maxLength', false).setPriority(10);
+    const error: IsFieldError = new IsFieldError('maxLength', false).withPriority(10);
     error.params = { requiredLength: maxLength, actualLength: actualLength };
     error.message = 'Required max number of characters';
 
@@ -18,35 +25,35 @@ export class FieldErrorService {
   }
 
   static licenseKeyError() {
-    const error: FieldErrorModel = new FieldErrorModel('licenseKey', false).setPriority(10);
+    const error: IsFieldError = new IsFieldError('licenseKey', false).withPriority(10);
     error.message = 'License key must match format XXX-XXXX-XXX';
 
     return { licenseKeyError: error };
   }
 
   static notANumberError() {
-    const error: FieldErrorModel = new FieldErrorModel('notANumber', false).setPriority(10);
+    const error: IsFieldError = new IsFieldError('notANumber', false).withPriority(10);
     error.message = 'Value is not a number';
 
     return { notANumber: error };
   }
 
   static maxNumberError(maxNum: number, actual: number) {
-    const error: FieldErrorModel = new FieldErrorModel('maxNumber', false).setPriority(20);
+    const error: IsFieldError = new IsFieldError('maxNumber', false).withPriority(20);
     error.params = { requiredMax: maxNum, actual: actual };
 
     return { maxNumber: error };
   }
 
   static recordWithSameValueAlreadyExistsError() {
-    const error: FieldErrorModel = new FieldErrorModel('recordWithSameValueAlreadyExists', false).setPriority(30);
+    const error: IsFieldError = new IsFieldError('recordWithSameValueAlreadyExists', false).withPriority(30);
     error.message = 'Record with same value already exists';
 
     return { recordWithSameValueAlreadyExists: error };
   }
 
   static passwordWeakError(minLength: number, actualLength: number) {
-    const error = new FieldErrorModel('passwordWeak', false).setPriority(40);
+    const error = new IsFieldError('passwordWeak', false).withPriority(40);
     error.params = { minLength: minLength, actualLength: actualLength };
     error.message = 'Password is weak';
 
@@ -54,7 +61,7 @@ export class FieldErrorService {
   }
 
   static forbiddenChars(contains: string[]) {
-    const error = new FieldErrorModel('forbiddenChars', false).setPriority(40);
+    const error = new IsFieldError('forbiddenChars', false).withPriority(40);
     error.params = { contains: `[${contains.join(', ')}]` };
     error.message = 'Value contains invalid character(s)';
 
@@ -62,42 +69,42 @@ export class FieldErrorService {
   }
 
   static passwordDoNotMatchError() {
-    const error = new FieldErrorModel('passwordDoNotMatch', false).setPriority(50);
+    const error = new IsFieldError('passwordDoNotMatch', false).withPriority(50);
     error.message = 'Password does not match';
 
     return { passwordDoNotMatch: error };
   }
 
   static invalidCronError() {
-    const error = new FieldErrorModel('invalidCron', false).setPriority(40);
+    const error = new IsFieldError('invalidCron', false).withPriority(40);
     error.message = 'Invalid CRON expression';
 
     return { invalidCron: error };
   }
 
   static adminEndpointNameError() {
-    const error = new FieldErrorModel('adminEndpointName', false).setPriority(40);
+    const error = new IsFieldError('adminEndpointName', false).withPriority(40);
     error.message = 'Endpoint name must contain only number or letter characters';
 
     return { adminEndpointName: error };
   }
 
   static loginAlreadyUsedError() {
-    const error = new FieldErrorModel('loginAlreadyUsed', false).setPriority(40);
+    const error = new IsFieldError('loginAlreadyUsed', false).withPriority(40);
     error.message = 'Login is already used';
 
     return { loginAlreadyUsed: error };
   }
 
   static prefillOrTemplateRequiredError() {
-    const error = new FieldErrorModel('prefillOrTemplateRequired', false).setPriority(50);
+    const error = new IsFieldError('prefillOrTemplateRequired', false).withPriority(50);
     error.message = 'Either Prefill or Template must be selected';
 
     return { prefillOrTemplateRequired: error };
   }
 
   static codeViewIsActiveWarning() {
-    const error = new FieldErrorModel('codeViewIsActive', false).setPriority(50);
+    const error = new IsFieldError('codeViewIsActive', false).withPriority(50);
     error.message = 'Please switch editor to WYSIWYG mode before saving';
 
     return { codeViewIsActive: error };

@@ -1,55 +1,84 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
-import { FieldErrorModel } from './is-field-error.model';
-
-// export const IS_FIELD_ERROR_VALUE_ACCESSOR: any = {
-//   provide: NG_VALUE_ACCESSOR,
-//   useExisting: forwardRef(() => IsFieldErrorComponent),
-//   multi: true
-// };
+import { configToken, IsCoreUIConfig } from '../is-core-ui.interfaces';
+import { IsFieldError } from './is-field-error.model';
 
 @Component({
   selector: 'is-field-error',
-  template: `<i *ngIf="isShown" class="fa fa-exclamation-triangle" placement="right" container="body" containerClass="tooltip-field-error"></i><span *ngIf="isShown && !showOnlyIcon">{{error}}</span>`,
+  templateUrl: './is-field-error.component.html',
   styleUrls: ['./is-field-error.component.scss'],
-  // providers: [IS_FIELD_ERROR_VALUE_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IsFieldErrorComponent implements OnInit, OnDestroy {
 
+/**
+ * Attach a FormControl to listen on status/value changes and display correct error
+ */
   @Input()
-  field: FormControl;
+  control: FormControl;
 
+  /**
+   * set wheather this component will appear as Icon (default) or Icon + error message
+   */
   @Input()
-  showOnlyIcon: boolean = false;
+  iconOnly: boolean = true;
+
+  /**
+   * tooltip placement (see ngx-bootstrap tooltip/popover placement)
+   */
+  @Input()
+  tooltipPlacement: string = 'top';
 
   // @Output()
   // changed: EventEmitter<any> = new EventEmitter<any>();
 
-  private subStat: Subscription;
-  private subVal: Subscription;
   // private onTouched: Function;
 
   // private _changeSubscription: Subscription = null;
 
   isShown: boolean = false;
 
+  /**
+   * Error text to be displayed. This property is exclusive with [control]
+   */
+  @Input()
   error: string;
 
-  constructor(private changeDetector: ChangeDetectorRef, public translate: TranslateService) {
+  private translationPrefix: string = 'field-error.';
+  private subStat: Subscription;
+  private subVal: Subscription;
+
+  constructor(@Optional() @Inject(configToken) coreUiConfig: IsCoreUIConfig, private changeDetector: ChangeDetectorRef, public translate: TranslateService) {
+    if(coreUiConfig && coreUiConfig.fieldErrorConfig) {
+      this.translationPrefix = coreUiConfig.fieldErrorConfig.translationPrefix;
+    }
   }
 
   ngOnInit() {
-    this.subVal = this.field.valueChanges.subscribe(() => {
+    if (this.control) {
       this.detectChanges();
-    });
+      this.subVal = this.control.valueChanges.subscribe(() => {
+        this.detectChanges();
+      });
 
-    this.subStat = this.field.statusChanges.subscribe(() => {
-      this.detectChanges();
-    });
+      this.subStat = this.control.statusChanges.subscribe(() => {
+        this.detectChanges();
+      });
+    } else if (this.error) {
+      this.isShown = true;
+    }
   }
 
   // /**
@@ -73,8 +102,12 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   // }
 
   ngOnDestroy() {
-    this.subVal.unsubscribe();
-    this.subStat.unsubscribe();
+    if (this.subVal) {
+      this.subVal.unsubscribe();
+    }
+    if (this.subStat) {
+      this.subStat.unsubscribe();
+    }
 
     // if (this._changeSubscription) {
     //   this._changeSubscription.unsubscribe();
@@ -82,27 +115,23 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   }
 
   private detectChanges() {
-    this.isShown = this.field.invalid && (this.field.touched || this.field.dirty);
+    this.isShown = this.control.invalid; // && (this.control.touched || this.control.dirty);
 
-    if (this.field.errors !== null) {
-      let highestPriorityError: FieldErrorModel = null;
-      Object.keys(this.field.errors).forEach((key) => {
-        if (highestPriorityError === null || highestPriorityError.priority > this.field.errors[key].priority) {
-          highestPriorityError = this.field.errors[key];
+    if (this.control.errors !== null) {
+      let highestPriorityError: IsFieldError = null;
+      Object.keys(this.control.errors).forEach((key) => {
+        if (highestPriorityError === null || highestPriorityError.priority > this.control.errors[key].priority) {
+          highestPriorityError = this.control.errors[key];
         }
       });
-      if (highestPriorityError.message) {
-        this.error = highestPriorityError.message;
+      const key = this.translationPrefix + highestPriorityError.key;
+      const translated: string = this.translate.instant(key, highestPriorityError);
+
+      if (translated !== key) {
+        this.error = translated;
       } else {
-        const translated: string = this.translate.instant('field-error.' + highestPriorityError.key, highestPriorityError);
-
-        if (translated !== 'field-error.' + highestPriorityError.key) {
-          this.error = translated;
-        } else {
-          this.error = '';
-        }
+        this.error = highestPriorityError.message || '';
       }
-
     }
     this.changeDetector.detectChanges();
   }

@@ -1,13 +1,15 @@
-$is-color-cls-danger-fg: var(--is-color-danger, red);
+@import '../../../../styles/variables';
 
 :host {
+  display: flex;
+  align-items: center;
   i {
-    color: $is-color-cls-danger-fg;
+    color: $is-control-invalid-fg-color;
   }
   span {
-    color: $is-color-cls-danger-fg;
+    color: $is-control-invalid-fg-color;
     font-weight: normal;
     font-size: 12px;
-    padding-left: 6px;
+    padding-left: $is-general-padding-small;
   }
 }

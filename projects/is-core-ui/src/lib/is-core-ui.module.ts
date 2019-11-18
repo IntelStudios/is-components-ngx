@@ -6,19 +6,20 @@ import { TooltipModule } from 'ngx-bootstrap';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 
 import { IsBreadcrumbBoxComponent } from './is-breadcrumb-box/is-breadcrumb-box.component';
+import { IsCheckboxComponent, IsRadioGroupDirective } from './is-checkbox/is-checkbox.component';
+import { configToken, IsCoreUIConfig } from './is-core-ui.interfaces';
 import { IsFieldErrorComponent } from './is-field-error/is-field-error.component';
 import { IsHintComponent } from './is-hint/is-hint.component';
+import { IsPasswordComponent } from './is-password/is-password.component';
 import { IsPortletComponent } from './is-portlet/is-portlet.component';
 import { IsPortletTitleDirective } from './is-portlet/is-portlet.directives';
+import { IsSearchComponent } from './is-search/is-search.component';
 import {
   IsTabContentDirective,
   IsTabDirective,
   IsTabsetComponent,
   IsTabTitleDirective,
 } from './is-tabset/is-tabset.component';
-import { IsSearchComponent } from './is-search/is-search.component';
-import { IsPasswordComponent } from './is-password/is-password.component';
-import { IsCheckboxComponent, IsRadioGroupDirective } from './is-checkbox/is-checkbox.component';
 
 @NgModule({
   imports: [
@@ -30,9 +31,12 @@ import { IsCheckboxComponent, IsRadioGroupDirective } from './is-checkbox/is-che
     IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective]
 })
 export class IsCoreUIModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(config?: IsCoreUIConfig): ModuleWithProviders {
     return {
-      ngModule: IsCoreUIModule
+      ngModule: IsCoreUIModule,
+      providers: [
+        { provide: configToken, useValue: config }
+      ]
     }
   }
 }
