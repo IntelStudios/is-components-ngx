@@ -45,6 +45,20 @@ export class IsFieldErrorFactory {
     return { maxNumber: error };
   }
 
+  static minNumberError(minNum: number, actual: number) {
+    const error: IsFieldError = new IsFieldError('minNumber', false).withPriority(20);
+    error.params = { requiredMin: minNum, actual: actual };
+
+    return { minNumber: error };
+  }
+
+  static minMaxNumberError(minNum: number, maxNum: number, actual: number) {
+    const error: IsFieldError = new IsFieldError('minMaxNumber', false).withPriority(20);
+    error.params = { requiredMin: minNum, requiredMax: maxNum, actual: actual };
+
+    return { minMaxNumber: error };
+  }
+
   static recordWithSameValueAlreadyExistsError() {
     const error: IsFieldError = new IsFieldError('recordWithSameValueAlreadyExists', false).withPriority(30);
     error.message = 'Record with same value already exists';
