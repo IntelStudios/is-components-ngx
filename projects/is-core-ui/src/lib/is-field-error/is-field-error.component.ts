@@ -125,7 +125,7 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
         }
       });
       const key = this.translationPrefix + highestPriorityError.key;
-      const translated: string = this.translate.instant(key, highestPriorityError);
+      const translated: string = this.translate.instant(key, highestPriorityError.params);
 
       if (translated !== key) {
         this.error = translated;
