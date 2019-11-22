@@ -15,12 +15,6 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
     >.ui-select-container {
       >.ui-select-match {
         @include is-input-invalid;
-        >.ui-select-toggle {
-          >.ui-select-match-text {
-            color: $is-control-invalid-fg-color;
-          }
-        }
-
       }
     }
 
@@ -49,7 +43,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         flex: 1;
         align-self: center;
         margin-left: 4px;
-        margin-right: 8px;
+        margin-right: $is-general-padding-small;
         color: $is-control-handle-color;
       }
 
@@ -58,7 +52,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        padding: 8px;
+        padding: $is-general-padding-small;
         width: 100%;
 
         &.align-left {
