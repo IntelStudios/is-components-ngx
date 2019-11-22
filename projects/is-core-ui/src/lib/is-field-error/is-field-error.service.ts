@@ -66,6 +66,13 @@ export class IsFieldErrorFactory {
     return { recordWithSameValueAlreadyExists: error };
   }
 
+  static duplicityError() {
+    const error: IsFieldError = new IsFieldError('duplicity', false).withPriority(30);
+    error.message = 'Duplicity';
+
+    return { recordWithSameValueAlreadyExists: error };
+  }
+
   static passwordWeakError(minLength: number, actualLength: number) {
     const error = new IsFieldError('passwordWeak', false).withPriority(40);
     error.params = { minLength: minLength, actualLength: actualLength };

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { Subscription, merge } from 'rxjs';
 
 import { configToken, IsCoreUIConfig } from '../is-core-ui.interfaces';
 import { IsFieldError } from './is-field-error.model';
@@ -27,7 +27,18 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
  * Attach a FormControl to listen on status/value changes and display correct error
  */
   @Input()
-  control: FormControl;
+  set control(value: FormControl) {
+    this._control= value;
+    if (value) {
+      this.unbindControl();
+      this.bindControl();
+    }
+  }
+  get control(): FormControl {
+    return this._control;
+  }
+
+  private _control: FormControl;
 
   /**
    * set wheather this component will appear as Icon (default) or Icon + error message
@@ -41,24 +52,15 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   @Input()
   tooltipPlacement: string = 'top';
 
-  // @Output()
-  // changed: EventEmitter<any> = new EventEmitter<any>();
-
-  // private onTouched: Function;
-
-  // private _changeSubscription: Subscription = null;
-
-  isShown: boolean = false;
-
   /**
    * Error text to be displayed. This property is exclusive with [control]
    */
   @Input()
   error: string;
 
+  isShown: boolean = false;
   private translationPrefix: string = 'field-error.';
-  private subStat: Subscription;
-  private subVal: Subscription;
+  private _sub: Subscription;
 
   constructor(@Optional() @Inject(configToken) coreUiConfig: IsCoreUIConfig, private changeDetector: ChangeDetectorRef, public translate: TranslateService) {
     if(coreUiConfig && coreUiConfig.fieldErrorConfig) {
@@ -67,51 +69,28 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.control) {
-      this.detectChanges();
-      this.subVal = this.control.valueChanges.subscribe(() => {
-        this.detectChanges();
-      });
-
-      this.subStat = this.control.statusChanges.subscribe(() => {
-        this.detectChanges();
-      });
-    } else if (this.error) {
+    if (!this.control && this.error) {
       this.isShown = true;
     }
   }
 
-  // /**
-  // * Implemented as part of ControlValueAccessor.
-  // */
-  // writeValue(value: any): void {
-  //   console.log("[Is-FieldError Component] Write value: ", value);
-
-  //   this.changeDetector.detectChanges();
-  // }
-
-  // registerOnChange(fn: (_: any) => {}): void {
-  //   if (this._changeSubscription) {
-  //     this._changeSubscription.unsubscribe();
-  //   }
-  //   this._changeSubscription = this.changed.subscribe(fn);
-  // }
-
-  // registerOnTouched(fn: (_: any) => {}): void {
-  //   this.onTouched = fn;
-  // }
-
   ngOnDestroy() {
-    if (this.subVal) {
-      this.subVal.unsubscribe();
-    }
-    if (this.subStat) {
-      this.subStat.unsubscribe();
-    }
+    this.unbindControl();
+  }
 
-    // if (this._changeSubscription) {
-    //   this._changeSubscription.unsubscribe();
-    // }
+  private bindControl() {
+    this._sub = merge(this.control.valueChanges, this.control.statusChanges)
+      .subscribe(() => {
+        this.detectChanges();
+      });
+    this.detectChanges();
+  }
+
+  private unbindControl() {
+    if (this._sub) {
+      this._sub.unsubscribe();
+      this._sub = null;
+    }
   }
 
   private detectChanges() {

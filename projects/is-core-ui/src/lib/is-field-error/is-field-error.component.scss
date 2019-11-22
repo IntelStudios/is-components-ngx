@@ -3,13 +3,23 @@
 :host {
   display: flex;
   align-items: center;
+  font-size: var(--is-field-error-msg-font-size, 14px);
   i {
     color: $is-control-invalid-fg-color;
   }
   span {
     color: $is-control-invalid-fg-color;
     font-weight: normal;
-    font-size: 12px;
     padding-left: $is-general-padding-small;
+  }
+  &.align-right {
+    justify-content: flex-end;
+    span {
+      padding-left: 0;
+      padding-right: $is-general-padding-small;
+    }
+    i {
+      order: 1;
+    }
   }
 }
