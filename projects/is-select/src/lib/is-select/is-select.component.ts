@@ -114,21 +114,49 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
       if (this._value) {
         let active = null;
-        if (this.firstItemHasChildren) {
-          this.options.forEach((item: SelectItem) => {
-            const activeChild = item.children.find(c => c.ID === this._value);
-            if (activeChild) {
-              active = activeChild;
-            }
-          });
-        } else {
-          active = this.options.find(o => o.ID === this._value);
+        if (!this.multiple) {
+          // single value
+          if (this.firstItemHasChildren) {
+            this.options.forEach((item: SelectItem) => {
+              const activeChild = item.children.find(c => c.ID === this._value);
+              if (activeChild) {
+                active = activeChild;
+              }
+            });
+          } else {
+            active = this.options.find(o => o.ID === this._value);
+          }
+          this._active = active;
+          if (!active && this.unsetNoMatch) {
+            this._active = null;
+            // there was a value, but given options did not contain it
+            this.emitChange() // emit change
+          }
         }
-        this._active = active;
-        if (!active && this.unsetNoMatch) {
-          this._active = null;
-          // there was a value, but given options did not contain it
-          this.emitChange() // emit change
+        else {
+          // multiple values
+          if (this.firstItemHasChildren) {
+            console.warn('setting value with [multiple]="true" and grouped options not yet implemented')
+            // this.options.forEach((item: SelectItem) => {
+            //   const activeChild = item.children.find(c => c.ID === this._value);
+            //   if (activeChild) {
+            //     active = activeChild;
+            //   }
+            // });
+          } else {
+            active = this.options.filter(o => this._value.indexOf(o.ID) > -1);
+          }
+
+          if (active) {
+            this._active = active;
+          }
+
+          if (!active && this.unsetNoMatch) {
+            console.warn('[unsetNoMatch]="true" does not (yet) work together with [multiple]="true"')
+            // // there was a value, but given options did not contain it
+            // this._active = active;
+            // this.emitChange(); // emit change
+          }
         }
       }
     }
