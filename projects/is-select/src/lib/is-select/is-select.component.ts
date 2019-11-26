@@ -617,7 +617,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
           //   }
           // });
         } else {
-          active = this.options.filter(o => o.ID === this._value);
+          active = this.options.filter(o => this._value.indexOf(o.ID) > -1);
         }
 
         if (active) {
