@@ -8,8 +8,7 @@ is-select-color {
     is-select {
       >.ui-select-container {
         >.ui-select-match {
-          --is-control-border-color: #{$is-control-invalid-fg-color};
-          --is-control-fg-color: #{$is-control-invalid-fg-color};
+          @include is-input-invalid;
         }
       }
     }
