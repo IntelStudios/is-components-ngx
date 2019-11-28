@@ -7,6 +7,7 @@ import {
   OnDestroy,
   OnInit,
   Optional,
+  HostBinding
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -59,6 +60,12 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   error: string;
 
   isShown: boolean = false;
+
+  @HostBinding('class.hidden')
+  get isHidden() {
+    return !this.isShown;
+  }
+
   private translationPrefix: string = 'field-error.';
   private _sub: Subscription;
 
