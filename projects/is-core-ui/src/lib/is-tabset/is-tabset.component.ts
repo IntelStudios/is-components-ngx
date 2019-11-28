@@ -17,7 +17,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, fromEvent, merge } from 'rxjs';
+import { Subscription, fromEvent, merge, interval } from 'rxjs';
 
 let nextId = 0;
 
@@ -111,8 +111,8 @@ export interface TabChangeEvent {
       </li>
     </ul>
 
-    <div class="scroll-btn left"><i class="fas fa-chevron-left" (click)="scrollTabRight()"></i></div>
-    <div class="scroll-btn right"><i class="fas fa-chevron-right" (click)="scrollTabLeft()"></i></div>
+    <div class="scroll-btn left"><i class="fas fa-chevron-left" (mousedown)="scrollTabRight()" (mouseup)="stopScroll()"></i></div>
+    <div class="scroll-btn right"><i class="fas fa-chevron-right" (mousedown)="scrollTabLeft()" (mouseup)="stopScroll()"></i></div>
 
     <div class="tab-content" [class.pills]="pills" *ngIf="tabs.length > 0">
       <ng-template ngFor let-tab [ngForOf]="tabs">
@@ -173,6 +173,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   private elBtnRight: HTMLDivElement;
 
   private _sub: Subscription;
+  private _scrollSub: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef, private renderer: Renderer2) {
 
@@ -269,11 +270,21 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   }
 
   scrollTabRight() {
-    this.elUL.scrollBy({ behavior: 'smooth', left: -50 });
+    this._scrollSub = interval(100).subscribe(() => {
+      this.elUL.scrollBy({ behavior: 'smooth', left: -50 });
+    });
   }
 
   scrollTabLeft() {
-    this.elUL.scrollBy({ behavior: 'smooth', left: 50 });
+    this._scrollSub = interval(100).subscribe(() => {
+      this.elUL.scrollBy({ behavior: 'smooth', left: 50 });
+    });
+  }
+
+  stopScroll() {
+    if (this._scrollSub) {
+      this._scrollSub.unsubscribe();
+    }
   }
 
   private updateScrollBtnVisibility() {
@@ -283,6 +294,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
 
     if (this.elUL.scrollLeft === 0) {
       this.renderer.removeStyle(this.elBtnLeft, 'display');
+      this.stopScroll();
     } else {
       this.renderer.setStyle(this.elBtnLeft, 'display', 'flex');
       this.renderer.setStyle(this.elBtnLeft, 'height', `${this.elUL.clientHeight}px`);
@@ -290,6 +302,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
 
     if (this.elUL.scrollLeft === this.elUL.scrollWidth - this.elUL.clientWidth) {
       this.renderer.removeStyle(this.elBtnRight, 'display');
+      this.stopScroll();
     } else {
       this.renderer.setStyle(this.elBtnRight, 'display', 'flex');
       this.renderer.setStyle(this.elBtnRight, 'height', `${this.elUL.clientHeight}px`);
