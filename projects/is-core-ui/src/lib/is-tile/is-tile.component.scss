@@ -1,0 +1,104 @@
+@import '../../../../styles/variables';
+
+$is-tile-bg-color: var(--is-tile-bg-color, #555);
+$is-tile-fg-color: var(--is-tile-fg-color, #fff);
+$is-tile-border-color: var(--is-tile-border-color, transparent);
+$is-tile-bg-hover-color: var(--is-tile-bg-hover-color, #888);
+
+:host {
+
+  user-select: none;
+
+  &.disabled {
+    cursor: not-allowed;
+    > .tile {
+      pointer-events: none;
+    }
+  }
+
+  .tile {
+    display: block;
+    height: 88px;
+    width: 88px !important;
+    background-color: $is-tile-bg-color;
+    cursor: pointer;
+    position: relative;
+    font-size: 12px;
+    line-height: 15px;
+    overflow: hidden;
+    padding: 4px;
+    border: 4px solid;
+    border-color: $is-tile-border-color;
+    border-radius: $is-general-border-radius;
+    margin: 0 $is-general-padding $is-general-padding 0;
+
+    &:hover {
+      background-color: $is-tile-bg-hover-color;
+    }
+
+    .tile-body {
+      display: flex;
+      justify-content: center;
+      color: $is-tile-fg-color;
+      &.no-icon {
+        display: table;
+        width: 100%;
+        padding: 0;
+      }
+
+      i {
+        margin-top: $is-general-padding;
+        display: block;
+        font-size: 22px;
+        text-align: center;
+      }
+    }
+
+    .tile-object {
+
+      position: absolute;
+      bottom: 0;
+      height: 30px;
+      background-color: transparent;
+      color: $is-tile-fg-color;
+      .name {
+
+        text-align: center;
+        position: absolute;
+        bottom: 2px;
+        font-weight: bold;
+        font-size: 12px;
+        display: block;
+        display: -webkit-box;
+        width: 72px;
+        max-height: 30px;
+        margin: 0 auto;
+        line-height: 15px;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        @media(min--moz-device-pixel-ratio:0) {
+          overflow: hidden;
+          &:before {
+            bottom: 0;
+            position: absolute;
+            right: 0;
+            float: right;
+            content: '\2026';
+            margin-left: -3rem;
+            width: 2rem;
+          }
+          &:after {
+            content: '';
+            position: absolute;
+            height: 50px;
+            width: 100%;
+            z-index: 1;
+          }
+        }
+      }
+    }
+  }
+}

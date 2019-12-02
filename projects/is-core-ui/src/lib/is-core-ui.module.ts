@@ -20,15 +20,16 @@ import {
   IsTabsetComponent,
   IsTabTitleDirective,
 } from './is-tabset/is-tabset.component';
+import { IsTileComponent } from './is-tile/is-tile.component';
 
 @NgModule({
   imports: [
     CommonModule, RouterModule, TranslateModule, PopoverModule, TooltipModule
   ],
   declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective],
+    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent],
   exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective]
+    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent]
 })
 export class IsCoreUIModule {
   static forRoot(config?: IsCoreUIConfig): ModuleWithProviders {

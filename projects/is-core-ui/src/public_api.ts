@@ -13,3 +13,4 @@ export * from './lib/is-field-error/is-validators';
 export * from './lib/is-checkbox/is-checkbox.interfaces';
 export * from './lib/is-checkbox/is-checkbox.component';
 export * from './lib/is-search/is-search.component';
+export * from './lib/is-tile/is-tile.component';

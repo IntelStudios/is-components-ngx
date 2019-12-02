@@ -1,0 +1,8 @@
+<a class="tile" [title]="label" (click)="onClick($event)">
+  <div class="tile-body">
+    <i *ngIf="icon" [class]="icon"></i>
+  </div>
+  <div class="tile-object">
+    <div *ngIf="label" class="name" >{{label}}</div>
+  </div>
+</a>
