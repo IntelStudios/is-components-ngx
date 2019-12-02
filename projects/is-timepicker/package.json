@@ -1,6 +1,6 @@
 {
   "name": "is-timepicker",
-  "version": "8.0.0-dev",
+  "version": "8.0.1-dev",
   "peerDependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
