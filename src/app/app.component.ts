@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
     { title: 'Core UI', route: '/core-ui' },
     { title: 'Date Picker', route: '/datepicker' },
     { title: 'Bootstrap Switch', route: '/bootstrap-switch' },
-    { title: 'Password', route: '/password' },
     { title: 'Editable textbox', route: '/editable-textbox' },
     { title: 'Select Tree', route: '/select-tree' },
     { title: 'Select Tree DX', route: '/dx-select-tree' },

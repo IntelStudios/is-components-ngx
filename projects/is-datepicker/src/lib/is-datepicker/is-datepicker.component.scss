@@ -31,6 +31,7 @@ is-datepicker {
       border:0;
       flex: 1;
       outline: 0;
+      min-width: 0;
       background: transparent;
 
       &.align-left {

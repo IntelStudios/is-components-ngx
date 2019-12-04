@@ -31,7 +31,7 @@
     > .timepicker-value {
       color: $is-control-fg-color;
       flex: 1;
-
+      overflow: hidden;
       &.align-left {
         text-align: left !important;
       }

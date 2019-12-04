@@ -17,18 +17,19 @@
   color: $is-control-fg-color;
   padding: $is-general-padding-small;
   font-size: 14px;
+  &:not(.disabled) {
+    &::placeholder {
+      color: $is-control-placeholder-color;
+    }
+    &:hover {
+      border-color: $is-control-boder-hover-color;
+    }
 
-  &::placeholder {
-    color: $is-control-placeholder-color;
-  }
-  &:hover {
-    border-color: $is-control-boder-hover-color;
-  }
-
-  &:active, &:focus {
-    background-color: $is-control-bg-color;
-    color: $is-control-fg-color;
-    @include is-input-active;
+    &:active, &:focus {
+      background-color: $is-control-bg-color;
+      color: $is-control-fg-color;
+      @include is-input-active;
+    }
   }
 }
 
