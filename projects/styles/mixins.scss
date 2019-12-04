@@ -9,6 +9,15 @@
 @mixin is-input-disabled {
   background-color: $is-control-disabled-bg-color;
   color: $is-control-disabled-fg-color;
+  &:hover {
+    border-color: $is-control-boder-color;
+  }
+  &:active, &:focus {
+    background-color: $is-control-disabled-bg-color;
+    color: $is-control-disabled-fg-color;
+    box-shadow: none;
+    border-color:$is-control-boder-color;
+  }
 }
 
 @mixin is-input {
@@ -17,7 +26,6 @@
   color: $is-control-fg-color;
   padding: $is-general-padding-small;
   font-size: 14px;
-  &:not(.disabled) {
     &::placeholder {
       color: $is-control-placeholder-color;
     }
@@ -30,7 +38,6 @@
       color: $is-control-fg-color;
       @include is-input-active;
     }
-  }
 }
 
 @mixin is-input-invalid {

@@ -40,6 +40,9 @@ body {
 
 .is-input {
   @include is-input;
+  &[disabled] {
+    @include is-input-disabled;
+  }
 }
 
 
