@@ -2,8 +2,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   ElementRef,
+  EventEmitter,
   forwardRef,
   Input,
   Output,
@@ -24,6 +24,7 @@ export const IS_SEARCH_VALUE_ACCESSOR: any = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IsSearchComponent {
+
   @Input()
   placeholder: string = '';
 
@@ -43,7 +44,7 @@ export class IsSearchComponent {
   // change events from the input
   onChange(event: any) {
     if (event) {
-      this.value = event.target.value;
+      // this.value = event.target.value;
       this.changed.next(event.target.value);
       this._onChangeCallback(event.target.value);
     }
