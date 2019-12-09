@@ -19,9 +19,17 @@ export class IsFieldErrorFactory {
   static maxLengthError(maxLength: number, actualLength: number) {
     const error: IsFieldError = new IsFieldError('maxLength', false).withPriority(10);
     error.params = { requiredLength: maxLength, actualLength: actualLength };
-    error.message = 'Required max number of characters';
+    error.message = `Maximum allowed characters is ${maxLength}`;
 
     return { maxLength: error };
+  }
+
+  static minLengthPasswordError(passwordMinLength: number) {
+    const error: IsFieldError = new IsFieldError('passwordMinLength', false).withPriority(10);
+    error.params = { requiredLength: passwordMinLength };
+    error.message = `Password must contain at least ${passwordMinLength} characters`;
+
+    return { passwordMinLength: error };
   }
 
   static licenseKeyError() {
