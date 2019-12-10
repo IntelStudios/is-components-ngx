@@ -42,6 +42,9 @@ export class IsPortletComponent implements OnInit {
   id: string;
 
   @Input()
+  showHeader: boolean = true;
+
+  @Input()
   heading: string;
 
   @Input()

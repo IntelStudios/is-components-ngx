@@ -175,6 +175,18 @@
       </div>
     </is-section>
   </div>
+  <div class="col-sm-6">
+    <is-section [showHeader]="false">
+      <ng-template is-portlet-title>
+        <div class="caption">
+          <a href="#" style="color: white;" [routerLink]="['/']">Section with title template</a>
+        </div>
+      </ng-template>
+      <div class="portlet-body">
+        Section without header
+      </div>
+    </is-section>
+  </div>
 </div>
 
 <div class="row">

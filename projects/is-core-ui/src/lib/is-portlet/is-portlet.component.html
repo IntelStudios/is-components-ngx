@@ -1,5 +1,5 @@
 <div class="portlet" [class.section]="isSection">
-    <div class="portlet-title {{headingClass}}" [ngClass]="{'collapsed-closed': collapse==='closed'}">
+    <div *ngIf="showHeader" class="portlet-title {{headingClass}}" [ngClass]="{'collapsed-closed': collapse==='closed'}">
         <ng-container [ngTemplateOutlet]="templateTitle || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
         </ng-container>
         <ng-content select=".actions"></ng-content>

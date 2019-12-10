@@ -10,5 +10,5 @@
     "moment": "^2.22.2",
     "ngx-bootstrap": "^5.1.2"
   },
-  "version": "8.0.8-dev"
+  "version": "8.0.9-dev"
 }
