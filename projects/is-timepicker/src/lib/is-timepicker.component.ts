@@ -132,7 +132,7 @@ export class IsTimepickerComponent {
       return;
     }
 
-    let positions: any = [{ originX: 'end', originY: 'bottom',  overlayX: 'end', overlayY: 'top' }];
+    const positions: any = [{ originX: 'end', originY: 'bottom',  overlayX: 'end', overlayY: 'top' }];
 
     const positionStrategy = this.overlay.position().flexibleConnectedTo(this.element)
       .withPositions(positions)

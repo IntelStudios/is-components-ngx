@@ -32,6 +32,7 @@
       color: $is-control-fg-color;
       flex: 1;
       overflow: hidden;
+      white-space: nowrap;
       &.align-left {
         text-align: left !important;
       }

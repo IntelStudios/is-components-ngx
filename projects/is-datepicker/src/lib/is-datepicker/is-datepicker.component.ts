@@ -1,6 +1,9 @@
+import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ChangeDetectorRef,
   Component,
+  ComponentRef,
   ElementRef,
   EventEmitter,
   forwardRef,
@@ -8,13 +11,13 @@ import {
   OnDestroy,
   Output,
   Renderer2,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
-import { BsDatepickerDirective } from 'ngx-bootstrap';
 import { Subscription } from 'rxjs';
+
+import { IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
 
 const moment = m;
 
@@ -41,17 +44,17 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   @Input('placeholder')
   placeholder: string = '';
 
-  @Input('iconHidden')
-  iconHidden: boolean = false;
-
-  @Input('initOnLoad')
-  initOnLoad: boolean = true;
-
   /**
    * when stringMode is enabled, expected and emitted date must be in Xeelo date format (DD-MM-YYYY)
    */
   @Input()
   stringMode: boolean = false;
+
+  /**
+   * display date format (angular date pipe)
+   */
+  @Input()
+  viewFormat: string = 'dd-MM-yyyy';
 
   @Input()
   alignment: 'left' | 'center' | 'right' = 'left';
@@ -69,74 +72,134 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('dp', { static: true })
-  datepicker: BsDatepickerDirective;
-
-  dateFormat: string = DATE_FORMAT;
-
-  datepickerModel: any = '';
+  dateValue: any = '';
   disabled: boolean = false;
 
+  private pickerOverlayRef: OverlayRef;
+  private pickerInstanceRef: ComponentRef<IsDatepickerPopupComponent>;
+  private _clickedOutsideListener = null;
   private _changeSubscription: Subscription = null;
   private onTouched: Function;
 
-  constructor(private changeDetector: ChangeDetectorRef, private el: ElementRef, private renderer: Renderer2) {
+  constructor(private changeDetector: ChangeDetectorRef, private overlay: Overlay, private el: ElementRef, private renderer: Renderer2) {
 
   }
+  ngOnDestroy() {
+    if (this._changeSubscription) {
+      this._changeSubscription.unsubscribe();
+    }
+  }
 
-  onChange() {
-    if (this.datepickerModel) {
-      let valid = !isNaN(this.datepickerModel.valueOf());
+  get isOpen(): boolean {
+    return !!this.pickerOverlayRef;
+  }
+
+  onValueChange() {
+    if (this.dateValue) {
+      let valid = !isNaN(this.dateValue.valueOf());
       if (!valid) {
         // if date is invalid then set up actual date
-        this.datepickerModel = this.stripTimezone(new Date());
+        this.dateValue = this.stripTimezone(new Date());
       }
     }
-    if (this.datepickerModel === null) {
+    if (this.dateValue === null) {
       this.changed.emit(null);
       this.changeDetector.markForCheck();
       return;
     }
-    const date = this.stripTimezone(this.datepickerModel);
+    const date = this.stripTimezone(this.dateValue);
     // console.log(date.toISOString());
-    this.changed.emit(this.stringMode ?  moment(date).format(DATE_FORMAT) : date);
+    this.changed.emit(this.stringMode ? moment(this.dateValue).format(DATE_FORMAT) : this.dateValue);
     this.changeDetector.markForCheck();
-  }
-
-  onShown($event: any) {
-    this.adjustPosition();
-    if (!this.datepickerModel && this.initOnLoad) {
-      this.datepickerModel = new Date();
-
-      setTimeout(() => {
-        this.datepicker.show();
-      })
-
-      this.changed.emit(this.stringMode ? moment(this.datepickerModel).format(DATE_FORMAT) : this.datepickerModel);
-      this.changeDetector.markForCheck();
-    }
-  }
-
-  onHidden($event) {
   }
 
   onRemove($event: MouseEvent) {
     $event.preventDefault();
     $event.stopPropagation();
-    this.datepickerModel = null;
-    this.onChange();
+    this.dateValue = null;
+    this.onValueChange();
   }
 
-  openDatepicker() {
-    if (!this.disabled && !this.isOpen) {
-      setTimeout(() => {
-        this.datepicker.show();
-      })
+  closePopup() {
+    if (this.pickerInstanceRef) {
+      this.pickerInstanceRef.destroy();
+      this.pickerOverlayRef.detach();
+      this.pickerOverlayRef.dispose();
+      this.pickerOverlayRef = undefined;
+      this.pickerInstanceRef = undefined;
+
+      if (this._clickedOutsideListener) {
+        this._clickedOutsideListener();
+        this._clickedOutsideListener = null;
+      }
+
+      this.changeDetector.markForCheck();
     }
   }
 
-  get isOpen(): boolean {
-    return this.datepicker && this.datepicker.isOpen;
+  openPopup() {
+    if (this.disabled) {
+      return;
+    }
+
+    if (this.isOpen) {
+      this.closePopup();
+      return;
+    }
+
+    const rect: DOMRect = this.el.nativeElement.getBoundingClientRect();
+    const optionsHeight = 286;
+    const optionsWidth = 280;
+    const isDropup = rect.bottom + optionsHeight > window.innerHeight;
+
+    const position: ConnectedPosition = isDropup ?
+      { originY: 'top', originX: 'end', overlayX: 'end', overlayY: 'bottom' }
+      : { originY: 'bottom', originX: 'end', overlayX: 'end', overlayY: 'top' };
+
+    const wouldOverflowLeft = optionsWidth - rect.width > rect.left;
+    if (wouldOverflowLeft) {
+      position.originX = 'start';
+      position.overlayX = 'start';
+    }
+
+    const positionStrategy = this.overlay.position().flexibleConnectedTo(this.el)
+      .withPositions([position])
+      .withPush(true);
+
+    this.pickerOverlayRef = this.overlay.create(
+      {
+        minWidth: `${optionsWidth}px`,
+        minHeight: `${optionsHeight}px`,
+        positionStrategy: positionStrategy,
+        scrollStrategy: this.overlay.scrollStrategies.reposition()
+      }
+    );
+    this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsDatepickerPopupComponent));
+
+    this.pickerInstanceRef.instance.control = {
+      value: this.dateValue,
+      onChange: (value: Date) => {
+        this.dateValue = value;
+        this.closePopup();
+        this.onValueChange();
+      }
+    }
+
+    this._clickedOutsideListener = this.renderer.listen('document', 'click', ($event: MouseEvent) => {
+      if (this.isOpen) {
+        let el: HTMLElement = <HTMLElement>$event.target;
+        let isThisEl = false;
+        while (el.parentElement && !isThisEl) {
+          isThisEl = this.el.nativeElement === el || this.pickerInstanceRef.location.nativeElement === el;
+          el = el.parentElement;
+        }
+        if (!isThisEl) {
+          this.closePopup();
+        }
+      }
+    });
+
+    this.changeDetector.markForCheck();
   }
 
   /**
@@ -144,7 +207,7 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
    */
   writeValue(value: string): void {
     if (!value) {
-      this.datepickerModel = null;
+      this.dateValue = null;
       this.changeDetector.markForCheck();
       return;
     };
@@ -179,10 +242,10 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   private setValue(value: string) {
     if (value) {
       const date = this.stringMode ? moment(value, DATE_FORMAT).local(true) : moment.utc(value).local(true);
-      this.datepickerModel = date.toDate();
+      this.dateValue = date.toDate();
     }
     else {
-      this.datepickerModel = null;
+      this.dateValue = null;
     }
 
     this.changeDetector.markForCheck();
@@ -197,38 +260,5 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
     return new Date(date.getTime() - userTimezoneOffset);
   }
 
-  /**
-   * nasty workaround to datepicker positioning
-   */
-  private adjustPosition() {
-    // this code is highly based on experiments, calculations does not have anything common with math or geometry
-    // as a side effect there is (either on left or righ) a space, which does not work as close trigger on outside click
-
-    const input = this.el.nativeElement.querySelector('.datepicker-input');
-    const dp = document.querySelector('bs-datepicker-container > .bs-datepicker');
-    //const igb = this.el.nativeElement.querySelector('.input-group-btn');
-    const inputDim: DOMRect = input.getBoundingClientRect();
-    const dpDim: DOMRect = dp.getBoundingClientRect() as DOMRect;
-    //const igbDim: DOMRect = igb.getBoundingClientRect();
-    const elDim: DOMRect = this.el.nativeElement.getBoundingClientRect();
-    const wouldOverflowLeft = dpDim.width - inputDim.width > inputDim.left;
-    this.renderer.setStyle(dp, 'position', 'absolute');
-    this.renderer.setStyle(dp, 'top', '8px');
-    if (wouldOverflowLeft) {
-      this.renderer.setStyle(dp, 'left', `0px`);
-    } else {
-      let addConst: number = 15;
-      if (this.allowClear) {
-        addConst += 9;
-      }
-      this.renderer.setStyle(dp, 'right', `-${addConst + (inputDim.width / 2)}px`);
-    }
-  }
-
-  ngOnDestroy() {
-    if (this._changeSubscription) {
-      this._changeSubscription.unsubscribe();
-    }
-  }
 }
 
