@@ -192,9 +192,11 @@
 <div class="row">
   <div class="col-sm-12">
     <h2>Tabs</h2>
+    <button (click)="tabValid = !tabValid">Valid tab</button>
   </div>
   <div class="col-sm-6">
     <is-tabset>
+      <ng-template TabsetInvalid><i class="fa fa-beer"></i></ng-template>
       <is-tab title="Tab 1">
         <ng-template TabContent>
           First tab content
@@ -208,7 +210,7 @@
           Second tab content
         </ng-template>
       </is-tab>
-      <is-tab>
+      <is-tab [valid]="tabValid">
         <ng-template TabTitle>
           Advanced tab title with quite long text <i class="fa fa-home"></i>
         </ng-template>

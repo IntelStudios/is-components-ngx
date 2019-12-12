@@ -16,6 +16,7 @@ import { IsPortletTitleDirective } from './is-portlet/is-portlet.directives';
 import { IsSearchComponent } from './is-search/is-search.component';
 import {
   IsTabContentDirective,
+  IsTabsetInvalidDirective,
   IsTabDirective,
   IsTabsetComponent,
   IsTabTitleDirective,
@@ -27,9 +28,9 @@ import { IsTileComponent } from './is-tile/is-tile.component';
     CommonModule, RouterModule, TranslateModule, PopoverModule, TooltipModule
   ],
   declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent],
+    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent],
   exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent]
+    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent]
 })
 export class IsCoreUIModule {
   static forRoot(config?: IsCoreUIConfig): ModuleWithProviders {

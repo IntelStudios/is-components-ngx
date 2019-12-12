@@ -1,28 +1,58 @@
 import {
   AfterContentChecked,
   AfterContentInit,
+  AfterViewInit,
   Component,
   ContentChild,
   ContentChildren,
   Directive,
+  ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
   QueryList,
-  TemplateRef,
-  OnInit,
-  OnDestroy,
-  ElementRef,
   Renderer2,
-  AfterViewInit,
+  TemplateRef,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, fromEvent, merge, interval } from 'rxjs';
+import { fromEvent, interval, merge, Subscription, bindCallback, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 let nextId = 0;
 
-/* tslint:disable */
+/**
+ * The payload of the change event fired right before the tab change
+ */
+export interface TabChangeEvent {
+  /**
+   * Id of the currently active tab
+   */
+  activeId: string;
 
+  /**
+   * Id of the newly selected tab
+   */
+  nextId: string;
+
+  forced: boolean;
+
+  /**
+   * Function that will prevent tab switch if called
+   */
+  preventDefault: () => void;
+}
+
+/**
+ * This directive should be used to render invalid content, which appears
+ * when there is an invalid tab not visible by user because of wrap feature
+ */
+@Directive({ selector: 'ng-template[TabsetInvalid]' })
+export class IsTabsetInvalidDirective {
+  constructor(public templateRef: TemplateRef<any>) { }
+}
 
 /**
  * This directive should be used to wrap tab titles that need to contain HTML markup or other directives.
@@ -61,6 +91,22 @@ export class IsTabDirective {
   @Input() disabled = false;
 
   /**
+   * Valid/invalid tab incidation. This allows to incidate invalid tab in tabset
+   * which is not visible to user (because of wrap being enabled)
+   */
+  @Input()
+  set valid(value: boolean) {
+    this._valid = value;
+    console.log('set valid', value);
+    if (this.tabset && value === true || value === false) {
+      this.tabset.updateValidityIndication();
+    }
+  }
+  get valid(): boolean {
+    return this._valid;
+  }
+  private _valid = true;
+  /**
    * set wheather tab content should be lazy-loaded or not. Default is false,
    * so tab's content is immediately rendered. If set to `true` tab's content
    * is loaded when selected for the 1st time
@@ -71,29 +117,19 @@ export class IsTabDirective {
   @ContentChild(IsTabTitleDirective, { static: true }) titleTpl: IsTabTitleDirective;
 
   loaded: boolean = false;
-}
-/* tslint:enable */
 
-/**
- * The payload of the change event fired right before the tab change
- */
-export interface TabChangeEvent {
-  /**
-   * Id of the currently active tab
-   */
-  activeId: string;
+  private tabset: IsTabsetComponent;
+  constructor() {
+
+  }
+
 
   /**
-   * Id of the newly selected tab
+   * *internal use only*
    */
-  nextId: string;
-
-  forced: boolean;
-
-  /**
-   * Function that will prevent tab switch if called
-   */
-  preventDefault: () => void;
+  registerTabset(tabset: IsTabsetComponent) {
+    this.tabset = tabset;
+  }
 }
 
 /**
@@ -104,7 +140,7 @@ export interface TabChangeEvent {
   styleUrls: ['is-tabset.component.scss'],
   template: `
     <ul [class]="tabClass" role="tablist" [class.stretched]="stretched">
-      <li class="nav-item" *ngFor="let tab of tabs" [class.disabled]="tab.disabled">
+      <li class="nav-item" *ngFor="let tab of tabs" [class.disabled]="tab.disabled" [class.is-tab-invalid]="tab.valid === false">
         <a [id]="tab.id" class="nav-link {{tab.titleClass}}" [ngClass]="{'active show' : tab.id === activeId}" (click)="select(tab.id)">
           {{tab.title}}<ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
         </a>
@@ -113,7 +149,13 @@ export interface TabChangeEvent {
 
     <div class="scroll-btn left"><i class="fas fa-chevron-left" (mousedown)="scrollTabRight()" (mouseup)="stopScroll()"></i></div>
     <div class="scroll-btn right"><i class="fas fa-chevron-right" (mousedown)="scrollTabLeft()" (mouseup)="stopScroll()"></i></div>
-
+    <div *ngIf="tabsetInvalid" class="tabset-invalid">
+    <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate || defaultInvalidTemplate">
+        </ng-container>
+    </div>
+    <ng-template #defaultInvalidTemplate>
+      <i class="fas fa-exclamation"></i>
+    </ng-template>
     <div class="tab-content" [class.pills]="pills" *ngIf="tabs.length > 0">
       <ng-template ngFor let-tab [ngForOf]="tabs">
         <div class="tab-pane" [ngClass]="{'active show' : tab.id === activeId}" *ngIf="tab.loaded || tab.id === activeId" role="tabpanel" [attr.aria-labelledby]="tab.id">
@@ -165,6 +207,11 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
 
   @ContentChildren(IsTabDirective) tabs: QueryList<IsTabDirective>;
 
+  @ContentChild(IsTabsetInvalidDirective, { static: false, read: TemplateRef })
+  tabsetInvalidTemplate: IsTabsetInvalidDirective
+
+  tabsetInvalid: boolean = false;
+
   private isSelecting: boolean = false;
 
   private elUL: HTMLUListElement;
@@ -174,8 +221,10 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
 
   private _sub: Subscription;
   private _scrollSub: Subscription;
+  private _updateValidity$: Subject<any> = new Subject();
+  private _updateValiditySub: Subscription;
 
-  constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef, private renderer: Renderer2) {
+  constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private changeDetector: ChangeDetectorRef) {
 
   }
 
@@ -195,10 +244,36 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
         .subscribe(() => {
           this.updateScrollBtnVisibility();
         });
+
+      this._updateValiditySub = merge(...sources, this._updateValidity$.asObservable())
+        .pipe(debounceTime(200))
+        .subscribe(() => {
+          if (!this.elUL) {
+            return;
+          }
+          const width = this.elUL.getBoundingClientRect().left + this.elUL.clientWidth;
+          const tabs = this.elUL.querySelectorAll('ul > .is-tab-invalid');
+          let isInvalidTabHidden = false;
+
+          tabs.forEach(t => {
+            if (isInvalidTabHidden) {
+              return;
+            }
+            const rect = t.getBoundingClientRect();
+            if (rect.left + (rect.width - 1) > width) {
+              isInvalidTabHidden = true;
+            }
+          });
+          this.tabsetInvalid = isInvalidTabHidden;
+          this.changeDetector.markForCheck();
+        });
     }
   }
 
   ngOnDestroy() {
+    if (this._updateValidity$) {
+      this._updateValiditySub.unsubscribe();
+    }
     if (this._sub) {
       this._sub.unsubscribe();
     }
@@ -206,17 +281,20 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
 
   ngAfterViewInit() {
     this.updateScrollBtnVisibility();
+
   }
 
   ngAfterContentInit() {
     //set internal loaded state based on input lazyLoad option
     this.tabs.forEach((t: IsTabDirective) => {
+      t.registerTabset(this);
       if (!t.loaded) {
         t.loaded = t.load === 'always';
       } else {
         t.loaded = t.load !== 'activeOnly';
       }
     });
+    this.updateValidityIndication();
   }
 
   ngAfterContentChecked() {
@@ -285,6 +363,11 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
     if (this._scrollSub) {
       this._scrollSub.unsubscribe();
     }
+  }
+
+
+  updateValidityIndication() {
+    this._updateValidity$.next();
   }
 
   private updateScrollBtnVisibility() {

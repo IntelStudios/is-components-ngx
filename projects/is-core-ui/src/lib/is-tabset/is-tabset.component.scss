@@ -16,6 +16,12 @@
 :host {
   position: relative;
   display: block;
+  > .tabset-invalid {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+  }
   > .scroll-btn {
     position: absolute;
     z-index: 1;

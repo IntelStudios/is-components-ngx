@@ -44,6 +44,8 @@ export class DemoCoreUIComponent implements OnInit {
   checkboxIndeterminate = false;
   radioGroupControl: FormControl = new FormControl();
 
+  tabValid = true;
+
   constructor() {
     this.formControl1 = new FormControl();
     this.formControl2 = new FormControl();
