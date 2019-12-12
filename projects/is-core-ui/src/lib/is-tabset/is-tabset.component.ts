@@ -97,8 +97,7 @@ export class IsTabDirective {
   @Input()
   set valid(value: boolean) {
     this._valid = value;
-    console.log('set valid', value);
-    if (this.tabset && value === true || value === false) {
+    if (this.tabset && (value === true || value === false)) {
       this.tabset.updateValidityIndication();
     }
   }
@@ -119,6 +118,7 @@ export class IsTabDirective {
   loaded: boolean = false;
 
   private tabset: IsTabsetComponent;
+
   constructor() {
 
   }
