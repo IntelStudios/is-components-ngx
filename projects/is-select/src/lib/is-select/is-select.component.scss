@@ -75,15 +75,15 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
 
       &.multiple {
         height: auto;
-        min-height: 34px;
+        min-height: 32px;
 
         &.fixed-height {
-          height: 34px;
+          height: 32px;
           align-items: flex-start;
           overflow: hidden;
 
           >.ui-select-toggle {
-            padding-top: 3px;
+            padding-top: 1px;
           }
 
           >.additional-values {
@@ -100,7 +100,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         >.ui-select-toggle {
           display: flex;
           flex-wrap: wrap;
-          padding: 2px;
+          padding: 1px 2px 0 2px;
 
           .ui-select-placeholder {
             padding: 4px;

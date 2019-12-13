@@ -681,16 +681,18 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this.optionsOverlayRef.updatePosition();
     }
     if (this.resize === false) {
+      const elWrap = this.element.nativeElement.querySelector('.ui-select-match');
+      const wrapRect = elWrap.getBoundingClientRect();
       const el = this.element.nativeElement.querySelector('.ui-select-toggle');
       const rect = el.getBoundingClientRect();
-      if (rect.height < 30) {
+      if (rect.height <= wrapRect.height) {
         if (this.additionalValues !== 0) {
           this.additionalValues = 0;
           this.changeDetector.markForCheck();
           return;
         }
       }
-      if (rect.height > 33) {
+      if (rect.height > wrapRect.height + 3) {
         // some options got hidden
         // force rendering hint for additional values
         this.additionalValues = 1;
