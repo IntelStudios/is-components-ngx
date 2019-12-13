@@ -20,7 +20,13 @@
     position: absolute;
     z-index: 1;
     top: 0;
-    right: 0;
+
+    &.left {
+      left: 0;
+    }
+    &.right {
+      right: 0;
+    }
   }
   > .scroll-btn {
     position: absolute;

@@ -149,9 +149,13 @@ export class IsTabDirective {
 
     <div class="scroll-btn left"><i class="fas fa-chevron-left" (mousedown)="scrollTabRight()" (mouseup)="stopScroll()"></i></div>
     <div class="scroll-btn right"><i class="fas fa-chevron-right" (mousedown)="scrollTabLeft()" (mouseup)="stopScroll()"></i></div>
-    <div *ngIf="tabsetInvalid" class="tabset-invalid">
-    <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate || defaultInvalidTemplate">
-        </ng-container>
+    <div *ngIf="tabsetInvalidLeft" class="tabset-invalid left">
+      <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate || defaultInvalidTemplate">
+      </ng-container>
+    </div>
+    <div *ngIf="tabsetInvalidRight" class="tabset-invalid right">
+      <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate || defaultInvalidTemplate">
+      </ng-container>
     </div>
     <ng-template #defaultInvalidTemplate>
       <i class="fas fa-exclamation"></i>
@@ -210,7 +214,9 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   @ContentChild(IsTabsetInvalidDirective, { static: false, read: TemplateRef })
   tabsetInvalidTemplate: IsTabsetInvalidDirective
 
-  tabsetInvalid: boolean = false;
+  tabsetInvalidLeft: boolean = false;
+  tabsetInvalidRight: boolean = false;
+
 
   private isSelecting: boolean = false;
 
@@ -251,20 +257,22 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
           if (!this.elUL) {
             return;
           }
-          const width = this.elUL.getBoundingClientRect().left + this.elUL.clientWidth;
+          const ulRect = this.elUL.getBoundingClientRect();
+          const width = ulRect.left + this.elUL.clientWidth;
           const tabs = this.elUL.querySelectorAll('ul > .is-tab-invalid');
-          let isInvalidTabHidden = false;
 
+          this.tabsetInvalidRight = false;
+          this.tabsetInvalidLeft = false;
           tabs.forEach(t => {
-            if (isInvalidTabHidden) {
-              return;
-            }
             const rect = t.getBoundingClientRect();
+            if (rect.left < ulRect.left) {
+              this.tabsetInvalidLeft = true;
+            }
             if (rect.left + (rect.width - 1) > width) {
-              isInvalidTabHidden = true;
+              this.tabsetInvalidRight = true;
             }
           });
-          this.tabsetInvalid = isInvalidTabHidden;
+          this.tabsetInvalidRight;
           this.changeDetector.markForCheck();
         });
     }
