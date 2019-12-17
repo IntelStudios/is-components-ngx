@@ -59,7 +59,16 @@ export class IsPortletComponent implements OnInit {
   @ContentChild(IsPortletTitleDirective, { read: TemplateRef, static: true })
   templateTitle: IsPortletTitleDirective;
 
-  collapse: string = 'open';
+  @Input()
+  set collapse(value: boolean){
+    if (value) {
+      this._collapse = 'open';
+    } else {
+      this._collapse = 'closed';
+    }
+    this.changeDetector.markForCheck();
+  }
+  _collapse: string = 'open';
 
   isSection: boolean;
 
@@ -71,14 +80,14 @@ export class IsPortletComponent implements OnInit {
     this.isSection = this.el.nativeElement.localName === 'is-section';
     if (this.id) {
       const setting = localStorage.getItem(`is-portlet:${this.id}`);
-      this.collapse = ['open', 'closed'].indexOf(setting) < 0 ? 'open' : setting;
+      this._collapse = ['open', 'closed'].indexOf(setting) < 0 ? 'open' : setting;
     }
   }
 
   toggleCollapse() {
-    this.collapse = this.collapse === 'open' ? 'closed' : 'open';
+    this._collapse = this._collapse === 'open' ? 'closed' : 'open';
     if (this.id) {
-      localStorage.setItem(`is-portlet:${this.id}`, this.collapse);
+      localStorage.setItem(`is-portlet:${this.id}`, this._collapse);
     }
     this.changeDetector.markForCheck();
   }
