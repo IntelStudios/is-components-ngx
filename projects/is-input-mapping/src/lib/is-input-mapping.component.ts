@@ -133,7 +133,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
       this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
     } else {
-      console.log('this.collapsed', this.collapsed)
       this.icon = !this.collapsed ? 'fa-folder' : 'fa-folder-open'; // folder
     }
 
