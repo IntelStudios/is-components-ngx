@@ -6,24 +6,35 @@
      (mouseover)="mouseover = true"
      (mouseout)="mouseover = false"
 >
-  <div class="node-icon fa {{icon}}"></div>
+  <i class="node-icon fa {{icon}}"></i>
   <span>{{paintedStructure.Name}}</span>
 
   <span *ngIf="paintedStructure.Children.length === 0">
-    <span class="assigned-item" *ngFor="let item of inputsAssigned">{{item.Name}} <i class="fa fa-times btn-release-item" (click)="release(item)"></i></span>
+    <span class="assigned-item" *ngFor="let item of inputsAssigned">
+      <div>
+        <span class="name">{{item.Name}}</span>
+        <span class="delete">
+          <i class="fa fa-times btn-release-item" (click)="release(item)"></i>
+        </span>
+      </div>
+    </span>
     <i *ngIf="!disabled && inputsAssignableFiltered.length > 0 && (mouseover || dropdownVisible)" class="fa fa-plus-square btn-attach-item" (click)="dropdownShown()"></i>
   </span>
 
   <div class="dropdown" *ngIf="dropdownVisible">
     <div class="dropdown-content">
-      <div *ngFor="let item of inputsAssignableFiltered" (click)="assign(item)" class="item"><div class="node-icon fa {{getTypeIcon(item.DataType)}}"></div>{{item.Name}}</div>
+      <div *ngFor="let item of inputsAssignableFiltered" (click)="assign(item)" class="item">
+        <div class="node-icon fa {{getTypeIcon(item.DataType)}}"></div>
+        <span>{{item.Name}}</span>
+        <i [class]="'fa fa-plus-square'"></i>
+      </div>
     </div>
   </div>
 
   <i *ngIf="paintedStructure.Children.length > 0" class="chevron fa" [class.fa-chevron-up]="!collapsed" [class.fa-chevron-down]="collapsed"></i>
 </div>
 
-<div class="children" [class.left-line]="level > 0" *ngIf="data && collapsed" [ngStyle]="{ marginLeft: (level * 5) + 'px' }">
+<div class="children" [class.left-line]="level > 0" *ngIf="data && collapsed">
   <is-input-mapping *ngFor="let child of paintedStructure.Children; let i = index"
                         [data]="data"
                         [paintedPath]="getChildPath(i)"

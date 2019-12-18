@@ -30,13 +30,6 @@ import { IsInputMappingService } from './is-input-mapping.service';
 })
 export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
-  inputSchemaMap: Map<string, string>;  // the value of this element, only used in the root instance
-
-  level: number = null;
-  collapsible = false;
-
-  private _data: IsInputMappingInput = null;
-
   @Input()
   set data(value: IsInputMappingInput) {
     if (typeof (value) === 'undefined') {
@@ -53,7 +46,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       }
     }
   }
-
   get data(): IsInputMappingInput {
     return this._data;
   }
@@ -64,22 +56,27 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   @Input()
   service: IsInputMappingService; // taken from root element
 
-  private inputsAssignable: InputSchema[] = [];
   inputsAssignableFiltered: InputSchema[] = [];
   inputsAssigned: InputSchema[] = [];
   inputsFilled: InputSchema[] = [];
-
   paintedStructure: DataStructure; // the part of the data that this element represents
 
   icon: string;
   collapsed = true;
   dropdownVisible = false;
 
+  inputSchemaMap: Map<string, string>;  // the value of this element, only used in the root instance
+
+  level: number = null;
+  collapsible = false;
+
+  private _inputsAssignable: InputSchema[] = [];
+  private _data: IsInputMappingInput = null;
   private _mouseover = false;
-  private mouseoverSubject = new Subject<boolean>();
+  private _mouseoverSubject = new Subject<boolean>();
 
   set mouseover(value: boolean) {
-    this.mouseoverSubject.next(value);
+    this._mouseoverSubject.next(value);
     if (value) { // apply mouseover immediately
       this._mouseover = value;
     }
@@ -111,34 +108,39 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.service = this.serviceRoot;
       this.inputSchemaMap = new Map<string, string>();
       this.collapsible = true;
+
       if (this._data) {
         this.paintedStructure = this._data.DataStructure;
       }
+
     } else { // no root
       let paintedData: DataStructure = this._data.DataStructure;
+
       for (const pathIndex of this.paintedPath) {
         paintedData = paintedData.Children[pathIndex];
       }
+
       this.paintedStructure = paintedData;
       this.level = this.paintedPath.length;
       this.collapsible = this.paintedStructure.Children.length > 0;
     }
 
     if (!this.collapsible) { // node that can have attached items
-      this.inputsAssignable = this._data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
+      this._inputsAssignable = this._data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
       const alreadyAssignedNames = this.service.getAssignedItemNames();
-      this.inputsAssignableFiltered = this.inputsAssignable.slice().filter(item => alreadyAssignedNames.indexOf(item.Name) === -1);
+      this.inputsAssignableFiltered = this._inputsAssignable.slice().filter(item => alreadyAssignedNames.indexOf(item.Name) === -1);
       this.icon = this.getTypeIcon(this.paintedStructure.DataType);
 
       this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
     } else {
-      this.icon = 'fa-folder-open'; // folder
+      console.log('this.collapsed', this.collapsed)
+      this.icon = !this.collapsed ? 'fa-folder' : 'fa-folder-open'; // folder
     }
 
     this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
 
     // debounce quick changes in mouseover states
-    this._subscriptions.push(this.mouseoverSubject.asObservable().pipe(debounceTime(20)).subscribe(value => this._mouseover = value));
+    this._subscriptions.push(this._mouseoverSubject.asObservable().pipe(debounceTime(20)).subscribe(value => this._mouseover = value));
 
     // subscribe to assigning items
     this._subscriptions.push(this.service.itemAssigned$.subscribe(item => this.assignCallback(item)));
@@ -155,7 +157,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
 
       // add released item back to available items
-      for (const item of this.inputsAssignable) {
+      for (const item of this._inputsAssignable) {
         if ((item.Name === data.Item.Name) && (this.inputsAssignableFiltered.filter(input => input.Name === item.Name).length === 0)) {
           this.inputsAssignableFiltered.push(item);
           this.inputsAssignableFiltered.sort();
@@ -173,21 +175,21 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }));
   }
 
-  ngOnDestroy(): void {
-    this._subscriptions.forEach(s => s.unsubscribe());
-  }
-
   toggleCollapsed() {
     if (!this.collapsible || this.disabled) {
       return;
     }
+
     this.collapsed = !this.collapsed;
+    this.icon = !this.collapsed ? 'fa-folder' : 'fa-folder-open'; // folder
+    this.cd.markForCheck();
   }
 
   dropdownShown() {
     if (this.disabled) {
       return;
     }
+
     this.dropdownVisible = true;
   }
 
@@ -195,11 +197,135 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     if (this.disabled) {
       return;
     }
+
     this.dropdownVisible = false;
   }
 
   assign(item: InputSchema) {
     this.service.assignItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
+  }
+
+  release(item: InputSchema) {
+    this.service.releaseItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
+  }
+
+  getChildPath(i: number): number[] {
+    const path = this.paintedPath.slice();
+    path.push(i);
+
+    return path;
+  }
+
+  getTypeIcon(type: number) {
+    switch (type) {
+      case 1:
+        // int
+        return 'fa-pause';
+      case 2:
+        // string
+        return 'fa-font';
+      case 3:
+        // boolean
+        return 'fa-columns';
+      case 4:
+        // base64
+        return 'fa-database';
+      case 5:
+        // datetime
+        return 'fa-calendar';
+      case 6:
+        // double
+        return 'fa-angle-double-up';
+      case 7:
+        // complex
+        return 'fa-code-fork';
+    }
+  }
+
+  /*
+   * Control value accessor
+   */
+  writeValue(value: Map<string, string>): void {
+    value = new Map(value);
+    if (!this.data) {
+      return;
+    }
+
+    const findNodePaintedPathByPath = (rootPath: string, struct: DataStructure, paintedPath: number[]): number[] => {
+      if (struct.Path === rootPath) {
+        return paintedPath;
+      }
+
+      for (let i = 0; i < struct.Children.length; i++) {
+        const child = struct.Children[i];
+        const paintedChildPath = paintedPath.slice();
+        paintedChildPath.push(i);
+        if (rootPath.startsWith(child.Path)) {
+          const returnedData = findNodePaintedPathByPath(rootPath, child, paintedChildPath);
+          if (returnedData) {
+            return returnedData;
+          }
+        }
+      }
+      return null;
+    };
+
+    const findItemByName = (name): InputSchema => {
+      for (const schema of this._data.InputSchema) {
+        if (schema.Name === name) {
+          return schema;
+        }
+      }
+
+      return null;
+    };
+
+    // clear all previous values
+    this.inputSchemaMap.forEach((path, itemName) => {
+      const nodePaintedPath = findNodePaintedPathByPath(path, this._data.DataStructure, []);
+      const item = findItemByName(itemName);
+
+      if (!nodePaintedPath || !item) {
+        return;
+      }
+
+      this.service.releaseItem({ Item: item, Path: path, PaintedPath: nodePaintedPath, EmmitChange: false });
+    });
+
+    if (!value) {
+      return;
+    }
+
+    value.forEach((path, itemName) => {
+      const nodePaintedPath = findNodePaintedPathByPath(path, this._data.DataStructure, []);
+      const item = findItemByName(itemName);
+
+      if (!nodePaintedPath || !item) {
+        return;
+      }
+
+      this.service.assignItem({ Item: item, Path: path, PaintedPath: nodePaintedPath, EmmitChange: false });
+    });
+  }
+
+  /*
+   * Control value accessor
+   */
+  registerOnChange(fn: Function): void {
+    this._on_changes = fn;
+  }
+
+  /*
+   * Control value accessor
+   */
+  registerOnTouched(fn: any): void {
+  }
+
+  /*
+   * Control value accessor
+   */
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
   private assignCallback(status: AssignStatus) {
@@ -222,107 +348,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
   }
 
-  release(item: InputSchema) {
-    this.service.releaseItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
-  }
-
-  getChildPath(i: number): number[] {
-    const path = this.paintedPath.slice();
-    path.push(i);
-    return path;
-  }
-
-  getTypeIcon(type: number) {
-    switch (type) {
-      case 1:
-        return 'fa-plus';
-      case 2:
-        return 'fa-font';
-      case 3:
-        return 'fa-toggle-on';
-      case 4:
-        return 'fa-info';
-      case 5:
-        return 'fa-hourglass-half';
-      case 6:
-        return 'fa-plus';
-      case 7:
-        return 'fa-plus';
-    }
-  }
-
-  /*
-   * Control value accessor
-   */
-
-  writeValue(value: Map<string, string>): void {
-    value = new Map(value);
-    if (!this.data) {
-      return;
-    }
-
-    const findNodePaintedPathByPath = (rootPath: string, struct: DataStructure, paintedPath: number[]): number[] => {
-      if (struct.Path === rootPath) {
-        return paintedPath;
-      }
-      for (let i = 0; i < struct.Children.length; i++) {
-        const child = struct.Children[i];
-        const paintedChildPath = paintedPath.slice();
-        paintedChildPath.push(i);
-        if (rootPath.startsWith(child.Path)) {
-          const returnedData = findNodePaintedPathByPath(rootPath, child, paintedChildPath);
-          if (returnedData) {
-            return returnedData;
-          }
-        }
-      }
-      return null;
-    };
-
-    const findItemByName = (name): InputSchema => {
-      for (const schema of this._data.InputSchema) {
-        if (schema.Name === name) {
-          return schema;
-        }
-      }
-      return null;
-    };
-
-    // clear all previous values
-    this.inputSchemaMap.forEach((path, itemName) => {
-      const nodePaintedPath = findNodePaintedPathByPath(path, this._data.DataStructure, []);
-      const item = findItemByName(itemName);
-
-      if (!nodePaintedPath || !item) {
-        return;
-      }
-
-      this.service.releaseItem({ Item: item, Path: path, PaintedPath: nodePaintedPath, EmmitChange: false });
-    });
-
-    if (!value) {
-      return;
-    }
-    value.forEach((path, itemName) => {
-      const nodePaintedPath = findNodePaintedPathByPath(path, this._data.DataStructure, []);
-      const item = findItemByName(itemName);
-
-      if (!nodePaintedPath || !item) {
-        return;
-      }
-
-      this.service.assignItem({ Item: item, Path: path, PaintedPath: nodePaintedPath, EmmitChange: false });
-    });
-  }
-
-  registerOnChange(fn: Function): void {
-    this._on_changes = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+  ngOnDestroy(): void {
+    this._subscriptions.forEach(s => s.unsubscribe());
   }
 }

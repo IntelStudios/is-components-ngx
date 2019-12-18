@@ -6,14 +6,20 @@
     color: $is-color-fg;
 
     &.disabled {
-      color: $is-color-disabled-fg;
+      color: #878D94;
     }
 
     .node-icon {
-      opacity: .5;
-      margin-right: 2px;
-      width: 20px !important;
+      width: 24px;
+      height: 24px;
+      padding: 6px;
+      margin-right: 4px;
       text-align: center;
+      background-color: #EDEEEF;
+      color: #2B3642;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: bold;
     }
 
     &.folder:not(.disabled) {
@@ -28,17 +34,40 @@
 
     .btn-attach-item {
       cursor: pointer;
-      margin-left: 10px;
+      margin-left: 8px;
       z-index: 100;
     }
 
     .assigned-item {
-      background: $is-color-active-item-bg;
-      color: $is-color-selected-item;
+      background-color: #2B3642;
+      color: #fff;
       border-radius: 2px !important;
-      padding: 3px;
-      margin-left: 7px;
+      //padding: 8px 4px;
+      margin-left: 8px;
       display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      height: 20px;
+
+      >div {
+        display: flex;
+        align-items: center;
+        margin-left: 4px;
+      }
+
+      .name {
+        padding-right: 4px;
+      }
+
+      .delete {
+        width: 20px;
+        height: 20px;
+        padding: 4px;
+        border-left: 1px solid #444E58;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
       .btn-release-item {
         cursor: pointer;
@@ -57,34 +86,63 @@
         position: absolute;
         top: -10px;
         box-shadow: 0 3px 6px #00000029;
-        border: 1px solid #707070;
-        background: $is-color-bg;
-        border-radius: 3px !important;
+        //border: 1px solid #707070;
+        background: #EDEEEF;
+        border-radius: 4px !important;
         z-index: 1000 !important;
-        padding: 11px 8px;
+        padding: 0px;
+
+        .node-icon {
+          margin-right: 0px;
+          padding: 0;
+          width: unset;
+          height: unset;
+          padding-right: 4px;
+        }
+
+        i {
+          text-align: right !important;
+        }
 
         .item {
           cursor: pointer;
-          margin-bottom: 5px;
+          margin-bottom: 4px;
           white-space: nowrap;
-        }
+          min-width: 140px;
+          display: flex;
+          align-items: center;
+          margin-top: 4px;
+          padding-left: 8px;
+          padding-right: 8px;
+          height: 24px;
 
-        .item:last-of-type {
-          margin-bottom: 0;
-        }
+          >span {
+            flex: 1;
+          }
 
-        .item:hover {
-          transform: darken(#FFF, .5);
+          &:hover {
+            background-color: #DCDEDF;
+            border-radius: 4px;
+          }
+
+          &:last-of-type {
+            margin-bottom: 4px;
+          }
+
+          .node-icon {
+            background: transparent;
+          }
         }
       }
     }
   }
 
   .left-line {
-    border-left: 1px solid #777777;
+    border-left: 8px solid #EDEEEF;
   }
 
   .children {
-    padding-left: 10px;
+    padding-left: 8px;
+    margin-left: 8px;
   }
 }
