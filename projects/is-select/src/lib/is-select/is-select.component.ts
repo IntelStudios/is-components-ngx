@@ -291,7 +291,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     if (this._disabled === true) {
       this.hideOptions();
     }
-    this.changeDetector.detectChanges();
+    this.changeDetector.markForCheck();
   }
 
   registerOnTouched(fn: (_: any) => {}): void {
