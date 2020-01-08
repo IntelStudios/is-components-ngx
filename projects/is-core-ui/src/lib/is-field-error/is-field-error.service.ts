@@ -53,6 +53,20 @@ export class IsFieldErrorFactory {
     return { maxNumber: error };
   }
 
+  static maxFileSizeError(maxSize: string) {
+    const error: IsFieldError = new IsFieldError('maxFileSize', false).withPriority(20);
+    error.params = { maxSize: maxSize };
+
+    return { maxFileSize: error };
+  }
+
+  static unsupportedFileType(supportedTypes: string) {
+    const error: IsFieldError = new IsFieldError('unsupportedFileType', false).withPriority(20);
+    error.params = { supportedTypes: supportedTypes };
+
+    return { unsupportedFileType: error };
+  }
+
   static minNumberError(minNum: number, actual: number) {
     const error: IsFieldError = new IsFieldError('minNumber', false).withPriority(20);
     error.params = { requiredMin: minNum, actual: actual };
