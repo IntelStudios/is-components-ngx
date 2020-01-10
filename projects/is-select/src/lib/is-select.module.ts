@@ -1,4 +1,5 @@
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
@@ -12,10 +13,10 @@ import { IsCoreUIModule } from 'is-core-ui';
 
 @NgModule({
   imports: [
-    CommonModule, OverlayModule, IsCoreUIModule
+    CommonModule, OverlayModule, IsCoreUIModule, ScrollingModule
   ],
   declarations: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent, IsSelectOptionsComponent],
-  exports: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent],
+  exports: [ScrollingModule, IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent],
   entryComponents: [IsSelectOptionsComponent]
 })
 export class IsSelectModule { }

@@ -486,7 +486,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         width: `${rect.width + 2}px`,
         minHeight: '34px',
         positionStrategy: positionStrategy,
-        scrollStrategy: this.overlay.scrollStrategies.reposition({autoClose: true})
+        scrollStrategy: this.overlay.scrollStrategies.close()
       }
     );
     // subscribe to detach event

@@ -11,7 +11,7 @@ import { IsCoreUIModule } from 'projects/is-core-ui/src/public_api';
 @NgModule({
   declarations: [DemoSelectComponent],
   imports: [
-    CommonModule, IsSelectModule, ReactiveFormsModule, IsCoreUIModule
+    CommonModule, IsSelectModule, ReactiveFormsModule, IsCoreUIModule,
   ]
 })
 export class DemoSelectModule { }
