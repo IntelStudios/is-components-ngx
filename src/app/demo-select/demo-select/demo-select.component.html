@@ -159,6 +159,22 @@
       </div>
     </ng-template>
   </is-tab>
+
+  <is-tab title="Inside scrollable area">
+    <ng-template TabContent>
+      <div style="overflow: auto; height: 300px;">
+        <div style="height: 100vh;"></div>
+      <div class="row">
+        <div class="col-sm-6">
+          <is-select class="select-with-some-class" [formControl]="select1Control" [placeholderShow]="false"
+      [allowClear]="true" [items]="items" (changed)="changed($event)" placeholder="No city selected">
+    </is-select>
+        </div>
+        </div>
+      </div>
+    </ng-template>
+  </is-tab>
+
 </is-tabset>
 
 <div style="height: 100vh;"></div>

@@ -51,6 +51,9 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
   placeholder: string = 'None';
 
   @Input()
+  isSearch: boolean = true;
+
+  @Input()
   set value(value: any) {
     this._value = value;
     this.setValue();

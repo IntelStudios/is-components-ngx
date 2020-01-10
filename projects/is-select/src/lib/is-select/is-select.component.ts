@@ -242,6 +242,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   private _clickedOutsideListener = null;
   private onTouched: Function;
   private _changeSubscription: Subscription = null;
+  private _detachSub: Subscription;
   /**
    * internal value is used to store a value state in case we do not have options yet
    */
@@ -463,20 +464,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   hideOptions() {
     if (this.optionsInstanceRef) {
-      this.optionsInstanceRef.destroy();
       this.optionsOverlayRef.detach();
-      this.optionsOverlayRef.dispose();
-      this.optionsOverlayRef = undefined;
-      this.optionsInstanceRef = undefined;
-      if (this._clickedOutsideListener) {
-        this._clickedOutsideListener();
-        this._clickedOutsideListener = null;
-      }
-
-      if (this._minLoadChars > 0) {
-        this.items = null; // clear lazy loaded items
-      }
-      this.changeDetector.markForCheck();
     }
   }
 
@@ -498,9 +486,30 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         width: `${rect.width + 2}px`,
         minHeight: '34px',
         positionStrategy: positionStrategy,
-        scrollStrategy: this.overlay.scrollStrategies.reposition()
+        scrollStrategy: this.overlay.scrollStrategies.reposition({autoClose: true})
       }
     );
+    // subscribe to detach event
+    // overlay can be detached by us (calling hidOptions()) or by reposition strategy
+    // we need to cleanup things
+    this._detachSub = this.optionsOverlayRef.detachments().subscribe(() => {
+      // console.log('overlay detached');
+      this.optionsInstanceRef.destroy();
+      this.optionsOverlayRef.dispose();
+      this.optionsOverlayRef = undefined;
+      this.optionsInstanceRef = undefined;
+      if (this._clickedOutsideListener) {
+        this._clickedOutsideListener();
+        this._clickedOutsideListener = null;
+      }
+
+      if (this._minLoadChars > 0) {
+        this.items = null; // clear lazy loaded items
+      }
+      this.changeDetector.markForCheck();
+      this._detachSub.unsubscribe();
+    });
+
     this.optionsInstanceRef = this.optionsOverlayRef.attach(new ComponentPortal(IsSelectOptionsComponent));
     // copy/inherit classes from is-select and add them to is-select-options element, but ignore ng-*
     const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass;
