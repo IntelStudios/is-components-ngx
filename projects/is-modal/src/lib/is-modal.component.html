@@ -4,7 +4,7 @@
     <i class="fas fa-times"></i>
   </button>
 </div>
-<div class="modal-body" [class.short-scroll]="bodyScroll">
+<div class="modal-body" [class.short-scroll]="bodyScroll" cdkScrollable>
   <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{$implicit: this, modal: this}">
   </ng-container>
 </div>
