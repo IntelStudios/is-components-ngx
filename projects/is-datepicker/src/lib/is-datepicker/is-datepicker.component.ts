@@ -80,6 +80,7 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   private _clickedOutsideListener = null;
   private _changeSubscription: Subscription = null;
   private onTouched: Function;
+  private _detachSub: Subscription;
 
   constructor(private changeDetector: ChangeDetectorRef, private overlay: Overlay, private el: ElementRef, private renderer: Renderer2) {
 
@@ -87,6 +88,9 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   ngOnDestroy() {
     if (this._changeSubscription) {
       this._changeSubscription.unsubscribe();
+    }
+    if (this._detachSub) {
+      this._detachSub.unsubscribe();
     }
   }
 
@@ -122,18 +126,7 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
 
   closePopup() {
     if (this.pickerInstanceRef) {
-      this.pickerInstanceRef.destroy();
       this.pickerOverlayRef.detach();
-      this.pickerOverlayRef.dispose();
-      this.pickerOverlayRef = undefined;
-      this.pickerInstanceRef = undefined;
-
-      if (this._clickedOutsideListener) {
-        this._clickedOutsideListener();
-        this._clickedOutsideListener = null;
-      }
-
-      this.changeDetector.markForCheck();
     }
   }
 
@@ -171,10 +164,29 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
         minWidth: `${optionsWidth}px`,
         minHeight: `${optionsHeight}px`,
         positionStrategy: positionStrategy,
-        scrollStrategy: this.overlay.scrollStrategies.reposition()
+        scrollStrategy: this.overlay.scrollStrategies.close()
       }
     );
     this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsDatepickerPopupComponent));
+
+    // subscribe to detach event
+    // overlay can be detached by us (calling closePopup()) or by reposition strategy
+    // we need to cleanup things
+    this._detachSub = this.pickerOverlayRef.detachments().subscribe(() => {
+      // console.log('overlay detached');
+      this.pickerInstanceRef.destroy();
+      this.pickerOverlayRef.dispose();
+      this.pickerOverlayRef = undefined;
+      this.pickerInstanceRef = undefined;
+
+      if (this._clickedOutsideListener) {
+        this._clickedOutsideListener();
+        this._clickedOutsideListener = null;
+      }
+
+      this.changeDetector.markForCheck();
+      this._detachSub.unsubscribe();
+    });
 
     this.pickerInstanceRef.instance.control = {
       value: this.dateValue,

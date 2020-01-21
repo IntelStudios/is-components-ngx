@@ -126,7 +126,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
           } else {
             active = this.options.find(o => o.ID === this._value);
           }
-          this._active = active;
+          // we DID find currently set value among loaded options
+          if (active) {
+            this._active = active;
+          }
+          // we DID not find it and we're told to unset it
           if (!active && this.unsetNoMatch) {
             this._active = null;
             // there was a value, but given options did not contain it
