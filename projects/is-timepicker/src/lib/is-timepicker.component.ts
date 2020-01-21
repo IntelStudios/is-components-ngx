@@ -9,6 +9,7 @@ import {
   Renderer2,
   ComponentRef,
   ElementRef,
+  OnDestroy,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
@@ -34,7 +35,7 @@ export const IS_TIMEPICKER_VALUE_ACCESSOR: any = {
   providers: [IS_TIMEPICKER_VALUE_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IsTimepickerComponent {
+export class IsTimepickerComponent implements OnDestroy {
 
   @Input() allowClear: boolean = false;
   @Input('placeholder') placeholder: string = '';
@@ -66,15 +67,23 @@ export class IsTimepickerComponent {
   private onTouched: Function;
   private _changeSubscription: Subscription = null;
   private _clickedOutsideListener = null;
+  private _detachSub: Subscription;
 
   constructor(
     private element: ElementRef,
     private renderer: Renderer2,
     private overlay: Overlay,
-    private changeDetector: ChangeDetectorRef)
-  {
+    private changeDetector: ChangeDetectorRef) {
   }
 
+  ngOnDestroy() {
+    if (this._changeSubscription) {
+      this._changeSubscription.unsubscribe();
+    }
+    if (this._detachSub) {
+      this._detachSub.unsubscribe();
+    }
+  }
   /**
   * Implemented as part of ControlValueAccessor.
   */
@@ -106,18 +115,7 @@ export class IsTimepickerComponent {
 
   hidePicker() {
     if (this.pickerInstanceRef) {
-      this.pickerInstanceRef.destroy();
       this.pickerOverlayRef.detach();
-      this.pickerOverlayRef.dispose();
-      this.pickerOverlayRef = undefined;
-      this.pickerInstanceRef = undefined;
-
-      if (this._clickedOutsideListener) {
-        this._clickedOutsideListener();
-        this._clickedOutsideListener = null;
-      }
-
-      this.changeDetector.markForCheck();
     }
   }
 
@@ -132,7 +130,7 @@ export class IsTimepickerComponent {
       return;
     }
 
-    const positions: any = [{ originX: 'end', originY: 'bottom',  overlayX: 'end', overlayY: 'top' }];
+    const positions: any = [{ originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' }];
 
     const positionStrategy = this.overlay.position().flexibleConnectedTo(this.element)
       .withPositions(positions)
@@ -143,10 +141,29 @@ export class IsTimepickerComponent {
         minWidth: '180px',
         minHeight: '84px',
         positionStrategy: positionStrategy,
-        scrollStrategy: this.overlay.scrollStrategies.reposition()
+        scrollStrategy: this.overlay.scrollStrategies.close()
       }
     );
     this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsTimepickerPickerComponent));
+
+    // subscribe to detach event
+    // overlay can be detached by us (calling closePopup()) or by reposition strategy
+    // we need to cleanup things
+    this._detachSub = this.pickerOverlayRef.detachments().subscribe(() => {
+      // console.log('overlay detached');
+      this.pickerInstanceRef.destroy();
+      this.pickerOverlayRef.dispose();
+      this.pickerOverlayRef = undefined;
+      this.pickerInstanceRef = undefined;
+
+      if (this._clickedOutsideListener) {
+        this._clickedOutsideListener();
+        this._clickedOutsideListener = null;
+      }
+
+      this.changeDetector.markForCheck();
+      this._detachSub.unsubscribe();
+    });
 
     this.pickerInstanceRef.instance.control = {
       timeValue: this.timeValue,
@@ -192,7 +209,7 @@ export class IsTimepickerComponent {
       this.viewValue = val.format(TIME_FORMAT);
       this.timeValue = value;
 
-      this.changed.emit(this.stringMode ?  moment(value).format(TIME_FORMAT) : value);
+      this.changed.emit(this.stringMode ? moment(value).format(TIME_FORMAT) : value);
     }
     else {
       this.viewValue = '';
