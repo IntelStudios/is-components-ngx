@@ -107,7 +107,6 @@
           color: $is-tabset-item-hover-fg-color;
 
           &::before {
-            @include box-corner-top();
             content: "";
             width: 100%;
             height: 2px;
@@ -123,7 +122,6 @@
           color: $is-general-text-default-color;
 
           &::before {
-            @include box-corner-top();
             content: "";
             width: 100%;
             height: 4px;
