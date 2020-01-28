@@ -23,6 +23,7 @@ import { debounceTime } from 'rxjs/operators';
 
 let nextId = 0;
 
+export const SCROLL_BY: number = 50;
 /**
  * The payload of the change event fired right before the tab change
  */
@@ -147,8 +148,8 @@ export class IsTabDirective {
       </li>
     </ul>
 
-    <div class="scroll-btn left"><i class="fas fa-chevron-left" (mousedown)="scrollTabRight()" (mouseup)="stopScroll()"></i></div>
-    <div class="scroll-btn right"><i class="fas fa-chevron-right" (mousedown)="scrollTabLeft()" (mouseup)="stopScroll()"></i></div>
+    <div class="scroll-btn left"><i class="fas fa-chevron-left" (click)="scrollRight()" (mousedown)="startScrollRight()" (mouseup)="stopScroll()"></i></div>
+    <div class="scroll-btn right"><i class="fas fa-chevron-right" (click)="scrollLeft()" (mousedown)="startScrollLeft()" (mouseup)="stopScroll()"></i></div>
     <div *ngIf="tabsetInvalidLeft" class="tabset-invalid left">
       <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate || defaultInvalidTemplate">
       </ng-container>
@@ -355,15 +356,23 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
     }
   }
 
-  scrollTabRight() {
+  scrollLeft() {
+    this.elUL.scrollBy({ behavior: 'smooth', left: SCROLL_BY });
+  }
+
+  scrollRight() {
+    this.elUL.scrollBy({ behavior: 'smooth', left: - SCROLL_BY });
+  }
+  
+  startScrollRight() {
     this._scrollSub = interval(100).subscribe(() => {
-      this.elUL.scrollBy({ behavior: 'smooth', left: -50 });
+      this.elUL.scrollBy({ behavior: 'smooth', left: - SCROLL_BY });
     });
   }
 
-  scrollTabLeft() {
+  startScrollLeft() {
     this._scrollSub = interval(100).subscribe(() => {
-      this.elUL.scrollBy({ behavior: 'smooth', left: 50 });
+      this.elUL.scrollBy({ behavior: 'smooth', left: SCROLL_BY });
     });
   }
 
@@ -382,7 +391,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
     if (!this.elUL) {
       return;
     }
-
+    
     if (this.elUL.scrollLeft === 0) {
       this.renderer.removeStyle(this.elBtnLeft, 'display');
       this.stopScroll();
@@ -390,8 +399,13 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
       this.renderer.setStyle(this.elBtnLeft, 'display', 'flex');
       this.renderer.setStyle(this.elBtnLeft, 'height', `${this.elUL.clientHeight}px`);
     }
-
-    if (this.elUL.scrollLeft === this.elUL.scrollWidth - this.elUL.clientWidth) {
+    // safari somehow sometimes calculates scrollWidth + clientWidth not equaly
+    // even when it should be same
+    const scrollDiff = this.elUL.scrollWidth - this.elUL.clientWidth;
+    const diff2 = this.elUL.scrollLeft - scrollDiff;
+    const hideRight = diff2 === 0 || diff2 === 1;
+    //console.log(this.elUL.scrollLeft, scrollDiff, diff2)
+    if (hideRight) {
       this.renderer.removeStyle(this.elBtnRight, 'display');
       this.stopScroll();
     } else {
