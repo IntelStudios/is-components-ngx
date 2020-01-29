@@ -305,6 +305,8 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
       this.service.assignItem({ Item: item, Path: path, PaintedPath: nodePaintedPath, EmmitChange: false });
     });
+
+    this.cd.markForCheck();
   }
 
   /*
