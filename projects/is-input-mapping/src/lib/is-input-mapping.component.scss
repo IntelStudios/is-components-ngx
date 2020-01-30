@@ -22,6 +22,12 @@
       font-weight: bold;
     }
 
+    .description {
+      font-size: 10px;
+      margin-left: 5px;
+      color: #80898e;
+    }
+
     &.folder:not(.disabled) {
       font-weight: bold;
       cursor: pointer;

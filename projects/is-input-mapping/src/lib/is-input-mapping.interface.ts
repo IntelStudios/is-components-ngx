@@ -14,6 +14,7 @@ export interface DataStructure {
   Children: DataStructure[];
   Path: string;
   Name: string;
+  Description?: string;
   Type: number;
   DataType: number;
   InputColumns: string[];
