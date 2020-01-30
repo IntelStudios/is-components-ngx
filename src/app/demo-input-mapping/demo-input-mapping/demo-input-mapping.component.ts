@@ -11,7 +11,7 @@ export class DemoInputMappingComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.9.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.10.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsInputMappingModule } from 'is-input-mapping';</pre>
@@ -355,6 +355,7 @@ export class DemoInputMappingComponent implements OnInit {
               'Children': [],
               'Path': 'Load files.Directory',
               'Name': 'Directory',
+              'Description': 'aka folder',
               'Type': 0,
               'DataType': 2,
               'InputColumns': [
@@ -402,6 +403,16 @@ export class DemoInputMappingComponent implements OnInit {
             },
             {
               'Children': [],
+              'Path': 'Load files.Json',
+              'Name': 'JSON',
+              'Type': 0,
+              'DataType': 8,
+              'InputColumns': [
+                'Data'
+              ]
+            },
+            {
+              'Children': [],
               'Path': 'Load files.Size',
               'Name': 'Size',
               'Type': 0,
@@ -435,7 +446,7 @@ export class DemoInputMappingComponent implements OnInit {
           ],
           'Path': 'Load files',
           'Name': 'Load files',
-          'Type': 2,
+          'Type': 3,
           'DataType': 7,
           'InputColumns': []
         }

@@ -129,11 +129,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this._inputsAssignable = this._data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
       const alreadyAssignedNames = this.service.getAssignedItemNames();
       this.inputsAssignableFiltered = this._inputsAssignable.slice().filter(item => alreadyAssignedNames.indexOf(item.Name) === -1);
-      this.icon = this.getTypeIcon(this.paintedStructure.DataType);
+      this.icon = this.getDataTypeIcon(this.paintedStructure.DataType);
 
       this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
     } else {
-      this.icon = !this.collapsed ? 'fa-folder' : 'fa-folder-open'; // folder
+      this.icon = this.getTypeIcon(this.paintedStructure.Type); // folder
     }
 
     this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
@@ -180,7 +180,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
 
     this.collapsed = !this.collapsed;
-    this.icon = !this.collapsed ? 'fa-folder' : 'fa-folder-open'; // folder
+    this.icon = this.getTypeIcon(this.paintedStructure.Type);
     this.cd.markForCheck();
   }
 
@@ -217,27 +217,40 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   getTypeIcon(type: number) {
     switch (type) {
+      case 3:
+        // endpoint
+        return 'fa fa-plug';
+      default:
+        return !this.collapsed ? 'fa fa-folder' : 'fa fa-folder-open';
+    }
+  }
+
+  getDataTypeIcon(type: number) {
+    switch (type) {
       case 1:
         // int
-        return 'fa-pause';
+        return 'fa fa-pause';
       case 2:
         // string
-        return 'fa-font';
+        return 'fa fa-font';
       case 3:
         // boolean
-        return 'fa-columns';
+        return 'fa fa-columns';
       case 4:
         // base64
-        return 'fa-database';
+        return 'fa fa-database';
       case 5:
         // datetime
-        return 'fa-calendar';
+        return 'fa fa-calendar';
       case 6:
         // double
-        return 'fa-angle-double-up';
+        return 'fa fa-angle-double-up';
       case 7:
         // complex
-        return 'fa-code-fork';
+        return 'fa fa-code-fork';
+      case 8:
+        // json - requires FontAwesome pro
+        return 'fas fa-brackets-curly';
     }
   }
 
