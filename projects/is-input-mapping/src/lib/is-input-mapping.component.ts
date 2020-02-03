@@ -42,9 +42,13 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       if (this.level === 0) {
         this.service.clearInvalidAssigns(this.data.DataStructure);
         this.paintedStructure = this._data.DataStructure;
-        this.cd.detectChanges();
       }
+    } else {
+      this.paintedStructure = {
+        Children: [], DataType: 0, InputColumns: [], Name: '', Path: '', Type: 0
+      };
     }
+    this.cd.detectChanges();
   }
   get data(): IsInputMappingInput {
     return this._data;
@@ -206,6 +210,14 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   release(item: InputSchema) {
     this.service.releaseItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
+  }
+
+  getAllItems(): {item: InputSchema; assigned: boolean}[] {
+    if (!this.data) {
+      return [];
+    }
+    const assignedNames = this.service.getAssignedItemNames();
+    return this.data.InputSchema.map(item => ({item, assigned: assignedNames.indexOf(item.Name) > -1}));
   }
 
   getChildPath(i: number): number[] {

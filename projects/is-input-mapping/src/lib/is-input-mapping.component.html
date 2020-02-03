@@ -35,7 +35,14 @@
   <i *ngIf="paintedStructure.Children.length > 0" class="chevron fa" [class.fa-chevron-up]="!collapsed" [class.fa-chevron-down]="collapsed"></i>
 </div>
 
-<div class="children" [class.left-line]="level > 0" *ngIf="data && collapsed">
+<div *ngIf="level === 0" class="assigned-items">
+  <span *ngFor="let item of getAllItems()" class="assigned-item" [class.assigned]="item.assigned">
+    <span class="node-icon {{getDataTypeIcon(item.item.DataType)}}"></span>
+    <span>{{item.item.Name}}</span>
+  </span>
+</div>
+
+<div class="children" [class.left-line]="level > 0" *ngIf="data && collapsed && paintedStructure">
   <is-input-mapping *ngFor="let child of paintedStructure.Children; let i = index"
                         [data]="data"
                         [paintedPath]="getChildPath(i)"
