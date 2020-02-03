@@ -1,25 +1,61 @@
 @import '../../../styles/variables';
 
 :host {
+  .node-icon {
+    width: 24px;
+    height: 24px;
+    padding: 6px;
+    margin-right: 4px;
+    text-align: center;
+    background-color: #EDEEEF;
+    color: #2B3642;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .assigned-item {
+    background-color: #2B3642;
+    color: #fff;
+    border-radius: 2px !important;
+    //padding: 8px 4px;
+    margin-left: 8px;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    height: 20px;
+
+    >div {
+      display: flex;
+      align-items: center;
+      margin-left: 4px;
+    }
+
+    .name {
+      padding-right: 4px;
+    }
+
+    .delete {
+      width: 20px;
+      height: 20px;
+      padding: 4px;
+      border-left: 1px solid #444E58;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-release-item {
+      cursor: pointer;
+    }
+  }
+
   .node {
     margin-bottom: 5px;
     color: $is-color-fg;
 
     &.disabled {
       color: #878D94;
-    }
-
-    .node-icon {
-      width: 24px;
-      height: 24px;
-      padding: 6px;
-      margin-right: 4px;
-      text-align: center;
-      background-color: #EDEEEF;
-      color: #2B3642;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: bold;
     }
 
     .description {
@@ -44,42 +80,6 @@
       z-index: 100;
     }
 
-    .assigned-item {
-      background-color: #2B3642;
-      color: #fff;
-      border-radius: 2px !important;
-      //padding: 8px 4px;
-      margin-left: 8px;
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 600;
-      height: 20px;
-
-      >div {
-        display: flex;
-        align-items: center;
-        margin-left: 4px;
-      }
-
-      .name {
-        padding-right: 4px;
-      }
-
-      .delete {
-        width: 20px;
-        height: 20px;
-        padding: 4px;
-        border-left: 1px solid #444E58;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .btn-release-item {
-        cursor: pointer;
-      }
-    }
-
     .dropdown {
       display: inline-block;
       height: 0;
@@ -97,14 +97,6 @@
         border-radius: 4px !important;
         z-index: 1000 !important;
         padding: 0px;
-
-        .node-icon {
-          margin-right: 0px;
-          padding: 0;
-          width: unset;
-          height: unset;
-          padding-right: 4px;
-        }
 
         i {
           text-align: right !important;
@@ -150,5 +142,25 @@
   .children {
     padding-left: 8px;
     margin-left: 8px;
+  }
+
+  .assigned-items {
+
+    .assigned-item {
+      margin-bottom: 10px !important;
+      padding-right: 5px;
+
+      &.assigned {
+        background: #838586;
+      }
+    }
+
+    .node-icon {
+      font-size: 10px;
+      height: 20px;
+      width: 20px;
+      background: transparent;
+      color: #fff;
+    }
   }
 }
