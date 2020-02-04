@@ -6,15 +6,18 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-  <is-input-mapping [data]="currentDataset" [formControl]="formControl"></is-input-mapping>
-</div>
-<div class="col-sm-6">
-  <span>Value: {{currentValue}}</span>
-</div>
-    <div class="col-sm-6">
+    <is-input-mapping [data]="currentDataset" [formControl]="formControl"></is-input-mapping>
+  </div>
+  <div class="col-sm-6">
+    <span>Value: {{currentValue}}</span>
+  </div>
+  <div class="col-sm-6">
     <button class="btn btn-primary" (click)="nullIt()">Select nothing</button>
     <button class="btn btn-primary" (click)="modified2Created()">Modified to Created</button>
     <button class="btn btn-primary" (click)="switchDataset()">Switch dataset</button>
     <button class="btn btn-primary" (click)="deleteDataset()">Delete dataset</button>
-</div>
+  </div>
+  <div class="col-sm-6">
+    <span>{{validationError}}</span>
+  </div>
 </div>

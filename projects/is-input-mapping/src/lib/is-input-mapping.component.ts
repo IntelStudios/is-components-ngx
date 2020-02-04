@@ -8,12 +8,13 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { AssignStatus, DataStructure, InputSchema, IsInputMappingInput } from './is-input-mapping.interface';
 import { IsInputMappingService } from './is-input-mapping.service';
+import { isInputRequiredFilledValidator } from './is-input-mapping.validator';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -25,11 +26,15 @@ import { IsInputMappingService } from './is-input-mapping.service';
       provide: NG_VALUE_ACCESSOR,
       useExisting: IsInputMappingComponent,
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: IsInputMappingComponent,
+      multi: true
     }],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueAccessor {
-
+export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
   @Input()
   set data(value: IsInputMappingInput) {
     if (typeof (value) === 'undefined') {
@@ -49,6 +54,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       };
     }
     this.cd.detectChanges();
+    if (this._validatorOnChange) {
+      this._validatorOnChange();
+    }
   }
   get data(): IsInputMappingInput {
     return this._data;
@@ -78,6 +86,8 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   private _data: IsInputMappingInput = null;
   private _mouseover = false;
   private _mouseoverSubject = new Subject<boolean>();
+  private _validator: Function;
+  private _validatorOnChange: Function;
 
   set mouseover(value: boolean) {
     this._mouseoverSubject.next(value);
@@ -112,6 +122,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.service = this.serviceRoot;
       this.inputSchemaMap = new Map<string, string>();
       this.collapsible = true;
+      this._validator = isInputRequiredFilledValidator(this);
 
       if (this._data) {
         this.paintedStructure = this._data.DataStructure;
@@ -173,6 +184,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
         this.inputSchemaMap.delete(data.Item.Name);
         if (!data.hasOwnProperty('EmmitChange') || data.EmmitChange) {
           this._on_changes(this.inputSchemaMap);
+        }
+        if (this._validatorOnChange) {
+          this._validatorOnChange();
         }
       }
     }));
@@ -370,11 +384,25 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.inputSchemaMap.set(status.Item.Name, status.Path);
       if (!status.hasOwnProperty('EmmitChange') || status.EmmitChange) {
         this._on_changes(this.inputSchemaMap);
+        if (this._validatorOnChange) {
+          this._validatorOnChange();
+        }
       }
     }
   }
 
   ngOnDestroy(): void {
     this._subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  validate(control: AbstractControl): ValidationErrors {
+    if (this.level === 0) {
+      return this._validator(control);
+    }
+    return null;
+  }
+
+  registerOnValidatorChange?(fn: () => void): void {
+    this._validatorOnChange = fn;
   }
 }

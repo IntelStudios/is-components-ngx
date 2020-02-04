@@ -11,7 +11,7 @@ export class DemoInputMappingComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.11.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.12.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsInputMappingModule } from 'is-input-mapping';</pre>
@@ -461,6 +461,7 @@ export class DemoInputMappingComponent implements OnInit {
 
   formControl = new FormControl();
   currentValue = '';
+  validationError = null;
   val: Map<string, string>;
   currentDataset = this.MOCK_DATA;
 
@@ -477,6 +478,7 @@ export class DemoInputMappingComponent implements OnInit {
       const dict = {};
       val.forEach((v, k) => dict[k] = v);
       this.currentValue = JSON.stringify(dict);
+      this.validationError = this.formControl.errors === null ? '' : JSON.stringify(this.formControl.errors);
     });
     this.val = this.formControl.value;
   }
