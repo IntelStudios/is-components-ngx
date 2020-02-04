@@ -39,6 +39,7 @@
   <span *ngFor="let item of getAllItems()" class="assigned-item" [class.assigned]="item.assigned">
     <span class="node-icon {{getDataTypeIcon(item.item.DataType)}}"></span>
     <span>{{item.item.Name}}</span>
+    <span class="node-icon warning"><i *ngIf="!item.item.AllowNull" class="fa fa-warning"></i></span>
   </span>
 </div>
 

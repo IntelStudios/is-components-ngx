@@ -148,7 +148,6 @@
 
     .assigned-item {
       margin-bottom: 10px !important;
-      padding-right: 5px;
 
       &.assigned {
         background: #838586;
@@ -161,6 +160,10 @@
       width: 20px;
       background: transparent;
       color: #fff;
+
+      &.warning {
+        color: #95a5a6;
+      }
     }
   }
 }
