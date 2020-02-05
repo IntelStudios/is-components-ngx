@@ -184,9 +184,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
         this.inputSchemaMap.delete(data.Item.Name);
         if (!data.hasOwnProperty('EmmitChange') || data.EmmitChange) {
           this._on_changes(this.inputSchemaMap);
-        }
-        if (this._validatorOnChange) {
-          this._validatorOnChange();
+          if (this._validatorOnChange) {
+            this._validatorOnChange();
+          }
         }
       }
     }));
@@ -403,6 +403,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   registerOnValidatorChange?(fn: () => void): void {
-    this._validatorOnChange = fn;
+    return;  // checked together with value changes
   }
 }
