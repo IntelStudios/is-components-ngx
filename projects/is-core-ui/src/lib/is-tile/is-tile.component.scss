@@ -79,25 +79,25 @@ $is-tile-bg-hover-color: var(--is-tile-bg-hover-color, #888);
         overflow: hidden;
         text-overflow: ellipsis;
 
-        @media(min--moz-device-pixel-ratio:0) {
-          overflow: hidden;
-          &:before {
-            bottom: 0;
-            position: absolute;
-            right: 0;
-            float: right;
-            content: '\2026';
-            margin-left: -3rem;
-            width: 2rem;
-          }
-          &:after {
-            content: '';
-            position: absolute;
-            height: 50px;
-            width: 100%;
-            z-index: 1;
-          }
-        }
+        // @media(min--moz-device-pixel-ratio:0) {
+        //   overflow: hidden;
+        //   &:before {
+        //     bottom: 0;
+        //     position: absolute;
+        //     right: 0;
+        //     float: right;
+        //     content: '\2026';
+        //     margin-left: -3rem;
+        //     width: 2rem;
+        //   }
+        //   &:after {
+        //     content: '';
+        //     position: absolute;
+        //     height: 50px;
+        //     width: 100%;
+        //     z-index: 1;
+        //   }
+        // }
       }
     }
   }
