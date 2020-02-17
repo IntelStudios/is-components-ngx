@@ -435,7 +435,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   isActive(value: SelectItem): boolean {
-    if(!this.activeOption) {
+    if (!this.activeOption) {
       return;
     }
     return this.activeOption.ID === value.ID;
@@ -489,7 +489,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   private emitChange() {
     if (this.modelConfig) {
       if (this.active) {
-        const obj: any = this.modelConfig.baseModel ? {...this.modelConfig.baseModel } : {};
+        const obj: any = this.modelConfig.baseModel ? { ...this.modelConfig.baseModel } : {};
         obj[this.modelConfig.idProp] = this.active.ID;
         obj[this.modelConfig.textProp] = this.active.Value;
         this.changed.emit(obj);
@@ -502,7 +502,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         // emit ID property from item's source in case it's number
         // otherwise Item's ID is always string
         if (this.active.source && !isNaN(parseInt(this.active.source.ID))) {
-          this.changed.emit(Number(this.active.ID));
+          if (isNaN(Number(this.active.source.ID))) {
+            this.changed.emit(this.active.ID);
+          } else {
+            this.changed.emit(Number(this.active.ID));
+          }
         } else {
           this.changed.emit(this.active.ID);
         }
