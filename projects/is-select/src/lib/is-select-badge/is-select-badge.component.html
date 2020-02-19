@@ -1,4 +1,4 @@
-<is-select #select [multiple]="multiple" [useModels]="useModels" [placeholder]="placeholder" [allowClear]="allowClear" [items]="items"
+<is-select #select [multiple]="multiple" [class]="class" [useModels]="useModels" [placeholder]="placeholder" [allowClear]="allowClear" [items]="items"
   (changed)="onValueChanged($event)" [class.disabled]="disabled" [disabled]="disabled" [isSearch]="isSearch">
   <ng-template is-select-option let-item>
     <span>{{item.Value}}</span>

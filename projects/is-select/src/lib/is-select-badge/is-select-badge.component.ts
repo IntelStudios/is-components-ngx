@@ -77,6 +77,9 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
     return this._items;
   }
 
+  @Input()
+  class: string;
+
   @Output()
   valueChange: EventEmitter<any> = new EventEmitter<any>();
 
