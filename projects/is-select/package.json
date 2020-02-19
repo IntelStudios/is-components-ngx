@@ -1,6 +1,6 @@
 {
   "name": "is-select",
-  "version": "8.0.9-dev",
+  "version": "8.0.0",
   "peerDependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
