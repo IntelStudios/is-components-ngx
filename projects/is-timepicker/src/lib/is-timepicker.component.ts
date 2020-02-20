@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, ConnectedPosition } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Subscription } from 'rxjs';
 import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
@@ -130,21 +130,37 @@ export class IsTimepickerComponent implements OnDestroy {
       return;
     }
 
-    const positions: any = [{ originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' }];
+    const rect: DOMRect = this.element.nativeElement.getBoundingClientRect();
+    const pickerHeight = 114;
+    const pickerWidth = 282;
+    const isDropup = rect.bottom + pickerHeight > window.innerHeight;
+    const dropUpClass = isDropup ? ' is-timepicker-popup-dropup' : '';
+
+    const position: ConnectedPosition = isDropup ?
+      { originY: 'top', originX: 'end', overlayX: 'end', overlayY: 'bottom' }
+      : { originY: 'bottom', originX: 'end', overlayX: 'end', overlayY: 'top' };
+
+    const wouldOverflowLeft = pickerWidth - rect.width > rect.left;
+    if (wouldOverflowLeft) {
+      position.originX = 'start';
+      position.overlayX = 'start';
+    }
 
     const positionStrategy = this.overlay.position().flexibleConnectedTo(this.element)
-      .withPositions(positions)
+      .withPositions([position])
       .withPush(true);
 
     this.pickerOverlayRef = this.overlay.create(
       {
-        minWidth: '180px',
-        minHeight: '84px',
+        minWidth: `${pickerWidth}px`,
+        minHeight: `${pickerHeight}px`,
         positionStrategy: positionStrategy,
         scrollStrategy: this.overlay.scrollStrategies.close()
       }
     );
     this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsTimepickerPickerComponent));
+    const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass;
+    this.renderer.setAttribute(this.pickerInstanceRef.location.nativeElement, 'class', classes);
 
     // subscribe to detach event
     // overlay can be detached by us (calling closePopup()) or by reposition strategy

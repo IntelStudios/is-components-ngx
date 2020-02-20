@@ -144,6 +144,7 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
     const optionsHeight = 286;
     const optionsWidth = 280;
     const isDropup = rect.bottom + optionsHeight > window.innerHeight;
+    const dropUpClass = isDropup ? ' is-datepicker-popup-dropup' : '';
 
     const position: ConnectedPosition = isDropup ?
       { originY: 'top', originX: 'end', overlayX: 'end', overlayY: 'bottom' }
@@ -168,6 +169,8 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
       }
     );
     this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsDatepickerPopupComponent));
+    const classes = this.el.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass;
+    this.renderer.setAttribute(this.pickerInstanceRef.location.nativeElement, 'class', classes);
 
     // subscribe to detach event
     // overlay can be detached by us (calling closePopup()) or by reposition strategy
