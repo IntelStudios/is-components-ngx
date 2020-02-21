@@ -132,7 +132,7 @@ export class IsTimepickerComponent implements OnDestroy {
 
     const rect: DOMRect = this.element.nativeElement.getBoundingClientRect();
     const pickerHeight = 114;
-    const pickerWidth = 282;
+    const pickerWidth = 278;
     const isDropup = rect.bottom + pickerHeight > window.innerHeight;
     const dropUpClass = isDropup ? ' is-timepicker-popup-dropup' : '';
 
