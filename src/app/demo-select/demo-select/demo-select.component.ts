@@ -13,7 +13,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/8.x/package/is-select-8.0.2.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/8.x/package/is-select-8.0.3.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -25,6 +25,7 @@ export class DemoSelectComponent implements OnInit {
   select4Control: FormControl = new FormControl();
   select4ControlMulti: FormControl = new FormControl();
   select5Control: FormControl = new FormControl();
+  select5ControlMulti: FormControl = new FormControl();
   select6Control: FormControl = new FormControl();
   select6ControlMulti: FormControl = new FormControl();
 

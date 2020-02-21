@@ -68,9 +68,9 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
       return;
     }
     this._items = this.parseItems(items);
-    if (String(this._value)) {
+    //if (String(this._value) || this.multiple) {
       this.setValue();
-    }
+    //}
   }
 
   get items(): SelectItem[] {
@@ -172,8 +172,12 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
 
   private setValue() {
     if (this.select && this._items) {
-      // need to type to string as select2 cannot work with 0
-      if (String(this._value)) {
+      if (this._value instanceof Array) {
+        if (this.useModels) {
+          this.select.writeValue(this._value);
+        }
+      }
+      else if (String(this._value)) {
         const val = this._items.find((item: any) => String(item.ID) === String(this._value));
         //console.log(this.fieldId, this.value, val);
         if (val) {
@@ -183,8 +187,8 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
           //console.log('value not found? ', this.fieldId, this.value);
           this.select.writeValue(null);
         }
-
-      } else {
+      }
+      else {
         //console.log('clearing', this.fieldId, this.value, this._items);
         this.select.writeValue(null);
       }

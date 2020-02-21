@@ -152,7 +152,7 @@
         </div>
         <div class="col-sm-6">
           <h3>Select multiple (with badges)</h3>
-          <is-select-badge [formControl]="select5Control" [multiple]="true" [allowClear]="true" [items]="itemsBadges"
+          <is-select-badge [formControl]="select5ControlMulti" [multiple]="true" [useModels]="true" [allowClear]="true" [items]="itemsBadges"
             (valueChange)="changed($event)">
           </is-select-badge>
         </div>
