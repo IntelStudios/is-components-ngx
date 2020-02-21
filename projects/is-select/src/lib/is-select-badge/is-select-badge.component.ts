@@ -154,10 +154,13 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
       this.valueChange.next(this.value);
       return;
     }
-    this._value = this.useModels ? $event.ID : $event;
-    if ($event === []) {
-      this.valueChange.next(null);
+
+    if ($event instanceof Array) {
+      this._value = $event;
+      this.valueChange.next(this.value);
     } else {
+      this._value = this.useModels ? $event.ID : $event;
+
       if (String(Number(this.value)) !== String(this.value) || this.value === ' ') {
         this.valueChange.next(this.value);
       } else {
