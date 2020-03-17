@@ -197,7 +197,7 @@ export class DemoInputMappingComponent implements OnInit {
             ],
             'Path': 'Load files.Third level',
             'Name': 'Third level',
-            'Type': 2,
+            'Type': 1,
             'DataType': 7,
             'InputColumns': []
           },
