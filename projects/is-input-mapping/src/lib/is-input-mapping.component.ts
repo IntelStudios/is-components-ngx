@@ -193,7 +193,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   toggleCollapsed() {
-    if (!this.collapsible || this.disabled) {
+    if (!this.collapsible) {
       return;
     }
 
