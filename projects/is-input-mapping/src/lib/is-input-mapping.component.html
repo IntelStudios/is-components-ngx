@@ -2,15 +2,20 @@
      class="node"
      [class.folder]="paintedStructure.Children.length > 0"
      [class.disabled]="disabled"
-     (click)="toggleCollapsed()"
      (mouseover)="mouseover = true"
      (mouseout)="mouseover = false"
 >
-  <i class="node-icon {{icon}}"></i>
-  <span>{{paintedStructure.Name}}</span>
-  <span *ngIf="paintedStructure.Description" class="description">{{paintedStructure.Description}}</span>
+  <span
+    (click)="toggleCollapsed()">
+    <i class="node-icon {{icon}}"></i>
+    <span>{{paintedStructure.Name}}</span>
+    <span *ngIf="paintedStructure.Description" class="description">{{paintedStructure.Description}}</span>
 
-  <span *ngIf="paintedStructure.Children.length === 0">
+    <i *ngIf="paintedStructure.Children.length > 0" class="chevron fa" [class.fa-chevron-up]="collapsed"
+       [class.fa-chevron-down]="!collapsed"></i>
+  </span>
+
+  <span>
     <span class="assigned-item" *ngFor="let item of inputsAssigned">
       <div>
         <span class="name">{{item.Name}}</span>
@@ -19,7 +24,9 @@
         </span>
       </div>
     </span>
-    <i *ngIf="!disabled && inputsAssignableFiltered.length > 0 && (mouseover || dropdownVisible)" class="fa fa-plus-square btn-attach-item" (click)="dropdownShown()"></i>
+
+    <i *ngIf="!disabled && inputsAssignableFiltered.length > 0 && (mouseover || dropdownVisible)"
+       class="fa fa-plus-square btn-attach-item" (click)="dropdownShown()"></i>
   </span>
 
   <div class="dropdown" *ngIf="dropdownVisible">
@@ -27,12 +34,10 @@
       <div *ngFor="let item of inputsAssignableFiltered" (click)="assign(item)" class="item">
         <div class="node-icon {{getDataTypeIcon(item.DataType)}}"></div>
         <span>{{item.Name}}</span>
-<!--        <i [class]="'fa fa-plus-square'"></i>-->
+        <!--        <i [class]="'fa fa-plus-square'"></i>-->
       </div>
     </div>
   </div>
-
-  <i *ngIf="paintedStructure.Children.length > 0" class="chevron fa" [class.fa-chevron-up]="collapsed" [class.fa-chevron-down]="!collapsed"></i>
 </div>
 
 <div *ngIf="level === 0" class="assigned-items">
@@ -45,8 +50,8 @@
 
 <div class="children" [class.left-line]="level > 0" *ngIf="data && collapsed && paintedStructure">
   <is-input-mapping *ngFor="let child of paintedStructure.Children; let i = index"
-                        [data]="data"
-                        [paintedPath]="getChildPath(i)"
-                        [service]="service"
+                    [data]="data"
+                    [paintedPath]="getChildPath(i)"
+                    [service]="service"
   ></is-input-mapping>
 </div>
