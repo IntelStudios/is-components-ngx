@@ -244,6 +244,10 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   getTypeIcon(type: number) {
     switch (type) {
+      case 1:
+        return 'fa fa-code-fork'; // complex
+      case 2:
+        return 'fa fa-tasks'; // tbd
       case 3:
         // endpoint
         return 'fa fa-plug';
