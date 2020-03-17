@@ -69,8 +69,8 @@
           text-align: right;
           .ui-select-choices-row {
             &.active {
-              a {
-                padding-right: 12px;
+              a > *{
+                transform: translateX(-4px);
               }
             }
           }
@@ -81,8 +81,8 @@
         &.left {
           .ui-select-choices-row {
             &.active {
-              a {
-                padding-left: 12px;
+              a > * {
+                transform: translateX(4px);
               }
             }
           }
@@ -135,8 +135,15 @@
       line-height: 1.42857143;
       color: $is-control-fg-color;
       text-decoration: none;
-      transition: padding 0.15s;
       cursor: pointer;
+      > * {
+        transition: transform 0.15s;
+      }
+      > .item-desc {
+        color: $is-select-item-desc-fg-color;
+        font-size: 10px;
+        font-weight: bold;
+      }
     }
     &.selected {
       > a {

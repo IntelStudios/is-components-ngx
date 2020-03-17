@@ -5,6 +5,7 @@ import { stripDiacritics } from 'is-text-utils';
 export class SelectItem {
   ID: string;
   Value: string;
+  Description: string;
   children: Array<SelectItem>;
   parent: SelectItem;
   source: any = {};
@@ -26,9 +27,13 @@ export class SelectItem {
       if (modelConfig) {
         this.ID = String(source[modelConfig.idProp]);
         this.Value = source[modelConfig.textProp];
+        if (modelConfig.descProp) {
+          this.Description = source[modelConfig.descProp]
+        }
       } else {
         this.ID = String(source.ID);
         this.Value = source.Value;
+        this.Description = source.Description;
       }
 
       if(source.Disabled) {

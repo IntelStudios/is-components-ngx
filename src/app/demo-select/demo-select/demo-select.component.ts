@@ -28,7 +28,7 @@ export class DemoSelectComponent implements OnInit {
   select5ControlMulti: FormControl = new FormControl();
   select6Control: FormControl = new FormControl();
   select6ControlMulti: FormControl = new FormControl();
-
+  select7Control: FormControl = new FormControl();
   selectColorControl: FormControl = new FormControl();
 
   public items: Array<string> = ['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
@@ -59,6 +59,10 @@ export class DemoSelectComponent implements OnInit {
     { ID: 5, Value: '[primary_Primary]' }
   ];
 
+  itemsWithDesc = [{ ID: 1, Value: 'red', Description: 'Desc red' },
+  { ID: 2, Value: 'green', Description: 'Desc green' },
+  { ID: 3, Value: 'black', Description: 'Desc black' }]
+
   itemsGrouped: any[] = [];
   itemsGrouped$: Observable<any[]>;
   private value: any = {};
@@ -79,18 +83,20 @@ export class DemoSelectComponent implements OnInit {
           { ID: '13', Value: 'Nederlands', Disabled: true }
         ]
     };
-    const item2: any = { ID: '2', Value: 'Asia', children: [
-      { ID: '111', Value: 'China' },
-      { ID: '112', Value: 'Thailand' },
-      { ID: '113', Value: 'Malaysia', Disabled: true },
-      { ID: '114', Value: 'Russia', Disabled: true }
-    ]};
+    const item2: any = {
+      ID: '2', Value: 'Asia', children: [
+        { ID: '111', Value: 'China' },
+        { ID: '112', Value: 'Thailand' },
+        { ID: '113', Value: 'Malaysia', Disabled: true },
+        { ID: '114', Value: 'Russia', Disabled: true }
+      ]
+    };
     const item3: any = {
       ID: '3', Value: 'USA', children:
         [
           { ID: '1111', Value: 'Miami' },
           { ID: '1112', Value: 'Florida', Disabled: true },
-          { ID: '1113', Value: 'LA', Disabled: true  }
+          { ID: '1113', Value: 'LA', Disabled: true }
         ]
     };
 
@@ -102,7 +108,7 @@ export class DemoSelectComponent implements OnInit {
     if (ctrl.errors) {
       ctrl.setErrors(null);
     } else {
-      ctrl.setErrors({invalid: true});
+      ctrl.setErrors({ invalid: true });
     }
   }
 
@@ -155,19 +161,19 @@ export class DemoSelectComponent implements OnInit {
   }
 
   selectGreenModel() {
-    this.select4Control.setValue({Data: '2', Name: 'green (model)'});
+    this.select4Control.setValue({ Data: '2', Name: 'green (model)' });
   }
 
   selectGreenModelMulti() {
-    this.select4ControlMulti.setValue([{Data: '2', Name: 'green (model)'}]);
+    this.select4ControlMulti.setValue([{ Data: '2', Name: 'green (model)' }]);
   }
 
   selectFirstModel() {
-    this.select6Control.setValue({ID: 666, Value: 'xxx (unknown model)'});
+    this.select6Control.setValue({ ID: 666, Value: 'xxx (unknown model)' });
   }
 
   selectFirstModelMulti() {
-    this.select6ControlMulti.setValue([{ID: 666, Value: 'xxx (unknown model)'}]);
+    this.select6ControlMulti.setValue([{ ID: 666, Value: 'xxx (unknown model)' }]);
   }
 
   moreOptions$: BehaviorSubject<any[]> = new BehaviorSubject(null);
@@ -181,12 +187,12 @@ export class DemoSelectComponent implements OnInit {
     console.log(`Loading options filter=${$event}`);
     setTimeout(() => {
       this.moreOptions$.next([
-        {ID: 1, Value: 'aaaaa'},
-        {ID: 2, Value: 'aaaab'},
-        {ID: 3, Value: 'aaaac'},
-        {ID: 4, Value: 'aaaad'},
-        {ID: 5, Value: 'aaaba'},
-        {ID: 6, Value: 'aaabb'},
+        { ID: 1, Value: 'aaaaa' },
+        { ID: 2, Value: 'aaaab' },
+        { ID: 3, Value: 'aaaac' },
+        { ID: 4, Value: 'aaaad' },
+        { ID: 5, Value: 'aaaba' },
+        { ID: 6, Value: 'aaabb' },
       ]);
 
     }, 1000);

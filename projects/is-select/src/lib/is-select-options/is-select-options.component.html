@@ -71,4 +71,5 @@
 
 <ng-template #defaultOptionTemplate let-item="item">
   <div [innerHtml]="sanitize(item.Value)"></div>
+  <div *ngIf="item.Description" class="item-desc">{{item.Description}}</div>
 </ng-template>
