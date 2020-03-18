@@ -140,11 +140,13 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.collapsible = this.paintedStructure.Children.length > 0;
     }
 
-    this._inputsAssignable = this._data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
-    const alreadyAssignedNames = this.service.getAssignedItemNames();
-    this.inputsAssignableFiltered = this._inputsAssignable.slice().filter(item => alreadyAssignedNames.indexOf(item.Name) === -1);
+    if (this.level > 0) {
+      this._inputsAssignable = this._data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
+      const alreadyAssignedNames = this.service.getAssignedItemNames();
+      this.inputsAssignableFiltered = this._inputsAssignable.slice().filter(item => alreadyAssignedNames.indexOf(item.Name) === -1);
 
-    this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
+      this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
+    }
 
     if (!this.collapsible) {
       this.icon = this.getDataTypeIcon(this.paintedStructure.DataType);
