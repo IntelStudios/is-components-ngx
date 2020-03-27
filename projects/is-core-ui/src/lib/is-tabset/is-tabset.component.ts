@@ -212,7 +212,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
 
   @ContentChildren(IsTabDirective) tabs: QueryList<IsTabDirective>;
 
-  @ContentChild(IsTabsetInvalidDirective, { static: false, read: TemplateRef })
+  @ContentChild(IsTabsetInvalidDirective, { read: TemplateRef })
   tabsetInvalidTemplate: IsTabsetInvalidDirective
 
   tabsetInvalidLeft: boolean = false;

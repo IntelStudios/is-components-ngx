@@ -38,7 +38,7 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   @Output()
   changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @ViewChild('textInput', { static: false })
+  @ViewChild('textInput')
   input: ElementRef;
 
   public value = '';

@@ -7,7 +7,7 @@ import { IsCoreUIModule } from 'projects/is-core-ui/src/public_api';
 import { IsModalModule } from 'projects/is-modal/src/public_api';
 
 import { DemoBootstrapSwitchComponent } from './demo-bootstrap-switch/demo-bootstrap-switch.component';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [DemoBootstrapSwitchComponent],

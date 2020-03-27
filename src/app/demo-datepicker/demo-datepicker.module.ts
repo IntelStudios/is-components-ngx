@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IsDatepickerModule } from 'projects/is-datepicker/src/public_api';
 
 import { DemoDatepickerComponent } from './demo-datepicker/demo-datepicker.component';
-import { BsDatepickerModule } from 'ngx-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [DemoDatepickerComponent],

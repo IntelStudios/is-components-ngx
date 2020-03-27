@@ -19,7 +19,7 @@ import { IsGridRowComponent } from './is-grid-row/is-grid-row.component';
   exports: [IsGridComponent]
 })
 export class IsGridModule {
-  static forRoot(config: IIsGridConfig): ModuleWithProviders {
+  static forRoot(config: IIsGridConfig): ModuleWithProviders<IsGridModule> {
     return {
       ngModule: IsGridModule,
       providers: [

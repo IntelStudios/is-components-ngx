@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { TooltipModule } from 'ngx-bootstrap';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 
 import { IsBreadcrumbBoxComponent } from './is-breadcrumb-box/is-breadcrumb-box.component';
@@ -33,7 +33,7 @@ import { IsTileComponent } from './is-tile/is-tile.component';
     IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent]
 })
 export class IsCoreUIModule {
-  static forRoot(config?: IsCoreUIConfig): ModuleWithProviders {
+  static forRoot(config?: IsCoreUIConfig): ModuleWithProviders<IsCoreUIModule> {
     return {
       ngModule: IsCoreUIModule,
       providers: [

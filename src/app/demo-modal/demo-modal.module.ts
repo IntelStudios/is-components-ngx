@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IsModalModule } from 'projects/is-modal/src/public_api';
 
 import { DemoModalComponent } from './demo-modal/demo-modal.component';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({

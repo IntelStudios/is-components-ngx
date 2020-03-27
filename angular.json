@@ -10,32 +10,33 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:class": {
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:component": {
-          "spec": false,
-          "styleext": "scss"
+          "skipTests": true,
+          "style": "scss"
         },
         "@schematics/angular:directive": {
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:guard": {
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:module": {
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:pipe": {
-          "spec": false
+          "skipTests": true
         },
         "@schematics/angular:service": {
-          "spec": false
+          "skipTests": true
         }
       },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/app",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -76,6 +77,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -181,7 +188,12 @@
             "tsConfig": "projects/is-select/tsconfig.lib.json",
             "project": "projects/is-select/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-select/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -216,7 +228,12 @@
             "tsConfig": "projects/is-codemirror/tsconfig.lib.json",
             "project": "projects/is-codemirror/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-codemirror/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -251,7 +268,12 @@
             "tsConfig": "projects/is-froala/tsconfig.lib.json",
             "project": "projects/is-froala/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-froala/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -286,7 +308,12 @@
             "tsConfig": "projects/is-core-ui/tsconfig.lib.json",
             "project": "projects/is-core-ui/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-core-ui/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -321,7 +348,12 @@
             "tsConfig": "projects/is-datepicker/tsconfig.lib.json",
             "project": "projects/is-datepicker/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-datepicker/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -356,7 +388,12 @@
             "tsConfig": "projects/is-bootstrap-switch/tsconfig.lib.json",
             "project": "projects/is-bootstrap-switch/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-bootstrap-switch/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -391,7 +428,12 @@
             "tsConfig": "projects/is-select-tree/tsconfig.lib.json",
             "project": "projects/is-select-tree/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-select-tree/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -426,7 +468,12 @@
             "tsConfig": "projects/is-dx-select-tree/tsconfig.lib.json",
             "project": "projects/is-dx-select-tree/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-dx-select-tree/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -461,7 +508,12 @@
             "tsConfig": "projects/is-modal/tsconfig.lib.json",
             "project": "projects/is-modal/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-modal/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -496,7 +548,12 @@
             "tsConfig": "projects/is-grid/tsconfig.lib.json",
             "project": "projects/is-grid/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-grid/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -531,7 +588,12 @@
             "tsConfig": "projects/is-table/tsconfig.lib.json",
             "project": "projects/is-table/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-table/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -566,7 +628,12 @@
             "tsConfig": "projects/is-timepicker/tsconfig.lib.json",
             "project": "projects/is-timepicker/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-timepicker/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -601,7 +668,12 @@
             "tsConfig": "projects/is-cron-editor/tsconfig.lib.json",
             "project": "projects/is-cron-editor/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-cron-editor/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -636,7 +708,12 @@
             "tsConfig": "projects/is-checkmap/tsconfig.lib.json",
             "project": "projects/is-checkmap/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-checkmap/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -671,7 +748,12 @@
             "tsConfig": "projects/is-input-mapping/tsconfig.lib.json",
             "project": "projects/is-input-mapping/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-input-mapping/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -706,7 +788,12 @@
             "tsConfig": "projects/is-editable-textbox/tsconfig.lib.json",
             "project": "projects/is-editable-textbox/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-editable-textbox/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {

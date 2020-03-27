@@ -16,7 +16,7 @@ import { IsCoreUIModule } from 'is-core-ui';
     CommonModule, OverlayModule, IsCoreUIModule, ScrollingModule
   ],
   declarations: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent, IsSelectOptionsComponent],
-  exports: [ScrollingModule, IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent],
+  exports: [ScrollingModule, IsSelectComponent, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent],
   entryComponents: [IsSelectOptionsComponent]
 })
 export class IsSelectModule { }

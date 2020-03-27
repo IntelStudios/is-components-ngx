@@ -13,7 +13,7 @@ import { IsBootstrapSwitchComponent, configToken } from './is-bootstrap-switch.c
   exports: [IsBootstrapSwitchComponent]
 })
 export class IsBootstrapSwitchModule {
-  static forRoot(config: IsBootstrapSwitchConfig): ModuleWithProviders {
+  static forRoot(config: IsBootstrapSwitchConfig): ModuleWithProviders<IsBootstrapSwitchModule> {
     return {
       ngModule: IsBootstrapSwitchModule,
       providers: [

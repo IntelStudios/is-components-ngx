@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy, Renderer2, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { PopoverDirective } from 'ngx-bootstrap';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
 
 @Component({
   selector: 'is-hint',
@@ -22,7 +22,7 @@ export class IsHintComponent implements OnInit, OnDestroy {
   @Input()
   icon: string = 'fa fa-info-circle';
 
-  @ViewChild('popover', { static: false })
+  @ViewChild('popover')
   popover: PopoverDirective;
 
   private _documentClickListener: Function = null;

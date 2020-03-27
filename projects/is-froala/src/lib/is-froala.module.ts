@@ -10,7 +10,7 @@ import { IsFroalaConfig } from './is-froala.interfaces';
 })
 export class IsFroalaModule {
 
-  static forRoot(config: IsFroalaConfig): ModuleWithProviders {
+  static forRoot(config: IsFroalaConfig): ModuleWithProviders<IsFroalaModule> {
     return {
       ngModule: IsFroalaModule,
       providers: [

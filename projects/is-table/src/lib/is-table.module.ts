@@ -22,7 +22,7 @@ import {
   exports: [IsTableComponent, IsTableColumnDirective, IsTableActionsColumnDirective]
 })
 export class IsTableModule {
-  static forRoot(config: IIsTableConfig): ModuleWithProviders {
+  static forRoot(config: IIsTableConfig): ModuleWithProviders<IsTableModule> {
     return {
       ngModule: IsTableModule,
       providers: [

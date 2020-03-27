@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { IsModalComponent, IsModalConfig } from 'projects/is-modal/src/public_api';
 
 @Component({
