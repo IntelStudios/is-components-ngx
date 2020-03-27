@@ -55,6 +55,17 @@ export class SelectItem {
     }
   }
 
+  /**
+   * gets current's item ID with attepmt to type it as number if possible
+   */
+  getID(): string | number {
+    if (!this.source) {
+      return this.ID;
+    }
+    const isNum = String((parseInt(this.source.ID))) === String(this.source.ID);
+    return isNum ? Number(this.ID) : this.ID;
+  }
+
   public fillChildrenHash(optionsMap: Map<string, number>, startIndex: number): number {
     let i = startIndex;
     this.children.map((child: SelectItem) => {
