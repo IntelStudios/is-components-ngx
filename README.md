@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Prelaunch step
 
-Make sure to build Demo project's dependencies by running `npm buil.local` before launching it.
+Make sure to build Demo project's dependencies by running `npm build.local` before launching it.
 
 ## Development server
 
