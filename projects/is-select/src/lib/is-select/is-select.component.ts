@@ -283,6 +283,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   }
 
+  setReadonly(value: boolean) {
+    this.readonly = value;
+    this.changeDetector.markForCheck();
+  }
+
   /**
    * Implemented as part of ControlValueAccessor.
    */
