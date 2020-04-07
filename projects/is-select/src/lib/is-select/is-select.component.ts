@@ -42,9 +42,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string = 'None';
   @Input() placeholderShow: boolean = true;
   @Input() searchPlaceholder: string = 'Search a name or keyword';
+  @Input() allowHide: boolean = false;
   @Input() isSearch: boolean = true;
   @Input() alignItems: 'left' | 'right' = 'left';
-
+  @Input() readonly: boolean = false;
+  
   @Input()
   set multiple(value: boolean) {
     this._multiple = value;
@@ -230,6 +232,16 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     return this.optionsOpened && this._optionsDropup;
   }
 
+  /**
+   * Determines whether or not to hide the component
+   */
+  get hidden(): boolean {
+    const isNotEditable = this.disabled || this.readonly;
+    const noValueIsSet = this.active === null;
+    const hiddenStateIsAllowed = this.allowHide;
+    return isNotEditable && noValueIsSet && hiddenStateIsAllowed;
+  }
+
   private _optionsDropup: boolean = false;
 
   additionalValues: number = 0;
@@ -327,7 +339,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   matchClick(e: MouseEvent): void {
-    if (this._disabled === true) {
+    const isDisabledOrReadonly =
+      this._disabled === true ||
+      this.readonly === true;
+    if (isDisabledOrReadonly) {
       return;
     }
 
@@ -339,7 +354,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   mainClick(event: any) {
-    if (this.optionsOpened || this._disabled === true) {
+    const isDisabledOrReadonly =
+      this._disabled === true ||
+      this.readonly === true;
+    if (this.optionsOpened || isDisabledOrReadonly) {
       return;
     }
     if (event.keyCode === 46) {

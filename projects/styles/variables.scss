@@ -18,6 +18,10 @@ $is-control-selected-item-color: var(--is-control-selected-item-color, grey);
 $is-control-active-item-color: var(--is-control-active-item-bg-color, #428bca);
 $is-control-disabled-bg-color: var(--is-control-disabled-bg-color, #efefef);
 $is-control-disabled-fg-color: var(--is-control-disabled-fg-color, #333);
+$is-control-readonly-bg-color: var(--is-control-readonly-bg-color, transparent);
+$is-control-readonly-fg-color: var(--is-control-readonly-fg-color, #333);
+$is-control-readonly-text-weight: var(--is-control-readonly-text-weight, 600);
+$is-control-readonly-border-color: var(--is-control-readonly-border-color, transparent);
 
 $is-select-search-bg-color: var(--is-select-search-bg-color, #efefef);
 $is-select-item-desc-fg-color: var(--is-select-item-desc-fg-color, #333);

@@ -62,6 +62,13 @@
           </is-select>
           <p>Value: {{select7Control.valueChanges|async|json}}</p>
         </div>
+        <div class="col-sm-6">
+          <h3>Readonly select</h3>
+          <is-select [readonly]="true"
+            [items]="itemsWithDesc" [formControl]="selectReadonlyControl" [allowHide]="true" [readonly]="true">
+          </is-select>
+          <p>Value: {{selectReadonlyControl.valueChanges|async|json}}</p>
+        </div>
       </div>
 
     </ng-template>

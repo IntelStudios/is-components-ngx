@@ -20,6 +20,19 @@
   }
 }
 
+@mixin is-input-readonly {
+  background-color: $is-control-readonly-bg-color;
+  color: $is-control-readonly-fg-color;
+  border-color: $is-control-readonly-border-color;
+  &:hover {
+    border-color: $is-control-readonly-border-color;
+  }
+  &:active, &:focus {
+    border-color: $is-control-readonly-border-color;
+    box-shadow: none;
+  }
+}
+
 @mixin is-input {
   border-color:$is-control-boder-color;
   background-color: $is-control-bg-color;
