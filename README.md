@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.2.
 
+## Prelaunch step
+
+Make sure to build Demo project's dependencies by running `npm run build.local` before launching it.
+
 ## Development server
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4201/`. The app will automatically reload if you change any of the source files.
