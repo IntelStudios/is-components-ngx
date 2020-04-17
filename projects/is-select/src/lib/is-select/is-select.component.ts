@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 
 import { IsSelectOptionsComponent } from '../is-select-options/is-select-options.component';
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from '../is-select.directives';
-import { IsSelectModelConfig, IsSelectMutlipleConfig } from '../is-select.interfaces';
+import { IsSelectModelConfig, IsSelectMultipleConfig } from '../is-select.interfaces';
 import { SelectItem } from '../select-item';
 
 export const IS_SELECT_VALUE_ACCESSOR: any = {
@@ -51,13 +51,13 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
    * When set, select will work in multi-select mode.
    */
   @Input()
-  set multipleConfig(value: IsSelectMutlipleConfig) {
+  set multipleConfig(value: IsSelectMultipleConfig) {
     this._multipleConfig = value;
     this.emitChange = value ? this.multipleEmitChange : this.singleEmitChange;
     this.writeValue = value ? this.multipleWriteValue : this.singleWriteValue;
   }
 
-  get multipleConfig(): IsSelectMutlipleConfig {
+  get multipleConfig(): IsSelectMultipleConfig {
     return this._multipleConfig;
   }
 
@@ -260,7 +260,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @ContentChild(IsSelectOptionSelectedDirective, { read: TemplateRef })
   templateOptionSelected: IsSelectOptionSelectedDirective;
 
-  private _multipleConfig: IsSelectMutlipleConfig;
+  private _multipleConfig: IsSelectMultipleConfig;
   private _disabled: boolean = false;
   private _active: SelectItem | SelectItem[] = null;
   private _clickedOutsideListener = null;

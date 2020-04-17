@@ -4,7 +4,7 @@ import { IOptionsBehavior, ChildrenOptionsBehavior, GenericOptionsBehavior } fro
 import { IsSelectOptionDirective } from '../is-select.directives';
 import { SelectItem } from '../select-item';
 import { createFilterRegexp } from 'is-text-utils';
-import { IsSelectMutlipleConfig } from '../is-select.interfaces';
+import { IsSelectMultipleConfig } from '../is-select.interfaces';
 
 export interface ISelectOptionsControl {
   active: SelectItem | SelectItem[];
@@ -15,7 +15,7 @@ export interface ISelectOptionsControl {
   alignment: 'left' | 'right' | 'center';
   minLoadChars: number;
   isSearch: boolean;
-  multipleConfig: IsSelectMutlipleConfig;
+  multipleConfig: IsSelectMultipleConfig;
   onClosed: () => void;
   onLoadOptions: (filter: string) => void;
   onItemSelected: (item: SelectItem) => void;
@@ -59,7 +59,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   optionTemplate: IsSelectOptionDirective;
   isSearch: boolean;
   multiple: boolean;
-  multipleConfig: IsSelectMutlipleConfig;
+  multipleConfig: IsSelectMultipleConfig;
 
   private behavior: IOptionsBehavior;
   private searchFilter: string = '';
@@ -138,7 +138,6 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     if (this.visibleOptions.length > 0 && (!this.control.active || !this.activeOption)) {
       this.behavior.first();
     }
-    console.log(this);
   }
 
   ngAfterViewInit() {
