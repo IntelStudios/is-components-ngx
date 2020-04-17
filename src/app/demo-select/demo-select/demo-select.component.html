@@ -72,19 +72,19 @@
       <div class="row">
         <div class="col-sm-6">
           <h3>Select multiple cities</h3>
-          <is-select [multiple]="true" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true"
+          <is-select [multipleConfig]="{showButtons: true}" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true"
             [items]="items" (changed)="changed($event)" placeholder="0 cities selected">
           </is-select>
         </div>
         <div class="col-sm-6">
           <h3>Select multiple cities (fixed height)</h3>
-          <is-select [multiple]="true" [resize]="false" [formControl]="select1Control" [placeholderShow]="false"
+          <is-select [multipleConfig]="{showButtons: true}" [resize]="false" [formControl]="select1Control" [placeholderShow]="false"
             [allowClear]="true" [items]="items" (changed)="changed($event)" placeholder="0 cities selected">
           </is-select>
         </div>
         <div class="col-sm-6">
           <h3>Select multiple model (lazy load)</h3>
-          <is-select [allowClear]="true" [multiple]="true" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)"
+          <is-select [allowClear]="true" [multipleConfig]="{}" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)"
             [items]="moreOptions$ | async" [formControl]="select6ControlMulti"
             [modelConfig]="{idProp: 'ID', textProp: 'Value'}"></is-select>
           <button class="btn btn-primary" (click)="selectFirstModelMulti()">Select unknown (model)</button>
@@ -138,7 +138,7 @@
         </div>
         <div class="col-sm-6">
           <h3>Select multiple model (colors)</h3>
-          <is-select [allowClear]="true" [multiple]="true" [items]="colors" [formControl]="select4ControlMulti"
+          <is-select [allowClear]="true" [multipleConfig]="{}" [items]="colors" [formControl]="select4ControlMulti"
             (valueChange)="changed($event)"
             [modelConfig]="{idProp: 'Data', textProp: 'Name', 'baseModel':{'baseModelProp':'baseModelPropValue'}}">
           </is-select>

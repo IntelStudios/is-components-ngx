@@ -4,6 +4,7 @@ import { IOptionsBehavior, ChildrenOptionsBehavior, GenericOptionsBehavior } fro
 import { IsSelectOptionDirective } from '../is-select.directives';
 import { SelectItem } from '../select-item';
 import { createFilterRegexp } from 'is-text-utils';
+import { IsSelectMutlipleConfig } from '../is-select.interfaces';
 
 export interface ISelectOptionsControl {
   active: SelectItem | SelectItem[];
@@ -14,11 +15,13 @@ export interface ISelectOptionsControl {
   alignment: 'left' | 'right' | 'center';
   minLoadChars: number;
   isSearch: boolean;
-  multiple: boolean;
+  multipleConfig: IsSelectMutlipleConfig;
   onClosed: () => void;
   onLoadOptions: (filter: string) => void;
   onItemSelected: (item: SelectItem) => void;
   onItemUnselected: (item: SelectItem) => void;
+  onItemsSelected: () => void;
+  onItemsDeselected: () => void;
 }
 
 @Component({
@@ -56,10 +59,11 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   optionTemplate: IsSelectOptionDirective;
   isSearch: boolean;
   multiple: boolean;
+  multipleConfig: IsSelectMutlipleConfig;
 
   private behavior: IOptionsBehavior;
   private searchFilter: string = '';
-  isLoadingOptions : boolean = false;
+  isLoadingOptions: boolean = false;
 
 
   get firstItemHasChildren(): boolean {
@@ -86,7 +90,26 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.alignItems = this.control.alignItems;
     this.optionTemplate = this.control.optionTemplate;
     this.isSearch = this.control.isSearch;
-    this.multiple = this.control.multiple;
+    this.multipleConfig = this.control.multipleConfig;
+
+    if (this.multipleConfig) {
+      // apply defaults
+      this.multipleConfig = {
+        ...{
+          showButtons: false,
+          selectAll: {
+            cssClass: 'btn-primary',
+            label: 'Select All'
+          }, deselectAll: {
+            cssClass: 'btn-secondary',
+            label: 'Deselect All'
+          }
+        },
+        ...this.multipleConfig
+      };
+    }
+
+    this.multiple = !!this.multipleConfig;
     // decide which templateRef are we gonna use to render a single option
     this.optionMainTemplate = this.multiple ? this.optionMultiTemplate : this.optionSingleTemplate;
 
@@ -106,7 +129,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.markCheckedOptions();
 
     if (this.multiple && this.value) {
-      this.selectedOptions = (this.value as SelectItem[]).map(v => {v.Checked = true; return v;});
+      this.selectedOptions = (this.value as SelectItem[]).map(v => { v.Checked = true; return v; });
       this.options = this.options.filter(o => !o.Checked);
     }
 
@@ -115,6 +138,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     if (this.visibleOptions.length > 0 && (!this.control.active || !this.activeOption)) {
       this.behavior.first();
     }
+    console.log(this);
   }
 
   ngAfterViewInit() {
@@ -138,6 +162,14 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.changeDetector.markForCheck();
   }
 
+  selectAll() {
+    this.control.onItemsSelected();
+  }
+
+  deselectAll() {
+    this.control.onItemsDeselected();
+  }
+
   setOptions(options: SelectItem[]) {
     this.visibleOptions = options;
     this.options = options;
@@ -158,8 +190,8 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     }
     // in single mode value will never have Checked property set
     value.Checked ? this.control.onItemUnselected(value) : this.control.onItemSelected(value);
-     // only close options in single mode
-    !this.control.multiple && this.control.onClosed();
+    // only close options in single mode
+    !this.control.multipleConfig && this.control.onClosed();
   }
 
   selectActive(value: SelectItem) {

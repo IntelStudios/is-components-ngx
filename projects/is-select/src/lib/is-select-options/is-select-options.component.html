@@ -32,6 +32,16 @@
         </div>
       </li>
     </ul>
+    <div *ngIf="multipleConfig?.showButtons" class="select-all">
+      <button class="btn {{multipleConfig.selectAll.cssClass}}" (click)="selectAll()">
+        <i class="fas fa-fw fa-check-square"></i>
+        <span>{{multipleConfig.selectAll.label}}</span>
+      </button>
+      <button class="btn {{multipleConfig.deselectAll.cssClass}}" (click)="deselectAll()">
+        <i class="fas fa-fw fa-window-close"></i>
+        <span>{{multipleConfig.deselectAll.label}}</span>
+      </button>
+    </div>
   </ng-container>
   <!-- options with groups -->
   <ng-template #groupOptions>

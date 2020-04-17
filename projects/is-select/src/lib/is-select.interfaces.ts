@@ -14,3 +14,14 @@ export interface IsSelectModelConfig {
    */
   baseModel?: any;
 }
+
+export type IsSelectButtonConfig = {
+  label: string;
+  cssClass: string;
+};
+
+export interface IsSelectMutlipleConfig {
+  showButtons?: boolean;
+  selectAll? : IsSelectButtonConfig;
+  deselectAll?: IsSelectButtonConfig;
+}
