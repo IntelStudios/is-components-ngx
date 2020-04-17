@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 
 import { IsSelectOptionsComponent } from '../is-select-options/is-select-options.component';
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from '../is-select.directives';
-import { IsSelectModelConfig } from '../is-select.interfaces';
+import { IsSelectModelConfig, IsSelectMutlipleConfig } from '../is-select.interfaces';
 import { SelectItem } from '../select-item';
 
 export const IS_SELECT_VALUE_ACCESSOR: any = {
@@ -46,15 +46,23 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input() isSearch: boolean = true;
   @Input() alignItems: 'left' | 'right' = 'left';
   @Input() readonly: boolean = false;
-  
+
+  /**
+   * When set, select will work in multi-select mode.
+   */
   @Input()
-  set multiple(value: boolean) {
-    this._multiple = value;
+  set multipleConfig(value: IsSelectMutlipleConfig) {
+    this._multipleConfig = value;
     this.emitChange = value ? this.multipleEmitChange : this.singleEmitChange;
     this.writeValue = value ? this.multipleWriteValue : this.singleWriteValue;
   }
+
+  get multipleConfig(): IsSelectMutlipleConfig {
+    return this._multipleConfig;
+  }
+
   get multiple(): boolean {
-    return this._multiple;
+    return !!this._multipleConfig;
   }
 
   @Input()
@@ -252,7 +260,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @ContentChild(IsSelectOptionSelectedDirective, { read: TemplateRef })
   templateOptionSelected: IsSelectOptionSelectedDirective;
 
-  private _multiple: boolean = false;
+  private _multipleConfig: IsSelectMutlipleConfig;
   private _disabled: boolean = false;
   private _active: SelectItem | SelectItem[] = null;
   private _clickedOutsideListener = null;
@@ -272,7 +280,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     private overlay: Overlay,
     private renderer: Renderer2,
     private changeDetector: ChangeDetectorRef) {
-    this.multiple = false;
+
   }
 
   ngOnInit() {
@@ -536,7 +544,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     this.optionsInstanceRef.instance.control = {
       active: this.active,
       options: this.options,
-      multiple: this.multiple,
+      multipleConfig: this.multipleConfig,
       searchPlaceholder: this.searchPlaceholder,
       optionTemplate: this.templateOption,
       alignItems: this.alignItems,
@@ -545,6 +553,34 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       isSearch: this.isSearch,
       onClosed: () => {
         this.hideOptions();
+      },
+      onItemsSelected: () => {
+        if (this.multiple) {
+          this._active = [...this.options];
+          this.changeDetector.markForCheck();
+          this.emitChange();
+
+          setTimeout(() => {
+            if (this.optionsOpened) {
+              this.updatePosition();
+              this.optionsInstanceRef.instance.setValue(this.active);
+            }
+          });
+        }
+      },
+      onItemsDeselected: () => {
+        if (this.multiple) {
+          this._active = [];
+          this.changeDetector.markForCheck();
+          this.emitChange();
+
+          setTimeout(() => {
+            if (this.optionsOpened) {
+              this.updatePosition();
+              this.optionsInstanceRef.instance.setValue(this.active);
+            }
+          });
+        }
       },
       onItemSelected: (item: SelectItem) => {
         if (this.multiple) {

@@ -13,6 +13,9 @@
       > .ui-select-search {
         order: 1;
       }
+      > .select-all {
+        margin-bottom: 0px;
+      }
       > .ui-select-choices {
         margin-bottom: $is-general-padding-small;
         margin-top: 0px;
@@ -143,6 +146,7 @@
         color: $is-select-item-desc-fg-color;
         font-size: 10px;
         font-weight: bold;
+        padding-left: 4px;
       }
     }
     &.selected {
@@ -188,5 +192,18 @@
   .dropdown-header {
     font-weight: bold;
     padding: 3px 7px 4px;
+  }
+  .select-all {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid $is-select-search-bg-color;
+    padding: 4px $is-general-padding-small;
+    margin-bottom: -8px;
+    > button {
+      line-height: 1;
+      height: 24px;
+    }
   }
 }
