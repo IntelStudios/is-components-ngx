@@ -20,7 +20,7 @@ export type IsSelectButtonConfig = {
   cssClass: string;
 };
 
-export interface IsSelectMutlipleConfig {
+export interface IsSelectMultipleConfig {
   showButtons?: boolean;
   selectAll? : IsSelectButtonConfig;
   deselectAll?: IsSelectButtonConfig;
