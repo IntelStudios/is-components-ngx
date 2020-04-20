@@ -268,7 +268,8 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     private overlay: Overlay,
     private renderer: Renderer2,
     private changeDetector: ChangeDetectorRef) {
-
+      // trigger setter by default so we're initially in single select mode
+      this.multipleConfig = undefined;
   }
 
   ngOnInit() {
@@ -416,6 +417,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   private singleEmitChange() {
+
     const active = this.active as SelectItem;
     if (this.modelConfig) {
       if (this.active) {
