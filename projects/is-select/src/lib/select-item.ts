@@ -72,7 +72,9 @@ export class SelectItem {
     if (!this.source) {
       return this.ID;
     }
-    const isNum = String((parseInt(this.source.ID))) === String(this.source.ID);
+    const isNum = String((parseInt(this.source.ID))) === String(this.source.ID)
+      || String((parseInt(this.source.id))) === String(this.source.id);
+
     return isNum ? Number(this.ID) : this.ID;
   }
 
