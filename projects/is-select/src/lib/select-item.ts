@@ -31,12 +31,12 @@ export class SelectItem {
           this.Description = source[modelConfig.descProp]
         }
       } else {
-        this.ID = String(source.ID);
-        this.Value = source.Value;
-        this.Description = source.Description;
+        this.ID = String(source.ID || source.id);
+        this.Value = source.Value || source.value;
+        this.Description = source.Description || source.description;
       }
 
-      if(source.Disabled) {
+      if (source.Disabled) {
         this.disabled = source.Disabled;
       } else {
         this.disabled = false;
@@ -53,6 +53,16 @@ export class SelectItem {
     if (this.Value) {
       this.FilterValue = stripTags(stripDiacritics(this.Value));
     }
+  }
+
+  static isItem(item: any, modelConfig?: IsSelectModelConfig): boolean {
+    const isItem =
+    (typeof item === 'string')
+      || (typeof item === 'object' && (item.ID || item.ID === 0 || item.id || item.id === 0) && (item.value || item.Value));
+      if (!isItem && modelConfig) {
+        return (item[modelConfig.idProp] || item[modelConfig.idProp] === 0) && item[modelConfig.textProp]
+      }
+    return isItem;
   }
 
   /**

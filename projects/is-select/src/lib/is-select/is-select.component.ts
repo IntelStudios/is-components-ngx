@@ -117,7 +117,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       this.options = [];
     } else {
       this.options = items.filter((item: any) => {
-        if ((typeof item === 'string') || (typeof item === 'object' && (item.ID || item.ID === 0) && item.Value)) {
+        if (SelectItem.isItem(item)) {
           return item;
         }
       }).map((item: any) => new SelectItem(item));
