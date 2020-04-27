@@ -13,7 +13,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/9.x/package/is-select-9.0.6.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/9.x/package/is-select-9.0.7.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
