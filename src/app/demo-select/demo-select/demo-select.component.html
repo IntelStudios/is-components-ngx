@@ -47,7 +47,7 @@
         </div>
         <div class="col-sm-6">
           <h3>Select model (lazy load)</h3>
-          <is-select [allowClear]="true" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)"
+          <is-select [allowClear]="true" [minLoadChars]="0" (loadOptions)="onOptionsRequired($event)"
             [items]="moreOptions$ | async" [formControl]="select6Control"
             [modelConfig]="{idProp: 'ID', textProp: 'Value'}">
           </is-select>

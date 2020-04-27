@@ -183,6 +183,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     }
   }
 
+  /**
+   * Sets minimum search characters to trigger (loadOptions) event.
+   * Set to 0, to emit event instantly when combo opens up (in such case filter will be set to empty string)
+   */
   @Input()
   set minLoadChars(val: number) {
     this.isSearch = val > 0;
@@ -271,7 +275,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
    * internal value is used to store a value state in case we do not have options yet
    */
   private _value: string | string[];
-  private _minLoadChars = 0;
+  private _minLoadChars = -1;
 
   private optionsOverlayRef: OverlayRef;
   private optionsInstanceRef: ComponentRef<IsSelectOptionsComponent>;
@@ -532,7 +536,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         this._clickedOutsideListener = null;
       }
 
-      if (this._minLoadChars > 0) {
+      if (this._minLoadChars > -1) {
         this.items = null; // clear lazy loaded items
       }
       this.changeDetector.markForCheck();

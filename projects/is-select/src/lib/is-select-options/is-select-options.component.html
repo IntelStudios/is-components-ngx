@@ -5,7 +5,7 @@
       class="form-control" [placeholder]="searchPlaceholder">
     <i class="fa fa-search"></i>
   </div>
-  <i *ngIf="isLoadingOptions" class="fa fa-circle-o-notch fa-spin options-loading"></i>
+  <i *ngIf="isLoadingOptions" class="fas fa-circle-notch fa-spin options-loading" [class.is-search]="isSearch"></i>
 
   <!-- options without groups -->
   <ng-container *ngIf="!firstItemHasChildren; else groupOptions">
