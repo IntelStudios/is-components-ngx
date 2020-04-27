@@ -143,6 +143,16 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.focusToInput();
     this.scrollToSelected();
+
+    if (this.control.minLoadChars === 0) {
+      setTimeout(() => {
+        // immediatelly request options from client
+        this.isLoadingOptions = true;
+        this.control.onLoadOptions('');
+        this.changeDetector.markForCheck();
+      });
+    }
+
   }
 
   focusToInput(value: string = ''): void {
@@ -173,10 +183,11 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.visibleOptions = options;
     this.options = options;
     this.markCheckedOptions();
-    if (options && this.isLoadingOptions && this.searchFilter && this.searchFilter.length >= this.control.minLoadChars) {
+    if (options && this.isLoadingOptions && (this.control.minLoadChars === 0) || (this.searchFilter && this.searchFilter.length >= this.control.minLoadChars)) {
       this.options = this.options.filter(o => !o.Checked);
       this.behavior.filter(createFilterRegexp(this.searchFilter));
       this.isLoadingOptions = false;
+      this.scrollToSelected();
     }
 
     this.changeDetector.markForCheck();

@@ -184,10 +184,14 @@
   }
   .options-loading {
     position: absolute;
-    right: 29px;
-    top: 10px;
+    right: 8px;
+    top: 4px;
     z-index: 20;
     color: $is-control-handle-color;
+    &.is-search {
+      top: 16px;
+      right: 40px;
+    }
   }
   .dropdown-header {
     font-weight: bold;
