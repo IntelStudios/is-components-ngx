@@ -7,6 +7,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 
 import { IsBreadcrumbBoxComponent } from './is-breadcrumb-box/is-breadcrumb-box.component';
 import { IsCheckboxComponent, IsRadioGroupDirective } from './is-checkbox/is-checkbox.component';
+import { IsSwitchComponent } from './is-switch/is-switch.component';
 import { configToken, IsCoreUIConfig } from './is-core-ui.interfaces';
 import { IsFieldErrorComponent } from './is-field-error/is-field-error.component';
 import { IsHintComponent } from './is-hint/is-hint.component';
@@ -28,9 +29,9 @@ import { IsTileComponent } from './is-tile/is-tile.component';
     CommonModule, RouterModule, TranslateModule, PopoverModule, TooltipModule
   ],
   declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent],
+    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsSwitchComponent, IsTileComponent],
   exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent]
+    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsSwitchComponent, IsTileComponent]
 })
 export class IsCoreUIModule {
   static forRoot(config?: IsCoreUIConfig): ModuleWithProviders<IsCoreUIModule> {

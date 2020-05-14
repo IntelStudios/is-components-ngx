@@ -32,6 +32,9 @@
     <is-checkbox [formControl]="checkboxControl" [indeterminate]="checkboxIndeterminate">
       Checkbox value
     </is-checkbox>
+    <is-checkbox [formControl]="checkboxControl" [indeterminate]="checkboxIndeterminate">
+      Checkbox value
+    </is-checkbox>
     <button (click)="toggleCheckboxValue()">Toggle Value</button>
     <button (click)="intermediateCheckboxValue()">Intermediate</button>
     <button (click)="toggleDisabled(checkboxControl)">Disabled</button>
@@ -54,6 +57,19 @@
     <button (click)="toggleRadioValue()">Toggle Value</button>
     <button (click)="toggleDisabled(radioGroupControl)">Disabled</button>
     <p>{{radioGroupControl.valueChanges|async}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Switch</h2>
+  </div>
+  <div class="col-sm-12">
+    <is-switch [formControl]="switchControl">
+      Switch value
+    </is-switch>
+    <button (click)="toggleSwitchValue()">Toggle value</button>
+    <button (click)="toggleDisabled(switchControl)">Disabled</button>
+    <p>{{switchControl.valueChanges|async}}</p>
   </div>
 </div>
 <div class="row">

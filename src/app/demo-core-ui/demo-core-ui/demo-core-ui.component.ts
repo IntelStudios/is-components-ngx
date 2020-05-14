@@ -43,6 +43,7 @@ export class DemoCoreUIComponent implements OnInit {
   checkboxControl: FormControl = new FormControl();
   checkboxIndeterminate = false;
   radioGroupControl: FormControl = new FormControl();
+  switchControl: FormControl = new FormControl();
 
   tabValid = true;
 
@@ -104,5 +105,10 @@ export class DemoCoreUIComponent implements OnInit {
   toggleRadioValue() {
     const val = this.radioGroupControl.value;
     this.radioGroupControl.setValue(val === '1' ? '2' : '1');
+  }
+
+  toggleSwitchValue() {
+    const val = this.switchControl.value;
+    this.switchControl.setValue(!val);
   }
 }
