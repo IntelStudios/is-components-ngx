@@ -1,0 +1,97 @@
+@import '../../../../styles/variables';
+
+$checkbox-width: 1.75em;
+$checkbox-height: 1.15em;
+
+:host {
+  display: flex;
+  position: relative;
+
+  input {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+
+    ~ label {
+      margin: 0;
+      padding-left: calc(#{$checkbox-width} + 0.75em);
+      position: relative;
+      user-select: none;
+    }
+
+    ~ label:before,
+    ~ label:after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: $checkbox-height;
+      transform: translate(0, -50%);
+      top: 50%;
+      left: 0;
+      background-color: $is-switch-backdrop;
+      border: 2px solid $is-switch-border;
+      border-radius: #{$checkbox-height / 2};
+    }
+
+    ~ label:before {
+      transition:
+        border-width 0.15s ease-in-out,
+        background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
+      width: $checkbox-width;
+    }
+
+    ~ label:after {
+      transition:
+        border-width 0.15s ease-in-out,
+        transform 0.15s ease-in-out,
+        background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
+      width: $checkbox-height;
+    }
+
+    &:checked ~ label:before {
+      background-color: $is-switch-checked;
+      border-color: $is-switch-checked;
+    }
+
+    &:checked ~ label:after {
+      transform: translate(#{$checkbox-width - $checkbox-height}, -50%);
+      border-color: $is-switch-checked;
+    }
+
+    &:disabled ~ label {
+      color: $is-switch-disabled;
+    }
+
+    &:disabled ~ label:before {
+      border-color: $is-switch-disabled;
+    }
+
+    &:disabled ~ label:after {
+      background-color: $is-switch-disabled;
+      transform: translate(0, -50%) scale(0.5);
+      height: $checkbox-height;
+      width: $checkbox-height;
+      border-color: $is-switch-backdrop;
+    }
+
+    &:disabled:checked ~ label:before {
+      background-color: $is-switch-disabled;
+      border-color: $is-switch-disabled;
+    }
+
+    &:disabled:checked ~ label:after {
+      background-color: $is-switch-backdrop;
+      border-color: $is-switch-backdrop;
+      transform: translate(#{$checkbox-width - $checkbox-height}, -50%) scale(0.75);
+    }
+  }
+}

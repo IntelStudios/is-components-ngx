@@ -1,0 +1,6 @@
+<input 
+  #inputEl type="checkbox" [id]="switchId" [name]="_name" [checked]="checked" [value]="value" [disabled]="disabled"
+  (change)="_onChange($event, inputEl.checked, inputEl.value)" />
+<label [for]="switchId">
+  <ng-content></ng-content>
+</label>
