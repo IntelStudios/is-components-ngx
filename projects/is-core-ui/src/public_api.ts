@@ -16,3 +16,5 @@ export * from './lib/is-checkbox/is-checkbox.component';
 export * from './lib/is-search/is-search.component';
 export * from './lib/is-tile/is-tile.component';
 export * from './lib/is-password/is-password.component'
+export * from './lib/is-switch/is-switch.component';
+export * from './lib/is-switch/is-switch.interfaces';

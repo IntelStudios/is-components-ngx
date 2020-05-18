@@ -14,7 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { IsSwitchChange } from './is-switch.interfaces';
 
-export const IS_CHECKBOX_VALUE_ACCESSOR: any = {
+export const IS_SWITCH_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => IsSwitchComponent),
   multi: true
@@ -27,7 +27,7 @@ let switchId = 0;
   selector: 'is-switch',
   templateUrl: './is-switch.component.html',
   styleUrls: ['is-switch.component.scss'],
-  providers: [IS_CHECKBOX_VALUE_ACCESSOR],
+  providers: [IS_SWITCH_VALUE_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IsSwitchComponent implements ControlValueAccessor {
