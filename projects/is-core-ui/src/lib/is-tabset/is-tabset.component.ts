@@ -16,6 +16,7 @@ import {
   Renderer2,
   TemplateRef,
   ChangeDetectorRef,
+  HostBinding,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, interval, merge, Subscription, bindCallback, Subject } from 'rxjs';
@@ -91,6 +92,8 @@ export class IsTabDirective {
    */
   @Input() disabled = false;
 
+  @Input() paneClass = '';
+
   /**
    * Valid/invalid tab incidation. This allows to incidate invalid tab in tabset
    * which is not visible to user (because of wrap being enabled)
@@ -123,8 +126,7 @@ export class IsTabDirective {
   constructor() {
 
   }
-
-
+  
   /**
    * *internal use only*
    */
@@ -163,7 +165,7 @@ export class IsTabDirective {
     </ng-template>
     <div class="tab-content" [class.pills]="pills" *ngIf="tabs.length > 0">
       <ng-template ngFor let-tab [ngForOf]="tabs">
-        <div class="tab-pane" [ngClass]="{'active show' : tab.id === activeId}" *ngIf="tab.loaded || tab.id === activeId" role="tabpanel" [attr.aria-labelledby]="tab.id">
+        <div class="tab-pane" [className]="tab.paneClass" [ngClass]="{'active show' : tab.id === activeId }" *ngIf="tab.loaded || tab.id === activeId" role="tabpanel" [attr.aria-labelledby]="tab.id">
           <ng-template [ngTemplateOutlet]="tab.contentTpl.templateRef"></ng-template>
         </div>
       </ng-template>
