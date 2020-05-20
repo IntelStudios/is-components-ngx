@@ -15,8 +15,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
 import { Subscription } from 'rxjs';
 
-import { DatepickerPopupControl } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { DatepickerPopupControl, DATEPICKER_CONFIG_DEFAULT } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { DATE_FORMAT } from '../is-datepicker/is-datepicker.component';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker/public_api';
 
 const moment = m;
 
@@ -56,6 +57,12 @@ export class IsDatepickerInlineComponent implements OnDestroy, ControlValueAcces
    * ammends selected date to be Start Of Day
    */
   @Input('isSOD') isSOD: boolean = false;
+
+  /**
+   * BsDatepicker config object to setup wrapped BsDatepickerInline component
+   */
+  @Input()
+  config: Partial<BsDatepickerConfig> = DATEPICKER_CONFIG_DEFAULT;
 
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();

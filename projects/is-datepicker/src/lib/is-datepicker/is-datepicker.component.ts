@@ -17,7 +17,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
 import { Subscription } from 'rxjs';
 
-import { IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { IsDatepickerPopupComponent, DATEPICKER_CONFIG_DEFAULT } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 const moment = m;
 
@@ -44,6 +45,11 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   @Input('placeholder')
   placeholder: string = '';
 
+    /**
+   * BsDatepicker config object to setup wrapped BsDatepickerInline component
+   */
+  @Input()
+  config: Partial<BsDatepickerConfig> = DATEPICKER_CONFIG_DEFAULT;
   /**
    * when stringMode is enabled, expected and emitted date must be in Xeelo date format (DD-MM-YYYY)
    */
@@ -191,6 +197,7 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
       this._detachSub.unsubscribe();
     });
     this.pickerInstanceRef.instance.value = this.dateValue;
+    this.pickerInstanceRef.instance.config = this.config;
     this.pickerInstanceRef.instance.control = {
       onChange: (value: Date) => {
         this.dateValue = value;

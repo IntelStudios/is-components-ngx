@@ -59,7 +59,7 @@ is-datepicker-popup {
             >span {
               color: $is-datepicker-day-fg-color;
               border-radius: $is-general-border-radius;
-              &.is-other-month {
+              &.is-other-month, &.disabled {
                 color: $is-datepicker-day-outside-fg-color;
               }
 

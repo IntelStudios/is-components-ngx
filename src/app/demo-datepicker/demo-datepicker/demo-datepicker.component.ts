@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-demo-datepicker',
@@ -21,6 +22,8 @@ export class DemoDatepickerComponent implements OnInit {
 
   control: FormControl;
 
+  config: Partial<BsDatepickerConfig> = { minDate: new Date() };
+
   constructor() {
     this.control = new FormControl();
   }
@@ -36,7 +39,7 @@ export class DemoDatepickerComponent implements OnInit {
     if (ctrl.errors) {
       ctrl.setErrors(null);
     } else {
-      ctrl.setErrors({invalid: true});
+      ctrl.setErrors({ invalid: true });
     }
   }
 
