@@ -214,10 +214,19 @@ export class IsTimepickerComponent implements OnDestroy {
     if (value) {
       if (this.stringMode && typeof value === 'string') {
         const input = value.split(':');
-        let date = new Date();
-        date.setHours(Number(input[0]));
-        date.setMinutes(Number(input[1]));
-        date.setSeconds(Number(input[2]));
+        const date = new Date();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        if (input.length > 0) {
+          date.setHours(Number(input[0]));
+        }
+        if (input.length > 1) {
+          date.setMinutes(Number(input[1]));
+        }
+        if (input.length > 2) {
+          date.setSeconds(Number(input[2]));
+        }
         value = date;
       }
 
