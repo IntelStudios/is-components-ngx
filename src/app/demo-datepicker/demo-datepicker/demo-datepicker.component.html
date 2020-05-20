@@ -19,7 +19,20 @@
     <is-datepicker viewFormat="dd. MM. yyyy"></is-datepicker>
   </div>
 </div>
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Date Picker inline</h3>
+  </div>
+  <div class="col-sm-6">
+    <is-datepicker-inline [formControl]="control"></is-datepicker-inline>
+  </div>
+</div>
 
+<div class="row">
+  <div class="col-sm-12">
+    <p>Value: {{control.valueChanges | async}}</p>
+  </div>
+</div>
 <div style="height: 100vh;"></div>
 <div class="row">
   <div class="col-sm-2">

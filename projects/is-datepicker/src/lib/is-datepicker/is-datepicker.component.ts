@@ -190,9 +190,8 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
       this.changeDetector.markForCheck();
       this._detachSub.unsubscribe();
     });
-
+    this.pickerInstanceRef.instance.value = this.dateValue;
     this.pickerInstanceRef.instance.control = {
-      value: this.dateValue,
       onChange: (value: Date) => {
         this.dateValue = value;
         this.closePopup();

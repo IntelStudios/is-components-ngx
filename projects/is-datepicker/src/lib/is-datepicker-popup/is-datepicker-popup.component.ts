@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@angular/core';
 
 export interface DatepickerPopupControl {
-  value: Date;
   onChange: (value: Date) => void;
 }
 
@@ -14,14 +13,16 @@ export interface DatepickerPopupControl {
 })
 export class IsDatepickerPopupComponent implements OnInit {
 
+  @Input()
   control: DatepickerPopupControl;
 
+  @Input()
   value: Date;
 
   constructor() { }
 
   ngOnInit() {
-    this.value = this.control.value;
+
   }
 
   onValueChange($event: Date) {

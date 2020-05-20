@@ -6,13 +6,14 @@ import { FormsModule } from '@angular/forms';
 import { IsDatepickerPopupComponent } from './is-datepicker-popup/is-datepicker-popup.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { IsDatepickerInlineComponent } from './is-datepicker-inline/is-datepicker-inline.component';
 
 @NgModule({
   imports: [
     CommonModule, BsDatepickerModule, FormsModule, OverlayModule, ScrollingModule
   ],
-  declarations: [IsDatepickerComponent, IsDatepickerPopupComponent],
-  exports: [IsDatepickerComponent],
+  declarations: [IsDatepickerComponent, IsDatepickerPopupComponent, IsDatepickerInlineComponent],
+  exports: [IsDatepickerComponent, IsDatepickerInlineComponent],
   entryComponents: [IsDatepickerPopupComponent]
 })
 export class IsDatepickerModule { }
