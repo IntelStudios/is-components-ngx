@@ -39,7 +39,8 @@ is-datepicker-popup {
       }
 
       .bs-datepicker-body {
-        border: 1px solid $is-datepicker-border-color;
+        border: none;
+        border-top: 1px solid $is-datepicker-border-color;
 
         table {
           >thead>tr>th {

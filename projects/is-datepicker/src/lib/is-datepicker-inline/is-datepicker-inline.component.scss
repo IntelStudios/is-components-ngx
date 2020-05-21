@@ -1,67 +1,19 @@
 @import '../../../../styles/mixins';
 @import '../../../../styles/variables';
 
-is-datepicker {
-  &.ng-invalid {
-    .datepicker-input {
-      @include is-input-invalid;
+is-datepicker-inline {
+  >is-datepicker-popup {
+    .bs-datepicker {
+      box-shadow: none;
+      border: none;
+
+      .bs-datepicker-container {
+        .bs-datepicker-body {
+          border-top: none;
+          background-color: $is-datepicker-inline-body-bg-color;
+        }
+      }
+
     }
   }
-
-  .datepicker-input {
-    border-width: 1px;
-    border-style: solid;
-    @include is-input;
-    display: flex;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-
-    &.open {
-      @include is-input-active;
-    }
-
-    &.disabled {
-      @include is-input-disabled;
-      cursor: not-allowed;
-    }
-
-    > span.datepicker-value {
-      color: $is-control-fg-color;
-      border:0;
-      flex: 1;
-      outline: 0;
-      min-width: 0;
-      background: transparent;
-      white-space: nowrap;
-      overflow: hidden;
-      &.align-left {
-        text-align: left !important;
-      }
-      &.align-center {
-        text-align: center !important;
-      }
-      &.align-right {
-        text-align: right !important;
-      }
-    }
-    > .btn-remove {
-      margin-left: #{$is-general-padding-small};
-      color: $is-control-handle-color;
-    }
-  }
-
-  .datepicker-icon {
-    margin-left: #{$is-general-padding-small};
-
-    >i {
-      color: $is-control-handle-color;
-    }
-    &.disabled {
-      pointer-events: none;
-      cursor: not-allowed;
-    }
-  }
-
 }
-
