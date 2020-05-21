@@ -42,6 +42,9 @@ export class IsEditableTextboxComponent implements OnInit, ControlValueAccessor 
   edit = false;
 
   @Input()
+  isReadOnly: boolean = false;
+
+  @Input()
   validator: any = { valid: false };
 
   @Output()

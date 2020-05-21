@@ -1,4 +1,4 @@
-<div *ngIf="edit" class="input-group input-group-text">
+<div *ngIf="edit && !isReadOnly" class="input-group input-group-text">
   <input #textInput
          type="text"
          class="form-control"
@@ -12,4 +12,4 @@
   >
   <i class="input-group-addon fa fa-check" (click)="toggleEdit()"></i>
 </div>
-<div class="text-mode" *ngIf="!edit">{{value}} <i class="fa fa-pencil edit-btn" (click)="toggleEdit()"></i></div>
+<div class="text-mode" *ngIf="!edit">{{ value }} <i *ngIf="!isReadOnly" class="fa fa-pencil edit-btn" (click)="toggleEdit()"></i></div>
