@@ -296,6 +296,13 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       return;
     }
 
+    // clear all previous values
+    this.service.releaseAllItems();
+
+    if (!value) {
+      return;
+    }
+
     const findNodePaintedPathByPath = (rootPath: string, struct: DataStructure, paintedPath: number[]): number[] => {
       if (struct.Path === rootPath) {
         return paintedPath;
@@ -324,22 +331,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
       return null;
     };
-
-    // clear all previous values
-    this.inputSchemaMap.forEach((path, itemName) => {
-      const nodePaintedPath = findNodePaintedPathByPath(path, this._data.DataStructure, []);
-      const item = findItemByName(itemName);
-
-      if (!nodePaintedPath || !item) {
-        return;
-      }
-
-      this.service.releaseItem({ Item: item, Path: path, PaintedPath: nodePaintedPath, EmmitChange: false });
-    });
-
-    if (!value) {
-      return;
-    }
 
     value.forEach((path, itemName) => {
       const nodePaintedPath = findNodePaintedPathByPath(path, this._data.DataStructure, []);
