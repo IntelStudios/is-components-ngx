@@ -42,6 +42,14 @@ export class IsInputMappingService {
     this.releaseSource.next(data);
   }
 
+  releaseAllItems() {
+    Object.keys(this.assignedCache).forEach(path => {
+      this.assignedCache[path].forEach((data: AssignStatus) => {
+        this.releaseItem(data);
+      });
+    });
+  }
+
   getAssignedItems(path: string): AssignStatus[] {
     return path in this.assignedCache ? this.assignedCache[path] : [];
   }
