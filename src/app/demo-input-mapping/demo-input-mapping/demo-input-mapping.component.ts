@@ -527,4 +527,8 @@ export class DemoInputMappingComponent implements OnInit {
   deleteDataset() {
     this.currentDataset = undefined;
   }
+
+  toggleDisabled() {
+    this.formControl.disabled ? this.formControl.enable() : this.formControl.disable({emitEvent: false});
+  }
 }

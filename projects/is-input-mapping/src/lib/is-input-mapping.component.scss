@@ -55,6 +55,10 @@
 
     &.disabled {
       color: #878D94;
+
+      .assigned-item {
+        color: inherit;
+      }
     }
 
     .description {

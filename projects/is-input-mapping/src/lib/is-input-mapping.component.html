@@ -20,13 +20,14 @@
       <div>
         <span class="name">{{item.Name}}</span>
         <span class="delete">
-          <i class="fa fa-times btn-release-item" (click)="release(item)"></i>
+          <i class="fa fa-times" [ngClass]="{'btn-release-item': !disabled}" (click)="release(item)"></i>
         </span>
       </div>
     </span>
 
     <i *ngIf="!disabled && inputsAssignableFiltered.length > 0 && (mouseover || dropdownVisible)"
-       class="fa fa-plus-square btn-attach-item" (click)="dropdownShown()"></i>
+       class="fa fa-plus-square btn-attach-item" (click)="dropdownShown()">
+    </i>
   </span>
 
   <div class="dropdown" *ngIf="dropdownVisible">
