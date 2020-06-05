@@ -7,14 +7,18 @@ export class IsInputMappingService {
 
   private assignSource = new Subject<AssignStatus>();
   private releaseSource = new Subject<AssignStatus>();
+  private disabledSource = new Subject<boolean>();
+
   /*
   key: path of item that has assigns
   value: list of assigned AssignStatus
    */
   private assignedCache = {};
+  private isDisabled = false;
 
   itemAssigned$ = this.assignSource.asObservable();
   itemReleased$ = this.releaseSource.asObservable();
+  disabledChange$ = this.disabledSource.asObservable();
 
   assignItem(data: AssignStatus) {
     if (!(data.Path in this.assignedCache)) {
@@ -61,6 +65,10 @@ export class IsInputMappingService {
   }
 
   isAssignable(paintedPath: number[], isCollapsible: boolean): boolean {
+    if (this.isDisabled) {
+      return false;
+    }
+
     if (Object.keys(this.assignedCache).length === 0) {
       return true;
     }
@@ -95,5 +103,10 @@ export class IsInputMappingService {
     Object.keys(this.assignedCache).filter(path => validPaths.indexOf(path) === -1).forEach(path => {
       this.assignedCache[path].forEach(status => this.releaseItem(status));
     });
+  }
+
+  setDisabled(val: boolean) {
+    this.isDisabled = val;
+    this.disabledSource.next(val);
   }
 }

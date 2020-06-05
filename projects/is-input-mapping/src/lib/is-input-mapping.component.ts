@@ -159,6 +159,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     // debounce quick changes in mouseover states
     this._subscriptions.push(this._mouseoverSubject.asObservable().pipe(debounceTime(20)).subscribe(value => this._mouseover = value));
 
+    // subscribe to disabled state change
+    this._subscriptions.push(this.service.disabledChange$.subscribe(val => this.disabled = val));
+
     // subscribe to assigning items
     this._subscriptions.push(this.service.itemAssigned$.subscribe(item => this.assignCallback(item)));
 
@@ -226,6 +229,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   release(item: InputSchema) {
+    if (this.disabled) {
+      return;
+    }
     this.service.releaseItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
   }
 
@@ -364,6 +370,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
    */
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
+    this.service.setDisabled(this.disabled);
   }
 
   private assignCallback(status: AssignStatus) {
