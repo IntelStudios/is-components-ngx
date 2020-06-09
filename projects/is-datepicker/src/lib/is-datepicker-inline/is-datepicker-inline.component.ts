@@ -13,11 +13,11 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
-import { DatepickerPopupControl, DATEPICKER_CONFIG_DEFAULT } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { DATEPICKER_CONFIG_DEFAULT, DatepickerPopupControl } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { DATE_FORMAT } from '../is-datepicker/is-datepicker.component';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker/public_api';
 
 const moment = m;
 
