@@ -22,6 +22,7 @@ $checkbox-height: 1.15em;
       padding-left: calc(#{$checkbox-width} + 0.75em);
       position: relative;
       user-select: none;
+      cursor: pointer;
     }
 
     ~ label:before,

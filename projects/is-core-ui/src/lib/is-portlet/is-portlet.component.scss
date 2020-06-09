@@ -36,7 +36,7 @@ is-portlet, is-section {
 
       >.tools,
       .actions {
-        flex: 1;
+        flex: initial;
 
         > a.is-caret {
           color: $is-control-handle-color;
