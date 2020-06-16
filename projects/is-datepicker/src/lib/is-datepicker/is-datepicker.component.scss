@@ -26,8 +26,11 @@ is-datepicker {
       cursor: not-allowed;
     }
 
-    > span.datepicker-value {
+    &:not(.disabled) > span.datepicker-value {
       color: $is-control-fg-color;
+    }
+
+    > span.datepicker-value {
       border:0;
       flex: 1;
       outline: 0;
