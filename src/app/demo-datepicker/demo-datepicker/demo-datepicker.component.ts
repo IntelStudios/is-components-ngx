@@ -43,4 +43,8 @@ export class DemoDatepickerComponent implements OnInit {
     }
   }
 
+  toggleDisabled() {
+    this.control.disabled ? this.control.enable() : this.control.disable();
+  }
+
 }
