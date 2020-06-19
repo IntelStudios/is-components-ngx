@@ -28,8 +28,11 @@
       @include is-input-active;
     }
 
-    > .timepicker-value {
+    &:not(.disabled) > .timepicker-value {
       color: $is-control-fg-color;
+    }
+
+    > .timepicker-value {
       flex: 1;
       overflow: hidden;
       white-space: nowrap;
