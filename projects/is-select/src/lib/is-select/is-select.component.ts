@@ -428,8 +428,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     if (this.multiple) {
       const active = this._active as SelectItem[];
       this._active = active.filter(i => i.ID !== item.ID);
+      this._value = active.map(v => v.ID);
     } else {
       this._active = null;
+      this._value = null;
     }
     this.changeDetector.markForCheck();
     this.emitChange();
@@ -594,8 +596,10 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
             this._active = [];
           }
           (this._active as SelectItem[]).push(item);
+          this._value = (this._active as SelectItem[]).map(v => v.ID);
         } else {
           this._active = item;
+          this._value = item.ID;
         }
         this.changeDetector.markForCheck();
         this.emitChange();
