@@ -11,6 +11,7 @@ import {
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { cronExpressionValidator, mapNumbers } from './is-cron-editor.validator';
+import { IsSelectMultipleConfig } from 'is-select';
 
 const cronValidator = cronExpressionValidator();
 
@@ -192,6 +193,8 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   private _value: string;
   private _ignore_reading = false;
   private validatorOnChangeFn: Function = null;
+
+  isSelectMultiple: IsSelectMultipleConfig = {showButtons: true};
 
   ngOnInit() {
     for (let i = 0; i < 60; i++) {

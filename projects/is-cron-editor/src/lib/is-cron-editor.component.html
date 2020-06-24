@@ -18,7 +18,7 @@
       </div>
       <div class="sub-content" *ngIf="formControl.seconds.type.value === 3">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-select [multiple]="true" placeholder="Select seconds at which will this expression run"
+        <is-select [multipleConfig]="isSelectMultiple" placeholder="Select seconds at which will this expression run"
                          [formControl]="formControl.seconds.specific"
                          [items]="values.minutes"
         ></is-select>
@@ -51,7 +51,7 @@
       </div>
       <div class="sub-content" *ngIf="formControl.minutes.type.value === 3">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-select [multiple]="true" placeholder="Select minutes at which will this expression run"
+        <is-select [multipleConfig]="isSelectMultiple" placeholder="Select minutes at which will this expression run"
                          [formControl]="formControl.minutes.specific"
                          [items]="values.minutes"
         ></is-select>
@@ -84,7 +84,7 @@
       </div>
       <div class="sub-content" *ngIf="formControl.hours.type.value === 3">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-select [multiple]="true" placeholder="Select hours at which will this expression run"
+        <is-select [multipleConfig]="isSelectMultiple" placeholder="Select hours at which will this expression run"
                          [formControl]="formControl.hours.specific"
                          [items]="values.hours"
         ></is-select>
@@ -125,7 +125,7 @@
       </div>
       <div class="sub-content" *ngIf="formControl.days.type.value === 5">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-select [multiple]="true" placeholder="Select days at which will this expression run"
+        <is-select [multipleConfig]="isSelectMultiple" placeholder="Select days at which will this expression run"
                          [formControl]="formControl.days.specificDayOfWeek"
                          [items]="values.daysOfWeek"
                          [useModels]="true"
@@ -133,7 +133,7 @@
       </div>
       <div class="sub-content" *ngIf="formControl.days.type.value === 12">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-select [multiple]="true" placeholder="Select days at which will this expression run"
+        <is-select [multipleConfig]="isSelectMultiple" placeholder="Select days at which will this expression run"
                          [formControl]="formControl.days.specificDayOfMonth"
                          [items]="values.daysOfMonth"
         ></is-select>
@@ -181,7 +181,7 @@
       </div>
       <div class="sub-content" *ngIf="formControl.months.type.value === 3">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-select [multiple]="true" placeholder="Select months at which will this expression run"
+        <is-select [multipleConfig]="isSelectMultiple" placeholder="Select months at which will this expression run"
                          [formControl]="formControl.months.specific"
                          [items]="values.months"
                          [useModels]="true"
@@ -214,7 +214,7 @@
       </div>
       <div class="sub-content" *ngIf="formControl.years.type.value === 3">
         <!--suppress AngularInvalidExpressionResultType -->
-        <is-select [multiple]="true" placeholder="Select years at which will this expression run"
+        <is-select [multipleConfig]="isSelectMultiple" placeholder="Select years at which will this expression run"
                          [formControl]="formControl.years.specific"
                          [items]="values.years"
         ></is-select>
