@@ -197,11 +197,11 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   isSelectMultiple: IsSelectMultipleConfig = {showButtons: true};
 
   ngOnInit() {
-    for (let i = 0; i < 60; i++) {
-      this.values.minutes.push({ ID: i, Value: `${i}` });
+    for (let i = 1; i <= 60; i++) {
+      this.values.minutes.push({ ID: i, Value: `${i - 1}` });
     }
-    for (let i = 0; i < 24; i++) {
-      this.values.hours.push({ ID: i, Value: `${i}` });
+    for (let i = 1; i <= 24; i++) {
+      this.values.hours.push({ ID: i, Value: `${i - 1}` });
     }
     for (let i = 1; i <= 31; i++) {
       this.values.daysOfMonth.push({ ID: i, Value: `${i}` });
@@ -313,7 +313,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
         break;
       case 3:
         if (this.formControl.seconds.specific.value && this.formControl.seconds.specific.value.length) {
-          this.cronState.seconds = this.formControl.seconds.specific.value.sort().map(v => `${v}`).join(',');
+          this.cronState.seconds = this.formControl.seconds.specific.value.sort().map(v => `${v - 1}`).join(',');
         } else {
           this.cronState.seconds = '0';
         }
@@ -333,7 +333,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
         break;
       case 3:
         if (this.formControl.minutes.specific.value && this.formControl.minutes.specific.value.length) {
-          this.cronState.minutes = this.formControl.minutes.specific.value.sort().map(v => `${v}`).join(',');
+          this.cronState.minutes = this.formControl.minutes.specific.value.sort().map(v => `${v - 1}`).join(',');
         } else {
           this.cronState.minutes = '0';
         }
@@ -353,7 +353,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
         break;
       case 3:
         if (this.formControl.hours.specific.value && this.formControl.hours.specific.value.length) {
-          this.cronState.hours = this.formControl.hours.specific.value.sort().map(v => `${v}`).join(',');
+          this.cronState.hours = this.formControl.hours.specific.value.sort().map(v => `${v - 1}`).join(',');
         } else {
           this.cronState.hours = '0';
         }
@@ -513,7 +513,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
         this.formControl.seconds.type.setValue(4);
       } else {
         this.formControl.seconds.type.setValue(3);
-        this.formControl.seconds.specific.setValue(mapNumbers(this.cronState.seconds.split(',')));
+        this.formControl.seconds.specific.setValue(mapNumbers(this.cronState.seconds.split(',')).map(n => n + 1));
       }
 
       // parse minutes
@@ -534,7 +534,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
         this.formControl.minutes.type.setValue(4);
       } else {
-        this.formControl.minutes.specific.setValue(mapNumbers(this.cronState.minutes.split(',')));
+        this.formControl.minutes.specific.setValue(mapNumbers(this.cronState.minutes.split(',')).map(n => n + 1));
 
         this.formControl.minutes.type.setValue(3);
       }
@@ -557,7 +557,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
         this.formControl.hours.type.setValue(4);
       } else {
-        this.formControl.hours.specific.setValue(mapNumbers(this.cronState.hours.split(',')));
+        this.formControl.hours.specific.setValue(mapNumbers(this.cronState.hours.split(',')).map(n => n + 1));
         this.formControl.hours.type.setValue(3);
       }
 
