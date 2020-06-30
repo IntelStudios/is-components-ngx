@@ -24,6 +24,8 @@ export class DemoDatepickerComponent implements OnInit {
 
   config: Partial<BsDatepickerConfig> = { minDate: new Date() };
 
+  readonly = false;
+
   constructor() {
     this.control = new FormControl();
   }
@@ -47,4 +49,7 @@ export class DemoDatepickerComponent implements OnInit {
     this.control.disabled ? this.control.enable() : this.control.disable();
   }
 
+  toggleReadOnly() {
+    this.readonly = !this.readonly;
+  }
 }
