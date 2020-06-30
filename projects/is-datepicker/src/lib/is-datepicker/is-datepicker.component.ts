@@ -79,7 +79,10 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   changed: EventEmitter<any> = new EventEmitter<any>();
 
   dateValue: any = '';
+
   disabled: boolean = false;
+
+  @Input() readonly: boolean = false;
 
   private pickerOverlayRef: OverlayRef;
   private pickerInstanceRef: ComponentRef<IsDatepickerPopupComponent>;
@@ -137,7 +140,7 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   }
 
   openPopup() {
-    if (this.disabled) {
+    if (this.disabled || this.readonly) {
       return;
     }
 
@@ -243,6 +246,11 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
       this._changeSubscription.unsubscribe();
     }
     this._changeSubscription = this.changed.subscribe(fn);
+  }
+
+  setReadonly(value: boolean) {
+    this.readonly = value;
+    this.changeDetector.markForCheck();
   }
 
   /**

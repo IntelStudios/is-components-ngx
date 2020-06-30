@@ -26,7 +26,12 @@ is-datepicker {
       cursor: not-allowed;
     }
 
-    &:not(.disabled) > span.datepicker-value {
+    &.readonly {
+      @include is-input-readonly;
+      cursor: auto;
+    }
+
+    &:not(.disabled):not(.readonly) > span.datepicker-value {
       color: $is-control-fg-color;
     }
 
