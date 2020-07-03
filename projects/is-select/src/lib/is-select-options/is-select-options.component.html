@@ -7,57 +7,25 @@
   </div>
   <i *ngIf="isLoadingOptions" class="fas fa-circle-notch fa-spin options-loading" [class.is-search]="isSearch"></i>
 
-  <!-- options without groups -->
-  <ng-container *ngIf="!firstItemHasChildren; else groupOptions">
-    <ul class="ui-select-choices">
-        <li *ngFor="let o of selectedOptions" role="menuitem" [class]="alignment">
-            <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == singleValue?.ID"
-              (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
-              <ng-container [ngTemplateOutlet]="optionMainTemplate"
-                [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
-              </ng-container>
-            </div>
-          </li>
-        <li *ngIf="selectedOptions && selectedOptions.length > 0">
-            <div class="ui-select-choices-row">
-              <div class="dropdown-item divider"></div>
-            </div>
-        </li>
-      <li *ngFor="let o of visibleOptions" role="menuitem" [class]="alignment">
-        <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == singleValue?.ID"
-          (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
-          <ng-container [ngTemplateOutlet]="optionMainTemplate"
-            [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
-          </ng-container>
+  <ul class="ui-select-choices">
+    <is-select-option *ngFor="let c of selectedOptions" [option]="c" [control]="control" [optionTemplate]="optionMainTemplate" [alignment]="alignment"></is-select-option>
+    <li *ngIf="selectedOptions && selectedOptions.length > 0">
+        <div class="ui-select-choices-row">
+          <div class="dropdown-item divider"></div>
         </div>
-      </li>
-    </ul>
-    <div *ngIf="multipleConfig?.showButtons" class="select-all">
-      <button class="btn {{multipleConfig.selectAll.cssClass}}" (click)="selectAll()">
-        <i class="fas fa-fw fa-check-square"></i>
-        <span>{{multipleConfig.selectAll.label}}</span>
-      </button>
-      <button class="btn {{multipleConfig.deselectAll.cssClass}}" (click)="deselectAll()">
-        <i class="fas fa-fw fa-window-close"></i>
-        <span>{{multipleConfig.deselectAll.label}}</span>
-      </button>
-    </div>
-  </ng-container>
-  <!-- options with groups -->
-  <ng-template #groupOptions>
-    <ul *ngIf="visibleOptions && visibleOptions.length > 0" class="ui-select-choices" role="menu">
-      <li *ngFor="let c of visibleOptions" role="menuitem" [class]="alignment">
-        <div class="dropdown-header">{{c.Value}}</div>
-        <div *ngFor="let o of c.children" class="ui-select-choices-row" [class.active]="isActive(o)"
-          [class.selected]="o.ID == singleValue?.ID" (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)"
-          [ngClass]="{'disabled': o.disabled === true}">
-          <ng-container [ngTemplateOutlet]="optionMainTemplate"
-            [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
-          </ng-container>
-        </div>
-      </li>
-    </ul>
-  </ng-template>
+    </li>
+    <is-select-option *ngFor="let c of visibleOptions" [option]="c" [control]="control" [optionTemplate]="optionMainTemplate" [alignment]="alignment"></is-select-option>
+</ul>
+<div *ngIf="multipleConfig?.showButtons" class="select-all">
+  <button class="btn {{multipleConfig.selectAll.cssClass}}" (click)="selectAll()">
+    <i class="fas fa-fw fa-check-square"></i>
+    <span>{{multipleConfig.selectAll.label}}</span>
+  </button>
+  <button class="btn {{multipleConfig.deselectAll.cssClass}}" (click)="deselectAll()">
+    <i class="fas fa-fw fa-window-close"></i>
+    <span>{{multipleConfig.deselectAll.label}}</span>
+  </button>
+</div>
 
 </div>
 <!-- option: single-mode -->

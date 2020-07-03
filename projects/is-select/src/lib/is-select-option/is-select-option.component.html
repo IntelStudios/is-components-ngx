@@ -1,0 +1,11 @@
+<ng-container *ngIf="option.children; else leaf">
+  <div *ngIf="option.children" class="dropdown-header">{{option.Value}}</div>
+  <is-select-option *ngFor="let o of option.children" [option]="o" [level]="level + 1" [alignment]="alignment" [control]="control" [optionTemplate]="optionTemplate" [style.margin-left.px]="4 * (level + 1)"></is-select-option>
+</ng-container>
+<ng-template #leaf>
+  <div class="ui-select-choices-row" [ngClass]="{'disabled': option.disabled === true}" [class.selected]="isSelected$ | async" [class.active]="isActive$ | async" (mouseenter)="selectActive()"  (click)="selectMatch($event)">
+    <ng-container [ngTemplateOutlet]="optionTemplate"
+      [ngTemplateOutletContext]="{$implicit: option, index: 0, item: option}">
+    </ng-container>
+  </div>
+</ng-template>

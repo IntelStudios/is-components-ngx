@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, AfterViewInit, TemplateRef, ViewChild } from '@angular/core';
 
-import { IOptionsBehavior, ChildrenOptionsBehavior, GenericOptionsBehavior } from '../options-behavior';
+import { IOptionsBehavior, ChildrenOptionsBehavior, GenericOptionsBehavior, OptionsBehavior } from '../options-behavior';
 import { IsSelectOptionDirective } from '../is-select.directives';
 import { SelectItem } from '../select-item';
 import { createFilterRegexp } from 'is-text-utils';
 import { IsSelectMultipleConfig } from '../is-select.interfaces';
+import { IsSelectOptionsService } from '../is-select.options.service';
 
 export interface ISelectOptionsControl {
   active: SelectItem | SelectItem[];
@@ -14,6 +15,7 @@ export interface ISelectOptionsControl {
   alignItems: 'left' | 'right';
   alignment: 'left' | 'right' | 'center';
   minLoadChars: number;
+  isGroupOptions: boolean;
   isSearch: boolean;
   multipleConfig: IsSelectMultipleConfig;
   onClosed: () => void;
@@ -28,7 +30,8 @@ export interface ISelectOptionsControl {
   selector: 'is-select-options',
   templateUrl: './is-select-options.component.html',
   styleUrls: ['./is-select-options.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  viewProviders: [IsSelectOptionsService],
 })
 export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
 
@@ -42,11 +45,14 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
 
   control: ISelectOptionsControl;
 
-  activeOption: SelectItem;
+  get activeOption(): SelectItem {
+    return this.optionsService.activeOption;
+  }
   value: SelectItem | SelectItem[];
 
   visibleOptions: SelectItem[];
   options: SelectItem[];
+  isGroupOptions: boolean;
 
   /**
    * in multi-mode these options are rendered on top
@@ -65,11 +71,6 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   private searchFilter: string = '';
   isLoadingOptions: boolean = false;
 
-
-  get firstItemHasChildren(): boolean {
-    return this.options[0] && this.options[0].hasChildren();
-  }
-
   get singleValue(): SelectItem {
     return this.value as SelectItem;
   }
@@ -78,12 +79,13 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     return this.value as SelectItem[];
   }
 
-  constructor(private changeDetector: ChangeDetectorRef, public element: ElementRef) { }
+  constructor(private changeDetector: ChangeDetectorRef, public element: ElementRef, private optionsService: IsSelectOptionsService) { }
 
 
   ngOnInit() {
 
     this.options = this.control.options;
+    this.isGroupOptions = this.control.isGroupOptions;
     this.value = this.control.active;
     this.searchPlaceholder = this.control.searchPlaceholder;
     this.alignment = this.control.alignment;
@@ -92,6 +94,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.isSearch = this.control.isSearch;
     this.multipleConfig = this.control.multipleConfig;
 
+    this.optionsService.setSingleValue(this.singleValue);
     if (this.multipleConfig) {
       // apply defaults
       this.multipleConfig = {
@@ -113,24 +116,18 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     // decide which templateRef are we gonna use to render a single option
     this.optionMainTemplate = this.multiple ? this.optionMultiTemplate : this.optionSingleTemplate;
 
-    // neccessary check if you are using select with groups
-    if (this.firstItemHasChildren) {
-      if (this.options.findIndex((item: SelectItem) => item.children === null || item.children === undefined) > -1) {
-        // it is required that every parent must have own child/ren
-        console.warn('Every item of the array must have children, filtering items without children...');
-        this.options = this.control.options.filter((item: SelectItem) => item.children);
-      }
+    if (this.isGroupOptions) {
       this.behavior = new ChildrenOptionsBehavior(this);
     } else {
       this.behavior = new GenericOptionsBehavior(this);
     }
     this.visibleOptions = this.options;
 
-    this.markCheckedOptions();
+    this.markCheckedOptions(this.options);
 
     if (this.multiple && this.value) {
       this.selectedOptions = (this.value as SelectItem[]).map(v => { v.Checked = true; return v; });
-      this.options = this.options.filter(o => !o.Checked);
+      this.options = OptionsBehavior.filterPredicate(this.options, (opt) => !opt.Checked);
     }
 
     this.behavior.reset();
@@ -167,7 +164,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
 
   setValue(option: SelectItem | SelectItem[]) {
     this.value = option;
-    this.markCheckedOptions();
+    this.markCheckedOptions(this.options);
     this.changeDetector.markForCheck();
   }
 
@@ -182,7 +179,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   setOptions(options: SelectItem[]) {
     this.visibleOptions = options;
     this.options = options;
-    this.markCheckedOptions();
+    this.markCheckedOptions(this.options);
     if (options && this.isLoadingOptions && (this.control.minLoadChars === 0) || (this.searchFilter && this.searchFilter.length >= this.control.minLoadChars)) {
       this.options = this.options.filter(o => !o.Checked);
       this.behavior.filter(createFilterRegexp(this.searchFilter));
@@ -204,9 +201,8 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     !this.control.multipleConfig && this.control.onClosed();
   }
 
-  selectActive(value: SelectItem) {
-    this.activeOption = value;
-    this.changeDetector.markForCheck();
+  setActiveOption(option: SelectItem) {
+    this.optionsService.setActiveOption(option);
   }
 
   onSearchChange($event: string) {
@@ -245,7 +241,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
       const el: any = this.element.nativeElement.querySelector('div.ui-select-search > input');
       if (!el.value || el.value.length <= 0) {
         if (this.value) {
-          this.control.onItemUnselected(this.activeOption);
+          this.control.onItemUnselected(this.optionsService.activeOption);
         }
         this.control.onClosed();
         e.preventDefault();
@@ -303,13 +299,6 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     return html;
   }
 
-  isActive(value: SelectItem): boolean {
-    if (!this.activeOption) {
-      return;
-    }
-    return this.activeOption.ID === value.ID;
-  }
-
   scrollToSelected() {
     const selectedElement = this.element.nativeElement.querySelector('div.ui-select-choices-row.selected');
     if (selectedElement === null) {
@@ -318,14 +307,18 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.element.nativeElement.querySelector('ul.ui-select-choices').scrollTop = selectedElement.offsetTop - 40;
   }
 
-  private markCheckedOptions() {
+  private markCheckedOptions(options: SelectItem[], checkSelected = true) {
     // set Checked property to options
     if (this.multiple && this.value) {
       const values = this.value as SelectItem[];
-      this.options.forEach(o => {
-        o.Checked = values.findIndex(v => v.ID === o.ID) > -1;
+      options.forEach(o => {
+        if (o.hasChildren()) {
+          this.markCheckedOptions(o.children, false);
+        } else {
+          o.Checked = values.findIndex(v => v.ID === o.ID) > -1;
+        }
       });
-      if (this.selectedOptions) {
+      if (this.selectedOptions && checkSelected) {
         this.selectedOptions.forEach(o => {
           o.Checked = values.findIndex(v => v.ID === o.ID) > -1;
         });
