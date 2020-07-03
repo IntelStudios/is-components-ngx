@@ -66,31 +66,7 @@
       margin-bottom: 0;
       list-style: none;
       padding-left: 0;
-      @include short-scroll;
-      > li {
-        &.right {
-          text-align: right;
-          .ui-select-choices-row {
-            &.active {
-              a > *{
-                transform: translateX(-4px);
-              }
-            }
-          }
-        }
-        &.center {
-          text-align: center;
-        }
-        &.left {
-          .ui-select-choices-row {
-            &.active {
-              a > * {
-                transform: translateX(4px);
-              }
-            }
-          }
-        }
-      }
+      @include short-scroll();
     }
 
     &.multiple {
@@ -124,45 +100,6 @@
   .ui-select-multiple {
     .ui-select-choices {
       margin-top: 1px;
-    }
-  }
-
-
-  .ui-select-choices-row {
-    padding: 0px $is-general-padding-small;
-    >a {
-      display: block;
-      padding: 4px $is-general-padding-small;
-      clear: both;
-      font-weight: 400;
-      line-height: 1.42857143;
-      color: $is-control-fg-color;
-      text-decoration: none;
-      cursor: pointer;
-      > * {
-        transition: transform 0.15s;
-      }
-      > .item-desc {
-        color: $is-select-item-desc-fg-color;
-        font-size: 10px;
-        font-weight: bold;
-        padding-left: 4px;
-      }
-    }
-    &.selected {
-      > a {
-        color: $is-control-selected-item-color;
-      }
-    }
-    &.active {
-      >a {
-        outline: 0;
-        background-color: $is-control-active-item-color;
-      }
-    }
-    &.disabled {
-      pointer-events: none;
-      opacity: 0.6;
     }
   }
 

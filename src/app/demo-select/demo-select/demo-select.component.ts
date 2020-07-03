@@ -79,29 +79,35 @@ export class DemoSelectComponent implements OnInit {
     const item1: any = {
       ID: '1', Value: 'Europe', children:
         [
-          { ID: '11', Value: 'Czech' },
+          { ID: '11', Value: 'Czech', children: [
+              {ID: '111', Value: 'Olomouc' },
+              {ID: '112', Value: 'Prague' },
+            ]
+          },
           { ID: '12', Value: 'Poland', Disabled: true },
           { ID: '13', Value: 'Nederlands', Disabled: true }
         ]
     };
     const item2: any = {
       ID: '2', Value: 'Asia', children: [
-        { ID: '111', Value: 'China' },
-        { ID: '112', Value: 'Thailand' },
-        { ID: '113', Value: 'Malaysia', Disabled: true },
-        { ID: '114', Value: 'Russia', Disabled: true }
+        { ID: '21', Value: 'China' },
+        { ID: '22', Value: 'Thailand' },
+        { ID: '23', Value: 'Malaysia', Disabled: true },
+        { ID: '24', Value: 'Russia', Disabled: true }
       ]
     };
     const item3: any = {
       ID: '3', Value: 'USA', children:
         [
-          { ID: '1111', Value: 'Miami' },
-          { ID: '1112', Value: 'Florida', Disabled: true },
-          { ID: '1113', Value: 'LA', Disabled: true }
+          { ID: '31', Value: 'Miami' },
+          { ID: '32', Value: 'Florida', Disabled: true },
+          { ID: '33', Value: 'LA', Disabled: true }
         ]
     };
 
-    this.itemsGrouped.push(item1, item2, item3);
+    const item4 = {ID: '4', Value: 'Mars'};
+
+    this.itemsGrouped = [item1, item2, item3, item4];
     this.changeDetector.markForCheck();
   }
 

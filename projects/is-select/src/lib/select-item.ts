@@ -41,13 +41,13 @@ export class SelectItem {
       } else {
         this.disabled = false;
       }
-      if (source.children && source.Value) {
+      if (source.children && (source.Value || source.value)) {
         this.children = source.children.map((c: any) => {
           const r: SelectItem = new SelectItem(c, modelConfig);
           r.parent = this;
           return r;
         });
-        this.Value = source.Value;
+        this.Value = source.Value || source.value;
       }
     }
     if (this.Value) {
@@ -80,9 +80,11 @@ export class SelectItem {
 
   public fillChildrenHash(optionsMap: Map<string, number>, startIndex: number): number {
     let i = startIndex;
-    this.children.map((child: SelectItem) => {
-      optionsMap.set(child.ID, i++);
-    });
+    if (this.children) {
+      this.children.map((child: SelectItem) => {
+        optionsMap.set(child.ID, i++);
+      });
+    }
     return i;
   }
 

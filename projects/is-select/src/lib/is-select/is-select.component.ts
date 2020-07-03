@@ -22,6 +22,7 @@ import { IsSelectOptionsComponent } from '../is-select-options/is-select-options
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from '../is-select.directives';
 import { IsSelectModelConfig, IsSelectMultipleConfig } from '../is-select.interfaces';
 import { SelectItem } from '../select-item';
+import { OptionsBehavior } from '../options-behavior';
 
 export const IS_SELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -126,16 +127,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         let active = null;
         if (!this.multiple) {
           // single value
-          if (this.firstItemHasChildren) {
-            this.options.forEach((item: SelectItem) => {
-              const activeChild = item.children.find(c => c.ID === this._value);
-              if (activeChild) {
-                active = activeChild;
-              }
-            });
-          } else {
-            active = this.options.find(o => o.ID === this._value);
-          }
+          active = this.findSelectedOption(this.options);
           // we DID find currently set value among loaded options
           if (active) {
             this._active = active;
@@ -149,7 +141,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         }
         else {
           // multiple values
-          if (this.firstItemHasChildren) {
+          if (this.isGroupOptions) {
             console.warn('setting value with [multiple]="true" and grouped options not yet implemented')
             // this.options.forEach((item: SelectItem) => {
             //   const activeChild = item.children.find(c => c.ID === this._value);
@@ -437,8 +429,8 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     this.emitChange();
   }
 
-  private get firstItemHasChildren(): boolean {
-    return this.options[0] && this.options[0].hasChildren();
+  private get isGroupOptions(): boolean {
+    return this.options && this.options.findIndex(o => o.hasChildren()) > -1;
   }
 
   private emitChange() {
@@ -552,6 +544,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     this.optionsInstanceRef.instance.control = {
       active: this.active,
       options: this.options,
+      isGroupOptions: this.isGroupOptions,
       multipleConfig: this.multipleConfig,
       searchPlaceholder: this.searchPlaceholder,
       optionTemplate: this.templateOption,
@@ -564,7 +557,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       },
       onItemsSelected: () => {
         if (this.multiple) {
-          this._active = [...this.options];
+          this._active = [...OptionsBehavior.getLeafOptions(this.options).filter(o => !o.disabled)];
           this.changeDetector.markForCheck();
           this.emitChange();
 
@@ -654,17 +647,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       }
 
       if (this.options && this.options.length > 0) {
-        let active = null;
-        if (this.firstItemHasChildren) {
-          this.options.forEach((item: SelectItem) => {
-            const activeChild = item.children.find(c => c.ID === this._value);
-            if (activeChild) {
-              active = activeChild;
-            }
-          });
-        } else {
-          active = this.options.find(o => o.ID === this._value);
-        }
+        let active = this.findSelectedOption(this.options);
 
         if (active) {
           this._active = active;
@@ -690,6 +673,23 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     this.changeDetector.markForCheck();
   }
 
+  private findSelectedOption(options: SelectItem[]): SelectItem | null {
+    let result: SelectItem = null;
+    options.forEach(o => {
+      if (result) {
+        return;
+      }
+      if (o.ID === this._value) {
+        result = o;
+        return;
+      }
+      if (o.hasChildren()) {
+        result = this.findSelectedOption(o.children);
+      }
+    });
+    return result;
+  }
+
   private multipleWriteValue(values: any[]): void {
     if (values === null || values === undefined || values === []) {
       this._active = null;
@@ -710,7 +710,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
       if (this.options && this.options.length > 0) {
         let active = null;
-        if (this.firstItemHasChildren) {
+        if (this.isGroupOptions) {
           console.warn('setting value with [multiple]="true" and grouped options not yet implemented')
           // this.options.forEach((item: SelectItem) => {
           //   const activeChild = item.children.find(c => c.ID === this._value);
