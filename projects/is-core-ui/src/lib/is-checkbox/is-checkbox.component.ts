@@ -13,6 +13,7 @@ import {
   Output,
   QueryList,
   ViewChild,
+  AfterViewInit
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -30,7 +31,7 @@ export const IS_RADIO_GROUP_VALUE_ACCESSOR: any = {
   selector: 'is-radio-group',
   providers: [IS_RADIO_GROUP_VALUE_ACCESSOR]
 })
-export class IsRadioGroupDirective implements ControlValueAccessor {
+export class IsRadioGroupDirective implements ControlValueAccessor, AfterViewInit {
 
   @ContentChildren(forwardRef(() => IsCheckboxComponent), { descendants: true })
   _radios: QueryList<IsCheckboxComponent>;
@@ -48,6 +49,9 @@ export class IsRadioGroupDirective implements ControlValueAccessor {
 
   constructor() { }
 
+  ngAfterViewInit() {
+    this._updateSelectedRadioFromValue();
+  }
   /**
 * Implemented as part of ControlValueAccessor.
 */
