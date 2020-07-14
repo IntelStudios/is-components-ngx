@@ -532,7 +532,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       overlayConfig.width = overlayConfig.minWidth;
       overlayConfig.minWidth = undefined;
     }
-    console.log(overlayConfig)
+
     this.optionsOverlayRef = this.overlay.create(overlayConfig);
 
     // subscribe to detach event
