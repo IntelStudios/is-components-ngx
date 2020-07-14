@@ -9,6 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { AppComponent } from './app.component';
+import { IsSelectModule } from 'projects/is-select/src/public_api';
 
 
 export const routes: Routes = [
@@ -42,6 +43,7 @@ export const routes: Routes = [
     TranslateModule.forRoot(),
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
+    // IsSelectModule.forRoot({ optionsOverflowWidth: true })
   ],
   providers: [],
   bootstrap: [AppComponent]

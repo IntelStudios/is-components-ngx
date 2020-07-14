@@ -68,8 +68,11 @@ export class SelectItem {
   /**
    * gets current's item ID with attepmt to type it as number if possible
    */
-  getID(): string | number {
+  getID(convert?: boolean): string | number {
     if (!this.source) {
+      return this.ID;
+    }
+    if (!convert) {
       return this.ID;
     }
     const isNum = String((parseInt(this.source.ID))) === String(this.source.ID)

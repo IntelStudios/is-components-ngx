@@ -163,13 +163,17 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
         @include is-input-readonly;
         cursor: default;
 
+        > .btn-remove {
+          display: none;
+        }
+
         >.ui-select-toggle {
           padding: $is-control-readonly-spacing;
-          
+
           >.ui-select-match-text {
             font-weight: $is-control-readonly-text-weight;
           }
-          
+
           >.ui-select-placeholder,
           >.ui-select-match-text {
             cursor: text;

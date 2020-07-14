@@ -22,6 +22,19 @@
       }
     }
   }
+
+  &.is-select-overflow-width {
+    >.ui-select-choices-container {
+      border-top: 2px solid;
+    }
+
+    &.is-select-options-dropup {
+      >.ui-select-choices-container {
+        border-bottom: 2px solid;
+      }
+    }
+  }
+
   .ui-select-choices-container {
     width: 100%;
     background-color: $is-control-bg-color;

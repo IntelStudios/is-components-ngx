@@ -1,4 +1,4 @@
-import { Overlay, OverlayRef, ConnectedPosition } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, ConnectedPosition, OverlayConfig } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ChangeDetectionStrategy,
@@ -14,13 +14,15 @@ import {
   Renderer2,
   TemplateRef,
   ComponentRef,
+  Inject,
+  Optional,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { IsSelectOptionsComponent } from '../is-select-options/is-select-options.component';
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from '../is-select.directives';
-import { IsSelectModelConfig, IsSelectMultipleConfig } from '../is-select.interfaces';
+import { IsSelectModelConfig, IsSelectMultipleConfig, configToken, IsSelectConfig } from '../is-select.interfaces';
 import { SelectItem } from '../select-item';
 import { OptionsBehavior } from '../options-behavior';
 
@@ -28,6 +30,14 @@ export const IS_SELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => IsSelectComponent),
   multi: true
+};
+
+const DEFALULT_CONFIG: IsSelectConfig = {
+  defaultModelConfig: {
+    idProp: 'ID',
+    textProp: 'Value'
+  },
+  optionsOverflowWidth: false
 };
 
 @Component({
@@ -66,9 +76,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     return !!this._multipleConfig;
   }
 
-  @Input()
-  showSelectAll: boolean = false;
-
   /**
    * When enabled (default) main input is resized based on
    * selected options. When disabled, main input keeps it's height
@@ -86,6 +93,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input() autoSearchMinOptions: number = 0;
 
   /**
+   * Enable dropdown options to overflow control width
+   */
+  @Input() optionsOverflowWidth = false;
+
+  /**
    * when modelConfig is set, component will require model in writeValue
    * and will emit similar model on change.
    */
@@ -94,15 +106,13 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   /**
    * alternative to modelConfig. Enabling this
-   * will set modelConfig compatible to `SelectItem`
+   * will set default modelConfig from IsSelectConfig (see IsSelectModule.forRoot)
+   * By default compatible to `SelectItem`
    */
   @Input()
   set useModels(value: boolean) {
     if (value) {
-      this.modelConfig = {
-        idProp: 'ID',
-        textProp: 'Value'
-      };
+      this.modelConfig = this.selectConfig.defaultModelConfig;
     }
   }
 
@@ -275,9 +285,14 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   constructor(public element: ElementRef,
     private overlay: Overlay,
     private renderer: Renderer2,
+    @Optional() @Inject(configToken) private selectConfig: IsSelectConfig,
     private changeDetector: ChangeDetectorRef) {
       // trigger setter by default so we're initially in single select mode
       this.multipleConfig = undefined;
+      if (!this.selectConfig) {
+        this.selectConfig = { ...DEFALULT_CONFIG };
+      }
+      this.optionsOverflowWidth = this.selectConfig.optionsOverflowWidth;
   }
 
   ngOnInit() {
@@ -452,9 +467,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
     } else {
       if (active) {
-        // emit ID property from item's source in case it's number
-        // otherwise Item's ID is always string
-        this.changed.emit(active.getID());
+        this.changed.emit(active.getID(this.selectConfig.convertValueIDToInt));
       } else {
         this.changed.emit(null);
       }
@@ -480,7 +493,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         // emit ID property from item's source in case it's number
         // otherwise Item's ID is always string
         const values = active.map((item: SelectItem) => {
-          return item.getID();
+          return item.getID(this.selectConfig.convertValueIDToInt);
         });
         this.changed.emit(values);
       } else {
@@ -508,14 +521,20 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       .withPositions([position])
       .withDefaultOffsetX(-1);
 
-    this.optionsOverlayRef = this.overlay.create(
-      {
-        width: `${rect.width + 2}px`,
-        minHeight: '34px',
-        positionStrategy: positionStrategy,
-        scrollStrategy: this.overlay.scrollStrategies.close()
-      }
-    );
+    const overlayConfig: OverlayConfig = {
+      minWidth: `${rect.width + 2}px`,
+      minHeight: '34px',
+      positionStrategy: positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.close()
+    };
+    const oprionsOverflowClass = this.optionsOverflowWidth ? ' is-select-overflow-width': '';
+    if (!this.optionsOverflowWidth) {
+      overlayConfig.width = overlayConfig.minWidth;
+      overlayConfig.minWidth = undefined;
+    }
+    console.log(overlayConfig)
+    this.optionsOverlayRef = this.overlay.create(overlayConfig);
+
     // subscribe to detach event
     // overlay can be detached by us (calling hidOptions()) or by reposition strategy
     // we need to cleanup things
@@ -539,7 +558,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
     this.optionsInstanceRef = this.optionsOverlayRef.attach(new ComponentPortal(IsSelectOptionsComponent));
     // copy/inherit classes from is-select and add them to is-select-options element, but ignore ng-*
-    const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass;
+    const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass + oprionsOverflowClass;
     this.renderer.setAttribute(this.optionsInstanceRef.location.nativeElement, 'class', classes);
     this.optionsInstanceRef.instance.control = {
       active: this.active,

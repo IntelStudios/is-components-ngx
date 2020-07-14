@@ -1,7 +1,7 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { IsSelectBadgeComponent } from './is-select-badge/is-select-badge.component';
 import { IsSelectColorComponent } from './is-select-color/is-select-color.component';
@@ -11,6 +11,7 @@ import { IsSelectComponent } from './is-select/is-select.component';
 import { HighlightPipe } from './select-pipes';
 import { IsCoreUIModule } from 'is-core-ui';
 import { IsSelectOptionComponent } from './is-select-option/is-select-option.component';
+import { IsSelectConfig, configToken } from './is-select.interfaces';
 
 @NgModule({
   imports: [
@@ -20,4 +21,13 @@ import { IsSelectOptionComponent } from './is-select-option/is-select-option.com
   exports: [ScrollingModule, IsSelectComponent, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent],
   entryComponents: [IsSelectOptionsComponent]
 })
-export class IsSelectModule { }
+export class IsSelectModule {
+  static forRoot(config?: IsSelectConfig): ModuleWithProviders<IsSelectModule> {
+    return {
+      ngModule: IsCoreUIModule,
+      providers: [
+        { provide: configToken, useValue: config }
+      ]
+    }
+  }
+}

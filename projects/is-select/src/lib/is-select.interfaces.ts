@@ -1,3 +1,5 @@
+import { InjectionToken } from '@angular/core';
+
 export interface IsColorItem {
   ID: string;
   Value: string;
@@ -25,3 +27,24 @@ export interface IsSelectMultipleConfig {
   selectAll? : IsSelectButtonConfig;
   deselectAll?: IsSelectButtonConfig;
 }
+
+
+export interface IsSelectConfig {
+  /**
+   * if set to true, is-select will try to convert selected value(s)
+   * ID to int
+   */
+  convertValueIDToInt?: boolean;
+  /**
+   * Default model config. This will be used in case you use `[useModels]="true"`
+   * but do not provide `[modelConfig]` input
+   */
+  defaultModelConfig?: IsSelectModelConfig;
+
+  /**
+   * Enable dropdown options to overflow control width
+   */
+  optionsOverflowWidth?: boolean;
+}
+
+export const configToken = new InjectionToken<IsSelectConfig>('IsSelectConfig');

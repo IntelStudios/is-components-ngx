@@ -19,6 +19,13 @@
           <button class="btn btn-primary" (click)="toggleDisable()">Disable</button>
           <button class="btn btn-primary" (click)="toggleInvalid(select1Control)">Invalid</button>
         </div>
+        <div class="col-sm-3">
+          <h3>Select with overflowOptions</h3>
+          <is-select [optionsOverflowWidth]="true" [alignment]="'right'" class="select-with-some-class" [formControl]="select1Control"
+            [placeholderShow]="false" [allowClear]="true" [items]="items" (changed)="changed($event)"
+            placeholder="No city selected">
+          </is-select>
+        </div>
         <div class="col-sm-6">
           <h3>Select color - load items</h3>
           <is-select [allowClear]="true" [formControl]="select2Control" [items]="colors" (changed)="changed($event)"
@@ -64,10 +71,8 @@
         </div>
         <div class="col-sm-6">
           <h3>Readonly select</h3>
-          <is-select [readonly]="true"
-            [items]="itemsWithDesc" [formControl]="selectReadonlyControl" [allowHide]="true" [readonly]="true">
+          <is-select [items]="items" [formControl]="select1Control" [allowClear]="true" [allowHide]="true" [readonly]="true">
           </is-select>
-          <p>Value: {{selectReadonlyControl.valueChanges|async|json}}</p>
         </div>
       </div>
 

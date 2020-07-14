@@ -13,7 +13,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/9.x/package/is-select-9.0.8.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/9.x/package/is-select-9.2.0.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -29,7 +29,6 @@ export class DemoSelectComponent implements OnInit {
   select6Control: FormControl = new FormControl();
   select6ControlMulti: FormControl = new FormControl();
   select7Control: FormControl = new FormControl();
-  selectReadonlyControl: FormControl = new FormControl();
   selectColorControl: FormControl = new FormControl();
 
   public items: Array<string> = ['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
