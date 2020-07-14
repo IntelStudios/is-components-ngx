@@ -50,7 +50,7 @@ export class IsRadioGroupDirective implements ControlValueAccessor, AfterViewIni
   constructor() { }
 
   ngAfterViewInit() {
-    this._updateSelectedRadioFromValue();
+    setTimeout(() => this._updateSelectedRadioFromValue());
   }
   /**
 * Implemented as part of ControlValueAccessor.
