@@ -45,6 +45,9 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   @Input('placeholder')
   placeholder: string = '';
 
+  @Input()
+  hidden = false;
+
     /**
    * BsDatepicker config object to setup wrapped BsDatepickerInline component
    */

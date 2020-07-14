@@ -24,7 +24,6 @@ export class IsDatepickerPopupComponent implements OnInit {
   set config(value: Partial<BsDatepickerConfig>) {
     if (value) {
       Object.assign(this._config, value);
-      console.log(this._config);
     }
   }
   get config(): Partial<BsDatepickerConfig> {

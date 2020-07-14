@@ -29,6 +29,10 @@ is-datepicker {
     &.readonly {
       @include is-input-readonly;
       cursor: auto;
+      padding: $is-control-readonly-spacing;
+      > .datepicker-icon {
+        display: none;
+      }
     }
 
     &:not(.disabled):not(.readonly) > span.datepicker-value {
