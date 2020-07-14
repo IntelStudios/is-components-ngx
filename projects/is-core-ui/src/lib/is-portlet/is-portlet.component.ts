@@ -9,6 +9,8 @@ import {
   TemplateRef,
   ViewEncapsulation,
   ElementRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 
 import { IsPortletTitleDirective } from './is-portlet.directives';
@@ -59,16 +61,25 @@ export class IsPortletComponent implements OnInit {
   @ContentChild(IsPortletTitleDirective, { read: TemplateRef, static: true })
   templateTitle: IsPortletTitleDirective;
 
+  /**
+   * set true to collapse the section, false to expand it
+   */
   @Input()
   set collapse(value: boolean){
     if (value) {
-      this._collapse = 'open';
-    } else {
       this._collapse = 'closed';
+    } else {
+      this._collapse = 'open';
     }
     this.changeDetector.markForCheck();
   }
   _collapse: string = 'open';
+
+  /**
+   * emits when Porltet is collapsed (true) / expanded (false) by user
+   */
+  @Output()
+  collapseChange: EventEmitter<boolean> = new EventEmitter();
 
   isSection: boolean;
 
@@ -89,6 +100,7 @@ export class IsPortletComponent implements OnInit {
     if (this.id) {
       localStorage.setItem(`is-portlet:${this.id}`, this._collapse);
     }
+    this.collapseChange.next(this._collapse === 'closed');
     this.changeDetector.markForCheck();
   }
 }
