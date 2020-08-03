@@ -13,8 +13,7 @@
     font-weight: bold;
   }
 
-  .assigned-item {
-    background-color: #2B3642;
+  .assigned-item, .assigned-filter {
     color: #fff;
     border-radius: 2px !important;
     //padding: 8px 4px;
@@ -38,7 +37,6 @@
       width: 20px;
       height: 20px;
       padding: 4px;
-      border-left: 1px solid #444E58;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -46,6 +44,68 @@
 
     .btn-release-item {
       cursor: pointer;
+    }
+  }
+
+  .assigned-item {
+    background-color: #2B3642;
+
+    .delete {
+      border-left: 1px solid #444E58;
+    }
+  }
+
+  .assigned-filter, .new-filter {
+    .node-type {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-right: 4px;
+      font-weight: bold;
+    }
+  }
+
+  .assigned-filter {
+    background: #EA8D22;
+
+    .delete {
+      border-left: 1px solid #EC9736;
+    }
+
+    .value {
+      margin-right: 4px;
+    }
+  }
+
+  .assigned-filter-or {
+    background: #F9DFC2;
+    color: #E87E04;
+    padding: 4px;
+    margin-left: 4px;
+    font-size: 10px;
+  }
+
+  .new-filter {
+    display: inline-flex;
+    width: 128px;
+    background: #edeeef;
+    border-radius: 4px !important;
+    padding: 2px;
+    margin-left: 8px;
+
+    .node-type {
+      color: #000;
+      margin-left: 4px;
+      font-size: 20px;
+    }
+
+    input {
+      flex-grow: 1;
+      background: #DCDEDF;
+      border-radius: 4px !important;
+      color: #000;
+      width: 93px;
     }
   }
 
@@ -168,5 +228,9 @@
         color: #95a5a6;
       }
     }
+  }
+
+  .filter {
+    color: #EA8D22;
   }
 }

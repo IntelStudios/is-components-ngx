@@ -8,11 +8,26 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator
+} from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { AssignStatus, DataStructure, InputSchema, IsInputMappingInput } from './is-input-mapping.interface';
+import {
+  AssignStatus,
+  DataStructure,
+  InputSchema,
+  IsInputMappingInput,
+  IsInputMappingValue,
+  IsInputSchemaFilter, IsInputSchemaFilterStatus
+} from './is-input-mapping.interface';
 import { IsInputMappingService } from './is-input-mapping.service';
 import { isInputRequiredFilledValidator } from './is-input-mapping.validator';
 
@@ -45,7 +60,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
     if (this.data) {
       if (this.level === 0) {
-        this.service.clearInvalidAssigns(this.data.DataStructure);
         this.paintedStructure = this._data.DataStructure;
       }
     } else {
@@ -54,6 +68,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       };
     }
     this.cd.detectChanges();
+
+    if (this.data && this.level === 0) {
+      setTimeout(() => this.service.clearInvalidAssigns(this.data.DataStructure, this.inputFilters));
+    }
+
     if (this._validatorOnChange) {
       this._validatorOnChange();
     }
@@ -75,9 +94,16 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   icon: string;
   collapsed = true;
-  dropdownVisible = false;
+  filters: IsInputSchemaFilter[] = [];
+  assignDropdownVisible = false;
+  filterDropdownVisible = false;
+  newFilterModalVisible = false;
+  newFilterModalType: string;
+  newFilterModalValue: FormControl = new FormControl();
 
-  inputSchemaMap: Map<string, string>;  // the value of this element, only used in the root instance
+  // the value of this element, only used in the root instance
+  inputSchemaMap: Map<string, string> = new Map<string, string>();
+  inputFilters: { [id: string]: IsInputSchemaFilter[] } = {};
 
   level: number = null;
   collapsible = false;
@@ -100,7 +126,17 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     return this._mouseover;
   }
 
-  disabled = false;
+  private _disabled = false;
+  set disabled(value: boolean) {
+    this._disabled = value;
+    if (this.disabled) {
+      this.service.applyFilter({Path: this.paintedStructure.Path, Filters: [], EmmitChange: true});
+    }
+  }
+
+  get disabled(): boolean {
+    return this._disabled;
+  }
 
   private _subscriptions: Subscription[] = [];
   private _on_changes: Function = () => { };
@@ -110,8 +146,10 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   @HostListener('document:click', ['$event'])
   clickGlobal(event) {
-    if (this.dropdownVisible && !this.elRef.nativeElement.contains(event.target)) {
-      this.dropdownHide();
+    if ((this.assignDropdownVisible || this.filterDropdownVisible) && !this.elRef.nativeElement.contains(event.target)) {
+      this.assignDropdownHide();
+      this.filterDropdownHide();
+      this.filterModalHide();
     }
   }
 
@@ -189,13 +227,40 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       if (this.level === 0) {
         this.inputSchemaMap.delete(data.Item.Name);
         if (!data.hasOwnProperty('EmmitChange') || data.EmmitChange) {
-          this._on_changes(this.inputSchemaMap);
+          this.propagateNewValue();
           if (this._validatorOnChange) {
             this._validatorOnChange();
           }
         }
       }
     }));
+
+    // subscribe to new filters
+    this._subscriptions.push(this.service.filterChange$.subscribe(filter => {
+      if (filter.Path !== this.paintedStructure.Path && this.level !== 0 && filter.Path !== null) {
+        // this filter is not for us
+        return;
+      }
+
+      if (this.level === 0) {
+        this.inputFilters[filter.Path] = filter.Filters;
+        if (this.inputFilters[filter.Path].length === 0) {
+          delete this.inputFilters[filter.Path];
+        }
+        if (filter.EmmitChange) {
+          this.propagateNewValue();
+        }
+        return;
+      }
+
+      this.filters = filter.Filters;
+
+      this.cd.markForCheck();
+    }));
+
+    if (this.level === 0) {
+      this.cd.markForCheck();
+    }
   }
 
   toggleCollapsed() {
@@ -208,21 +273,55 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.cd.markForCheck();
   }
 
-  dropdownShown() {
+  assignDropdownShown() {
     if (this.disabled) {
       return;
     }
 
-    this.dropdownVisible = true;
+    this.assignDropdownVisible = true;
   }
 
-  dropdownHide() {
+  assignDropdownHide() {
     if (this.disabled) {
       return;
     }
 
-    this.dropdownVisible = false;
+    this.assignDropdownVisible = false;
   }
+
+  filterDropdownShown() {
+    if (this.disabled) {
+      return;
+    }
+
+    this.filterDropdownVisible = true;
+  }
+
+  filterDropdownHide() {
+    if (this.disabled) {
+      return;
+    }
+
+    this.filterDropdownVisible = false;
+  }
+
+  filterModalShow() {
+    if (this.disabled) {
+      return;
+    }
+
+    this.newFilterModalVisible = true;
+  }
+
+
+  filterModalHide() {
+    if (this.disabled) {
+      return;
+    }
+
+    this.newFilterModalVisible = false;
+  }
+
 
   assign(item: InputSchema) {
     this.service.assignItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
@@ -250,7 +349,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     return path;
   }
 
-  getTypeIcon(type: number) {
+  getTypeIcon(type: number): string {
     switch (type) {
       case 1:
         return 'fa fa-code-fork'; // complex
@@ -264,7 +363,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
   }
 
-  getDataTypeIcon(type: number) {
+  getDataTypeIcon(type: number): string {
     switch (type) {
       case 1:
         // int
@@ -293,19 +392,113 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
   }
 
+  getDataTypeFilters(type: number): string[] {
+    switch (type) {
+      case 2:
+        // string
+        return ['StringEq', 'StringNotEq'];
+    }
+
+    return [];
+  }
+
+  hasDataTypeFilters(type: number): boolean {
+    return this.getDataTypeFilters(type).length > 0;
+  }
+
+  getFilterTypeIcon(type: string): string {
+    switch (type) {
+      case 'StringEq':
+        return 'fas fa-equal';
+      case 'StringNotEq':
+        return 'fas fa-not-equal';
+    }
+  }
+
+  getFilterTypeContent(type: string): string {
+    switch (type) {
+      case 'StringEq':
+        return '=';
+      case 'StringNotEq':
+        return '≠';
+    }
+  }
+
+  getFilterTypeName(type: string): string {
+    switch (type) {
+      case 'StringEq':
+        return 'equals';
+      case 'StringNotEq':
+        return 'not equals';
+    }
+  }
+
+  private propagateNewValue(): void {
+    const value: IsInputMappingValue = {InputSchemaFilter: this.inputFilters, InputSchemaMapping: this.inputSchemaMap};
+    this._on_changes(value);
+  }
+
+  createNewDataFilter(filterType: string) {
+    this.newFilterModalType = filterType;
+    this.newFilterModalValue.setValue(null);
+    this.filterModalShow();
+    this.filterDropdownHide();
+  }
+
+  applyNewFilter(): void {
+    if (!this.newFilterModalValue.value) {
+      return;
+    }
+    const newFilters = this.filters.slice();
+    newFilters.push({
+      Type: this.newFilterModalType,
+      Value: this.newFilterModalValue.value
+    });
+    const newStatus: IsInputSchemaFilterStatus = {
+      Path: this.paintedStructure.Path,
+      Filters: newFilters,
+      EmmitChange: true
+    };
+
+    this.service.applyFilter(newStatus);
+    this.filterDropdownHide();
+    this.filterModalHide();
+  }
+
+  releaseFilter(filter: IsInputSchemaFilter) {
+    const newFilters = this.filters.filter(f => f !== filter);
+    const newStatus: IsInputSchemaFilterStatus = {
+      Path: this.paintedStructure.Path,
+      Filters: newFilters,
+      EmmitChange: true
+    };
+
+    this.service.applyFilter(newStatus);
+  }
+
   /*
    * Control value accessor
    */
-  writeValue(value: Map<string, string>): void {
-    value = new Map(value);
+  writeValue(value: IsInputMappingValue): void {
+    let mappedValue: Map<string, string>;
+    if (value) {
+      if (value.InputSchemaMapping instanceof Map) {
+        mappedValue = new Map(value.InputSchemaMapping);
+      } else {
+        mappedValue = new Map<string, string>();
+        Object.keys(value.InputSchemaMapping).forEach(k => mappedValue.set(k, value.InputSchemaMapping[k]));
+      }
+    }
+
     if (!this.data) {
       return;
     }
 
     // clear all previous values
     this.service.releaseAllItems();
+    this.service.releaseAllFilters();
 
-    if (!value) {
+    if (!mappedValue) {
       return;
     }
 
@@ -338,7 +531,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       return null;
     };
 
-    value.forEach((path, itemName) => {
+    mappedValue.forEach((path, itemName) => {
       const nodePaintedPath = findNodePaintedPathByPath(path, this._data.DataStructure, []);
       const item = findItemByName(itemName);
 
@@ -348,6 +541,12 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
       this.service.assignItem({ Item: item, Path: path, PaintedPath: nodePaintedPath, EmmitChange: false });
     });
+
+    if (value.InputSchemaFilter) {
+      Object.keys(value.InputSchemaFilter).forEach((path: string) => {
+        this.service.applyFilter({Path: path, Filters: value.InputSchemaFilter[path], EmmitChange: false});
+      });
+    }
 
     this.cd.markForCheck();
   }
@@ -388,7 +587,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     if (this.level === 0) {
       this.inputSchemaMap.set(status.Item.Name, status.Path);
       if (!status.hasOwnProperty('EmmitChange') || status.EmmitChange) {
-        this._on_changes(this.inputSchemaMap);
+        this.propagateNewValue();
         if (this._validatorOnChange) {
           this._validatorOnChange();
         }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IsInputMappingInput } from 'projects/is-input-mapping/src/public_api';
+import { IsInputMappingInput, IsInputMappingValue } from 'projects/is-input-mapping/src/public_api';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -11,7 +11,7 @@ export class DemoInputMappingComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.20.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.21.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsInputMappingModule } from 'is-input-mapping';</pre>
@@ -472,22 +472,25 @@ export class DemoInputMappingComponent implements OnInit {
   formControl = new FormControl();
   currentValue = '';
   validationError = null;
-  val: Map<string, string>;
+  val: IsInputMappingValue;
   currentDataset = this.MOCK_DATA;
 
   constructor() { }
 
   ngOnInit() {
-    this.formControl.valueChanges.subscribe((val: Map<string, string>) => {
+    this.formControl.valueChanges.subscribe((val: IsInputMappingValue) => {
       this.val = val;
       console.log('val', val);
       if (!val) {
         this.currentValue = 'null';
         return;
       }
-      const dict = {};
-      val.forEach((v, k) => dict[k] = v);
-      this.currentValue = JSON.stringify(dict);
+      if (val.InputSchemaMapping instanceof Map) {
+        const m = {};
+        val.InputSchemaMapping.forEach((v, k) => m[k] = v);
+        val.InputSchemaMapping = m;
+      }
+      this.currentValue = JSON.stringify(val);
       this.validationError = this.formControl.errors === null ? '' : JSON.stringify(this.formControl.errors);
     });
     this.val = this.formControl.value;
@@ -500,28 +503,23 @@ export class DemoInputMappingComponent implements OnInit {
   }
 
   emptyMap() {
-    this.formControl.setValue(new Map<string, string>());
+    this.formControl.setValue({InputSchemaMapping: {}});
   }
 
   modified2Created() {
     // this example does NOT emit value change event
     // we have to cache current value by ourselves
-    const map = new Map<string, string>();
-    map.set('Modified', 'Load files.Created');
+    this.val = {InputSchemaMapping: {'Modified': 'Load files.Created'}, InputSchemaFilter: {}};
+    this.currentValue = JSON.stringify(this.val);
 
-    this.val = map;
-    const dict = {};
-    map.forEach((v, k) => dict[k] = v);
-    this.currentValue = JSON.stringify(dict);
-
-    this.formControl.setValue(map, {emitEvent: false});
+    this.formControl.setValue(this.val, {emitEvent: false});
   }
 
   switchDataset() {
     // this example does emit value change event
     // it will be cached in the valueChanges subscription
     this.currentDataset = this.currentDataset === this.MOCK_DATA_LITTLE ? this.MOCK_DATA : this.MOCK_DATA_LITTLE;
-    this.formControl.setValue(this.val);
+    // this.formControl.setValue(this.val);
   }
 
   deleteDataset() {
@@ -530,5 +528,13 @@ export class DemoInputMappingComponent implements OnInit {
 
   toggleDisabled() {
     this.formControl.disabled ? this.formControl.enable() : this.formControl.disable({emitEvent: false});
+  }
+
+  filterFullpath() {
+    if (!this.val) {
+      this.val = {InputSchemaMapping: {}, InputSchemaFilter: {}};
+    }
+    this.val.InputSchemaFilter['Load files.FullPath'] = [{'Type': 'StringEq', 'Value': 'C:\\Windows\\'}];
+    this.formControl.setValue(this.val);
   }
 }

@@ -17,6 +17,7 @@
 
   <span>
     <span class="assigned-item" *ngFor="let item of inputsAssigned">
+      <!--suppress HtmlUnknownTag -->
       <div>
         <span class="name">{{item.Name}}</span>
         <span class="delete">
@@ -25,12 +26,12 @@
       </div>
     </span>
 
-    <i *ngIf="!disabled && inputsAssignableFiltered.length > 0 && (mouseover || dropdownVisible)"
-       class="fa fa-plus-square btn-attach-item" (click)="dropdownShown()">
+    <i *ngIf="!disabled && inputsAssignableFiltered.length > 0 && (mouseover || assignDropdownVisible)"
+       class="fa fa-plus-square btn-attach-item" (click)="assignDropdownShown()">
     </i>
   </span>
 
-  <div class="dropdown" *ngIf="dropdownVisible">
+  <div class="dropdown" *ngIf="assignDropdownVisible">
     <div class="dropdown-content">
       <div *ngFor="let item of inputsAssignableFiltered" (click)="assign(item)" class="item">
         <div class="node-icon {{getDataTypeIcon(item.DataType)}}"></div>
@@ -39,12 +40,54 @@
       </div>
     </div>
   </div>
+
+  <span>
+    <span *ngFor="let filter of filters; let i = index">
+      <span class="assigned-filter">
+        <!--suppress HtmlUnknownTag -->
+        <div>
+          <span class="node-type"><span>{{getFilterTypeContent(filter.Type)}}</span></span>
+          <span class="value">{{filter.Value}}</span>
+          <span class="delete">
+            <i class="fa fa-times" [ngClass]="{'btn-release-item': !disabled}" (click)="releaseFilter(filter)"></i>
+          </span>
+        </div>
+      </span>
+
+      <span *ngIf="i + 1 < filters.length" class="assigned-filter-or">
+        OR
+      </span>
+    </span>
+
+    <i
+      *ngIf="!disabled && hasDataTypeFilters(paintedStructure.DataType) && (mouseover || filterDropdownVisible || newFilterModalVisible)"
+      class="filter fa fa-filter btn-attach-item" (click)="filterDropdownShown()">
+    </i>
+  </span>
+
+  <div class="dropdown" *ngIf="filterDropdownVisible">
+    <div class="dropdown-content">
+      <div *ngFor="let filterType of getDataTypeFilters(paintedStructure.DataType)"
+           (click)="createNewDataFilter(filterType)"
+           class="item"
+      >
+        <div class="node-icon {{getFilterTypeIcon(filterType)}}">{{getFilterTypeContent(filterType)}}</div>
+        <span>{{getFilterTypeName(filterType)}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="newFilterModalVisible" class="new-filter" (click)="applyNewFilter()">
+    <span class="node-type"><span>{{getFilterTypeContent(newFilterModalType)}}</span></span>
+    <!--suppress HtmlFormInputWithoutLabel -->
+    <input type="text" [formControl]="newFilterModalValue" (keydown.enter)="applyNewFilter()">
+  </div>
 </div>
 
 <div *ngIf="level === 0" class="assigned-items">
   <span *ngFor="let item of getAllItems()" class="assigned-item" [class.assigned]="item.assigned">
     <span class="node-icon {{getDataTypeIcon(item.item.DataType)}}"></span>
-    <span [ngStyle]="{'padding-right': !item.item.AllowNull ? '0px' : '8px'}" >{{item.item.Name}}</span>
+    <span [ngStyle]="{'padding-right': !item.item.AllowNull ? '0px' : '8px'}">{{item.item.Name}}</span>
     <span *ngIf="!item.item.AllowNull" class="node-icon warning"><i class="fa fa-warning"></i></span>
   </span>
 </div>
