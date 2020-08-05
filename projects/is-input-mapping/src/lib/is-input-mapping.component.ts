@@ -81,6 +81,17 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     return this._data;
   }
 
+  private _filtersAllowed = true;
+  @Input()
+  set filtersAllowed(val: boolean) {
+    this._filtersAllowed = val;
+    this.cd.markForCheck();
+  }
+
+  get filtersAllowed(): boolean {
+    return this._filtersAllowed;
+  }
+
   @Input()
   paintedPath: number[] = null; // taken from root element
 
