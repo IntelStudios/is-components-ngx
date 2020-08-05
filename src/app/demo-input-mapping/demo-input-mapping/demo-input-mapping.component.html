@@ -6,7 +6,7 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-input-mapping [data]="currentDataset" [formControl]="formControl"></is-input-mapping>
+    <is-input-mapping [data]="currentDataset" [formControl]="formControl" [filtersAllowed]="filtersAllowed"></is-input-mapping>
   </div>
   <div class="col-sm-6">
     <span>Value: {{currentValue}}</span>
@@ -19,6 +19,7 @@
     <button class="btn btn-primary" (click)="switchDataset()">Switch dataset</button>
     <button class="btn btn-primary" (click)="deleteDataset()">Delete dataset</button>
     <button class="btn btn-primary" (click)="filterFullpath()">Filter fullpath</button>
+    <button class="btn btn-primary" (click)="switchFilters()">Switch filters</button>
   </div>
   <div class="col-sm-6">
     <span>{{validationError}}</span>

@@ -11,7 +11,7 @@ export class DemoInputMappingComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.21.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.22.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsInputMappingModule } from 'is-input-mapping';</pre>
@@ -471,6 +471,7 @@ export class DemoInputMappingComponent implements OnInit {
 
   formControl = new FormControl();
   currentValue = '';
+  filtersAllowed = true;
   validationError = null;
   val: IsInputMappingValue;
   currentDataset = this.MOCK_DATA;
@@ -536,5 +537,9 @@ export class DemoInputMappingComponent implements OnInit {
     }
     this.val.InputSchemaFilter['Load files.FullPath'] = [{'Type': 'StringEq', 'Value': 'C:\\Windows\\'}];
     this.formControl.setValue(this.val);
+  }
+
+  switchFilters() {
+    this.filtersAllowed = !this.filtersAllowed;
   }
 }

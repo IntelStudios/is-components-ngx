@@ -60,7 +60,7 @@
     </span>
 
     <i
-      *ngIf="!disabled && hasDataTypeFilters(paintedStructure.DataType) && (mouseover || filterDropdownVisible || newFilterModalVisible)"
+      *ngIf="!disabled && filtersAllowed && hasDataTypeFilters(paintedStructure.DataType) && (mouseover || filterDropdownVisible || newFilterModalVisible)"
       class="filter fa fa-filter btn-attach-item" (click)="filterDropdownShown()">
     </i>
   </span>
@@ -97,5 +97,6 @@
                     [data]="data"
                     [paintedPath]="getChildPath(i)"
                     [service]="service"
+                    [filtersAllowed]="filtersAllowed"
   ></is-input-mapping>
 </div>
