@@ -140,9 +140,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   private _disabled = false;
   set disabled(value: boolean) {
     this._disabled = value;
-    if (this.disabled) {
-      this.service.applyFilter({Path: this.paintedStructure.Path, Filters: [], EmmitChange: true});
-    }
   }
 
   get disabled(): boolean {
@@ -203,13 +200,15 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.icon = this.getTypeIcon(this.paintedStructure.Type); // folder
     }
 
-    this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
+    this.setDisabled(!this.service.isAssignable(this.paintedPath, this.collapsible), true);
 
     // debounce quick changes in mouseover states
     this._subscriptions.push(this._mouseoverSubject.asObservable().pipe(debounceTime(20)).subscribe(value => this._mouseover = value));
 
     // subscribe to disabled state change
-    this._subscriptions.push(this.service.disabledChange$.subscribe(val => this.disabled = val));
+    this._subscriptions.push(this.service.disabledChange$.subscribe(
+      val => this.setDisabled(val || !this.service.isAssignable(this.paintedPath, this.collapsible)))
+    );
 
     // subscribe to assigning items
     this._subscriptions.push(this.service.itemAssigned$.subscribe(item => this.assignCallback(item)));
@@ -223,7 +222,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
       this.inputsFilled = this.inputsFilled.filter(input => input.Name !== data.Item.Name);
 
-      this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
+      this.setDisabled(!this.service.isAssignable(this.paintedPath, this.collapsible), true);
 
       // add released item back to available items
       for (const item of this._inputsAssignable) {
@@ -477,6 +476,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   releaseFilter(filter: IsInputSchemaFilter) {
+    if (this.disabled) {
+      return;
+    }
     const newFilters = this.filters.filter(f => f !== filter);
     const newStatus: IsInputSchemaFilterStatus = {
       Path: this.paintedStructure.Path,
@@ -592,7 +594,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.inputsAssignableFiltered = this.inputsAssignableFiltered.filter(input => input.Name !== status.Item.Name);
     this.inputsFilled.push(status.Item);
 
-    this.disabled = !this.service.isAssignable(this.paintedPath, this.collapsible);
+    this.setDisabled(!this.service.isAssignable(this.paintedPath, this.collapsible), true);
 
     // root element saves the selection state into value
     if (this.level === 0) {
@@ -608,6 +610,13 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   ngOnDestroy(): void {
     this._subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  setDisabled(value: boolean, clearFilters = false): void {
+    this.disabled = value;
+    if (value && clearFilters) {
+      this.service.applyFilter({Path: this.paintedStructure.Path, Filters: [], EmmitChange: true});
+    }
   }
 
   validate(control: AbstractControl): ValidationErrors {

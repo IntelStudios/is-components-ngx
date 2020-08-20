@@ -43,7 +43,7 @@
 
   <span>
     <span *ngFor="let filter of filters; let i = index">
-      <span class="assigned-filter">
+      <span class="assigned-filter" [class.disabled]="disabled">
         <!--suppress HtmlUnknownTag -->
         <div>
           <span class="node-type"><span>{{getFilterTypeContent(filter.Type)}}</span></span>

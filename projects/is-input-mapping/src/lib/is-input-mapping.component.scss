@@ -16,12 +16,15 @@
   .assigned-item, .assigned-filter {
     color: #fff;
     border-radius: 2px !important;
-    //padding: 8px 4px;
     margin-left: 8px;
     display: inline-block;
     font-size: 10px;
     font-weight: 600;
     height: 20px;
+
+    &.disabled {
+      color: #878D94;
+    }
 
     >div {
       display: flex;
