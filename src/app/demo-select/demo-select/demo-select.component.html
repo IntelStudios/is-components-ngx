@@ -117,6 +117,11 @@
             (changed)="changed($event)" placeholder="No item selected"></is-select>
           <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
         </div>
+        <div class="col-sm-6">
+          <h3>Groups lazy load (search)</h3>
+          <is-select [formControl]="select3Control" [minLoadChars]="2" [isSearch]="true" [allowClear]="true" [items]="itemsGrouped$ | async"
+            (changed)="changed($event)" (loadOptions)="loadItemsGrouped()" placeholder="No item selected"></is-select>
+        </div>
       </div>
     </ng-template>
   </is-tab>

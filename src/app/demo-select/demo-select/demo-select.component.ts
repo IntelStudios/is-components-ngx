@@ -119,7 +119,7 @@ export class DemoSelectComponent implements OnInit {
   }
 
   loadItemsGrouped() {
-    this.itemsGrouped$ = of(this.itemsGrouped);
+    this.itemsGrouped$ = of([...this.itemsGrouped]);
     this.changeDetector.markForCheck();
   }
 
