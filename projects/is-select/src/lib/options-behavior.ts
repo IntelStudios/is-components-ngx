@@ -138,10 +138,7 @@ export class GenericOptionsBehavior extends OptionsBehavior implements IOptionsB
   }
 
   filter(query: RegExp): void {
-    const options = this.select.options
-      .filter((option: SelectItem) => {
-        return option.FilterValue.match(query);
-      });
+    const options = OptionsBehavior.filterPredicate(this.select.options, (option: SelectItem) => !!option.FilterValue.match(query));
     this.select.visibleOptions = options;
     if (this.select.visibleOptions.length > 0) {
       this.select.setActiveOption(this.select.visibleOptions[0]);

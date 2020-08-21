@@ -191,7 +191,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
    */
   @Input()
   set minLoadChars(val: number) {
-    this.isSearch = val > 0;
     this._minLoadChars = val;
   }
 
@@ -213,6 +212,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   @Output() opened: EventEmitter<any> = new EventEmitter();
   @Output() changed: EventEmitter<any> = new EventEmitter();
+  /**
+   * Event emitted when is-select needs you to load options (set [items] property).
+   * Make sure items is alwyas fresh new array
+   *
+   */
   @Output() loadOptions: EventEmitter<string> = new EventEmitter<string>();
 
   options: Array<SelectItem> = [];
