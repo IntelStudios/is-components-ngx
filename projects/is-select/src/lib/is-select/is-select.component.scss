@@ -155,6 +155,9 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
             color: inherit;
           }
         }
+        >.dropdown-caret {
+          display: none;
+        }
       }
     }
 
