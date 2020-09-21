@@ -38,6 +38,15 @@ export class IsRadioGroupDirective implements ControlValueAccessor, AfterViewIni
 
   disabled: boolean = false;
 
+  @Input()
+  set readonly(readonly: boolean) {
+    this.setDisabledState(readonly);
+  }
+
+  get readonly(): boolean {
+    return this.disabled;
+  }
+
   private _onChangeCallback = (_: any) => { };
   onTouched = () => { };
 
