@@ -35,7 +35,8 @@ export const IS_SELECT_VALUE_ACCESSOR: any = {
 const DEFALULT_CONFIG: IsSelectConfig = {
   defaultModelConfig: {
     idProp: 'ID',
-    textProp: 'Value'
+    textProp: 'Value',
+    objectProp: 'Object',
   },
   optionsOverflowWidth: false
 };
@@ -464,6 +465,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         const obj: any = this.modelConfig.baseModel ? { ...this.modelConfig.baseModel } : {};
         obj[this.modelConfig.idProp] = active.ID;
         obj[this.modelConfig.textProp] = active.Value;
+        if (this.modelConfig.objectProp) {
+          obj[this.modelConfig.objectProp] = active.source;
+        }
         this.changed.emit(obj);
       } else {
         this.changed.emit(null);
@@ -486,6 +490,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
           const obj: any = this.modelConfig.baseModel ? { ...this.modelConfig.baseModel } : {};
           obj[this.modelConfig.idProp] = item.ID;
           obj[this.modelConfig.textProp] = item.Value;
+          if (this.modelConfig.objectProp) {
+            obj[this.modelConfig.objectProp] = item.source;
+          }
           return obj;
         });
         this.changed.emit(values);
