@@ -38,7 +38,8 @@ const DEFALULT_CONFIG: IsSelectConfig = {
     textProp: 'Value',
     objectProp: 'Object',
   },
-  optionsOverflowWidth: false
+  optionsOverflowWidth: false,
+  allowClear: false,
 };
 
 @Component({
@@ -298,6 +299,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         this.selectConfig = { ...DEFALULT_CONFIG };
       }
       this.optionsOverflowWidth = this.selectConfig.optionsOverflowWidth;
+      this.allowClear = this.selectConfig.allowClear;
   }
 
   ngOnInit() {

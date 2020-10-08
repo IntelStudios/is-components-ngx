@@ -46,6 +46,10 @@ export interface IsSelectConfig {
    * Enable dropdown options to overflow control width
    */
   optionsOverflowWidth?: boolean;
+  /**
+   * default for [allowClear] input (allow user to clear selection)
+   */
+  allowClear?: boolean;
 }
 
 export const configToken = new InjectionToken<IsSelectConfig>('IsSelectConfig');
