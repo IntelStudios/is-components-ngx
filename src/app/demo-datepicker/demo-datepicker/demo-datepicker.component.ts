@@ -20,16 +20,17 @@ export class DemoDatepickerComponent implements OnInit {
 
   `
 
-  control: FormControl;
+  control: FormControl = new FormControl();
 
   control2: FormControl = new FormControl();
+
+  control3: FormControl = new FormControl();
 
   config: Partial<BsDatepickerConfig> = { minDate: new Date() };
 
   readonly = false;
 
   constructor() {
-    this.control = new FormControl();
   }
 
   ngOnInit() {
@@ -43,6 +44,9 @@ export class DemoDatepickerComponent implements OnInit {
     const now = new Date();
     now.setDate(now.getDate() + 1);
     if (ctrl === this.control) {
+      ctrl.setValue(now);
+    }
+    if (ctrl === this.control3) {
       ctrl.setValue(now);
     }
     if (ctrl === this.control2) {

@@ -31,8 +31,11 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-6">
     <h3>Date Picker (stringMode)</h3>
+  </div>
+  <div class="col-sm-6">
+    <h3>Date Picker (localDateMode)</h3>
   </div>
 </div>
 <div class="row">
@@ -42,10 +45,20 @@
       <button class="btn btn-primary" (click)="setTomorrow(control2)">Set tomorrow</button>
     </div>
   </div>
+  <div class="col-sm-6">
+    <is-datepicker [formControl]="control3" [localDateMode]="true" [allowClear]="true"></is-datepicker>
+    <div style="margin-top: 5px;">
+      <button class="btn btn-primary" (click)="setTomorrow(control3)">Set tomorrow</button>
+    </div>
+  </div>
 </div>
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-6">
     <p>Value: {{control2.valueChanges | async}}</p>
+  </div>
+  <div class="col-sm-6">
+    <p>Value: {{control3.valueChanges | async}}</p>
+    <p>Value UTC: {{(control3.valueChanges | async)?.toISOString()}}</p>
   </div>
 </div>
 <div class="row">

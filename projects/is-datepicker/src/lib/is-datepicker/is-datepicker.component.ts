@@ -63,6 +63,12 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   stringMode: boolean = false;
 
   /**
+   * when localDateMode enabled, picker will understand date as local, without time
+   */
+  @Input()
+  localDateMode = false;
+
+  /**
    * display date format (angular date pipe)
    */
   @Input()
@@ -96,6 +102,9 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
       if (this.dpConfig.viewFormat) {
         this.viewFormat = this.dpConfig.viewFormat;
       }
+      if (this.dpConfig.localDateMode !== undefined) {
+        this.localDateMode = this.dpConfig.localDateMode;
+      }
     }
   }
 
@@ -125,7 +134,17 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
       this.changeDetector.markForCheck();
       return;
     }
-    this.changed.emit(this.stringMode ? moment(this.dateValue).format(DATE_FORMAT) : this.dateValue);
+    if (this.stringMode) {
+      this.changed.emit(moment(this.dateValue).format(DATE_FORMAT));
+    } else {
+      if (this.localDateMode) {
+        const date = new Date(this.dateValue);
+        date.setHours(0, 0, 0, 0);
+        this.changed.emit(this.stripTimezone(date));
+      } else {
+        this.changed.emit(this.dateValue);
+      }
+    }
     this.changeDetector.markForCheck();
   }
 
@@ -233,12 +252,14 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: string): void {
+    this.changeDetector.markForCheck();
     if (!value) {
       this.dateValue = null;
-      this.changeDetector.markForCheck();
       return;
     };
-    this.setValue(value);
+    const date = this.stringMode ? moment(value, DATE_FORMAT).local(true) : moment.utc(value);
+    this.dateValue = this.localDateMode ? this.stripTimezone(date.toDate()) : date.toDate();
+    console.log(this.localDateMode, this.dateValue);
   }
 
   /**
@@ -271,25 +292,13 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  private setValue(value: string) {
-    if (value) {
-      const date = this.stringMode ? moment(value, DATE_FORMAT).local(true) : moment.utc(value);
-      this.dateValue = date.toDate();
-    }
-    else {
-      this.dateValue = null;
-    }
-
-    this.changeDetector.markForCheck();
-  }
-
   private stripTimezone(date: Date): Date {
     if (!date) {
       return null;
     }
 
-    const userTimezoneOffset = date.getTimezoneOffset() * 60000;
-    return new Date(date.getTime() - userTimezoneOffset);
+    const offset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - offset);
   }
 
 }
