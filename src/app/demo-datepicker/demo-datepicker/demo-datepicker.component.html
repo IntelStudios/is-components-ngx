@@ -12,13 +12,40 @@
 <div class="row">
   <div class="col-sm-6">
     <is-datepicker [readonly]="readonly" [formControl]="control" [alignment]="'right'" [allowClear]="true"></is-datepicker>
-    <button class="btn btn-primary pull-right" (click)="onClearDate()" style="margin-top: 5px;">Clear date</button>
-    <button class="btn btn-primary" (click)="toggleInvalid()">Invalid</button>
-    <button class="btn btn-primary" (click)="toggleDisabled()">Disable</button>
-    <button class="btn btn-primary" (click)="toggleReadOnly()">Read only</button>
+    <div style="margin-top: 5px;">
+      <button class="btn btn-primary pull-right" (click)="onClearDate()">Clear date</button>
+      <button class="btn btn-primary" (click)="toggleInvalid()">Invalid</button>
+      <button class="btn btn-primary" (click)="toggleDisabled()">Disable</button>
+      <button class="btn btn-primary" (click)="toggleReadOnly()">Read only</button>
+      <button class="btn btn-primary" (click)="setTomorrow(control)">Set tomorrow</button>
+    </div>
   </div>
   <div class="col-sm-6 datepicker-colors">
     <is-datepicker [readonly]="readonly" viewFormat="dd. MM. yyyy"></is-datepicker>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <p>Value: {{control.valueChanges | async}}</p>
+    <p>Value UTC: {{(control.valueChanges | async)?.toISOString()}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Date Picker (stringMode)</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <is-datepicker [formControl]="control2" [stringMode]="true" [allowClear]="true"></is-datepicker>
+    <div style="margin-top: 5px;">
+      <button class="btn btn-primary" (click)="setTomorrow(control2)">Set tomorrow</button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <p>Value: {{control2.valueChanges | async}}</p>
   </div>
 </div>
 <div class="row">
@@ -36,11 +63,7 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-sm-12">
-    <p>Value: {{control.valueChanges | async}}</p>
-  </div>
-</div>
+
 <div style="height: 100vh;"></div>
 <div class="row">
   <div class="col-sm-2">

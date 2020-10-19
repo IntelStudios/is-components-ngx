@@ -22,6 +22,8 @@ export class DemoDatepickerComponent implements OnInit {
 
   control: FormControl;
 
+  control2: FormControl = new FormControl();
+
   config: Partial<BsDatepickerConfig> = { minDate: new Date() };
 
   readonly = false;
@@ -35,6 +37,17 @@ export class DemoDatepickerComponent implements OnInit {
 
   onClearDate() {
     this.control.setValue(null);
+  }
+
+  setTomorrow(ctrl: FormControl) {
+    const now = new Date();
+    now.setDate(now.getDate() + 1);
+    if (ctrl === this.control) {
+      ctrl.setValue(now);
+    }
+    if (ctrl === this.control2) {
+      ctrl.setValue(`${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()}`);
+    }
   }
 
   toggleInvalid(ctrl: FormControl = this.control) {

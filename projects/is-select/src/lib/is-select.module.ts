@@ -24,7 +24,7 @@ import { IsSelectConfig, configToken } from './is-select.interfaces';
 export class IsSelectModule {
   static forRoot(config?: IsSelectConfig): ModuleWithProviders<IsSelectModule> {
     return {
-      ngModule: IsCoreUIModule,
+      ngModule: IsSelectModule,
       providers: [
         { provide: configToken, useValue: config }
       ]

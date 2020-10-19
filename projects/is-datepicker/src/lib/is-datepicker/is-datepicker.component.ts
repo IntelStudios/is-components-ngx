@@ -7,8 +7,10 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
+  Inject,
   Input,
   OnDestroy,
+  Optional,
   Output,
   Renderer2,
   ViewEncapsulation,
@@ -19,6 +21,7 @@ import { Subscription } from 'rxjs';
 
 import { IsDatepickerPopupComponent, DATEPICKER_CONFIG_DEFAULT } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 
 const moment = m;
 
@@ -48,9 +51,9 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   @Input()
   hidden = false;
 
-    /**
-   * BsDatepicker config object to setup wrapped BsDatepickerInline component
-   */
+  /**
+ * BsDatepicker config object to setup wrapped BsDatepickerInline component
+ */
   @Input()
   config: Partial<BsDatepickerConfig> = DATEPICKER_CONFIG_DEFAULT;
   /**
@@ -68,16 +71,6 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   @Input()
   alignment: 'left' | 'center' | 'right' = 'left';
 
-  /**
-   * ammends selected date to be End Of Day
-   */
-  @Input('isEOD') isEOD: boolean = false;
-
-  /**
-   * ammends selected date to be Start Of Day
-   */
-  @Input('isSOD') isSOD: boolean = false;
-
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
 
@@ -94,9 +87,18 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   private onTouched: Function;
   private _detachSub: Subscription;
 
-  constructor(private changeDetector: ChangeDetectorRef, private overlay: Overlay, private el: ElementRef, private renderer: Renderer2) {
-
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    @Optional() @Inject(configToken) private dpConfig: IsDatepickerConfig,
+    private overlay: Overlay,
+    private el: ElementRef, private renderer: Renderer2) {
+    if (this.dpConfig) {
+      if (this.dpConfig.viewFormat) {
+        this.viewFormat = this.dpConfig.viewFormat;
+      }
+    }
   }
+
   ngOnDestroy() {
     if (this._changeSubscription) {
       this._changeSubscription.unsubscribe();
@@ -112,10 +114,10 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
 
   onValueChange() {
     if (this.dateValue) {
-      let valid = !isNaN(this.dateValue.valueOf());
+      const valid = !isNaN(this.dateValue.valueOf());
       if (!valid) {
         // if date is invalid then set up actual date
-        this.dateValue = this.stripTimezone(new Date());
+        this.dateValue = this.stringMode ? this.stripTimezone(new Date()) : new Date();
       }
     }
     if (this.dateValue === null) {
@@ -123,8 +125,6 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
       this.changeDetector.markForCheck();
       return;
     }
-    const date = this.stripTimezone(this.dateValue);
-    // console.log(date.toISOString());
     this.changed.emit(this.stringMode ? moment(this.dateValue).format(DATE_FORMAT) : this.dateValue);
     this.changeDetector.markForCheck();
   }
@@ -273,7 +273,7 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
 
   private setValue(value: string) {
     if (value) {
-      const date = this.stringMode ? moment(value, DATE_FORMAT).local(true) : moment.utc(value).local(true);
+      const date = this.stringMode ? moment(value, DATE_FORMAT).local(true) : moment.utc(value);
       this.dateValue = date.toDate();
     }
     else {
