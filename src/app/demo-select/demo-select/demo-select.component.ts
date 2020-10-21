@@ -13,7 +13,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.1.1.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.1.2.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -149,7 +149,7 @@ export class DemoSelectComponent implements OnInit {
   }
 
   selectGreenModelMulti() {
-    this.select4ControlMulti.setValue([{Data: '2', Name: 'green (model)'}]);
+    this.select4ControlMulti.setValue([{Data: '2', Name: 'green (model)'}, {Data: '3', Name: 'black (model)'}]);
   }
 
   selectFirstModel() {
