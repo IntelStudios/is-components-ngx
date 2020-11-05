@@ -53,15 +53,19 @@ export class SelectItem {
     if (this.Value) {
       this.FilterValue = stripTags(stripDiacritics(this.Value));
     }
+    // XI2543: search also in description, not only the value
+    if (this.Description) {
+      this.FilterValue += ' ' + stripTags(stripDiacritics(this.Description));
+    }
   }
 
   static isItem(item: any, modelConfig?: IsSelectModelConfig): boolean {
     const isItem =
-    (typeof item === 'string')
+      (typeof item === 'string')
       || (typeof item === 'object' && (item.ID || item.ID === 0 || item.id || item.id === 0) && (item.value || item.Value));
-      if (!isItem && modelConfig) {
-        return (item[modelConfig.idProp] || item[modelConfig.idProp] === 0) && item[modelConfig.textProp]
-      }
+    if (!isItem && modelConfig) {
+      return (item[modelConfig.idProp] || item[modelConfig.idProp] === 0) && item[modelConfig.textProp]
+    }
     return isItem;
   }
 
