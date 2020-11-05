@@ -30,24 +30,35 @@ export class OptionsBehavior {
 
   static filterPredicate(options: SelectItem[], predicate: (option: SelectItem) => boolean): SelectItem[] {
     const ret = [];
+
     options.forEach(opt => {
-      if (opt.hasChildren()) {
-        const children = OptionsBehavior.filterPredicate(opt.children, predicate);
-        if (children.length > 0) {
-          const opt2 = opt.getSimilar();
-          opt2.children = children;
-          ret.push(opt2)
-        }
-      } else {
-        if (predicate(opt)) {
-          ret.push(opt);
+      let condition = false;
+      // XI2543 - extension of search capability also for nodes
+      if (predicate(opt)) {
+        ret.push(opt);
+        condition = true;
+      }
+
+      if (!condition) {
+        if (opt.hasChildren()) {
+          const children = OptionsBehavior.filterPredicate(opt.children, predicate);
+          if (children.length > 0) {
+            const opt2 = opt.getSimilar();
+            opt2.children = children;
+            ret.push(opt2);
+          }
+        } else {
+          if (predicate(opt)) {
+            ret.push(opt);
+          }
         }
       }
     })
+
     return ret;
   }
 
-  static getLeafOptions(options: SelectItem[], result? : SelectItem[]): SelectItem[] {
+  static getLeafOptions(options: SelectItem[], result?: SelectItem[]): SelectItem[] {
     const ret = result || [];
     options.forEach(opt => {
       if (opt.hasChildren()) {

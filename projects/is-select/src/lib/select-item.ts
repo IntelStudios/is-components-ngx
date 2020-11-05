@@ -36,7 +36,7 @@ export class SelectItem {
         this.Description = source.Description;
       }
 
-      if(source.Disabled) {
+      if (source.Disabled) {
         this.disabled = source.Disabled;
       } else {
         this.disabled = false;
@@ -52,6 +52,10 @@ export class SelectItem {
     }
     if (this.Value) {
       this.FilterValue = stripTags(stripDiacritics(this.Value));
+    }
+    // XI2543: search also in description, not only the value
+    if (this.Description) {
+      this.FilterValue += ' ' + stripTags(stripDiacritics(this.Description));
     }
   }
 
