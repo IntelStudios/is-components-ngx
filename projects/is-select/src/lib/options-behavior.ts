@@ -169,6 +169,7 @@ export class ChildrenOptionsBehavior extends OptionsBehavior implements IOptions
   }
 
   first(): void {
+    this.select.setActiveOption(undefined);
     // TODO implement
     // let parentIndex = 0;
     // let childIndex = 0;
@@ -298,9 +299,38 @@ export class ChildrenOptionsBehavior extends OptionsBehavior implements IOptions
   filter(query: RegExp): void {
     this.select.visibleOptions = OptionsBehavior.filterPredicate(this.select.options, (opt) => !!opt.FilterValue.match(query));
     if (this.select.visibleOptions.length > 0) {
-      //this.select.setActiveOption(this.select.visibleOptions[0].children[0]);
-      //super.ensureHighlightVisible(optionsMap);
+      // find leat (active option) which isn't disabled
+      const option = this.findLeaf(this.select.visibleOptions);
+
+      if (option) {
+        this.select.setActiveOption(option);
+        super.ensureHighlightVisible(this.optionsMap);
+      } else {
+        this.select.setActiveOption(undefined);
+      }
     }
+  }
+
+  /**
+   * Find first item which hasn't got child/ren and it is not disabled
+   */
+  findLeaf(options: SelectItem[]): SelectItem | null {
+    let found = null;
+
+    for (let i = 0; i < options.length; i++) {
+      const opt = options[i];
+
+      if (opt.hasChildren()) {
+        return this.findLeaf(opt.children);
+      } else {
+        found = opt.disabled ? null : opt;
+      }
+      if (found) {
+        return found;
+      }
+    }
+
+    return found;
   }
 
   reset() {
