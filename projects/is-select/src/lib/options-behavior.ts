@@ -301,7 +301,6 @@ export class ChildrenOptionsBehavior extends OptionsBehavior implements IOptions
     if (this.select.visibleOptions.length > 0) {
       // find leat (active option) which isn't disabled
       const option = this.findLeaf(this.select.visibleOptions);
-      console.log('option ', option);
       if (option) {
         this.select.setActiveOption(option);
         super.ensureHighlightVisible(this.optionsMap);
