@@ -179,6 +179,16 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   setOptions(options: SelectItem[]) {
     this.visibleOptions = options;
     this.options = options;
+
+    // re-check options - may change because of lazy load
+    const isGroupOpts = this.options && this.options.findIndex(o => o.hasChildren()) > -1;
+
+    if (isGroupOpts) {
+      this.behavior = new ChildrenOptionsBehavior(this);
+    } else {
+      this.behavior = new GenericOptionsBehavior(this);
+    }
+
     this.markCheckedOptions(this.options);
     if (options && this.isLoadingOptions && (this.control.minLoadChars === 0) || (this.searchFilter && this.searchFilter.length >= this.control.minLoadChars)) {
       this.options = this.options.filter(o => !o.Checked);

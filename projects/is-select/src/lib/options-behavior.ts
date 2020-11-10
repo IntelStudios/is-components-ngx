@@ -303,11 +303,9 @@ export class ChildrenOptionsBehavior extends OptionsBehavior implements IOptions
       const option = this.findLeaf(this.select.visibleOptions);
       console.log('option ', option);
       if (option) {
-        console.log('set active');
         this.select.setActiveOption(option);
         super.ensureHighlightVisible(this.optionsMap);
       } else {
-        console.log('set active undefined');
         this.select.setActiveOption(undefined);
       }
     }

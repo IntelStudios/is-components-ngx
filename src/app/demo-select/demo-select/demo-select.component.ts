@@ -106,9 +106,9 @@ export class DemoSelectComponent implements OnInit {
 
     const item4 = {ID: '4', Value: 'Mars'};
 
-    this.itemsGrouped = [{"ID":"HierarchyAlfa","Value":"HierarchyAlfa","children":[{"ID":"Value1","Value":"Value1 - Name1","Description":"desc1"},{"ID":"Value3","Value":"Value3 - Name3","Description":"Desc3"}]},{"ID":"HierarchyBeta","Value":"HierarchyBeta","children":[{"ID":"Value2","Value":"Value2 - Name2","Description":"Desc2"},{"ID":"Value4","Value":"Value4 - Name4","Description":"Desc4"}]}];
     //this.itemsGrouped = [{"ID":"HierarchyAlfa","Value":"HierarchyAlfa","children":[{"ID":"Value1","Value":"Value1 - Name1","Description":"desc1"},{"ID":"Value3","Value":"Value3 - Name3","Description":"Desc3"}]},{"ID":"HierarchyBeta","Value":"HierarchyBeta","children":[{"ID":"Value2","Value":"Value2 - Name2","Description":"Desc2"},{"ID":"Value4","Value":"Value4 - Name4","Description":"Desc4"}]}];
-    //this.itemsGrouped = [item1, item2, item3, item4];
+    //this.itemsGrouped = [{"ID":"HierarchyAlfa","Value":"HierarchyAlfa","children":[{"ID":"Value1","Value":"Value1 - Name1","Description":"desc1"},{"ID":"Value3","Value":"Value3 - Name3","Description":"Desc3"}]},{"ID":"HierarchyBeta","Value":"HierarchyBeta","children":[{"ID":"Value2","Value":"Value2 - Name2","Description":"Desc2"},{"ID":"Value4","Value":"Value4 - Name4","Description":"Desc4"}]}];
+    this.itemsGrouped = [item1, item2, item3, item4];
     this.changeDetector.markForCheck();
   }
 
