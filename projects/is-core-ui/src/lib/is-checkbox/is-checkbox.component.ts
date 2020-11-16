@@ -61,9 +61,14 @@ export class IsRadioGroupDirective implements ControlValueAccessor, AfterViewIni
   ngAfterViewInit() {
     setTimeout(() => this._updateSelectedRadioFromValue());
   }
+
+  setReadonly(value: boolean) {
+    this.setDisabledState(value);
+  }
+
   /**
-* Implemented as part of ControlValueAccessor.
-*/
+  * Implemented as part of ControlValueAccessor.
+  */
   writeValue(value: any): void {
     //this.checked = value === true;
     this.value = value;
@@ -155,6 +160,10 @@ export class IsCheckboxComponent implements ControlValueAccessor {
 
   private _onChangeCallback = (_: any) => { };
   onTouched = () => { };
+
+  setReadonly(value: boolean) {
+    this.setDisabledState(value);
+  }
 
   constructor(
     @Optional() private radioGroup: IsRadioGroupDirective,
