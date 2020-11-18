@@ -166,6 +166,13 @@ export class IsCodemirrorComponent implements ControlValueAccessor, OnDestroy {
         return true;
       });
     }
+
+    // for cases when codemirror is inside a template or ngIf it is required
+    // to manually call refresh after a delay after first setValue
+    setTimeout(() => {
+      this.instance.refresh();
+      this.changeDetector.markForCheck();
+    }, 300);
   }
 
   /**
