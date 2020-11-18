@@ -7,6 +7,6 @@
     (click)="closePopup()"
     [class.open]="isOpen"
     [class.disabled]="disabled">
-  <i *ngIf="allowClear && !disabled && (input.value || dateValue)" class="fas fa-times btn-remove" (click)="onRemove($event, input)"></i>
+  <i *ngIf="allowClear && !disabled && (input.value || dateValue)" class="fas fa-times btn-remove" (click)="onRemove($event)"></i>
   <span class="datepicker-icon" [class.disabled]="disabled" (click)="openPopup()"><i class="fas fa-calendar-alt fa-fw"></i></span>
 </div>
