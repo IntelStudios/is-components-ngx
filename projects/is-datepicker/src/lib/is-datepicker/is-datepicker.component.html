@@ -4,6 +4,7 @@
     [value]="dateValue | date:viewFormat"
     [formControl]="dateControl"
     (keyup)="onInputValueChange(input.value)"
+    (click)="closePopup()"
     [class.open]="isOpen"
     [class.disabled]="disabled"
     [class.readonly]="readonly">

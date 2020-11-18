@@ -15,6 +15,7 @@ import {
   Optional,
   Output,
   Renderer2,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -82,6 +83,9 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
 
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild('input', { static: true })
+  input: ElementRef;
 
   dateValue: any = '';
 
@@ -210,6 +214,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     $event.preventDefault();
     $event.stopPropagation();
     this.dateValue = null;
+    this.input.nativeElement.value = null;
     this.onValueChange();
   }
 
