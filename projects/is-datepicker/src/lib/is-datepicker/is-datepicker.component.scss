@@ -4,67 +4,106 @@
 is-datepicker {
   &.ng-invalid {
     .datepicker-input {
-      @include is-input-invalid;
+      @include is-input-invalid();
+    }
+
+    &:hover {
+      @include is-input-invalid();
     }
   }
 
-  .datepicker-input {
-    border-width: 1px;
-    border-style: solid;
-    @include is-input;
-    display: flex;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-
-    &.open {
-      @include is-input-active;
+  .input-group {
+    .form-control {
+      border-radius: 4px !important;
     }
 
-    &.disabled {
-      @include is-input-disabled;
-      cursor: not-allowed;
-    }
-
-    &:not(.disabled) > span.datepicker-value {
-      color: $is-control-fg-color;
-    }
-
-    > span.datepicker-value {
-      border:0;
+    .datepicker-input {
+      border-width: 1px;
+      border-style: solid;
+      @include is-input();
+      display: flex;
+      align-items: center;
+      position: relative;
+      // cursor: pointer;
       flex: 1;
       outline: 0;
       min-width: 0;
-      background: transparent;
       white-space: nowrap;
       overflow: hidden;
+
+      &.open {
+        @include is-input-active;
+      }
+
+      &.disabled {
+        @include is-input-disabled;
+        cursor: not-allowed;
+      }
+
       &.align-left {
         text-align: left !important;
       }
+
       &.align-center {
         text-align: center !important;
       }
+
       &.align-right {
         text-align: right !important;
+        padding-right: 48px;
+      }
+
+      &:not(.disabled):not(.readonly) {
+        color: $is-control-fg-color;
+      }
+
+      &.ng-invalid {
+        @include is-input-invalid();
       }
     }
-    > .btn-remove {
+
+    // &.datepicker-value {
+    //   border: 0;
+    //   flex: 1;
+    //   outline: 0;
+    //   min-width: 0;
+    //   background: transparent;
+    //   white-space: nowrap;
+    //   overflow: hidden;
+
+
+    // }
+
+    >.btn-remove {
       margin-left: #{$is-general-padding-small};
       color: $is-control-handle-color;
     }
   }
 
   .datepicker-icon {
+    position: absolute;
+    right: 8px;
+    top: 6px;
     margin-left: #{$is-general-padding-small};
+    z-index: 1000;
+    cursor: pointer;
 
     >i {
       color: $is-control-handle-color;
     }
+
     &.disabled {
       pointer-events: none;
       cursor: not-allowed;
     }
   }
 
+  .btn-remove {
+    cursor: pointer;
+    position: absolute;
+    right: 32px;
+    top: 10px;
+    color: $is-control-handle-color;
+    z-index: 1000;
+  }
 }
-
