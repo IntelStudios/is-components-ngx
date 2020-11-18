@@ -1,6 +1,7 @@
 import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ComponentRef,
@@ -10,17 +11,18 @@ import {
   Inject,
   Input,
   OnDestroy,
+  OnInit,
   Optional,
   Output,
   Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
-import { IsDatepickerPopupComponent, DATEPICKER_CONFIG_DEFAULT } from '../is-datepicker-popup/is-datepicker-popup.component';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { DATEPICKER_CONFIG_DEFAULT, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 
 const moment = m;
@@ -38,9 +40,10 @@ export const NG_DATEPICKER_VALUE_ACCESSOR: any = {
   templateUrl: './is-datepicker.component.html',
   styleUrls: ['./is-datepicker.component.scss'],
   providers: [NG_DATEPICKER_VALUE_ACCESSOR],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
+export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   @Input('allowClear')
   allowClear: boolean = false;
@@ -86,6 +89,8 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
 
   @Input() readonly: boolean = false;
 
+  dateControl: FormControl;
+
   private pickerOverlayRef: OverlayRef;
   private pickerInstanceRef: ComponentRef<IsDatepickerPopupComponent>;
   private _clickedOutsideListener = null;
@@ -106,6 +111,27 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
         this.localDateMode = this.dpConfig.localDateMode;
       }
     }
+
+    this.dateControl = new FormControl();
+  }
+
+  ngOnInit(): void {
+    const dateValidator = (control: AbstractControl) => {
+      const invalid = { 'dateInvalid': true };
+      const value = control.value;
+
+      if (value && typeof value === 'string') {
+        const match = value.match(/^((0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-[12]\d{3})$/);
+
+        if (!match) {
+          return invalid;
+        }
+      }
+
+      return null;
+    };
+
+    this.dateControl.setValidators(dateValidator);
   }
 
   ngOnDestroy() {
@@ -121,7 +147,39 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
     return !!this.pickerOverlayRef;
   }
 
-  onValueChange() {
+  onInputValueChange($event: string): void {
+    if (this.dateControl.invalid) {
+      return;
+    }
+
+    const date = moment($event, DATE_FORMAT).toDate();
+    const valid = !isNaN(date.valueOf());
+    if (!valid) {
+      this.dateControl.setErrors({ 'dateInvalid': true });
+      return;
+    }
+    this.dateValue = date;
+
+    if (this.dateValue === null) {
+      this.changed.emit(null);
+      this.changeDetector.markForCheck();
+      return;
+    }
+    if (this.stringMode) {
+      this.changed.emit(moment(this.dateValue).format(DATE_FORMAT));
+    } else {
+      if (this.localDateMode) {
+        const date = new Date(this.dateValue);
+        date.setHours(0, 0, 0, 0);
+        this.changed.emit(this.stripTimezone(date));
+      } else {
+        this.changed.emit(this.dateValue);
+      }
+    }
+    this.changeDetector.markForCheck();
+  }
+
+  onValueChange(): void {
     if (this.dateValue) {
       const valid = !isNaN(this.dateValue.valueOf());
       if (!valid) {
@@ -302,4 +360,3 @@ export class IsDatepickerComponent implements OnDestroy, ControlValueAccessor {
   }
 
 }
-
