@@ -8,50 +8,73 @@
     }
   }
 
-  .timepicker-input {
-    border-width: 1px;
-    border-style: solid;
-    @include is-input;
-    display: flex;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
+  .input-group {
+    color: $is-control-fg-color;
 
-    &.disabled {
-      @include is-input-disabled;
-      cursor: not-allowed;
+    .form-control {
+      border-radius: 4px !important;
     }
 
-    &.active {
-      background-color: $is-control-bg-color;
-      color: $is-control-fg-color;
-      @include is-input-active;
+    .timepicker-input {
+      border-width: 1px;
+      border-style: solid;
+      @include is-input;
+      display: flex;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
+
+      &.disabled {
+        @include is-input-disabled;
+        cursor: not-allowed;
+      }
+
+      &.active {
+        background-color: $is-control-bg-color;
+        color: $is-control-fg-color;
+        @include is-input-active;
+      }
+
+      &:not(.disabled)>.timepicker-value {
+        color: $is-control-fg-color;
+      }
     }
 
-    &:not(.disabled) > .timepicker-value {
-      color: $is-control-fg-color;
-    }
-
-    > .timepicker-value {
+    .timepicker-value {
       flex: 1;
       overflow: hidden;
       white-space: nowrap;
+
       &.align-left {
         text-align: left !important;
       }
+
       &.align-center {
         text-align: center !important;
       }
+
       &.align-right {
         text-align: right !important;
+        padding-right: 48px;
       }
     }
-    > .btn-remove {
+
+    .btn-remove {
+      cursor: pointer;
+      position: absolute;
+      right: 32px;
+      top: 10px;
+      z-index: 1000;
       color: $is-control-handle-color;
       margin-left: #{$is-general-padding-small};
     }
 
-    > .timepicker-icon {
+    .timepicker-icon {
+      cursor: pointer;
+      position: absolute;
+      right: 8px;
+      top: 6px;
+      z-index: 1000;
       margin-left: #{$is-general-padding-small};
 
       >i {
@@ -59,7 +82,4 @@
       }
     }
   }
-
-
-
 }

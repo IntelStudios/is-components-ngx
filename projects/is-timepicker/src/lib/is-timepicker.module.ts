@@ -1,16 +1,16 @@
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
-import { IsTimepickerComponent } from './is-timepicker.component';
 import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { IsTimepickerComponent } from './is-timepicker.component';
 
 @NgModule({
   imports: [
-    CommonModule, OverlayModule, TimepickerModule.forRoot(), FormsModule, ScrollingModule
+    CommonModule, OverlayModule, TimepickerModule.forRoot(), FormsModule, ScrollingModule, ReactiveFormsModule,
   ],
   declarations: [IsTimepickerComponent, IsTimepickerPickerComponent],
   exports: [IsTimepickerComponent],
