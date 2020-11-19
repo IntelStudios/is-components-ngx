@@ -22,7 +22,7 @@
       display: flex;
       align-items: center;
       position: relative;
-      cursor: pointer;
+      // cursor: pointer;
 
       &.disabled {
         @include is-input-disabled;
