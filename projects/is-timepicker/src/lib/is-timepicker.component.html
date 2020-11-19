@@ -1,5 +1,13 @@
-<div class="timepicker-input form-control" (click)="onPickerShown()" [class.active]="pickerOpened" [class.disabled]="disabled">
-  <span class="timepicker-value align-{{alignment}}">{{viewValue}}</span>
-  <i *ngIf="allowClear && timeValue && !disabled" class="fas fa-times btn-remove" (click)="removeClick($event)"></i>
-  <span class="timepicker-icon"><i class="fas fa-fw fa-clock"></i></span>
+<div class="input-group">
+  <input #input
+    class="timepicker-input timepicker-value form-control align-{{alignment}}"
+    [value]="viewValue"
+    [formControl]="timeControl"
+    (keyup)="onInputValueChange(input.value);"
+    (click)="hidePicker()"
+    [class.active]="pickerOpened"
+    [class.disabled]="disabled"
+    [readOnly]="disabled">
+    <i *ngIf="allowClear && timeValue && !disabled" class="fas fa-times btn-remove" (click)="removeClick($event)"></i>
+    <span class="timepicker-icon" (click)="onPickerShown()"><i class="fas fa-fw fa-clock"></i></span>
 </div>

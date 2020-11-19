@@ -1,21 +1,24 @@
+import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ComponentRef,
+  ElementRef,
   EventEmitter,
   forwardRef,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
   Renderer2,
-  ComponentRef,
-  ElementRef,
-  OnDestroy,
+  ViewChild,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as m from 'moment';
-import { Overlay, OverlayRef, ConnectedPosition } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
 import { Subscription } from 'rxjs';
+
 import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
 
 const moment = m;
@@ -33,9 +36,9 @@ export const IS_TIMEPICKER_VALUE_ACCESSOR: any = {
   templateUrl: './is-timepicker.component.html',
   styleUrls: ['./is-timepicker.component.scss'],
   providers: [IS_TIMEPICKER_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IsTimepickerComponent implements OnDestroy {
+export class IsTimepickerComponent implements OnInit, OnDestroy {
 
   @Input() allowClear: boolean = false;
   @Input('placeholder') placeholder: string = '';
@@ -49,6 +52,9 @@ export class IsTimepickerComponent implements OnDestroy {
   @Input()
   alignment: 'left' | 'center' | 'right' = 'left';
 
+  @ViewChild('input', { static: true })
+  input: ElementRef;
+
   get pickerOpened(): boolean {
     return !!this.pickerOverlayRef;
   }
@@ -61,6 +67,7 @@ export class IsTimepickerComponent implements OnDestroy {
   public timeValue: Date;
   public viewValue: string = '';
 
+  timeControl: FormControl;
   disabled: boolean;
   active: boolean;
 
@@ -74,6 +81,26 @@ export class IsTimepickerComponent implements OnDestroy {
     private renderer: Renderer2,
     private overlay: Overlay,
     private changeDetector: ChangeDetectorRef) {
+      this.timeControl = new FormControl();
+  }
+
+  ngOnInit(): void {
+    const timeValidator = (control: AbstractControl) => {
+      const invalid = { 'dateInvalid': true };
+      const value = control.value;
+
+      if (value && typeof value === 'string') {
+        const match = value.match(/^(?:(?:([01]?\d|2[0-3]):)([0-5]\d):)([0-5]\d)$/);
+
+        if (!match) {
+          return invalid;
+        }
+      }
+
+      return null;
+    };
+
+    this.timeControl.setValidators(timeValidator);
   }
 
   ngOnDestroy() {
@@ -117,6 +144,14 @@ export class IsTimepickerComponent implements OnDestroy {
     if (this.pickerInstanceRef) {
       this.pickerOverlayRef.detach();
     }
+  }
+
+  onInputValueChange($event: string): void {
+    if (this.timeControl.invalid) {
+      return;
+    }
+
+    this.setValue($event);
   }
 
   onPickerShown() {
@@ -207,6 +242,7 @@ export class IsTimepickerComponent implements OnDestroy {
 
   removeClick(event: any): void {
     event.stopPropagation();
+    this.input.nativeElement.value = null;
     this.setValue(null);
   }
 
