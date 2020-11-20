@@ -1,0 +1,20 @@
+<app-modal #modal [class]="cssClass" [backdrop]="false">
+  <ng-container *ngIf="config.title" class="app-modal-header">{{config.title|translate}}</ng-container>
+  <ng-container class="app-modal-body">
+    <ng-container [ngTemplateOutlet]="config.template" [ngTemplateOutletContext]="{$implicit: this, modal: this}">
+    </ng-container>
+  </ng-container>
+  <ng-container class="app-modal-footer">
+    <div class="buttons">
+      <button *ngFor="let b of config?.buttonsLeft" type="button" class="btn is-btn-left {{b.buttonClass}}" (click)="buttonClick(b)">
+        <i *ngIf="b.icon" [class]="b.icon"></i>
+        <span>{{b.title|translate}}</span>
+      </button>
+      <div class="divider"></div>
+      <button *ngFor="let b of config?.buttonsRight" type="button" class="btn is-btn-right {{b.buttonClass}}" (click)="buttonClick(b)">
+        <i *ngIf="b.icon" [class]="b.icon"></i>
+        <span>{{b.title|translate}}</span>
+      </button>
+    </div>
+  </ng-container>
+</app-modal>
