@@ -66,3 +66,8 @@ $is-switch-border: var(--is-switch-border, $is-control-fg-color);
 $is-switch-backdrop: var(--is-switch-backdrop, #fff);
 $is-switch-checked: var(--is-switch-checked, $is-control-fg-color);
 $is-switch-disabled: var(--is-switch-disabled, $is-control-disabled-fg-color);
+
+$is-movable-modal-header-fg-color: var(--is-movable-modal-header-fg-color, #000);
+$is-movable-modal-border-color: var(--is-movable-modal-border-color, #ccc);
+$is-movable-modal-box-shadow-dragging-color: var(--is-movable-modal-box-shadow-dragging-color, #666);
+
