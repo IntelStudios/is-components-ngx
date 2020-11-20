@@ -153,6 +153,9 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
 
   onInputValueChange($event: string): void {
     if (this.dateControl.invalid) {
+      // if date is invalid, result value will be null
+      this.changed.emit(null);
+      this.changeDetector.markForCheck();
       return;
     }
 
