@@ -15,7 +15,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { AbstractControl, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 import * as m from 'moment';
 import { Subscription } from 'rxjs';
 
@@ -31,11 +31,17 @@ export const IS_TIMEPICKER_VALUE_ACCESSOR: any = {
   multi: true
 };
 
+export const NG_TIMEPICKER_VALUE_VALIDATOR: any = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => IsTimepickerComponent),
+  multi: true
+}
+
 @Component({
   selector: 'is-timepicker',
   templateUrl: './is-timepicker.component.html',
   styleUrls: ['./is-timepicker.component.scss'],
-  providers: [IS_TIMEPICKER_VALUE_ACCESSOR],
+  providers: [IS_TIMEPICKER_VALUE_ACCESSOR, NG_TIMEPICKER_VALUE_VALIDATOR],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IsTimepickerComponent implements OnInit, OnDestroy {
@@ -75,6 +81,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   private _changeSubscription: Subscription = null;
   private _clickedOutsideListener = null;
   private _detachSub: Subscription;
+  private validatorOnChangeFn: Function = null;
 
   constructor(
     private element: ElementRef,
@@ -86,7 +93,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const timeValidator = (control: AbstractControl) => {
-      const invalid = { 'dateInvalid': true };
+      const invalid = { 'timeInvalid': true };
       const value = control.value;
 
       if (value && typeof value === 'string') {
@@ -147,9 +154,15 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   }
 
   onInputValueChange($event: string): void {
-    if (this.timeControl.invalid) {
-      // if time is invalid, result value will be null
+    if (this.timeControl.invalid || !$event) {
+      // if time is invalid or empty, result value will be null
       this.changed.emit(null);
+
+      if (!$event) {
+        this.input.nativeElement.value = null;
+        this.setValue(null);
+      }
+
       this.changeDetector.markForCheck();
       return;
     }
@@ -246,7 +259,26 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   removeClick(event: any): void {
     event.stopPropagation();
     this.input.nativeElement.value = null;
+    this.timeControl.setErrors(null);
     this.setValue(null);
+  }
+
+  /**
+   * Implemented as part of NG Validator.
+   */
+  registerOnValidatorChange(fn: () => void): void {
+    this.validatorOnChangeFn = fn;
+  }
+
+  /**
+   * Implemented as part of NG Validator.
+   */
+  validate(control: AbstractControl): ValidationErrors | null {
+    if (control.valid && this.timeControl.valid) {
+      return null;
+    } else {
+      return { 'timeInvalid': true };
+    }
   }
 
   private setValue(value: any): void {

@@ -18,7 +18,14 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+} from '@angular/forms';
 import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
@@ -36,11 +43,17 @@ export const NG_DATEPICKER_VALUE_ACCESSOR: any = {
   multi: true
 };
 
+export const NG_DATEPICKER_VALUE_VALIDATOR: any = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => IsDatepickerComponent),
+  multi: true
+}
+
 @Component({
   selector: 'is-datepicker',
   templateUrl: './is-datepicker.component.html',
   styleUrls: ['./is-datepicker.component.scss'],
-  providers: [NG_DATEPICKER_VALUE_ACCESSOR],
+  providers: [NG_DATEPICKER_VALUE_ACCESSOR, NG_DATEPICKER_VALUE_VALIDATOR],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
@@ -101,6 +114,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   private _changeSubscription: Subscription = null;
   private onTouched: Function;
   private _detachSub: Subscription;
+  private validatorOnChangeFn: Function = null;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -152,9 +166,15 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   onInputValueChange($event: string): void {
-    if (this.dateControl.invalid) {
-      // if date is invalid, result value will be null
+    if (this.dateControl.invalid || !$event) {
+      // if date is invalid or empty, result value will be null
       this.changed.emit(null);
+
+      if (!$event) {
+        this.dateValue = null;
+        this.input.nativeElement.value = null;
+      }
+
       this.changeDetector.markForCheck();
       return;
     }
@@ -218,6 +238,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     $event.stopPropagation();
     this.dateValue = null;
     this.input.nativeElement.value = null;
+    this.dateControl.setErrors(null);
     this.onValueChange();
   }
 
@@ -356,6 +377,24 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
    */
   registerOnTouched(fn: (_: any) => {}): void {
     this.onTouched = fn;
+  }
+
+  /**
+   * Implemented as part of NG Validator.
+   */
+  registerOnValidatorChange(fn: () => void): void {
+    this.validatorOnChangeFn = fn;
+  }
+
+  /**
+   * Implemented as part of NG Validator.
+   */
+  validate(control: AbstractControl): ValidationErrors | null {
+    if (control.valid && this.dateControl.valid) {
+      return null;
+    } else {
+      return { 'dateInvalid': true };
+    }
   }
 
   private stripTimezone(date: Date): Date {
