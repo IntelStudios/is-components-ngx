@@ -16,7 +16,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
@@ -49,9 +49,9 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   @Input('placeholder')
   placeholder: string = '';
 
-    /**
-   * BsDatepicker config object to setup wrapped BsDatepickerInline component
-   */
+  /**
+ * BsDatepicker config object to setup wrapped BsDatepickerInline component
+ */
   @Input()
   config: Partial<BsDatepickerConfig> = DATEPICKER_CONFIG_DEFAULT;
   /**
@@ -117,7 +117,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       return null;
     };
 
-    this.dateControl.setValidators(dateValidator);
+    this.dateControl.setValidators([dateValidator, Validators.pattern(new RegExp('^[0-9-]*$'))]);
   }
 
   ngOnDestroy() {
@@ -133,8 +133,32 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     return !!this.pickerOverlayRef;
   }
 
-  onInputValueChange($event: string): void {
+  // checkKey(e: KeyboardEvent): void {
+  //   console.log('evet ', e.keyCode);
+
+
+  //   if (
+  //     (e.keyCode >= 48 && e.keyCode <= 57) ||  // digits
+  //     (e.keyCode >= 96 && e.keyCode <= 105) || // digits on numeric keyboard
+  //     e.key === 'Backspace' ||
+  //     e.key === 'Delete' ||
+  //     e.key === 'Enter' ||
+  //     e.keyCode === 109 ||                  // dash on numeric
+  //     e.keyCode === 189 ||                  // dash
+  //     (e.keyCode >= 35 && e.keyCode <= 40)  // home, end, arrows
+  //   ) {
+  //     // still missing check for ctrl/cmd + A, ctrl/cmd + c, ctrl/cmd + v etc.
+  //   } else {
+  //     e.preventDefault();
+  //     return;
+  //   }
+  // }
+
+  onInputValueChange($event: string,): void {
     if (this.dateControl.invalid) {
+      // if date is invalid, result value will be null
+      this.changed.emit(null);
+      this.changeDetector.markForCheck();
       return;
     }
 
