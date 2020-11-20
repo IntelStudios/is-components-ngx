@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
-import { IsModalButtonConfig } from './is-modal.interfaces';
+import { IsModalButtonConfig, IsModalRef } from './is-modal.interfaces';
 
 @Component({
   selector: 'is-modal',
@@ -16,16 +16,22 @@ export class IsModalComponent implements OnInit {
   buttonsLeft: IsModalButtonConfig[];
   buttonsRight: IsModalButtonConfig[];
   bodyScroll: boolean = true;
+  modalRef: IsModalRef;
 
-  constructor(public modalRef: BsModalRef) { }
+  constructor(private bsModalRef: BsModalRef) { }
 
   ngOnInit() {
+    this.modalRef = {
+      close: () => {
+        this.bsModalRef.hide();
+      }
+    }
   }
 
   buttonClick(btn: IsModalButtonConfig) {
     btn.onClick && btn.onClick(this.modalRef);
     if (btn.autoClose !== false) {
-      this.modalRef.hide();
+      this.modalRef.close();
     }
   }
 
