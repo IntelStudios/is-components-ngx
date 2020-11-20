@@ -81,7 +81,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private overlay: Overlay,
     private changeDetector: ChangeDetectorRef) {
-      this.timeControl = new FormControl();
+    this.timeControl = new FormControl();
   }
 
   ngOnInit(): void {
@@ -148,6 +148,9 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
 
   onInputValueChange($event: string): void {
     if (this.timeControl.invalid) {
+      // if time is invalid, result value will be null
+      this.changed.emit(null);
+      this.changeDetector.markForCheck();
       return;
     }
 
