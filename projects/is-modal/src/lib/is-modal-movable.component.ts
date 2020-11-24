@@ -1,45 +1,35 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import { IsModalButtonConfig, IsModalConfig, IsModalRef } from './is-modal.interfaces';
-
-export interface MovableModalControl {
-  config: IsModalConfig;
-  cssClass: string;
-  onButtonClicked: (btn: IsModalButtonConfig) => void;
-}
+import { IsModalButtonConfig, IsModalMovableControl, IsModalRef } from './is-modal.interfaces';
 
 @Component({
   selector: 'is-modal-movable',
   templateUrl: 'is-modal-movable.component.html',
   styleUrls: ['is-modal-movable.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class IsModalMovableComponent implements OnInit {
 
-  control: MovableModalControl;
-
-  config: IsModalConfig;
-
-  cssClass: string;
-
-  modalRef: IsModalRef;
+  control: IsModalMovableControl;
 
   @ViewChild('modal', { static: true })
   modal: any;
 
+  modalRef: IsModalRef;
+
+  closed: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
-    this.config = this.control.config;
-    this.cssClass = this.control.cssClass;
-
     this.modalRef = {
       close: () => {
-        this.modal.hide();
+        this.control.hide();
       }
     }
 
-    if (this.config) {
+    if (this.control.config) {
       this.modal.show();
     }
   }
@@ -47,6 +37,12 @@ export class IsModalMovableComponent implements OnInit {
   buttonClick(btn: IsModalButtonConfig) {
     btn.onClick && btn.onClick(this.modalRef);
     if (btn.autoClose !== false) {
+      this.modalRef.close();
+    }
+  }
+
+  closeModal($event) {
+    if ($event) {
       this.modalRef.close();
     }
   }

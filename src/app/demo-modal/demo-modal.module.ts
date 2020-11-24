@@ -5,13 +5,16 @@ import { IsModalModule } from 'projects/is-modal/src/public_api';
 
 import { DemoModalComponent } from './demo-modal/demo-modal.component';
 import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule as ModalLibModule } from 'ng-modal-lib';
+import { DemoModalMovableComponent } from './demo-modal/demo-modal-movable.component';
 
 
 @NgModule({
-  declarations: [DemoModalComponent],
+  declarations: [DemoModalComponent, DemoModalMovableComponent],
   imports: [
-    CommonModule, IsModalModule, ModalModule.forRoot()
-  ]
+    CommonModule, IsModalModule, ModalLibModule, ModalModule.forRoot()
+  ],
+  entryComponents: [ DemoModalMovableComponent]
 })
 export class DemoModalModule { }
 

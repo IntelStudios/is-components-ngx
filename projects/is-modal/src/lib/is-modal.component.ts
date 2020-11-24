@@ -34,5 +34,4 @@ export class IsModalComponent implements OnInit {
       this.modalRef.close();
     }
   }
-
 }
