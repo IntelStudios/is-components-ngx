@@ -13,10 +13,10 @@ export class IsModalMovableService {
 
   show(config: IsModalMovableConfig): IsModalMovableRef {
 
-    return this.showComponent(IsModalMovableComponent, config);
+    return this.showComponent(IsModalMovableComponent, config, null);
   }
 
-  showComponent(component: Type<IsModalMovableInstance>, config: IsModalMovableConfig): IsModalMovableRef {
+  showComponent(component: Type<IsModalMovableInstance>, config: IsModalMovableConfig, initialState?: any): IsModalMovableRef {
     const positionStrategy = this.over.position().global()
       .centerHorizontally()
       .centerVertically();
@@ -48,6 +48,7 @@ export class IsModalMovableService {
 
     instanceRef.control = {
       config: config,
+      initialState: Object.assign({}, initialState),
       hide: hide
     };
 

@@ -117,9 +117,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   }
 
   openMovableComponentModal() {
-    console.log('movable ref', this.modalMovableRef);
     if (!this.modalMovableRef || (this.modalMovableRef && this.modalMovableRef.closed)) {
-      this.modalMovableRef = this.movableService.showComponent(DemoModalMovableComponent, { template: null });
+      this.modalMovableRef = this.movableService.showComponent(DemoModalMovableComponent, { template: null }, { title: 'Test Movable Title', close: 'Close', save: 'Save' });
     }
   }
 

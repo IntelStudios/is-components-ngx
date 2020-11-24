@@ -63,6 +63,7 @@ export interface IsModalMovableInstance {
 
 export interface IsModalMovableControl {
   config: IsModalMovableConfig;
+  initialState?: any;
   hide:() => void;
 }
 
