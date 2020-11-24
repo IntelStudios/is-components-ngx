@@ -538,7 +538,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       minWidth: `${rect.width + 2}px`,
       minHeight: '34px',
       positionStrategy: positionStrategy,
-      scrollStrategy: this.overlay.scrollStrategies.close()
+      scrollStrategy: this.overlay.scrollStrategies.reposition()
     };
     const oprionsOverflowClass = this.optionsOverflowWidth ? ' is-select-overflow-width': '';
     if (!this.optionsOverflowWidth) {
