@@ -17,6 +17,21 @@
     <button class="btn btn-primary" (click)="openDialog2()">Body only</button>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h2>Movable Modal (template)</h2>
+    <button class="btn btn-primary" (click)="openMovableModal(modalContent)">Default</button>
+    <button class="btn btn-primary" (click)="openMovableModal(modalContentLarge)">Body Scroll</button>
+    <button class="btn btn-primary" (click)="closeMovableModal()">Close</button>
+  </div>
+
+  <div class="col-sm-6">
+    <h2>Movable Modal (component)</h2>
+    <button class="btn btn-primary" (click)="openMovableComponentModal()">Default</button>
+  </div>
+</div>
+
 <ng-template #modalContent let-modal="modal">
   Content to be displayed in modal ....<br>
   Content can access to modal properties like title: <strong>{{modal.title}}</strong><br>

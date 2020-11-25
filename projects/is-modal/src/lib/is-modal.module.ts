@@ -6,6 +6,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalModule as ModalLibModule } from 'ng-modal-lib';
 import { IsModalComponent } from './is-modal.component';
 import { IsModalMovableComponent } from './is-modal-movable.component';
+import { IsModalMovableService } from './is-modal-movable.service';
+import { Overlay } from '@angular/cdk/overlay';
 
 @NgModule({
   imports: [
@@ -13,6 +15,7 @@ import { IsModalMovableComponent } from './is-modal-movable.component';
   ],
   declarations: [IsModalComponent, IsModalMovableComponent],
   exports: [IsModalComponent, IsModalMovableComponent],
+  providers: [IsModalMovableService, Overlay],
   entryComponents: [IsModalComponent, IsModalMovableComponent]
 })
 export class IsModalModule { }

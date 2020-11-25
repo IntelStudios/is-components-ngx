@@ -1,0 +1,20 @@
+<app-modal #modal [backdrop]="false" (closeModal)="control.hide()">
+  <ng-container class="app-modal-header">{{control.initialState.title}}</ng-container>
+  <ng-container class="app-modal-body">
+    Content to be displayed in modal ....<br>
+    Content can access to modal properties like title: <strong>{{control.initialState.title}}</strong><br>
+    Content can even close the modal via <button class="btn btn-default" (click)="control.hide()">hide()</button>
+  </ng-container>
+  <ng-container class="app-modal-footer">
+    <div class="buttons">
+      <button class="btn is-btn-left xe-btn-ghost" (click)="control.hide()">
+        <span>{{control.initialState.close}}</span>
+      </button>
+      <div class="divider"></div>
+      <button type="button" class="btn is-btn-right xe-btn-success" (click)="saveClick()">
+        <i class="fa fa-check"></i>
+        <span>{{control.initialState.save}}</span>
+      </button>
+    </div>
+  </ng-container>
+</app-modal>

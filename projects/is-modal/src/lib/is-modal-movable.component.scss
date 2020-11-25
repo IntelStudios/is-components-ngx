@@ -1,7 +1,7 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixins.scss';
 
-:host {
+is-modal-movable {
   app-modal {
 
     &.modal-subgrid {

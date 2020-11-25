@@ -49,3 +49,25 @@ export interface IsModalConfig {
    */
   buttonsRight?: IsModalButtonConfig[];
 }
+
+export interface IsModalMovableConfig extends IsModalConfig {
+  /**
+   * Modal css class, if not set nothing will be added
+   */
+  cssClass?: string;
+}
+
+export interface IsModalMovableInstance {
+  control: IsModalMovableControl;
+}
+
+export interface IsModalMovableControl {
+  config: IsModalMovableConfig;
+  initialState?: any;
+  hide:() => void;
+}
+
+export interface IsModalMovableRef {
+  close:() => void;
+  closed: boolean;
+}
