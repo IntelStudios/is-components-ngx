@@ -18,13 +18,13 @@ export class IsModalMovableService {
 
   showComponent(component: Type<IsModalMovableInstance>, config: IsModalMovableConfig, initialState?: any): IsModalMovableRef {
     const positionStrategy = this.over.position().global()
-      .centerHorizontally()
-      .centerVertically();
+      .left('0px')
+      .top('0px');
 
       const overlayRef: OverlayRef = this.over.create(
       {
-        minWidth: '200px',
-        minHeight: '200px',
+        minWidth: '1px',
+        minHeight: '1px',
         positionStrategy: positionStrategy,
       }
     );
