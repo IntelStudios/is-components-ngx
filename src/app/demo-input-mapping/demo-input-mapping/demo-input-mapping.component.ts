@@ -26,6 +26,12 @@ export class DemoInputMappingComponent implements OnInit {
       'IsComplex': false
     },
     {
+      'Name': 'Surname',
+      'DataType': 2,
+      'AllowNull': false,
+      'IsComplex': false
+    },
+    {
       'Name': 'Directory',
       'DataType': 2,
       'AllowNull': false,
@@ -82,7 +88,8 @@ export class DemoInputMappingComponent implements OnInit {
               'Name',
               'Directory',
               'FullPath',
-              'Extension'
+              'Extension',
+              'Surname'
             ]
           },
           {
@@ -492,6 +499,8 @@ export class DemoInputMappingComponent implements OnInit {
         val.InputSchemaMapping = m;
       }
       this.currentValue = JSON.stringify(val);
+    });
+    this.formControl.statusChanges.subscribe(() => {
       this.validationError = this.formControl.errors === null ? '' : JSON.stringify(this.formControl.errors);
     });
     this.val = this.formControl.value;

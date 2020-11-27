@@ -69,12 +69,19 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
     this.cd.detectChanges();
 
-    if (this.data && this.level === 0) {
-      setTimeout(() => this.service.clearInvalidAssigns(this.data.DataStructure, this.inputFilters));
-    }
-
-    if (this._validatorOnChange) {
-      this._validatorOnChange();
+    if (this.level === 0) {
+      if (this.data) {
+        setTimeout(() => {
+          this.service.clearInvalidAssigns(this.data.DataStructure, this.inputFilters);
+          if (this._validatorOnChange) {
+            this._validatorOnChange();
+          }
+        });
+      } else {
+        if (this._validatorOnChange) {
+          this._validatorOnChange();
+        }
+      }
     }
   }
   get data(): IsInputMappingInput {
@@ -627,6 +634,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   registerOnValidatorChange?(fn: () => void): void {
-    return;  // checked together with value changes
+    this._validatorOnChange = fn;
   }
 }
