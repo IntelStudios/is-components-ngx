@@ -498,11 +498,12 @@ export class DemoInputMappingComponent implements OnInit {
         val.InputSchemaMapping.forEach((v, k) => m[k] = v);
         val.InputSchemaMapping = m;
       }
+      this.validationError = this.formControl.errors === null ? '' : JSON.stringify(this.formControl.errors);
       this.currentValue = JSON.stringify(val);
     });
-    this.formControl.statusChanges.subscribe(() => {
-      this.validationError = this.formControl.errors === null ? '' : JSON.stringify(this.formControl.errors);
-    });
+    // this.formControl.statusChanges.subscribe(() => {
+    //   this.validationError = this.formControl.errors === null ? '' : JSON.stringify(this.formControl.errors);
+    // });
     this.val = this.formControl.value;
   }
 
@@ -530,6 +531,7 @@ export class DemoInputMappingComponent implements OnInit {
     // it will be cached in the valueChanges subscription
     this.currentDataset = this.currentDataset === this.MOCK_DATA_LITTLE ? this.MOCK_DATA : this.MOCK_DATA_LITTLE;
     // this.formControl.setValue(this.val);
+    // setTimeout(() => this.formControl.setValue(null));
   }
 
   deleteDataset() {
@@ -550,5 +552,9 @@ export class DemoInputMappingComponent implements OnInit {
 
   switchFilters() {
     this.filtersAllowed = !this.filtersAllowed;
+  }
+
+  logState() {
+    console.log(this.formControl);
   }
 }

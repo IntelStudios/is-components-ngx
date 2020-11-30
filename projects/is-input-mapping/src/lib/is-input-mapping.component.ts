@@ -245,9 +245,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
         this.inputSchemaMap.delete(data.Item.Name);
         if (!data.hasOwnProperty('EmmitChange') || data.EmmitChange) {
           this.propagateNewValue();
-          if (this._validatorOnChange) {
-            this._validatorOnChange();
-          }
         }
       }
     }));
@@ -452,7 +449,12 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   private propagateNewValue(): void {
     const value: IsInputMappingValue = {InputSchemaFilter: this.inputFilters, InputSchemaMapping: this.inputSchemaMap};
-    this._on_changes(value);
+    if (this.level === 0 && this._validatorOnChange) {
+      this._validatorOnChange();
+      setTimeout(() => this._on_changes(value));
+    } else {
+      this._on_changes(value);
+    }
   }
 
   createNewDataFilter(filterType: string) {
@@ -608,9 +610,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.inputSchemaMap.set(status.Item.Name, status.Path);
       if (!status.hasOwnProperty('EmmitChange') || status.EmmitChange) {
         this.propagateNewValue();
-        if (this._validatorOnChange) {
-          this._validatorOnChange();
-        }
       }
     }
   }
