@@ -14,7 +14,7 @@ export class IsInputMappingService {
   key: path of item that has assigns
   value: list of assigned AssignStatus
    */
-  private assignedCache = {};
+  private assignedCache: { [id: string]: AssignStatus[]} = {};
   private isDisabled = false;
 
   itemAssigned$ = this.assignSource.asObservable();
@@ -100,7 +100,7 @@ export class IsInputMappingService {
     return true;
   }
 
-  clearInvalidAssigns(validStructure: DataStructure, filters: { [id: string]: IsInputSchemaFilter[] }) {
+  clearInvalidAssigns(validStructure: DataStructure, validNames: string[], filters: { [id: string]: IsInputSchemaFilter[] }) {
     const validPaths = [];
 
     function fetchValidPaths(structure: DataStructure) {
@@ -110,9 +110,24 @@ export class IsInputMappingService {
 
     fetchValidPaths(validStructure);
 
-    Object.keys(this.assignedCache).filter(path => validPaths.indexOf(path) === -1).forEach(path => {
-      this.assignedCache[path].forEach(status => this.releaseItem(status));
-    });
+    Object.keys(this.assignedCache)
+      .filter(path => {
+        if (validPaths.indexOf(path) === -1) {
+          // invalid path
+          return true;
+        }
+        for (const status of this.assignedCache[path]) {
+          if (validNames.indexOf(status.Item.Name) === -1) {
+            // invalid item name
+            return true;
+          }
+        }
+
+        return false;
+      })
+      .forEach(path => {
+        this.assignedCache[path].forEach(status => this.releaseItem(status));
+      });
 
     // remove invalid filters and reassign valid filters
     Object.keys(filters).forEach(path => {

@@ -71,8 +71,12 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
     if (this.level === 0) {
       if (this.data) {
+        if (this._unappliedValue) {
+          this.applyValue();
+        }
         setTimeout(() => {
-          this.service.clearInvalidAssigns(this.data.DataStructure, this.inputFilters);
+          this.service.clearInvalidAssigns(this.data.DataStructure, this.data.InputSchema.map((x) => x.Name), this.inputFilters);
+          this.cd.markForCheck();
           if (this._validatorOnChange) {
             this._validatorOnChange();
           }
@@ -132,6 +136,10 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   private _mouseoverSubject = new Subject<boolean>();
   private _validator: Function;
   private _validatorOnChange: Function;
+
+  // if value was set and no data before, then cache the value
+  private _unappliedValue: IsInputMappingValue = null;
+  private _unappliedMappedValue: Map<string, string> = null;
 
   set mouseover(value: boolean) {
     this._mouseoverSubject.next(value);
@@ -484,37 +492,12 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.filterModalHide();
   }
 
-  releaseFilter(filter: IsInputSchemaFilter) {
-    if (this.disabled) {
-      return;
-    }
-    const newFilters = this.filters.filter(f => f !== filter);
-    const newStatus: IsInputSchemaFilterStatus = {
-      Path: this.paintedStructure.Path,
-      Filters: newFilters,
-      EmmitChange: true
-    };
+  applyValue(): void {
+    const value = this._unappliedValue;
+    const mappedValue = this._unappliedMappedValue;
 
-    this.service.applyFilter(newStatus);
-  }
-
-  /*
-   * Control value accessor
-   */
-  writeValue(value: IsInputMappingValue): void {
-    let mappedValue: Map<string, string>;
-    if (value) {
-      if (value.InputSchemaMapping instanceof Map) {
-        mappedValue = new Map(value.InputSchemaMapping);
-      } else {
-        mappedValue = new Map<string, string>();
-        Object.keys(value.InputSchemaMapping).forEach(k => mappedValue.set(k, value.InputSchemaMapping[k]));
-      }
-    }
-
-    if (!this.data) {
-      return;
-    }
+    this._unappliedValue = null;
+    this._unappliedMappedValue = null;
 
     // clear all previous values
     this.service.releaseAllItems();
@@ -571,6 +554,44 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
 
     this.cd.markForCheck();
+  }
+
+  releaseFilter(filter: IsInputSchemaFilter) {
+    if (this.disabled) {
+      return;
+    }
+    const newFilters = this.filters.filter(f => f !== filter);
+    const newStatus: IsInputSchemaFilterStatus = {
+      Path: this.paintedStructure.Path,
+      Filters: newFilters,
+      EmmitChange: true
+    };
+
+    this.service.applyFilter(newStatus);
+  }
+
+  /*
+   * Control value accessor
+   */
+  writeValue(value: IsInputMappingValue): void {
+    let mappedValue: Map<string, string>;
+    if (value) {
+      if (value.InputSchemaMapping instanceof Map) {
+        mappedValue = new Map(value.InputSchemaMapping);
+      } else {
+        mappedValue = new Map<string, string>();
+        Object.keys(value.InputSchemaMapping).forEach(k => mappedValue.set(k, value.InputSchemaMapping[k]));
+      }
+    }
+
+    this._unappliedValue = value;
+    this._unappliedMappedValue = mappedValue;
+
+    if (!this.data) {
+      return;
+    }
+
+    this.applyValue();
   }
 
   /*
