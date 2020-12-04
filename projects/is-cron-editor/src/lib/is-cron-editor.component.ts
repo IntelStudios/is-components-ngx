@@ -15,6 +15,7 @@ import { IsSelectMultipleConfig } from 'is-select';
 
 const cronValidator = cronExpressionValidator();
 
+// noinspection DuplicatedCode
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'is-cron-editor',
@@ -122,25 +123,25 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   cronExpressionControl = new FormControl();
 
   defaultSelectTypeValues = [
-    { ID: 1, Value: 'Every' },
-    { ID: 2, Value: 'Every X' },
-    { ID: 4, Value: 'Every between' },
-    { ID: 3, Value: 'Specific' },
+    { ID: '1', Value: 'Every' },
+    { ID: '2', Value: 'Every X' },
+    { ID: '4', Value: 'Every between' },
+    { ID: '3', Value: 'Specific' },
   ];
 
   daySelectTypeValues = [
-    { ID: 1, Value: 'Every' },
-    { ID: 2, Value: 'Every weekday' },
-    { ID: 3, Value: 'Every X days starting on day of week' },
-    { ID: 4, Value: 'Every X days starting on Yth' },
-    { ID: 5, Value: 'Specific day of week' },
-    { ID: 12, Value: 'Specific day of month' },
-    { ID: 6, Value: 'Any last day of the month' },
-    { ID: 7, Value: 'Last weekday of the month' },
-    { ID: 8, Value: 'Last day of week of the month' },
-    { ID: 9, Value: 'X days before end of the moth' },
-    { ID: 10, Value: 'Nearest weekday to the Xth of the month' },
-    { ID: 11, Value: 'On the Xth day of the month' },
+    { ID: '1', Value: 'Every' },
+    { ID: '2', Value: 'Every weekday' },
+    { ID: '3', Value: 'Every X days starting on day of week' },
+    { ID: '4', Value: 'Every X days starting on Yth' },
+    { ID: '5', Value: 'Specific day of week' },
+    { ID: '12', Value: 'Specific day of month' },
+    { ID: '6', Value: 'Any last day of the month' },
+    { ID: '7', Value: 'Last weekday of the month' },
+    { ID: '8', Value: 'Last day of week of the month' },
+    { ID: '9', Value: 'X days before end of the moth' },
+    { ID: '10', Value: 'Nearest weekday to the Xth of the month' },
+    { ID: '11', Value: 'On the Xth day of the month' },
   ];
 
   values = {
@@ -150,28 +151,28 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     daysOfMonth: [],
 
     daysOfWeek: [
-      { ID: 2, Value: 'Monday' },
-      { ID: 3, Value: 'Tuesday' },
-      { ID: 4, Value: 'Wednesday' },
-      { ID: 5, Value: 'Thursday' },
-      { ID: 6, Value: 'Friday' },
-      { ID: 7, Value: 'Saturday' },
-      { ID: 1, Value: 'Sunday' },
+      { ID: '2', Value: 'Monday' },
+      { ID: '3', Value: 'Tuesday' },
+      { ID: '4', Value: 'Wednesday' },
+      { ID: '5', Value: 'Thursday' },
+      { ID: '6', Value: 'Friday' },
+      { ID: '7', Value: 'Saturday' },
+      { ID: '1', Value: 'Sunday' },
     ],
 
     months: [
-      { ID: 1, Value: 'January' },
-      { ID: 2, Value: 'February' },
-      { ID: 3, Value: 'March' },
-      { ID: 4, Value: 'April' },
-      { ID: 5, Value: 'May' },
-      { ID: 6, Value: 'June' },
-      { ID: 7, Value: 'July' },
-      { ID: 8, Value: 'August' },
-      { ID: 9, Value: 'September' },
-      { ID: 10, Value: 'October' },
-      { ID: 11, Value: 'November' },
-      { ID: 12, Value: 'December' },
+      { ID: '1', Value: 'January' },
+      { ID: '2', Value: 'February' },
+      { ID: '3', Value: 'March' },
+      { ID: '4', Value: 'April' },
+      { ID: '5', Value: 'May' },
+      { ID: '6', Value: 'June' },
+      { ID: '7', Value: 'July' },
+      { ID: '8', Value: 'August' },
+      { ID: '9', Value: 'September' },
+      { ID: '10', Value: 'October' },
+      { ID: '11', Value: 'November' },
+      { ID: '12', Value: 'December' },
     ],
   };
 
@@ -219,6 +220,8 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       this.readState();
     }
 
+    this.formControl.seconds.type.valueChanges.subscribe((x) => console.log('seconds type', x));
+
     this.cronExpressionControl.valueChanges.pipe(debounceTime(500)).subscribe((val) => this.parseState(val));
   }
 
@@ -243,28 +246,28 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   setDefaults() {
     this._ignore_reading = true;
 
-    this.formControl.seconds.type.setValue(1);
+    this.formControl.seconds.type.setValue('1');
     this.formControl.seconds.everyX.everyX.setValue(0);
     this.formControl.seconds.everyX.staringAt.setValue(0);
     this.formControl.seconds.specific.setValue(null);
     this.formControl.seconds.between.start.setValue(0);
     this.formControl.seconds.between.end.setValue(0);
 
-    this.formControl.minutes.type.setValue(1);
+    this.formControl.minutes.type.setValue('1');
     this.formControl.minutes.everyX.everyX.setValue(0);
     this.formControl.minutes.everyX.staringAt.setValue(0);
     this.formControl.minutes.specific.setValue(null);
     this.formControl.minutes.between.start.setValue(0);
     this.formControl.minutes.between.end.setValue(0);
 
-    this.formControl.hours.type.setValue(1);
+    this.formControl.hours.type.setValue('1');
     this.formControl.hours.everyX.everyX.setValue(0);
     this.formControl.hours.everyX.staringAt.setValue(0);
     this.formControl.hours.specific.setValue(null);
     this.formControl.hours.between.start.setValue(0);
     this.formControl.hours.between.end.setValue(0);
 
-    this.formControl.days.type.setValue(1);
+    this.formControl.days.type.setValue('1');
     this.formControl.days.everyX.everyX.setValue(1);
     this.formControl.days.everyX.staringAt.setValue(1);
     this.formControl.days.specificDayOfWeek.setValue(null);
@@ -277,7 +280,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     this.formControl.days.XthDay.x.setValue(1);
     this.formControl.days.XthDay.day.setValue(1);
 
-    this.formControl.months.type.setValue(1);
+    this.formControl.months.type.setValue('1');
     this.formControl.months.everyX.everyX.setValue(1);
     this.formControl.months.everyX.staringAt.setValue(1);
     this.formControl.months.specific.setValue(null);
@@ -285,7 +288,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     this.formControl.months.between.end.setValue(1);
 
     const currentYear = (new Date()).getFullYear();
-    this.formControl.years.type.setValue(1);
+    this.formControl.years.type.setValue('1');
     this.formControl.years.everyX.everyX.setValue(1);
     this.formControl.years.everyX.staringAt.setValue(currentYear);
     this.formControl.years.specific.setValue(null);
@@ -304,83 +307,84 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     }
 
     switch (this.formControl.seconds.type.value) {
-      case 1:
+      case '1':
         this.cronState.seconds = '*';
+        console.log('cron state seconds', this.cronState.seconds);
         break;
-      case 2:
+      case '2':
         this.cronState.seconds = `${this.formControl.seconds.everyX.staringAt.value}/` +
           `${this.formControl.seconds.everyX.everyX.value}`;
         break;
-      case 3:
+      case '3':
         if (this.formControl.seconds.specific.value && this.formControl.seconds.specific.value.length) {
           this.cronState.seconds = this.formControl.seconds.specific.value.sort().map(v => `${v - 1}`).join(',');
         } else {
           this.cronState.seconds = '0';
         }
         break;
-      case 4:
+      case '4':
         this.cronState.seconds = `${this.formControl.seconds.between.start.value}-${this.formControl.seconds.between.end.value}`;
         break;
     }
 
     switch (this.formControl.minutes.type.value) {
-      case 1:
+      case '1':
         this.cronState.minutes = '*';
         break;
-      case 2:
+      case '2':
         this.cronState.minutes = `${this.formControl.minutes.everyX.staringAt.value}/` +
           `${this.formControl.minutes.everyX.everyX.value}`;
         break;
-      case 3:
+      case '3':
         if (this.formControl.minutes.specific.value && this.formControl.minutes.specific.value.length) {
           this.cronState.minutes = this.formControl.minutes.specific.value.sort().map(v => `${v - 1}`).join(',');
         } else {
           this.cronState.minutes = '0';
         }
         break;
-      case 4:
+      case '4':
         this.cronState.minutes = `${this.formControl.minutes.between.start.value}-${this.formControl.minutes.between.end.value}`;
         break;
     }
 
     switch (this.formControl.hours.type.value) {
-      case 1:
+      case '1':
         this.cronState.hours = '*';
         break;
-      case 2:
+      case '2':
         this.cronState.hours = `${this.formControl.hours.everyX.staringAt.value}/` +
           `${this.formControl.hours.everyX.everyX.value}`;
         break;
-      case 3:
+      case '3':
         if (this.formControl.hours.specific.value && this.formControl.hours.specific.value.length) {
           this.cronState.hours = this.formControl.hours.specific.value.sort().map(v => `${v - 1}`).join(',');
         } else {
           this.cronState.hours = '0';
         }
         break;
-      case 4:
+      case '4':
         this.cronState.hours = `${this.formControl.hours.between.start.value}-${this.formControl.hours.between.end.value}`;
         break;
     }
 
     switch (this.formControl.days.type.value) {
-      case 1:
+      case '1':
         this.cronState.dayOfWeek = '*';
         this.cronState.dayOfMonth = '?';
         break;
-      case 2:
+      case '2':
         this.cronState.dayOfMonth = '?';
         this.cronState.dayOfWeek = 'MON-FRI';
         break;
-      case 3:
+      case '3':
         this.cronState.dayOfMonth = '?';
         this.cronState.dayOfWeek = `${this.formControl.days.everyXDay.staringAt.value}/${this.formControl.days.everyXDay.everyX.value}`;
         break;
-      case 4:
+      case '4':
         this.cronState.dayOfWeek = '?';
         this.cronState.dayOfMonth = `${this.formControl.days.everyX.staringAt.value}/${this.formControl.days.everyX.everyX.value}`;
         break;
-      case 5:
+      case '5':
         const mapIDtoShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
         this.cronState.dayOfMonth = '?';
         if (this.formControl.days.specificDayOfWeek.value && this.formControl.days.specificDayOfWeek.value.length > 0) {
@@ -389,7 +393,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
           this.cronState.dayOfWeek = mapIDtoShort[0];
         }
         break;
-      case 12:
+      case '12':
         this.cronState.dayOfWeek = '?';
         if (this.formControl.days.specificDayOfMonth.value && this.formControl.days.specificDayOfMonth.value.length) {
           this.cronState.dayOfMonth = this.formControl.days.specificDayOfMonth.value.sort().map(v => `${v}`).join(',');
@@ -397,41 +401,41 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
           this.cronState.dayOfMonth = '1';
         }
         break;
-      case 6:
+      case '6':
         this.cronState.dayOfWeek = '?';
         this.cronState.dayOfMonth = 'L';
         break;
-      case 7:
+      case '7':
         this.cronState.dayOfWeek = '?';
         this.cronState.dayOfMonth = 'LW';
         break;
-      case 8:
+      case '8':
         this.cronState.dayOfWeek = `${this.formControl.days.lastDayOfWeekOfTheMonth.value}L`;
         this.cronState.dayOfMonth = '?';
         break;
-      case 9:
+      case '9':
         this.cronState.dayOfWeek = '?';
         this.cronState.dayOfMonth = `L-${this.formControl.days.XBeforeEnd.value}`;
         break;
-      case 10:
+      case '10':
         this.cronState.dayOfWeek = '?';
         this.cronState.dayOfMonth = `${this.formControl.days.nearestWeekdayTo.value}W`;
         break;
-      case 11:
+      case '11':
         this.cronState.dayOfWeek = `${this.formControl.days.XthDay.day.value}#${this.formControl.days.XthDay.x.value}`;
         this.cronState.dayOfMonth = '?';
         break;
     }
 
     switch (this.formControl.months.type.value) {
-      case 1:
+      case '1':
         this.cronState.months = '*';
         break;
-      case 2:
+      case '2':
         this.cronState.months = `${this.formControl.months.everyX.staringAt.value}/` +
           `${this.formControl.months.everyX.everyX.value}`;
         break;
-      case 3:
+      case '3':
         const mapIDtoShort = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
         if (this.formControl.months.specific.value && this.formControl.months.specific.value.length > 0) {
           this.cronState.months = this.formControl.months.specific.value.sort().map(m => mapIDtoShort[m.ID - 1]).join(',');
@@ -439,27 +443,27 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
           this.cronState.months = mapIDtoShort[0];
         }
         break;
-      case 4:
+      case '4':
         this.cronState.months = `${this.formControl.months.between.start.value}-${this.formControl.months.between.end.value}`;
         break;
     }
 
     switch (this.formControl.years.type.value) {
-      case 1:
+      case '1':
         this.cronState.years = '*';
         break;
-      case 2:
+      case '2':
         this.cronState.years = `${this.formControl.years.everyX.staringAt.value}/` +
           `${this.formControl.years.everyX.everyX.value}`;
         break;
-      case 3:
+      case '3':
         if (this.formControl.years.specific.value && this.formControl.years.specific.value.length) {
           this.cronState.years = this.formControl.years.specific.value.sort().map(v => `${v}`).join(',');
         } else {
           this.cronState.years = `${(new Date()).getFullYear()}`;
         }
         break;
-      case 4:
+      case '4':
         this.cronState.years = `${this.formControl.years.between.start.value}-${this.formControl.years.between.end.value}`;
         break;
     }
@@ -496,116 +500,116 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
       // parse seconds
       if (this.cronState.seconds === '*') {
-        this.formControl.seconds.type.setValue(1);
+        this.formControl.seconds.type.setValue('1');
       } else if (this.cronState.seconds.indexOf('/') > -1) {
         const split = mapNumbers(this.cronState.seconds.split('/'));
 
         this.formControl.seconds.everyX.everyX.setValue(split[1]);
         this.formControl.seconds.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.seconds.type.setValue(2);
+        this.formControl.seconds.type.setValue('2');
       } else if (this.cronState.seconds.indexOf('-') > -1) {
 
         const split = mapNumbers(this.cronState.seconds.split('-'));
         this.formControl.seconds.between.start.setValue(split[0]);
         this.formControl.seconds.between.end.setValue(split[1]);
 
-        this.formControl.seconds.type.setValue(4);
+        this.formControl.seconds.type.setValue('4');
       } else {
-        this.formControl.seconds.type.setValue(3);
+        this.formControl.seconds.type.setValue('3');
         this.formControl.seconds.specific.setValue(mapNumbers(this.cronState.seconds.split(',')).map(n => n + 1));
       }
 
       // parse minutes
       if (this.cronState.minutes === '*') {
-        this.formControl.minutes.type.setValue(1);
+        this.formControl.minutes.type.setValue('1');
       } else if (this.cronState.minutes.indexOf('/') > -1) {
         const split = mapNumbers(this.cronState.minutes.split('/'));
 
         this.formControl.minutes.everyX.everyX.setValue(split[1]);
         this.formControl.minutes.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.minutes.type.setValue(2);
+        this.formControl.minutes.type.setValue('2');
       } else if (this.cronState.minutes.indexOf('-') > -1) {
 
         const split = mapNumbers(this.cronState.minutes.split('-'));
         this.formControl.minutes.between.start.setValue(split[0]);
         this.formControl.minutes.between.end.setValue(split[1]);
 
-        this.formControl.minutes.type.setValue(4);
+        this.formControl.minutes.type.setValue('4');
       } else {
         this.formControl.minutes.specific.setValue(mapNumbers(this.cronState.minutes.split(',')).map(n => n + 1));
 
-        this.formControl.minutes.type.setValue(3);
+        this.formControl.minutes.type.setValue('3');
       }
 
       // parse hours
       if (this.cronState.hours === '*') {
-        this.formControl.hours.type.setValue(1);
+        this.formControl.hours.type.setValue('1');
       } else if (this.cronState.hours.indexOf('/') > -1) {
         const split = mapNumbers(this.cronState.hours.split('/'));
 
         this.formControl.hours.everyX.everyX.setValue(split[1]);
         this.formControl.hours.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.hours.type.setValue(2);
+        this.formControl.hours.type.setValue('2');
       } else if (this.cronState.hours.indexOf('-') > -1) {
 
         const split = mapNumbers(this.cronState.hours.split('-'));
         this.formControl.hours.between.start.setValue(split[0]);
         this.formControl.hours.between.end.setValue(split[1]);
 
-        this.formControl.hours.type.setValue(4);
+        this.formControl.hours.type.setValue('4');
       } else {
         this.formControl.hours.specific.setValue(mapNumbers(this.cronState.hours.split(',')).map(n => n + 1));
-        this.formControl.hours.type.setValue(3);
+        this.formControl.hours.type.setValue('3');
       }
 
       // parse days
       if (this.cronState.dayOfWeek === '*' && this.cronState.dayOfMonth === '?') {
-        this.formControl.days.type.setValue(1);
+        this.formControl.days.type.setValue('1');
       } else if (this.cronState.dayOfWeek === 'MON-FRI' && this.cronState.dayOfMonth === '?') {
-        this.formControl.days.type.setValue(2);
+        this.formControl.days.type.setValue('2');
       } else if (this.cronState.dayOfWeek.indexOf('/') > -1) {
         const split = mapNumbers(this.cronState.dayOfWeek.split('/'));
 
         this.formControl.days.everyXDay.everyX.setValue(split[1]);
         this.formControl.days.everyXDay.staringAt.setValue(split[0]);
 
-        this.formControl.days.type.setValue(3);
+        this.formControl.days.type.setValue('3');
       } else if (this.cronState.dayOfMonth.indexOf('/') > -1) {
         const split = mapNumbers(this.cronState.dayOfMonth.split('/'));
 
         this.formControl.days.everyX.everyX.setValue(split[1]);
         this.formControl.days.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.days.type.setValue(4);
+        this.formControl.days.type.setValue('4');
       } else if (this.cronState.dayOfMonth === 'L') {
-        this.formControl.days.type.setValue(6);
+        this.formControl.days.type.setValue('6');
       } else if (this.cronState.dayOfMonth === 'LW') {
-        this.formControl.days.type.setValue(7);
+        this.formControl.days.type.setValue('7');
       } else if (this.cronState.dayOfWeek.endsWith('L')) {
         const dayNumber = mapNumbers([this.cronState.dayOfWeek.charAt(0)])[0];
 
         this.formControl.days.lastDayOfWeekOfTheMonth.setValue(dayNumber);
-        this.formControl.days.type.setValue(8);
+        this.formControl.days.type.setValue('8');
       } else if (this.cronState.dayOfMonth.startsWith('L-')) {
         const dayOffset = mapNumbers([this.cronState.dayOfMonth.substr(2)]);
 
         this.formControl.days.XBeforeEnd.setValue(dayOffset);
-        this.formControl.days.type.setValue(9);
+        this.formControl.days.type.setValue('9');
       } else if (this.cronState.dayOfMonth.endsWith('W')) {
         const day = mapNumbers([this.cronState.dayOfMonth.substr(0, this.cronState.dayOfMonth.length - 1)]);
 
         this.formControl.days.nearestWeekdayTo.setValue(day);
-        this.formControl.days.type.setValue(10);
+        this.formControl.days.type.setValue('10');
       } else if (this.cronState.dayOfWeek.indexOf('#') > -1) {
         const split = mapNumbers(this.cronState.dayOfWeek.split('#'));
 
         this.formControl.days.XthDay.day.setValue(split[0]);
         this.formControl.days.XthDay.x.setValue(split[1]);
 
-        this.formControl.days.type.setValue(11);
+        this.formControl.days.type.setValue('11');
       } else {
         if (this.cronState.dayOfWeek.length > this.cronState.dayOfMonth.length) {
           const mapIDtoShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -623,39 +627,39 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
               throw Error('this day does not exist');
             }
             for (const dayOption of this.values.daysOfWeek) {
-              if (dayOption.ID === dayIndex + 1) {
+              if (dayOption.ID === `${dayIndex + 1}`) {
                 values.push(dayOption);
                 break;
               }
             }
           }
 
-          this.formControl.days.type.setValue(5);
+          this.formControl.days.type.setValue('5');
           this.formControl.days.specificDayOfWeek.setValue(values);
         } else {
           this.formControl.days.specificDayOfMonth.setValue(mapNumbers(this.cronState.dayOfMonth.split(',')));
 
-          this.formControl.days.type.setValue(12);
+          this.formControl.days.type.setValue('12');
         }
       }
 
       // parse month
       if (this.cronState.months === '*') {
-        this.formControl.months.type.setValue(1);
+        this.formControl.months.type.setValue('1');
       } else if (this.cronState.months.indexOf('/') > -1) {
         const split = mapNumbers(this.cronState.months.split('/'));
 
         this.formControl.months.everyX.everyX.setValue(split[1]);
         this.formControl.months.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.months.type.setValue(2);
+        this.formControl.months.type.setValue('2');
       } else if (this.cronState.months.indexOf('-') > -1) {
 
         const split = mapNumbers(this.cronState.months.split('-'));
         this.formControl.months.between.start.setValue(split[0]);
         this.formControl.months.between.end.setValue(split[1]);
 
-        this.formControl.months.type.setValue(4);
+        this.formControl.months.type.setValue('4');
       } else {
         const mapIDtoShort = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
         const values = [];
@@ -671,38 +675,38 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
             throw Error('this month does not exist');
           }
           for (const monthOption of this.values.months) {
-            if (monthOption.ID === monthIndex + 1) {
+            if (monthOption.ID === `${monthIndex + 1}`) {
               values.push(monthOption);
               break;
             }
           }
         }
 
-        this.formControl.months.type.setValue(3);
+        this.formControl.months.type.setValue('3');
         this.formControl.months.specific.setValue(values);
       }
 
       // parse years
       if (this.cronState.years === null ||  this.cronState.years === '' || this.cronState.years === '*') {
-        this.formControl.years.type.setValue(1);
+        this.formControl.years.type.setValue('1');
       } else if (this.cronState.years.indexOf('/') > -1) {
         const split = mapNumbers(this.cronState.years.split('/'));
 
         this.formControl.years.everyX.everyX.setValue(split[1]);
         this.formControl.years.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.years.type.setValue(2);
+        this.formControl.years.type.setValue('2');
       } else if (this.cronState.years.indexOf('-') > -1) {
 
         const split = mapNumbers(this.cronState.years.split('-'));
         this.formControl.years.between.start.setValue(split[0]);
         this.formControl.years.between.end.setValue(split[1]);
 
-        this.formControl.years.type.setValue(4);
+        this.formControl.years.type.setValue('4');
       } else {
         this.formControl.years.specific.setValue(mapNumbers(this.cronState.years.split(',')));
 
-        this.formControl.years.type.setValue(3);
+        this.formControl.years.type.setValue('3');
       }
     } catch (e) {
       console.error(e.message);
