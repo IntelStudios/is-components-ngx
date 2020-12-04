@@ -6,7 +6,7 @@
     <ng-template TabContent>
       <is-select [formControl]="formControl.seconds.type" [items]="defaultSelectTypeValues"
                  [isSearch]="false"></is-select>
-      <div class="sub-content" *ngIf="formControl.seconds.type.value === 2">
+      <div class="sub-content" *ngIf="formControl.seconds.type.value === '2'">
         <label>
           Every
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.everyX.everyX"
@@ -16,14 +16,14 @@
                  min="0" max="59">
         </label>
       </div>
-      <div class="sub-content" *ngIf="formControl.seconds.type.value === 3">
+      <div class="sub-content" *ngIf="formControl.seconds.type.value === '3'">
         <!--suppress AngularInvalidExpressionResultType -->
         <is-select [multipleConfig]="isSelectMultiple" placeholder="Select seconds at which will this expression run"
                          [formControl]="formControl.seconds.specific"
                          [items]="values.minutes"
         ></is-select>
       </div>
-      <div class="sub-content" *ngIf="formControl.seconds.type.value === 4">
+      <div class="sub-content" *ngIf="formControl.seconds.type.value === '4'">
         <label>
           Run every second between
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.between.start"
@@ -39,7 +39,7 @@
     <ng-template TabContent>
       <is-select [formControl]="formControl.minutes.type" [items]="defaultSelectTypeValues"
                  [isSearch]="false"></is-select>
-      <div class="sub-content" *ngIf="formControl.minutes.type.value === 2">
+      <div class="sub-content" *ngIf="formControl.minutes.type.value === '2'">
         <label>
           Every
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.everyX.everyX"
@@ -49,14 +49,14 @@
                  min="0" max="59">
         </label>
       </div>
-      <div class="sub-content" *ngIf="formControl.minutes.type.value === 3">
+      <div class="sub-content" *ngIf="formControl.minutes.type.value === '3'">
         <!--suppress AngularInvalidExpressionResultType -->
         <is-select [multipleConfig]="isSelectMultiple" placeholder="Select minutes at which will this expression run"
                          [formControl]="formControl.minutes.specific"
                          [items]="values.minutes"
         ></is-select>
       </div>
-      <div class="sub-content" *ngIf="formControl.minutes.type.value === 4">
+      <div class="sub-content" *ngIf="formControl.minutes.type.value === '4'">
         <label>
           Run every minute between
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.between.start"
@@ -72,7 +72,7 @@
     <ng-template TabContent>
       <is-select [formControl]="formControl.hours.type" [items]="defaultSelectTypeValues"
                  [isSearch]="false"></is-select>
-      <div class="sub-content" *ngIf="formControl.hours.type.value === 2">
+      <div class="sub-content" *ngIf="formControl.hours.type.value === '2'">
         <label>
           Every
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.hours.everyX.everyX"
@@ -82,14 +82,14 @@
                  min="0" max="23">
         </label>
       </div>
-      <div class="sub-content" *ngIf="formControl.hours.type.value === 3">
+      <div class="sub-content" *ngIf="formControl.hours.type.value === '3'">
         <!--suppress AngularInvalidExpressionResultType -->
         <is-select [multipleConfig]="isSelectMultiple" placeholder="Select hours at which will this expression run"
                          [formControl]="formControl.hours.specific"
                          [items]="values.hours"
         ></is-select>
       </div>
-      <div class="sub-content" *ngIf="formControl.hours.type.value === 4">
+      <div class="sub-content" *ngIf="formControl.hours.type.value === '4'">
         <label>
           Run every hour between
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.hours.between.start"
@@ -104,7 +104,7 @@
   <is-tab title="Days">
     <ng-template TabContent>
       <is-select [formControl]="formControl.days.type" [items]="daySelectTypeValues" [isSearch]="false"></is-select>
-      <div class="sub-content" *ngIf="formControl.days.type.value === 3">
+      <div class="sub-content" *ngIf="formControl.days.type.value === '3'">
         <label>
           Every
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.everyXDay.everyX"
@@ -113,7 +113,7 @@
         </label>
         <is-select [items]="values.daysOfWeek" [formControl]="formControl.days.everyXDay.staringAt"></is-select>
       </div>
-      <div class="sub-content" *ngIf="formControl.days.type.value === 4">
+      <div class="sub-content" *ngIf="formControl.days.type.value === '4'">
         <label>
           Every
           <input class="form-control two-digit-number" type="number" [formControl]="formControl.days.everyX.everyX"
@@ -123,7 +123,7 @@
                  min="1" max="31">th
         </label>
       </div>
-      <div class="sub-content" *ngIf="formControl.days.type.value === 5">
+      <div class="sub-content" *ngIf="formControl.days.type.value === '5'">
         <!--suppress AngularInvalidExpressionResultType -->
         <is-select [multipleConfig]="isSelectMultiple" placeholder="Select days at which will this expression run"
                          [formControl]="formControl.days.specificDayOfWeek"
@@ -131,32 +131,32 @@
                          [useModels]="true"
         ></is-select>
       </div>
-      <div class="sub-content" *ngIf="formControl.days.type.value === 12">
+      <div class="sub-content" *ngIf="formControl.days.type.value === '12'">
         <!--suppress AngularInvalidExpressionResultType -->
         <is-select [multipleConfig]="isSelectMultiple" placeholder="Select days at which will this expression run"
                          [formControl]="formControl.days.specificDayOfMonth"
                          [items]="values.daysOfMonth"
         ></is-select>
       </div>
-      <div class="sub-content" *ngIf="formControl.days.type.value === 8">
+      <div class="sub-content" *ngIf="formControl.days.type.value === '8'">
         On the last
         <is-select [items]="values.daysOfWeek" [formControl]="formControl.days.lastDayOfWeekOfTheMonth"></is-select>
         of the month
       </div>
-      <div class="sub-content" *ngIf="formControl.days.type.value === 9">
+      <div class="sub-content" *ngIf="formControl.days.type.value === '9'">
         <label>Run
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.XBeforeEnd"
                  min="1" max="31">
           days before the end of the month
         </label>
       </div>
-      <div class="sub-content" *ngIf="formControl.days.type.value === 10">
+      <div class="sub-content" *ngIf="formControl.days.type.value === '10'">
         <label>On nearest weekday to the
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.nearestWeekdayTo"
                  min="1" max="31">th
         </label>
       </div>
-      <div class="sub-content" *ngIf="formControl.days.type.value === 11">
+      <div class="sub-content" *ngIf="formControl.days.type.value === '11'">
         <label>
           Run on
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.XthDay.x"
@@ -170,7 +170,7 @@
     <ng-template TabContent>
       <is-select [formControl]="formControl.months.type" [items]="defaultSelectTypeValues"
                  [isSearch]="false"></is-select>
-      <div class="sub-content" *ngIf="formControl.months.type.value === 2">
+      <div class="sub-content" *ngIf="formControl.months.type.value === '2'">
         <label>
           Every
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.months.everyX.everyX"
@@ -179,7 +179,7 @@
         </label>
         <is-select [items]="values.months" [formControl]="formControl.months.everyX.staringAt"></is-select>
       </div>
-      <div class="sub-content" *ngIf="formControl.months.type.value === 3">
+      <div class="sub-content" *ngIf="formControl.months.type.value === '3'">
         <!--suppress AngularInvalidExpressionResultType -->
         <is-select [multipleConfig]="isSelectMultiple" placeholder="Select months at which will this expression run"
                          [formControl]="formControl.months.specific"
@@ -187,7 +187,7 @@
                          [useModels]="true"
         ></is-select>
       </div>
-      <div class="sub-content" *ngIf="formControl.months.type.value === 4">
+      <div class="sub-content" *ngIf="formControl.months.type.value === '4'">
         <label>
           Run every month between
         </label>
@@ -202,7 +202,7 @@
   <is-tab title="Year">
     <ng-template TabContent>
       <is-select [formControl]="formControl.years.type" [items]="defaultSelectTypeValues"></is-select>
-      <div class="sub-content" *ngIf="formControl.years.type.value === 2">
+      <div class="sub-content" *ngIf="formControl.years.type.value === '2'">
         <label>
           Every
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.years.everyX.everyX"
@@ -212,14 +212,14 @@
                  min="2016" max="2099">
         </label>
       </div>
-      <div class="sub-content" *ngIf="formControl.years.type.value === 3">
+      <div class="sub-content" *ngIf="formControl.years.type.value === '3'">
         <!--suppress AngularInvalidExpressionResultType -->
         <is-select [multipleConfig]="isSelectMultiple" placeholder="Select years at which will this expression run"
                          [formControl]="formControl.years.specific"
                          [items]="values.years"
         ></is-select>
       </div>
-      <div class="sub-content" *ngIf="formControl.years.type.value === 4">
+      <div class="sub-content" *ngIf="formControl.years.type.value === '4'">
         <label>
           Run every year between
           <input class="form-control is-input four-digit-number" type="number" [formControl]="formControl.years.between.start"
