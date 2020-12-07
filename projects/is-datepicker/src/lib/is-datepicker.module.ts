@@ -1,17 +1,19 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IsDatepickerComponent } from './is-datepicker/is-datepicker.component';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { ReactiveFormsModule } from '@angular/forms';
-import { IsDatepickerPopupComponent } from './is-datepicker-popup/is-datepicker-popup.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgxMaskModule } from 'ngx-mask';
+
 import { IsDatepickerInlineComponent } from './is-datepicker-inline/is-datepicker-inline.component';
+import { IsDatepickerPopupComponent } from './is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from './is-datepicker.interfaces';
+import { IsDatepickerComponent } from './is-datepicker/is-datepicker.component';
 
 @NgModule({
   imports: [
-    CommonModule, BsDatepickerModule, ReactiveFormsModule, OverlayModule, ScrollingModule
+    CommonModule, BsDatepickerModule, ReactiveFormsModule, OverlayModule, ScrollingModule, NgxMaskModule.forRoot(),
   ],
   declarations: [IsDatepickerComponent, IsDatepickerPopupComponent, IsDatepickerInlineComponent],
   exports: [IsDatepickerComponent, IsDatepickerInlineComponent],

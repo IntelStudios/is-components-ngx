@@ -134,22 +134,26 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   ngOnInit(): void {
-    const dateValidator = (control: AbstractControl) => {
-      const invalid = { 'dateInvalid': true };
-      const value = control.value;
+    // validator below is solved with ngx-mask
+    // const dateValidator = (control: AbstractControl) => {
+    //   const invalid = { 'dateInvalid': true };
+    //   const value = control.value;
 
-      if (value && typeof value === 'string') {
-        const match = value.match(/^((0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-[12]\d{3})$/);
+    //   if (value && typeof value === 'string') {
+    //     const match = value.match(/^((0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-[12]\d{3})$/);
 
-        if (!match) {
-          return invalid;
-        }
-      }
+    //     if (!match) {
+    //       return invalid;
+    //     }
+    //   }
 
-      return null;
-    };
+    //   return null;
+    // };
 
-    this.dateControl.setValidators(dateValidator);
+    // this.dateControl.setValidators(dateValidator);
+
+    // after ngx-mask initialization
+    setTimeout(() => this.changeDetector.markForCheck());
   }
 
   ngOnDestroy() {

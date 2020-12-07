@@ -3,6 +3,8 @@
     class="datepicker-input datepicker-value form-control align-{{alignment}}"
     [value]="dateValue | date:viewFormat"
     [formControl]="dateControl"
+    [mask]="'00-00-0000'"
+    [showMaskTyped]="true"
     (keyup)="onInputValueChange(input.value)"
     (click)="closePopup()"
     [class.open]="isOpen"
