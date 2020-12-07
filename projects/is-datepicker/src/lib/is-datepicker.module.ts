@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgxMaskModule } from 'ngx-mask';
 
 import { IsDatepickerInlineComponent } from './is-datepicker-inline/is-datepicker-inline.component';
 import { IsDatepickerPopupComponent } from './is-datepicker-popup/is-datepicker-popup.component';
@@ -11,7 +12,7 @@ import { IsDatepickerComponent } from './is-datepicker/is-datepicker.component';
 
 @NgModule({
   imports: [
-    CommonModule, BsDatepickerModule, FormsModule, OverlayModule, ScrollingModule, ReactiveFormsModule,
+    CommonModule, BsDatepickerModule, FormsModule, OverlayModule, ScrollingModule, ReactiveFormsModule, NgxMaskModule.forRoot(),
   ],
   declarations: [IsDatepickerComponent, IsDatepickerPopupComponent, IsDatepickerInlineComponent],
   exports: [IsDatepickerComponent, IsDatepickerInlineComponent],

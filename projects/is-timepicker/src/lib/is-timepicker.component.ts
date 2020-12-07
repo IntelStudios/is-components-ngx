@@ -92,22 +92,22 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const timeValidator = (control: AbstractControl) => {
-      const invalid = { 'timeInvalid': true };
-      const value = control.value;
+    // const timeValidator = (control: AbstractControl) => {
+    //   const invalid = { 'timeInvalid': true };
+    //   const value = control.value;
 
-      if (value && typeof value === 'string') {
-        const match = value.match(/^(?:(?:([01]?\d|2[0-3]):)([0-5]\d):)([0-5]\d)$/);
+    //   if (value && typeof value === 'string') {
+    //     const match = value.match(/^(?:(?:([01]?\d|2[0-3]):)([0-5]\d):)([0-5]\d)$/);
 
-        if (!match) {
-          return invalid;
-        }
-      }
+    //     if (!match) {
+    //       return invalid;
+    //     }
+    //   }
 
-      return null;
-    };
+    //   return null;
+    // };
 
-    this.timeControl.setValidators(timeValidator);
+    // this.timeControl.setValidators(timeValidator);
   }
 
   ngOnDestroy() {

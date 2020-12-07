@@ -23,7 +23,6 @@ import {
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
-  Validators,
 } from '@angular/forms';
 import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -117,22 +116,25 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   ngOnInit(): void {
-    const dateValidator = (control: AbstractControl) => {
-      const invalid = { 'dateInvalid': true };
-      const value = control.value;
+    // const dateValidator = (control: AbstractControl) => {
+    //   const invalid = { 'dateInvalid': true };
+    //   const value = control.value;
 
-      if (value && typeof value === 'string') {
-        const match = value.match(/^((0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-[12]\d{3})$/);
+    //   if (value && typeof value === 'string') {
+    //     const match = value.match(/^((0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-[12]\d{3})$/);
 
-        if (!match) {
-          return invalid;
-        }
-      }
+    //     if (!match) {
+    //       return invalid;
+    //     }
+    //   }
 
-      return null;
-    };
+    //   return null;
+    // };
 
-    this.dateControl.setValidators([dateValidator, Validators.pattern(new RegExp('^[0-9-]*$'))]);
+    //this.dateControl.setValidators([dateValidator, Validators.pattern(new RegExp('^[0-9-]*$'))]);
+
+    // after ngx-mask initialization
+    setTimeout(() => this.changeDetector.markForCheck());
   }
 
   ngOnDestroy() {

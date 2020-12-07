@@ -3,6 +3,8 @@
     class="timepicker-input timepicker-value form-control align-{{alignment}}"
     [value]="viewValue"
     [formControl]="timeControl"
+    [mask]="'00:00:00'"
+    [showMaskTyped]="true"
     (keyup)="onInputValueChange(input.value);"
     (click)="hidePicker()"
     [class.active]="pickerOpened"
