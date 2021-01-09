@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, AfterViewInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, AfterViewInit, TemplateRef, ViewChild, Optional } from '@angular/core';
 
 import { IOptionsBehavior, ChildrenOptionsBehavior, GenericOptionsBehavior, OptionsBehavior } from '../options-behavior';
 import { IsSelectOptionDirective } from '../is-select.directives';
 import { SelectItem } from '../select-item';
 import { createFilterRegexp } from 'is-text-utils';
-import { IsSelectMultipleConfig } from '../is-select.interfaces';
+import { configToken, IsSelectConfig, IsSelectMultipleConfig } from '../is-select.interfaces';
 import { IsSelectOptionsService } from '../is-select.options.service';
+import { Inject } from '@angular/core';
 
 export interface ISelectOptionsControl {
   active: SelectItem | SelectItem[];
@@ -79,7 +80,12 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     return this.value as SelectItem[];
   }
 
-  constructor(private changeDetector: ChangeDetectorRef, public element: ElementRef, private optionsService: IsSelectOptionsService) { }
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    public element: ElementRef,
+    private optionsService: IsSelectOptionsService,
+    @Optional() @Inject(configToken) private selectConfig: IsSelectConfig
+  ) { }
 
 
   ngOnInit() {
@@ -236,7 +242,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.behavior.filter(createFilterRegexp(this.searchFilter));
   }
 
-  inputEvent(e: any, isUpMode: boolean = false): void {
+  inputEvent(e: KeyboardEvent, isUpMode: boolean = false): void {
     // tab
     if (e.keyCode === 9) {
       return;
@@ -297,10 +303,36 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     // enter
     if (!isUpMode && e.keyCode === 13) {
       e.preventDefault();
+      if (this.multiple && e.ctrlKey) {
+        if (this.control.options.some(x => x.Checked && x.ID === this.activeOption.ID)) {
+          return;
+        }
+        this.control.onItemSelected(this.activeOption);
+        const input = (e.target as HTMLInputElement);
+        input.value = '';
+        input.dispatchEvent(new Event('input'));
+        return;
+      }
       this.control.onItemSelected(this.activeOption);
       this.control.onClosed();
       return;
     }
+  }
+
+  onPaste($event: ClipboardEvent): boolean {
+    console.log($event, this.selectConfig);
+    if (!this.multiple || !this.selectConfig?.attemptToProcessPasteMultipleSearch) {
+      return true;
+    }
+    $event.preventDefault();
+    $event.stopPropagation();
+    const text = $event.clipboardData.getData('text/plain');
+    // this regex could be configurable
+    const ids = Array.from(new Set([...text.split(/\s+|[,;]/g)]));
+    const opts = this.control.options.filter(x => ids.includes(x.ID) && !x.Checked);
+    opts.forEach((opt) => {
+      this.control.onItemSelected(opt);
+    });
   }
 
   sanitize(html: string): any {

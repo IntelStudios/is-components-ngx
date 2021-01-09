@@ -1,7 +1,7 @@
 <div class="ui-select-choices-container" [class.multiple]="multiple" [class.pull-right]="alignItems === 'right'" role="menu">
   <div class="ui-select-search" [class.hidden-input]="!isSearch">
     <input type="text" autocomplete="false" tabindex="-1" [style.text-align]="alignment"
-      (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)"
+      (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" (paste)="onPaste($event)"
       class="form-control" [placeholder]="searchPlaceholder">
     <i class="fa fa-search"></i>
   </div>

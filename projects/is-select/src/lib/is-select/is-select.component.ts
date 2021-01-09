@@ -33,6 +33,7 @@ export const IS_SELECT_VALUE_ACCESSOR: any = {
 };
 
 const DEFALULT_CONFIG: IsSelectConfig = {
+  attemptToProcessPasteMultipleSearch: false,
   defaultModelConfig: {
     idProp: 'ID',
     textProp: 'Value',

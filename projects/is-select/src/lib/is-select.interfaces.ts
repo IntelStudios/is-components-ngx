@@ -50,6 +50,10 @@ export interface IsSelectConfig {
    * default for [allowClear] input (allow user to clear selection)
    */
   allowClear?: boolean;
+  /**
+   * Attempt to parse pasted text for available ids for immediate selection in multiple search input box
+   */
+  attemptToProcessPasteMultipleSearch?: boolean,
 }
 
 export const configToken = new InjectionToken<IsSelectConfig>('IsSelectConfig');
