@@ -303,17 +303,16 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     // enter
     if (!isUpMode && e.keyCode === 13) {
       e.preventDefault();
+      if (this.control.options.some(x => x.Checked && x.ID === this.activeOption.ID)) {
+        return;
+      }
+      this.control.onItemSelected(this.activeOption);
       if (this.multiple && e.ctrlKey) {
-        if (this.control.options.some(x => x.Checked && x.ID === this.activeOption.ID)) {
-          return;
-        }
-        this.control.onItemSelected(this.activeOption);
         const input = (e.target as HTMLInputElement);
         input.value = '';
         input.dispatchEvent(new Event('input'));
         return;
       }
-      this.control.onItemSelected(this.activeOption);
       this.control.onClosed();
       return;
     }
