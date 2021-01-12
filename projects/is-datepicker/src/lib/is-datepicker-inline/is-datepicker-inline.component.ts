@@ -16,7 +16,7 @@ import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
-import { DATEPICKER_CONFIG_DEFAULT, DatepickerPopupControl } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { defaultDatePickerConfig, DatepickerPopupControl } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { DATE_FORMAT } from '../is-datepicker/is-datepicker.component';
 
 const moment = m;
@@ -62,7 +62,7 @@ export class IsDatepickerInlineComponent implements OnDestroy, ControlValueAcces
    * BsDatepicker config object to setup wrapped BsDatepickerInline component
    */
   @Input()
-  config: Partial<BsDatepickerConfig> = DATEPICKER_CONFIG_DEFAULT;
+  config: Partial<BsDatepickerConfig> = defaultDatePickerConfig();
 
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();

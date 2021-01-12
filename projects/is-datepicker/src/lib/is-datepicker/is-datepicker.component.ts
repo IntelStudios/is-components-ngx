@@ -30,7 +30,7 @@ import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
-import { DATEPICKER_CONFIG_DEFAULT, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 
 const moment = m;
@@ -72,7 +72,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
  * BsDatepicker config object to setup wrapped BsDatepickerInline component
  */
   @Input()
-  config: Partial<BsDatepickerConfig> = DATEPICKER_CONFIG_DEFAULT;
+  config: Partial<BsDatepickerConfig> = defaultDatePickerConfig();
   /**
    * when stringMode is enabled, expected and emitted date must be in Xeelo date format (DD-MM-YYYY)
    */
