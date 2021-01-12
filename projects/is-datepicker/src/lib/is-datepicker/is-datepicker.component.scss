@@ -88,27 +88,31 @@ is-datepicker {
       margin-left: #{$is-general-padding-small};
       color: $is-control-handle-color;
     }
-  }
 
-  .datepicker-icon {
-    position: absolute;
-    right: 8px;
-    display: flex;
-    // magic numbers dont work well with variable height inputs, position like so
-    top: 50%;
-    transform: translateY(-50%);
+    .datepicker-icon {
+      position: absolute;
+      right: 8px;
+      display: flex;
+      // magic numbers dont work well with variable height inputs, position like so
+      top: 50%;
+      transform: translateY(-50%);
 
-    margin-left: #{$is-general-padding-small};
-    z-index: 998;
-    cursor: pointer;
+      margin-left: #{$is-general-padding-small};
+      z-index: 998;
+      cursor: pointer;
 
-    >i {
-      color: $is-control-handle-color;
+      >i {
+        color: $is-control-handle-color;
+      }
+
+      &.disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+      }
     }
 
-    &.disabled {
-      pointer-events: none;
-      cursor: not-allowed;
+    .datepicker-input.readonly + .datepicker-icon {
+      display: none;
     }
   }
 
