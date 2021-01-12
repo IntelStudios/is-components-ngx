@@ -93,6 +93,7 @@ is-datepicker {
   .datepicker-icon {
     position: absolute;
     right: 8px;
+    display: flex;
     // magic numbers dont work well with variable height inputs, position like so
     top: 50%;
     transform: translateY(-50%);
