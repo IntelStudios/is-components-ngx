@@ -1,5 +1,6 @@
 import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -30,7 +31,7 @@ import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
-import { DATEPICKER_CONFIG_DEFAULT, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 
 const moment = m;
@@ -48,6 +49,12 @@ export const NG_DATEPICKER_VALUE_VALIDATOR: any = {
   useExisting: forwardRef(() => IsDatepickerComponent),
   multi: true
 }
+
+export const defaultDatePickerRootConfig = (): IsDatepickerConfig => ({
+  viewFormat: 'dd-MM-yyyy',
+  localDateMode: false,
+  mask: null,
+});
 
 @Component({
   selector: 'is-datepicker',
@@ -69,10 +76,16 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   hidden = false;
 
   /**
- * BsDatepicker config object to setup wrapped BsDatepickerInline component
- */
+   * BsDatepicker config object to setup wrapped BsDatepickerInline component
+   */
   @Input()
-  config: Partial<BsDatepickerConfig> = DATEPICKER_CONFIG_DEFAULT;
+  config: Partial<BsDatepickerConfig> = defaultDatePickerConfig();
+
+  /**
+   * Root config
+   */
+  rootConfig: IsDatepickerConfig = defaultDatePickerRootConfig();
+
   /**
    * when stringMode is enabled, expected and emitted date must be in Xeelo date format (DD-MM-YYYY)
    */
@@ -83,13 +96,16 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
    * when localDateMode enabled, picker will understand date as local, without time
    */
   @Input()
-  localDateMode = false;
+  localDateMode: boolean;
+
+  @Input()
+  mask: string;
 
   /**
    * display date format (angular date pipe)
    */
   @Input()
-  viewFormat: string = 'dd-MM-yyyy';
+  viewFormat: string;
 
   @Input()
   alignment: 'left' | 'center' | 'right' = 'left';
@@ -117,18 +133,16 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   private validatorOnChangeFn: Function = null;
 
   constructor(
-    private changeDetector: ChangeDetectorRef,
     @Optional() @Inject(configToken) private dpConfig: IsDatepickerConfig,
+    private changeDetector: ChangeDetectorRef,
     private overlay: Overlay,
+    private datePipe: DatePipe,
     private el: ElementRef, private renderer: Renderer2) {
-    if (this.dpConfig) {
-      if (this.dpConfig.viewFormat) {
-        this.viewFormat = this.dpConfig.viewFormat;
-      }
-      if (this.dpConfig.localDateMode !== undefined) {
-        this.localDateMode = this.dpConfig.localDateMode;
-      }
-    }
+    this.rootConfig = { ...this.rootConfig, ...dpConfig };
+    // Properties didnt get their input values, yet
+    this.viewFormat = this.rootConfig.viewFormat;
+    this.localDateMode = this.rootConfig.localDateMode;
+    this.mask = this.rootConfig.mask;
 
     this.dateControl = new FormControl();
   }
@@ -246,6 +260,17 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     this.onValueChange();
   }
 
+  onInputClick(): void {
+    const hasMask = this.mask;
+
+    if (hasMask || this.isOpen) {
+      this.closePopup();
+      return;
+    }
+
+    this.openPopup();
+  }
+
   closePopup() {
     if (this.pickerInstanceRef) {
       this.pickerOverlayRef.detach();
@@ -350,7 +375,8 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     };
     const date = this.stringMode ? moment(value, DATE_FORMAT).local(true) : moment.utc(value);
     this.dateValue = this.localDateMode ? this.stripTimezone(date.toDate()) : date.toDate();
-    console.log(this.localDateMode, this.dateValue);
+    // unless this is set, we wont get initial value displayed
+    this.dateControl.patchValue(this.datePipe.transform(this.dateValue, this.viewFormat));
   }
 
   /**

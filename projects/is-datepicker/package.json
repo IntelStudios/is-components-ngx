@@ -1,12 +1,12 @@
 {
   "name": "is-datepicker",
-  "version": "9.1.1",
+  "version": "9.1.6",
   "peerDependencies": {
     "@angular/common": "^9.0.0",
     "@angular/core": "^9.0.0",
     "moment": "^2.24.0",
-    "ngx-bootstrap":"^5.1.2",
-    "@angular/cdk":"^9.2.4",
+    "ngx-bootstrap": "^5.1.2",
+    "@angular/cdk": "^9.2.4",
     "ngx-mask": "^9.1.4"
   }
 }

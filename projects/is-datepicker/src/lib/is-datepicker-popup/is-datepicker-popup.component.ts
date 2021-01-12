@@ -5,11 +5,11 @@ export interface DatepickerPopupControl {
   onChange: (value: Date) => void;
 }
 
-export const DATEPICKER_CONFIG_DEFAULT = {
+export const defaultDatePickerConfig = () => ({
   showWeekNumbers: false,
   selectFromOtherMonth: true,
   customTodayClass: 'today'
-}
+});
 
 @Component({
   selector: 'is-datepicker-popup',
@@ -29,7 +29,7 @@ export class IsDatepickerPopupComponent implements OnInit {
   get config(): Partial<BsDatepickerConfig> {
     return this._config;
   }
-  private _config: Partial<BsDatepickerConfig> = DATEPICKER_CONFIG_DEFAULT;
+  private _config: Partial<BsDatepickerConfig> = defaultDatePickerConfig();
 
   @Input()
   control: DatepickerPopupControl;

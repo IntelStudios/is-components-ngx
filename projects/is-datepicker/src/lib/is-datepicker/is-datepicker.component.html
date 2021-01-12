@@ -1,16 +1,17 @@
 <div class="input-group">
+  <!-- readonly on input itself when mask is off since it breaks keyboard input -->
   <input #input
     class="datepicker-input datepicker-value form-control align-{{alignment}}"
     [value]="dateValue | date:viewFormat"
     [formControl]="dateControl"
-    [mask]="'00-00-0000'"
-    [showMaskTyped]="true"
+    [mask]="mask"
+    [showMaskTyped]="!!mask"
     (keyup)="onInputValueChange(input.value)"
-    (click)="closePopup()"
+    (click)="onInputClick()"
     [class.open]="isOpen"
     [class.disabled]="disabled"
     [class.readonly]="readonly"
-    [readonly]="disabled || readonly">
+    [readonly]="!mask || disabled || readonly">
   <i *ngIf="allowClear && !disabled && !readonly && input.value" class="fas fa-times btn-remove" (click)="onRemove($event)"></i>
   <span class="datepicker-icon" [class.disabled]="disabled" [class.readonly]="readonly" (click)="openPopup()"><i class="fas fa-calendar-alt fa-fw"></i></span>
 </div>

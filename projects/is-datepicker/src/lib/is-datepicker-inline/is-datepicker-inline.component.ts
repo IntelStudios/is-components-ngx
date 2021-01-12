@@ -5,8 +5,10 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
+  Inject,
   Input,
   OnDestroy,
+  Optional,
   Output,
   Renderer2,
   ViewEncapsulation,
@@ -16,8 +18,9 @@ import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
-import { DATEPICKER_CONFIG_DEFAULT, DatepickerPopupControl } from '../is-datepicker-popup/is-datepicker-popup.component';
-import { DATE_FORMAT } from '../is-datepicker/is-datepicker.component';
+import { defaultDatePickerConfig, DatepickerPopupControl } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { IsDatepickerConfig, configToken } from '../is-datepicker.interfaces';
+import { DATE_FORMAT, defaultDatePickerRootConfig } from '../is-datepicker/is-datepicker.component';
 
 const moment = m;
 
@@ -46,7 +49,7 @@ export class IsDatepickerInlineComponent implements OnDestroy, ControlValueAcces
    * display date format (angular date pipe)
    */
   @Input()
-  viewFormat: string = 'dd-MM-yyyy';
+  viewFormat: string;
 
   /**
    * ammends selected date to be End Of Day
@@ -62,7 +65,9 @@ export class IsDatepickerInlineComponent implements OnDestroy, ControlValueAcces
    * BsDatepicker config object to setup wrapped BsDatepickerInline component
    */
   @Input()
-  config: Partial<BsDatepickerConfig> = DATEPICKER_CONFIG_DEFAULT;
+  config: Partial<BsDatepickerConfig> = defaultDatePickerConfig();
+
+  rootConfig: IsDatepickerConfig = defaultDatePickerRootConfig();
 
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
@@ -80,9 +85,18 @@ export class IsDatepickerInlineComponent implements OnDestroy, ControlValueAcces
   private _changeSubscription: Subscription = null;
   private onTouched: Function;
 
-  constructor(private changeDetector: ChangeDetectorRef, private overlay: Overlay, private el: ElementRef, private renderer: Renderer2) {
-
+  constructor(
+    @Optional() @Inject(configToken) private dpConfig: IsDatepickerConfig,
+    private changeDetector: ChangeDetectorRef,
+    private overlay: Overlay,
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) {
+    this.rootConfig = { ...this.rootConfig, ...dpConfig };
+    // Properties didnt get their input values, yet
+    this.viewFormat = this.rootConfig.viewFormat;
   }
+
   ngOnDestroy() {
     if (this._changeSubscription) {
       this._changeSubscription.unsubscribe();

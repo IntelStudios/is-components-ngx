@@ -26,7 +26,7 @@ export class IsSelectModule {
     return {
       ngModule: IsSelectModule,
       providers: [
-        { provide: configToken, useValue: config }
+        { provide: configToken, useValue: config },
       ]
     }
   }
