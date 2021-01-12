@@ -1,6 +1,6 @@
 {
   "name": "is-datepicker",
-  "version": "9.1.4",
+  "version": "9.1.5",
   "peerDependencies": {
     "@angular/common": "^9.0.0",
     "@angular/core": "^9.0.0",

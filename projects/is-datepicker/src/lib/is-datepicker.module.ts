@@ -1,6 +1,6 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -15,6 +15,7 @@ import { IsDatepickerComponent } from './is-datepicker/is-datepicker.component';
   imports: [
     CommonModule, BsDatepickerModule, ReactiveFormsModule, OverlayModule, ScrollingModule, NgxMaskModule.forRoot(),
   ],
+  providers: [DatePipe],
   declarations: [IsDatepickerComponent, IsDatepickerPopupComponent, IsDatepickerInlineComponent],
   exports: [IsDatepickerComponent, IsDatepickerInlineComponent],
   entryComponents: [IsDatepickerPopupComponent]
@@ -24,7 +25,7 @@ export class IsDatepickerModule {
     return {
       ngModule: IsDatepickerModule,
       providers: [
-        { provide: configToken, useValue: config }
+        { provide: configToken, useValue: config },
       ]
     }
   }

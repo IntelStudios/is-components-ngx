@@ -1,5 +1,6 @@
 import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -135,8 +136,8 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     @Optional() @Inject(configToken) private dpConfig: IsDatepickerConfig,
     private changeDetector: ChangeDetectorRef,
     private overlay: Overlay,
+    private datePipe: DatePipe,
     private el: ElementRef, private renderer: Renderer2) {
-    console.log(this.mask, dpConfig);
     this.rootConfig = { ...this.rootConfig, ...dpConfig };
     // Properties didnt get their input values, yet
     this.viewFormat = this.rootConfig.viewFormat;
@@ -374,7 +375,8 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     };
     const date = this.stringMode ? moment(value, DATE_FORMAT).local(true) : moment.utc(value);
     this.dateValue = this.localDateMode ? this.stripTimezone(date.toDate()) : date.toDate();
-    console.log(this.localDateMode, this.dateValue);
+    // unless this is set, we wont get initial value displayed
+    this.dateControl.patchValue(this.datePipe.transform(this.dateValue, this.viewFormat));
   }
 
   /**
