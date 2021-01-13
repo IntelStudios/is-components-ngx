@@ -1,5 +1,6 @@
 import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,9 +9,11 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
+  Optional,
   Output,
   Renderer2,
   ViewChild,
@@ -28,7 +31,8 @@ import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
-import { DATEPICKER_CONFIG_DEFAULT, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 
 const moment = m;
 
@@ -45,6 +49,11 @@ export const NG_DATEPICKER_VALUE_VALIDATOR: any = {
   useExisting: forwardRef(() => IsDatepickerComponent),
   multi: true
 }
+
+export const defaultDatePickerRootConfig = (): IsDatepickerConfig => ({
+  viewFormat: 'dd-MM-yyyy',
+  mask: null,
+});
 
 @Component({
   selector: 'is-datepicker',
@@ -63,10 +72,16 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   placeholder: string = '';
 
   /**
- * BsDatepicker config object to setup wrapped BsDatepickerInline component
- */
+   * BsDatepicker config object to setup wrapped BsDatepickerInline component
+   */
   @Input()
-  config: Partial<BsDatepickerConfig> = DATEPICKER_CONFIG_DEFAULT;
+  config: Partial<BsDatepickerConfig> = defaultDatePickerConfig();
+
+  /**
+  * Root config
+  */
+  rootConfig: IsDatepickerConfig = defaultDatePickerRootConfig();
+
   /**
    * when stringMode is enabled, expected and emitted date must be in Xeelo date format (DD-MM-YYYY)
    */
@@ -77,7 +92,10 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
    * display date format (angular date pipe)
    */
   @Input()
-  viewFormat: string = 'dd-MM-yyyy';
+  viewFormat: string;
+
+  @Input()
+  mask: string;
 
   @Input()
   alignment: 'left' | 'center' | 'right' = 'left';
@@ -111,7 +129,17 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   private _detachSub: Subscription;
   private validatorOnChangeFn: Function = null;
 
-  constructor(private changeDetector: ChangeDetectorRef, private overlay: Overlay, private el: ElementRef, private renderer: Renderer2) {
+  constructor(
+    @Optional() @Inject(configToken) private dpConfig: IsDatepickerConfig,
+    private changeDetector: ChangeDetectorRef,
+    private overlay: Overlay,
+    private datePipe: DatePipe,
+    private el: ElementRef, private renderer: Renderer2) {
+    this.rootConfig = { ...this.rootConfig, ...dpConfig };
+    // Properties didnt get their input values, yet
+    this.viewFormat = this.rootConfig.viewFormat;
+    this.mask = this.rootConfig.mask;
+
     this.dateControl = new FormControl();
   }
 
@@ -229,6 +257,17 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     this.input.nativeElement.value = null;
     this.dateControl.setErrors(null);
     this.onValueChange();
+  }
+
+  onInputClick(): void {
+    const hasMask = this.mask;
+
+    if (hasMask || this.isOpen) {
+      this.closePopup();
+      return;
+    }
+
+    this.openPopup();
   }
 
   closePopup() {
@@ -365,6 +404,8 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     if (value) {
       const date = this.stringMode ? moment(value, DATE_FORMAT).local(true) : moment.utc(value).local(true);
       this.dateValue = date.toDate();
+      // unless this is set, we wont get initial value displayed
+      this.dateControl.patchValue(this.datePipe.transform(this.dateValue, this.viewFormat));
     }
     else {
       this.dateValue = null;

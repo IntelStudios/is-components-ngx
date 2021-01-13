@@ -83,7 +83,11 @@ is-datepicker {
   .datepicker-icon {
     position: absolute;
     right: 8px;
-    top: 6px;
+    display: flex;
+    // magic numbers dont work well with variable height inputs, position like so
+    top: 50%;
+    transform: translateY(-50%);
+
     margin-left: #{$is-general-padding-small};
     z-index: 998;
     cursor: pointer;
@@ -98,11 +102,17 @@ is-datepicker {
     }
   }
 
+  .datepicker-input.readonly+.datepicker-icon {
+    display: none;
+  }
+
   .btn-remove {
     cursor: pointer;
     position: absolute;
     right: 32px;
-    top: 10px;
+    // magic numbers dont work well with variable height inputs, position like so
+    top: 50%;
+    transform: translateY(-50%);
     color: $is-control-handle-color;
     z-index: 1000;
   }
