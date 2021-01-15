@@ -190,8 +190,8 @@ export class DemoInputMappingComponent implements OnInit {
               },
               {
                 'Children': [],
-                'Path': 'Load files.Third level.Word',
-                'Name': 'Word',
+                'Path': 'Load files.Third level.Name',
+                'Name': 'Name',
                 'Type': 0,
                 'DataType': 2,
                 'InputColumns': [
@@ -220,7 +220,22 @@ export class DemoInputMappingComponent implements OnInit {
                   'Name',
                   'Directory',
                   'FullPath',
-                  'Extension'
+                  'Extension',
+                  'Surname'
+                ]
+              },
+              {
+                'Children': [],
+                'Path': 'Load files.Third level second.Surname',
+                'Name': 'Surname',
+                'Type': 0,
+                'DataType': 2,
+                'InputColumns': [
+                  'Name',
+                  'Directory',
+                  'FullPath',
+                  'Extension',
+                  'Surname'
                 ]
               }
             ],

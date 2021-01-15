@@ -6,7 +6,7 @@ import {
   HostListener,
   Input,
   OnDestroy,
-  OnInit,
+  OnInit, QueryList, ViewChildren,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -50,6 +50,9 @@ import { isInputRequiredFilledValidator } from './is-input-mapping.validator';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
+  @ViewChildren('child')
+  children: QueryList<IsInputMappingComponent>;
+
   @Input()
   set data(value: IsInputMappingInput) {
     if (typeof (value) === 'undefined') {
@@ -655,5 +658,38 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   registerOnValidatorChange?(fn: () => void): void {
     this._validatorOnChange = fn;
+  }
+
+  autoassign(toAssign: Array<InputSchema> = null): Array<InputSchema> {
+    if (this.disabled) {
+      return toAssign;
+    }
+
+    if (toAssign === null) {
+      toAssign = this.getAllItems().filter((x) => !x.assigned).map((x) => x.item);
+    }
+
+    // keep only those which cannot be assigned here and assign those which can
+    toAssign = toAssign.filter((item) => {
+      if (this.inputsAssignableFiltered.indexOf(item) !== -1 && item.Name === this.paintedStructure.Name) {
+        this.assign(item);
+        return false;
+      }
+
+      return true;
+    });
+
+    if (toAssign.length) {
+      // recursive assign the unassigned
+      this.children.forEach((child) => {
+        if (!toAssign.length) {
+          return;
+        }
+
+        toAssign = child.autoassign(toAssign);
+      });
+    }
+
+    return toAssign;
   }
 }

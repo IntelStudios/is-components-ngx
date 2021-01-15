@@ -11,8 +11,16 @@
     <span>{{paintedStructure.Name}}</span>
     <span *ngIf="paintedStructure.Description" class="description">{{paintedStructure.Description}}</span>
 
-    <i *ngIf="paintedStructure.Children.length > 0" class="chevron fa" [class.fa-chevron-up]="collapsed"
-       [class.fa-chevron-down]="!collapsed"></i>
+    <ng-container *ngIf="paintedStructure.Children.length > 0">
+      <i class="chevron fa" [class.fa-chevron-up]="collapsed" [class.fa-chevron-down]="!collapsed"></i>
+    </ng-container>
+
+    <!--suppress HtmlUnknownTarget -->
+    <img *ngIf="!disabled && paintedStructure.Children.length > 0 && (mouseover || assignDropdownVisible)"
+         class="map-all"
+         src="assets/svg/ico-map_all.svg"
+         (click)="autoassign(); $event.stopPropagation()"
+         alt="map all">
   </span>
 
   <span>
@@ -93,7 +101,8 @@
 </div>
 
 <div class="children" [class.left-line]="level > 0" *ngIf="data && collapsed && paintedStructure">
-  <is-input-mapping *ngFor="let child of paintedStructure.Children; let i = index"
+  <is-input-mapping #child
+                    *ngFor="let child of paintedStructure.Children; let i = index"
                     [data]="data"
                     [paintedPath]="getChildPath(i)"
                     [service]="service"
