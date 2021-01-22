@@ -7,6 +7,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 
 import { IsBreadcrumbBoxComponent } from './is-breadcrumb-box/is-breadcrumb-box.component';
 import { IsCheckboxComponent, IsRadioGroupDirective } from './is-checkbox/is-checkbox.component';
+import { IsCoreUICdkService } from './is-core-ui-cdk-service';
 import { configToken, IsCoreUIConfig } from './is-core-ui.interfaces';
 import { IsFieldErrorComponent } from './is-field-error/is-field-error.component';
 import { IsHintComponent } from './is-hint/is-hint.component';
@@ -30,7 +31,8 @@ import { IsTileComponent } from './is-tile/is-tile.component';
   declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
     IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent],
   exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent]
+    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsTileComponent],
+  providers: [IsCoreUICdkService],
 })
 export class IsCoreUIModule {
   static forRoot(config?: IsCoreUIConfig): ModuleWithProviders {

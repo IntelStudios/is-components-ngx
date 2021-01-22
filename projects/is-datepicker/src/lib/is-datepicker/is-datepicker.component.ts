@@ -1,4 +1,4 @@
-import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ConnectedPosition, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { DatePipe } from '@angular/common';
 import {
@@ -29,6 +29,8 @@ import {
 } from '@angular/forms';
 import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { IsCoreUICdkService } from 'projects/is-core-ui/src/lib/is-core-ui-cdk-service';
+import { IsCoreUICdkOutput } from 'projects/is-core-ui/src/lib/is-core-ui.interfaces';
 import { Subscription } from 'rxjs';
 
 import { defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
@@ -134,7 +136,8 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     private changeDetector: ChangeDetectorRef,
     private overlay: Overlay,
     private datePipe: DatePipe,
-    private el: ElementRef, private renderer: Renderer2) {
+    private el: ElementRef, private renderer: Renderer2,
+    private coreUICdkService: IsCoreUICdkService) {
     this.rootConfig = { ...this.rootConfig, ...dpConfig };
     // Properties didnt get their input values, yet
     this.viewFormat = this.rootConfig.viewFormat;
@@ -306,15 +309,26 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       .withPositions([position])
       .withPush(true);
 
-    this.pickerOverlayRef = this.overlay.create(
-      {
-        minWidth: `${optionsWidth}px`,
-        minHeight: `${optionsHeight}px`,
-        positionStrategy: positionStrategy,
-        scrollStrategy: this.overlay.scrollStrategies.close()
-      }
-    );
-    this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsDatepickerPopupComponent));
+    const config: OverlayConfig = {
+      minWidth: `${optionsWidth}px`,
+      minHeight: `${optionsHeight}px`,
+      positionStrategy: positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.close()
+    };
+
+    const coreCdk: IsCoreUICdkOutput = this.coreUICdkService.createCdkOverlay(this.overlay, IsDatepickerPopupComponent, config, this.el, this.renderer);
+    this.pickerOverlayRef = coreCdk.overlayRef;
+    this.pickerInstanceRef = coreCdk.componentRef;
+
+    // this.pickerOverlayRef = this.overlay.create(
+    //   {
+    //     minWidth: `${optionsWidth}px`,
+    //     minHeight: `${optionsHeight}px`,
+    //     positionStrategy: positionStrategy,
+    //     scrollStrategy: this.overlay.scrollStrategies.close()
+    //   }
+    // );
+    // this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsDatepickerPopupComponent));
     const classes = this.el.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass;
     this.renderer.setAttribute(this.pickerInstanceRef.location.nativeElement, 'class', classes);
 

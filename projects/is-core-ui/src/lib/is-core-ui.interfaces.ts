@@ -1,4 +1,5 @@
-import { InjectionToken } from '@angular/core';
+import { OverlayRef } from '@angular/cdk/overlay';
+import { ComponentRef, InjectionToken } from '@angular/core';
 
 interface FieldErrorConfig {
   /**
@@ -12,3 +13,8 @@ export interface IsCoreUIConfig {
 }
 
 export const configToken = new InjectionToken<IsCoreUIConfig>('IsCoreUIConfig');
+
+export interface IsCoreUICdkOutput {
+  overlayRef: OverlayRef;
+  componentRef: ComponentRef<any>;
+}
