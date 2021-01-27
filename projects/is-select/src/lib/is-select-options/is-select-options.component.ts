@@ -327,7 +327,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     $event.stopPropagation();
     const text = $event.clipboardData.getData('text/plain');
     // this regex could be configurable
-    const ids = Array.from(new Set([...text.split(/\s+|[,;]/g)]));
+    const ids = Array.from(new Set([...text.split(this.selectConfig.onPasteSplitRegExp)]));
     const opts = this.control.options.filter(x => ids.includes(x.ID) && !x.Checked);
     opts.forEach((opt) => {
       this.control.onItemSelected(opt);

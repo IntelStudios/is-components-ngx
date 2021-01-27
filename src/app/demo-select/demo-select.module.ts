@@ -12,7 +12,7 @@ import { IsCoreUIModule } from 'projects/is-core-ui/src/public_api';
   declarations: [DemoSelectComponent],
   imports: [
     CommonModule, IsSelectModule.forRoot(), ReactiveFormsModule, IsCoreUIModule,
-  ]
+  ],
 })
 export class DemoSelectModule { }
 

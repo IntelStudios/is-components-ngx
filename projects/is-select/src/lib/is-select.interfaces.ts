@@ -54,6 +54,10 @@ export interface IsSelectConfig {
    * Attempt to parse pasted text for available ids for immediate selection in multiple search input box
    */
   attemptToProcessPasteMultipleSearch?: boolean,
+  /**
+   * When pasting to selects opts, attempts to split pasted stirng to match toknes opt ids to autoselect
+   */
+  onPasteSplitRegExp?: RegExp,
 }
 
 export const configToken = new InjectionToken<IsSelectConfig>('IsSelectConfig');

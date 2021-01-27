@@ -32,17 +32,6 @@ export const IS_SELECT_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-const DEFALULT_CONFIG: IsSelectConfig = {
-  attemptToProcessPasteMultipleSearch: false,
-  defaultModelConfig: {
-    idProp: 'ID',
-    textProp: 'Value',
-    objectProp: 'Object',
-  },
-  optionsOverflowWidth: false,
-  allowClear: false,
-};
-
 @Component({
   selector: 'is-select',
   templateUrl: './is-select.component.html',
@@ -296,9 +285,6 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     private changeDetector: ChangeDetectorRef) {
       // trigger setter by default so we're initially in single select mode
       this.multipleConfig = undefined;
-      if (!this.selectConfig) {
-        this.selectConfig = { ...DEFALULT_CONFIG };
-      }
       this.optionsOverflowWidth = this.selectConfig.optionsOverflowWidth;
       this.allowClear = this.selectConfig.allowClear;
   }
