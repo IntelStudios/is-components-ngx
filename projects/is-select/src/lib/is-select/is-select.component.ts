@@ -424,7 +424,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     if (this.multiple) {
       const active = this._active as SelectItem[];
       this._active = active.filter(i => i.ID !== item.ID);
-      this._value = active.map(v => v.ID);
+      this._value = this._active.map(v => v.ID);
     } else {
       this._active = null;
       this._value = null;
