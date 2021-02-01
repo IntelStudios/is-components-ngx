@@ -134,6 +134,13 @@
           <is-select [formControl]="select3Control" [minLoadChars]="2" [isSearch]="true" [allowClear]="true" [items]="itemsGrouped$ | async"
             (changed)="changed($event)" (loadOptions)="loadItemsGrouped()" placeholder="No item selected"></is-select>
         </div>
+        <div class="col-sm-6">
+          <h3>Groups multi select delayed load</h3>
+          <is-select [formControl]="select3Control" [multipleConfig]="{showButtons: true}" [allowClear]="true" [items]="itemsGrouped$ | async"
+                     (changed)="changed($event)" placeholder="No item selected"></is-select>
+          <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
+          <button class="btn btn-primary" (click)="loadItemsGrouped()">Load Items</button>
+        </div>
       </div>
     </ng-template>
   </is-tab>

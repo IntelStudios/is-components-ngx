@@ -144,13 +144,8 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         else {
           // multiple values
           if (this.isGroupOptions) {
-            console.warn('setting value with [multiple]="true" and grouped options not yet implemented')
-            // this.options.forEach((item: SelectItem) => {
-            //   const activeChild = item.children.find(c => c.ID === this._value);
-            //   if (activeChild) {
-            //     active = activeChild;
-            //   }
-            // });
+            const allAtomicOptions = OptionsBehavior.getLeafOptions(this.options)
+            active = allAtomicOptions.filter(o => this._value.indexOf(o.ID) > -1);
           } else {
             active = this.options.filter(o => this._value.indexOf(o.ID) > -1);
           }
@@ -728,15 +723,12 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       }
 
       if (this.options && this.options.length > 0) {
-        let active = null;
+        let active: Array<SelectItem>;
+
         if (this.isGroupOptions) {
-          console.warn('setting value with [multiple]="true" and grouped options not yet implemented')
-          // this.options.forEach((item: SelectItem) => {
-          //   const activeChild = item.children.find(c => c.ID === this._value);
-          //   if (activeChild) {
-          //     active = activeChild;
-          //   }
-          // });
+          const allAtomicOptions: SelectItem[] = OptionsBehavior.getLeafOptions(this.options);
+
+          active = allAtomicOptions.filter(o => this._value.indexOf(o.ID) > -1);
         } else {
           active = this.options.filter(o => this._value.indexOf(o.ID) > -1);
         }
