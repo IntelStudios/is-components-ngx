@@ -234,6 +234,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       this._$element.froalaEditor('undo.reset');
       this._$element.froalaEditor('undo.saveStep');
       timeEnd('set value');
+    } else {
+      this.html = this.value;
     }
   }
 
