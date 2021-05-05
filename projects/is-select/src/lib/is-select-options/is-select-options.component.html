@@ -12,6 +12,7 @@
     <ul class="ui-select-choices">
         <li *ngFor="let o of selectedOptions" role="menuitem" [class]="alignment">
             <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == singleValue?.ID"
+              [ngClass]="{'disabled': o.disabled === true}"
               (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
               <ng-container [ngTemplateOutlet]="optionMainTemplate"
                 [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">
@@ -25,6 +26,7 @@
         </li>
       <li *ngFor="let o of visibleOptions" role="menuitem" [class]="alignment">
         <div class="ui-select-choices-row" [class.active]="isActive(o)" [class.selected]="o.ID == singleValue?.ID"
+          [ngClass]="{'disabled': o.disabled === true}"
           (mouseenter)="selectActive(o)" (click)="selectMatch(o, $event)">
           <ng-container [ngTemplateOutlet]="optionMainTemplate"
             [ngTemplateOutletContext]="{$implicit: o, index: 0, item: o}">

@@ -13,7 +13,7 @@ export class DemoSelectComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.1.2.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-7.1.3.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsSelectModule } from 'is-select';</pre>
@@ -27,6 +27,7 @@ export class DemoSelectComponent implements OnInit {
   select5Control: FormControl = new FormControl();
   select6Control: FormControl = new FormControl();
   select6ControlMulti: FormControl = new FormControl();
+  select7Control: FormControl = new FormControl();
 
   public items: Array<string> = ['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -54,6 +55,13 @@ export class DemoSelectComponent implements OnInit {
     { ID: 3, Value: '[info_Info]' },
     { ID: 4, Value: '[success_Success]' },
     { ID: 5, Value: '[primary_Primary]' }
+  ];
+
+  itemsDisabled = [
+    { ID: '1110', Value: 'Miami' },
+    { ID: '1111', Value: 'NY' },
+    { ID: '1112', Value: 'Florida', Disabled: true },
+    { ID: '1113', Value: 'LA', Disabled: true  }
   ];
 
   itemsGrouped: any[] = [];
