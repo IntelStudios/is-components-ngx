@@ -49,8 +49,8 @@
     </is-select>
   </div>
   <div class="col-sm-6">
-    <h3>Select including disabled items</h3>
-    <is-select #select7 [formControl]="select7Control" [placeholderShow]="false" [allowClear]="true" [items]="itemsDisabled" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected"></is-select>
+    <h3>Select including disabled items (dropup)</h3>
+    <is-select #select7 [formControl]="select7Control" [placeholderShow]="false" [dropup]="true" [allowClear]="true" [items]="itemsDisabled" (changed)="changed($event)" (selected)="selected($event)" (removed)="removed($event)" (typed)="typed($event)" placeholder="No city selected"></is-select>
   </div>
   <div class="col-sm-6">
     <h3>Select with groups including disabled items</h3>

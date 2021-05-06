@@ -44,6 +44,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input() searchPlaceholder: string = 'Type to search';
   @Input() isSearch: boolean = true;
   @Input() alignItems: 'left' | 'right' = 'left';
+  @Input() dropup: boolean = false;
 
   @Input()
   set multiple(value: boolean) {
@@ -444,8 +445,16 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   showOptions() {
 
     const rect: DOMRect = this.element.nativeElement.getBoundingClientRect();
+
+    let position = [];
+    if (this.dropup) {
+      position = [{ originY: 'top', originX: 'start', overlayX: 'start', overlayY: 'bottom' }];
+    } else {
+      position = [{ originY: 'bottom', originX: 'start', overlayX: 'start', overlayY: 'top' }];
+    }
+
     const positionStrategy = this.overlay.position().flexibleConnectedTo(this.element)
-      .withPositions([{ originY: 'bottom', originX: 'start', overlayX: 'start', overlayY: 'top' }])
+      .withPositions(position)
       .withPush(true);
 
     this.optionsOverlayRef = this.overlay.create(
