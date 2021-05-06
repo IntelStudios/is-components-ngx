@@ -15,6 +15,7 @@ export interface ISelectOptionsControl {
   minLoadChars: number;
   isSearch: boolean;
   multiple: boolean;
+  dropup: boolean;
   onClosed: () => void;
   onLoadOptions: (filter: string) => void;
   onItemSelected: (item: SelectItem) => void;
@@ -56,6 +57,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   optionTemplate: IsSelectOptionDirective;
   isSearch: boolean;
   multiple: boolean;
+  dropup: boolean;
 
   private behavior: IOptionsBehavior;
   private searchFilter: string = '';
@@ -87,6 +89,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.optionTemplate = this.control.optionTemplate;
     this.isSearch = this.control.isSearch;
     this.multiple = this.control.multiple;
+    this.dropup = this.control.dropup;
     // decide which templateRef are we gonna use to render a single option
     this.optionMainTemplate = this.multiple ? this.optionMultiTemplate : this.optionSingleTemplate;
 

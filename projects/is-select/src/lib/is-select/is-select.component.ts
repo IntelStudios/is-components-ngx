@@ -471,6 +471,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       active: this.active,
       options: this.options,
       multiple: this.multiple,
+      dropup: this.dropup,
       searchPlaceholder: this.searchPlaceholder,
       optionTemplate: this.templateOption,
       alignItems: this.alignItems,
