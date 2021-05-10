@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, Input } from '@angular/core';
+import { ModalComponent } from 'ng-modal-lib';
 import { IsModalMovableControl, IsModalMovableInstance, IsModalRef } from 'projects/is-modal/src/public_api';
 
 @Component({
@@ -12,7 +13,7 @@ export class DemoModalMovableComponent implements OnInit, IsModalMovableInstance
   control: IsModalMovableControl;
 
   @ViewChild('modal', { static: true })
-  modal: any;
+  modal: ModalComponent;
 
   modalRef: IsModalRef;
 
@@ -24,6 +25,12 @@ export class DemoModalMovableComponent implements OnInit, IsModalMovableInstance
 
   ngOnInit(): void {
     this.modal.show();
+  }
+
+  center(): void {
+    if (this.modal) {
+      this.modal.center();
+    }
   }
 
   saveClick() {

@@ -2,6 +2,8 @@ import { Component, TemplateRef, ViewChild, OnInit, ChangeDetectionStrategy, Ren
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { IsModalMovableService } from 'projects/is-modal/src/lib/is-modal-movable.service';
 import { IsModalComponent, IsModalConfig, IsModalMovableConfig, IsModalRef, IsModalMovableRef } from 'projects/is-modal/src/public_api';
+import { Observable, of } from 'rxjs';
+import { delay, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { DemoModalMovableComponent } from './demo-modal-movable.component';
 
 @Component({
@@ -41,7 +43,20 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
   modalMovableRef: IsModalMovableRef;
 
-  constructor(private bsModalservice: BsModalService, private movableService: IsModalMovableService, private element: ElementRef, private renderer: Renderer2) { }
+  largeContent$: Observable<string> = of('x')
+    .pipe(
+      delay(1000),
+      map(() => {
+        return `<p>${this.usage}${this.usage}${this.usage}${this.usage}${this.usage}${this.usage}</p>`;
+      }),
+      tap(() => {
+        setTimeout(() => {
+          this.modalMovableRef.center();
+        });
+      }),
+    )
+
+  constructor(private bsModalservice: BsModalService, private movableService: IsModalMovableService) { }
 
   ngOnInit() {
   }
