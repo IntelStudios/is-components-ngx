@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ModalComponent } from 'ng-modal-lib';
 
-import { IsModalButtonConfig, IsModalMovableControl, IsModalRef } from './is-modal.interfaces';
+import { IsModalButtonConfig, IsModalMovableControl, IsModalMovableInstance, IsModalRef } from './is-modal.interfaces';
 
 @Component({
   selector: 'is-modal-movable',
@@ -9,12 +10,12 @@ import { IsModalButtonConfig, IsModalMovableControl, IsModalRef } from './is-mod
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class IsModalMovableComponent implements OnInit {
+export class IsModalMovableComponent implements OnInit, IsModalMovableInstance {
 
   control: IsModalMovableControl;
 
   @ViewChild('modal', { static: true })
-  modal: any;
+  modal: ModalComponent;
 
   modalRef: IsModalRef;
 
@@ -31,6 +32,12 @@ export class IsModalMovableComponent implements OnInit {
 
     if (this.control.config) {
       this.modal.show();
+    }
+  }
+
+  center(): void {
+    if (this.modal) {
+      this.modal.center();
     }
   }
 

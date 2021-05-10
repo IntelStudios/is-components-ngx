@@ -40,10 +40,8 @@
 </ng-template>
 
 <ng-template #modalContentLarge>
-  <div [innerHTML]="usage"></div>
-  <div [innerHTML]="usage"></div>
-  <div [innerHTML]="usage"></div>
-  <div [innerHTML]="usage"></div>
-  <div [innerHTML]="usage"></div>
-  <div [innerHTML]="usage"></div>
+  <div *ngIf="largeContent$ | async as content; else loading" [innerHTML]="content"></div>
+</ng-template>
+<ng-template #loading>
+  Content is loading ...
 </ng-template>

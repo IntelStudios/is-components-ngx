@@ -59,6 +59,7 @@ export interface IsModalMovableConfig extends IsModalConfig {
 
 export interface IsModalMovableInstance {
   control: IsModalMovableControl;
+  center:() => void;
 }
 
 export interface IsModalMovableControl {
@@ -69,5 +70,9 @@ export interface IsModalMovableControl {
 
 export interface IsModalMovableRef {
   close:() => void;
+  /**
+   * center movable modal on the screen
+   */
+  center:() => void;
   closed: boolean;
 }

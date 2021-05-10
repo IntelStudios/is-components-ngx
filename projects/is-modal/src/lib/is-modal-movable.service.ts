@@ -30,7 +30,8 @@ export class IsModalMovableService {
 
     const ref: IsModalMovableRef = {
       closed: false,
-      close: () => {}
+      close: () => {},
+      center: () => {},
     };
 
     const hide = () => {
@@ -44,6 +45,10 @@ export class IsModalMovableService {
 
     const componentRef: ComponentRef<any> = overlayRef.attach(new ComponentPortal(component));
     const instanceRef: IsModalMovableInstance = componentRef.instance as IsModalMovableInstance;
+    
+    ref.center = () => {
+      instanceRef.center();
+    };
 
     instanceRef.control = {
       config: config,
