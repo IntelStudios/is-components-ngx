@@ -23,6 +23,7 @@
     "build.cron": "ng build is-cron-editor && cd dist/is-cron-editor && npm pack --quiet && cp *.tgz ../../package",
     "build.editable-textbox": "ng build is-editable-textbox && cd dist/is-editable-textbox && npm pack --quiet && cp *.tgz ../../package",
     "build.checkmap": "ng build is-checkmap && cd dist/is-checkmap && npm pack --quiet && cp *.tgz ../../package",
+    "publish.cdk": "ng build --prod is-cdk && npm publish dist/is-cdk",
     "docs": "./node_modules/.bin/compodoc -p tsconfig.json -d dist/app/docs --silent --theme readthedocs --disableCoverage --disableGraph --disablePrivate",
     "test": "ng test",
     "lint": "ng lint",

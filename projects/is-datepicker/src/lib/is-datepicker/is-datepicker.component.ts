@@ -29,6 +29,7 @@ import {
 } from '@angular/forms';
 import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { IsCdkService } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
 
 import { defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
@@ -131,6 +132,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
 
   constructor(
     @Optional() @Inject(configToken) private dpConfig: IsDatepickerConfig,
+    private isCdk: IsCdkService,
     private changeDetector: ChangeDetectorRef,
     private overlay: Overlay,
     private datePipe: DatePipe,
@@ -306,13 +308,14 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       .withPositions([position])
       .withPush(true);
 
-    this.pickerOverlayRef = this.overlay.create(
+    this.pickerOverlayRef = this.isCdk.create(
       {
         minWidth: `${optionsWidth}px`,
         minHeight: `${optionsHeight}px`,
         positionStrategy: positionStrategy,
         scrollStrategy: this.overlay.scrollStrategies.close()
-      }
+      },
+      this.el
     );
     this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsDatepickerPopupComponent));
     const classes = this.el.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass;

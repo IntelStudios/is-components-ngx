@@ -23,6 +23,7 @@ import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from '../is-
 import { IsSelectModelConfig, IsSelectMultipleConfig } from '../is-select.interfaces';
 import { SelectItem } from '../select-item';
 import { OptionsBehavior } from '../options-behavior';
+import { IsCdkService } from '@intelstudios/cdk';
 
 export const IS_SELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -266,6 +267,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   constructor(public element: ElementRef,
     private overlay: Overlay,
+    private isCdk: IsCdkService,
     private renderer: Renderer2,
     private changeDetector: ChangeDetectorRef) {
       // trigger setter by default so we're initially in single select mode
@@ -487,13 +489,14 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       .withPositions([position])
       .withDefaultOffsetX(-1);
 
-    this.optionsOverlayRef = this.overlay.create(
+    this.optionsOverlayRef = this.isCdk.create(
       {
         width: `${rect.width + 2}px`,
         minHeight: '34px',
         positionStrategy: positionStrategy,
         scrollStrategy: this.overlay.scrollStrategies.reposition()
-      }
+      },
+      this.element
     );
     // subscribe to detach event
     // overlay can be detached by us (calling hidOptions()) or by reposition strategy

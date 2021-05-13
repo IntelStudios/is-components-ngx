@@ -17,6 +17,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 import * as m from 'moment';
+import { IsCdkService } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
 
 import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
@@ -84,6 +85,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   private validatorOnChangeFn: Function = null;
 
   constructor(
+    private isCdk: IsCdkService,
     private element: ElementRef,
     private renderer: Renderer2,
     private overlay: Overlay,
@@ -201,13 +203,14 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
       .withPositions([position])
       .withPush(true);
 
-    this.pickerOverlayRef = this.overlay.create(
+    this.pickerOverlayRef = this.isCdk.create(
       {
         minWidth: `${pickerWidth}px`,
         minHeight: `${pickerHeight}px`,
         positionStrategy: positionStrategy,
         scrollStrategy: this.overlay.scrollStrategies.close()
-      }
+      }, 
+      this.element
     );
     this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsTimepickerPickerComponent));
     const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass;
