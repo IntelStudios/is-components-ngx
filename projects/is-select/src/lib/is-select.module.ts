@@ -12,6 +12,7 @@ import { HighlightPipe } from './select-pipes';
 import { IsCoreUIModule } from 'is-core-ui';
 import { IsSelectOptionComponent } from './is-select-option/is-select-option.component';
 import { IsSelectConfig, configToken } from './is-select.interfaces';
+import { IsCdkModule } from '@intelstudios/cdk';
 
 const defaultConfig = (): IsSelectConfig => ({
   attemptToProcessPasteMultipleSearch: false,
@@ -27,7 +28,7 @@ const defaultConfig = (): IsSelectConfig => ({
 
 @NgModule({
   imports: [
-    CommonModule, OverlayModule, IsCoreUIModule, ScrollingModule
+    CommonModule, OverlayModule, IsCoreUIModule, ScrollingModule, IsCdkModule,
   ],
   declarations: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent, IsSelectOptionsComponent, IsSelectOptionComponent],
   exports: [ScrollingModule, IsSelectComponent, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent],

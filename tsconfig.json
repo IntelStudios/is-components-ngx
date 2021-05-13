@@ -100,6 +100,10 @@
       ],
       "is-editable-textbox/*": [
         "dist/is-editable-textbox/*"
+      ],
+      "@intelstudios/cdk": [
+        "dist/is-cdk/is-cdk",
+        "dist/is-cdk"
       ]
     }
   }
