@@ -1,4 +1,5 @@
 import { TemplateRef } from '@angular/core';
+import { ModalDirective, ModalOptions } from 'ngx-bootstrap/modal';
 
 export interface IsModalRef {
   close: () => void;
@@ -48,6 +49,25 @@ export interface IsModalConfig {
    * Button definitions on the right side
    */
   buttonsRight?: IsModalButtonConfig[];
+  /**
+   * bootstrap modal options
+   */
+  options?: ModalOptions;
+}
+
+export interface IsModalInstance {
+  control: IsModalControl;
+  modal: ModalDirective;
+}
+
+export interface IsModalRef {
+  close:() => void;
+}
+
+export interface IsModalControl {
+  config: IsModalConfig;
+  initialState?: any;
+  hide:() => void;
 }
 
 export interface IsModalMovableConfig extends IsModalConfig {

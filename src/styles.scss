@@ -12,7 +12,13 @@
 
 @import '~angular-tree-component/dist/angular-tree-component.css';
 
-@import '~@angular/cdk/overlay-prebuilt.css';
+// import angular/cdk styles, but override overlay z-index
+// to work with bootstrap overlay z-index
+@import '~@angular/cdk/overlay';
+$cdk-z-index-overlay-container: 1055;
+$cdk-z-index-overlay: 1055;
+$cdk-z-index-overlay-bakcdrop: 1055;
+@include cdk-overlay();
 
 
 // @import '../node_modules/pretty-checkbox/src/pretty-checkbox.scss';
