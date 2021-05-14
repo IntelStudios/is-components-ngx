@@ -1,7 +1,7 @@
 import { Component, TemplateRef, ViewChild, OnInit, ChangeDetectionStrategy, Renderer2, ElementRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { IsModalMovableService } from 'projects/is-modal/src/lib/is-modal-movable.service';
-import { IsModalComponent, IsModalConfig, IsModalMovableConfig, IsModalRef, IsModalMovableRef } from 'projects/is-modal/src/public_api';
+import { IsModalComponent, IsModalConfig, IsModalMovableConfig, IsModalRef, IsModalMovableRef, IsModalService } from 'projects/is-modal/src/public_api';
 import { Observable, of } from 'rxjs';
 import { delay, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { DemoModalMovableComponent } from './demo-modal-movable.component';
@@ -51,12 +51,14 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       }),
       tap(() => {
         setTimeout(() => {
-          this.modalMovableRef.center();
+          if (this.modalMovableRef) {
+            this.modalMovableRef.center();
+          }
         });
       }),
     )
 
-  constructor(private bsModalservice: BsModalService, private movableService: IsModalMovableService) { }
+  constructor(private modalService: IsModalService, private movableService: IsModalMovableService) { }
 
   ngOnInit() {
   }
@@ -76,22 +78,25 @@ import { ModalModule } from 'ngx-bootstrap/modal';
           title: 'OK2',
           buttonClass: 'btn-primary'
         }
-      ]
+      ],
+      options: { class: 'modal-sm' }
     };
-    this.bsModalservice.show(IsModalComponent, { class: 'modal-sm', initialState: config });
+    this.modalService.show(config);
   }
 
   openDialog2() {
     const config: IsModalConfig = {
       template: this.template,
+      options: { class: 'modal-sm' },
     };
-    this.bsModalservice.show(IsModalComponent, { class: 'modal-sm', initialState: config });
+    this.modalService.show(config);
   }
 
   openModal(ref: TemplateRef<any>) {
     const config: IsModalConfig = {
       template: ref,
       title: 'Modal Title',
+      bodyScroll: true,
       buttonsLeft: [
         {
           title: 'Just a button',
@@ -125,10 +130,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
             console.log('OK 2 button click');
           }
         }
-      ]
+      ],
+      options: { class: 'modal-lg' },
     };
 
-    this.bsModalservice.show(IsModalComponent, { class: 'modal-lg', initialState: config });
+    this.modalService.show(config);
   }
 
   openMovableComponentModal() {

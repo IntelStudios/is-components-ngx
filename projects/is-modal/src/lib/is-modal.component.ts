@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
-import { IsModalButtonConfig, IsModalRef } from './is-modal.interfaces';
+import { IsModalButtonConfig, IsModalConfig, IsModalControl, IsModalInstance, IsModalRef } from './is-modal.interfaces';
 
 @Component({
   selector: 'is-modal',
@@ -9,7 +9,14 @@ import { IsModalButtonConfig, IsModalRef } from './is-modal.interfaces';
   styleUrls: ['is-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IsModalComponent implements OnInit {
+export class IsModalComponent implements OnInit, IsModalInstance {
+
+  @ViewChild(ModalDirective, { static: true })
+  modal: ModalDirective;
+
+  control: IsModalControl;
+
+  config: IsModalConfig;
 
   template: TemplateRef<any>;
   title: string;
@@ -18,12 +25,14 @@ export class IsModalComponent implements OnInit {
   bodyScroll: boolean = true;
   modalRef: IsModalRef;
 
-  constructor(private bsModalRef: BsModalRef) { }
+  constructor() { }
 
   ngOnInit() {
+    this.config = this.control.config;
+    console.log(this);
     this.modalRef = {
       close: () => {
-        this.bsModalRef.hide();
+        this.control.hide();
       }
     }
   }

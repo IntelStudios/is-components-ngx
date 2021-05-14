@@ -8,6 +8,7 @@ import { IsModalComponent } from './is-modal.component';
 import { IsModalMovableComponent } from './is-modal-movable.component';
 import { IsModalMovableService } from './is-modal-movable.service';
 import { Overlay } from '@angular/cdk/overlay';
+import { IsModalService } from './is-modal.service';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { Overlay } from '@angular/cdk/overlay';
   ],
   declarations: [IsModalComponent, IsModalMovableComponent],
   exports: [IsModalComponent, IsModalMovableComponent],
-  providers: [IsModalMovableService, Overlay],
+  providers: [IsModalMovableService, Overlay, IsModalService],
   entryComponents: [IsModalComponent, IsModalMovableComponent]
 })
 export class IsModalModule { }

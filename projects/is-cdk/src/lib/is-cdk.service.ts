@@ -1,6 +1,8 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ElementRef, Injectable } from '@angular/core';
 
+const ZINDEX_STEP = 10;
+
 @Injectable()
 export class IsCdkService {
 
@@ -25,10 +27,11 @@ export class IsCdkService {
 
   private adjustZindex(parentElement: ElementRef<HTMLElement>, element: HTMLElement): void {
     let currentEl = parentElement.nativeElement;
+    element.style.zIndex = `${ZINDEX_STEP}`;
     while (currentEl) {
       const zIndex = IsCdkService.getStyle(currentEl, 'z-index');
       if (zIndex && zIndex !== 'auto') {
-        element.style.zIndex = `${Number(zIndex) + 1}`;
+        element.style.zIndex = `${Number(zIndex) + ZINDEX_STEP}`;
         break;
       }
       currentEl = currentEl.parentElement;
