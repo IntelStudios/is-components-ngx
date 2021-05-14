@@ -1,7 +1,6 @@
 import { Component, TemplateRef, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { IsModalMovableService } from 'projects/is-modal/src/lib/is-modal-movable.service';
-import { IsModalComponent, IsModalConfig, IsModalMovableConfig, IsModalRef, IsModalMovableRef, IsModalService } from 'projects/is-modal/src/public_api';
+import { IsModalConfig, IsModalMovableConfig, IsModalRef, IsModalMovableRef, IsModalService } from 'projects/is-modal/src/public_api';
 import { Observable, of } from 'rxjs';
 import { delay, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { DemoModalMovableComponent } from './demo-modal-movable.component';

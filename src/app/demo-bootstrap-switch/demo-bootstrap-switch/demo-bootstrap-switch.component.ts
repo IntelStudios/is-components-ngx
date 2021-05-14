@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { IsModalComponent, IsModalConfig } from 'projects/is-modal/src/public_api';
+import { IsModalConfig, IsModalService } from 'projects/is-modal/src/public_api';
 
 @Component({
   selector: 'app-demo-bootstrap-switch',
@@ -41,7 +40,7 @@ export class DemoBootstrapSwitchComponent implements OnInit {
   control1: FormControl = new FormControl();
   control2: FormControl = new FormControl();
 
-  constructor(private bsModalservice: BsModalService, private changeDetector: ChangeDetectorRef) { }
+  constructor(private modalService: IsModalService, private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.control1 = new FormControl();
@@ -78,10 +77,13 @@ export class DemoBootstrapSwitchComponent implements OnInit {
             console.log('OK 2 button click');
           }
         }
-      ]
+      ], 
+      options: {
+        class: 'modal-lg',
+      }
     };
 
-    this.bsModalservice.show(IsModalComponent, { class: 'modal-lg', initialState: config });
+    this.modalService.show(config);
   }
 
   setValue(value: string) {

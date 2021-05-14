@@ -60,10 +60,6 @@ export interface IsModalInstance {
   modal: ModalDirective;
 }
 
-export interface IsModalRef {
-  close:() => void;
-}
-
 export interface IsModalControl {
   config: IsModalConfig;
   initialState?: any;

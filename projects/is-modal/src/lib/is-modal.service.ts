@@ -38,7 +38,7 @@ export class IsModalService {
 
     instanceRef.control = {
       config: config,
-      initialState: Object.assign({}, config.options?.initialState),
+      initialState: Object.assign({}, config.options.initialState),
       hide: hide
     };
 
