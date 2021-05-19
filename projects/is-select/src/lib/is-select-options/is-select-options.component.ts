@@ -121,8 +121,10 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.focusToInput();
-    this.scrollToSelected();
+    setTimeout(() => {
+      this.focusToInput();
+      this.scrollToSelected();
+    });
   }
 
   focusToInput(value: string = ''): void {

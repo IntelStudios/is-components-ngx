@@ -134,6 +134,7 @@ $is-color-search-separator: var(--is-select-search-spearator, #efefef);
     &.selected {
       > a {
         color: $is-color-selected-item;
+        background-color: $is-color-selected-item-bg;
       }
     }
     &.active {
