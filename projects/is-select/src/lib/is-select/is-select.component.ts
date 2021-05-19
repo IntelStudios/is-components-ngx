@@ -378,13 +378,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
     } else {
       if (active) {
-        // emit ID property from item's source in case it's number
-        // otherwise Item's ID is always string
-        if (active.source && !isNaN(parseInt(active.source.ID))) {
-          this.changed.emit(Number(active.ID));
-        } else {
-          this.changed.emit(active.ID);
-        }
+        this.changed.emit(active.getID(true));
       } else {
         this.changed.emit(null);
       }
@@ -410,11 +404,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         // emit ID property from item's source in case it's number
         // otherwise Item's ID is always string
         const values = active.map((item: SelectItem) => {
-          if (item.source && !isNaN(parseInt(item.source.ID))) {
-            return Number(item.ID);
-          } else {
-            return item.ID
-          }
+          return item.getID(true);
         });
         this.changed.emit(values);
       } else {

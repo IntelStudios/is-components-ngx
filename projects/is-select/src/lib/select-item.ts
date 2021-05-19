@@ -31,7 +31,7 @@ export class SelectItem {
         this.Value = source.Value;
       }
 
-      if(source.Disabled) {
+      if (source.Disabled) {
         this.disabled = source.Disabled;
       } else {
         this.disabled = false;
@@ -48,6 +48,22 @@ export class SelectItem {
     if (this.Value) {
       this.FilterValue = stripTags(stripDiacritics(this.Value));
     }
+  }
+
+  /**
+ * gets current's item ID with attepmt to type it as number if possible
+ */
+  getID(convert?: boolean): string | number {
+    if (!this.source) {
+      return this.ID;
+    }
+    if (!convert) {
+      return this.ID;
+    }
+    const isNum = String((parseInt(this.source.ID))) === String(this.source.ID)
+      || String((parseInt(this.source.id))) === String(this.source.id);
+
+    return isNum ? Number(this.ID) : this.ID;
   }
 
   public fillChildrenHash(optionsMap: Map<string, number>, startIndex: number): number {
