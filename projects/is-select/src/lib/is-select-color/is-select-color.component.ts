@@ -145,18 +145,19 @@ export class IsSelectColorComponent implements AfterViewInit, OnDestroy, Control
     this.changeDetector.markForCheck();
   }
 
-  valueSelected($event: any) {
-    this._value = $event.ID;
+  valueSelected($event: string | number | (string | number)[]) {
+    console.log($event);
+    if (!$event) {
+      this.removed();
+      return;
+    }
+    this._value = $event;
     if (this.multiple) {
-      this.valueChange.next($event.map((i: any) => i.ID));
+      this.valueChange.next($event);
     } else if ($event === []) {
       this.valueChange.next(null);
     } else {
-      if (String(Number(this.value)) !== String(this.value) || this.value === ' ') {
-        this.valueChange.next(this.value);
-      } else {
-        this.valueChange.next(Number(this.value));
-      }
+      this.valueChange.next(this.value);
     }
     this.changeDetector.markForCheck();
   }

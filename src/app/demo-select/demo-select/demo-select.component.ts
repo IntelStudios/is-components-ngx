@@ -28,6 +28,7 @@ export class DemoSelectComponent implements OnInit {
   select6Control: FormControl = new FormControl();
   select6ControlMulti: FormControl = new FormControl();
   select7Control: FormControl = new FormControl();
+  selectColorControl = new FormControl();
 
   public items: Array<string> = ['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',

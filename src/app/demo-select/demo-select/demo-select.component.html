@@ -62,11 +62,13 @@
 <div class="row">
   <div class="col-sm-6">
     <h3>Select Color</h3>
-    <is-select-color [allowClear]="true"></is-select-color>
+    <is-select-color [formControl]="selectColorControl" [allowClear]="true"></is-select-color>
+    <p>Value: {{selectColorControl.valueChanges|async|json}}</p>
   </div>
   <div class="col-sm-6">
     <h3>Select Color (no lables)</h3>
-    <is-select-color [allowClear]="true" [showLabel]="false" [isSearch]="false"></is-select-color>
+    <is-select-color  [formControl]="selectColorControl" [allowClear]="true" [showLabel]="false" [isSearch]="false"></is-select-color>
+    <p>Value: {{selectColorControl.valueChanges|async|json}}</p>
   </div>
 </div>
 
