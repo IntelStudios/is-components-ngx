@@ -280,8 +280,12 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     private changeDetector: ChangeDetectorRef) {
       // trigger setter by default so we're initially in single select mode
       this.multipleConfig = undefined;
-      this.optionsOverflowWidth = this.selectConfig.optionsOverflowWidth;
-      this.allowClear = this.selectConfig.allowClear;
+      if (this.selectConfig?.optionsOverflowWidth !== undefined) {
+        this.optionsOverflowWidth = this.selectConfig.optionsOverflowWidth;
+      }
+      if (this.selectConfig?.allowClear !== undefined) {
+        this.allowClear = this.selectConfig.allowClear;
+      }
   }
 
   ngOnInit() {
