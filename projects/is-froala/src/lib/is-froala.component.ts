@@ -188,6 +188,21 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
   }
 
+  resizeIframe(iframe: HTMLIFrameElement) {
+    setTimeout(() => {
+      // takes too much space, but good for approximation
+      const iframeHeight = iframe.scrollHeight;
+      const containerHeight = this.el.nativeElement.getBoundingClientRect().height;
+      // precise, but can be null during first initialization
+      if (iframe.contentDocument && iframe.contentDocument.body && iframe.contentDocument.body.parentElement) {
+        const iframeContentHeight = iframe.contentDocument.body.parentElement.getBoundingClientRect().height;
+        const initialHeight = (iframeContentHeight || iframeHeight);
+        const height = Math.max(containerHeight, initialHeight);
+        iframe.height = `${height}px`;
+      }
+    });
+  }
+
   loadEditor() {
     this.createEditor();
   }

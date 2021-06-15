@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-demo-froala',
@@ -61,12 +62,20 @@ npm install --save froala-editor at.js font-awesome</pre>
 
   control: FormControl = new FormControl();
 
-  constructor() { }
+  constructor(private sanitizer: DomSanitizer) { }
 
-  html: string = '<p style="padding: 3px; border: 1px solid blue;">Hello how are you</p>';
+  html = `<style>
+	body {
+		background: #7abdff !important;
+	}
+  </style>
+  <p style="padding: 3px; border: 1px solid blue;">Hello how are you</p>
+  <div style="width: 10px; height: 1500px"></div>`;
 
   ngOnInit() {
+    this.control.setValue(this.html);
   }
+
 
   onFroalaCommand($event) {
     console.log($event);

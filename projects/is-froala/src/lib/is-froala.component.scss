@@ -2,6 +2,8 @@
 @import '../../../styles/variables';
 
 
+$is-froala-min-height: var(--is-froala-min-height, 249px);
+$is-froala-max-height: var(--is-froala-max-height, 1049px);
 is-froala {
   min-height: 189px;
   display: block;
@@ -79,8 +81,8 @@ is-froala {
     padding-left: 12px;
     padding-right: 12px;
     padding-top: 6px;
-    min-height: 249px;
-    max-height: 1049px;
+    min-height: $is-froala-min-height;
+    max-height: $is-froala-max-height;
     overflow-y: auto;
     cursor: pointer;
   }
