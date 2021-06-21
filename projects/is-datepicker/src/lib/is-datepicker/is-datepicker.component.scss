@@ -37,7 +37,7 @@ is-datepicker {
 
       &.disabled {
         @include is-input-disabled;
-        cursor: not-allowed;
+        cursor: default;
       }
 
       &.align-left {
@@ -98,7 +98,7 @@ is-datepicker {
 
     &.disabled {
       pointer-events: none;
-      cursor: not-allowed;
+      cursor: default;
     }
   }
 
