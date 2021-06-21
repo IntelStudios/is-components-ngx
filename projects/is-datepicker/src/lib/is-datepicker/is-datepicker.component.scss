@@ -37,7 +37,7 @@ is-datepicker {
 
       &.disabled {
         @include is-input-disabled;
-        cursor: not-allowed;
+        cursor: default;;
       }
 
       &.readonly {
@@ -107,7 +107,7 @@ is-datepicker {
 
       &.disabled {
         pointer-events: none;
-        cursor: not-allowed;
+        cursor: default;;
       }
     }
 
