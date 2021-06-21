@@ -201,7 +201,7 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
     z-index: 5;
     top: 0;
     left: 0;
-    cursor: not-allowed;
+    cursor: default;;
   }
 
   .ui-select-multiple .ui-select-match-item {
