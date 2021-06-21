@@ -37,7 +37,7 @@ $is-color-cls-default-fg: var(--is-color-default, #333);
     &.disabled {
         pointer-events: none;
         background-color: $is-color-disabled-bg;
-        cursor: not-allowed;
+        cursor: default;
     }
 }
 
