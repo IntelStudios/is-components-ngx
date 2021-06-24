@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnIn
 import { IOptionsBehavior, ChildrenOptionsBehavior, GenericOptionsBehavior, OptionsBehavior } from '../options-behavior';
 import { IsSelectOptionDirective } from '../is-select.directives';
 import { SelectItem } from '../select-item';
-import { createFilterRegexp } from 'is-text-utils';
+import { createFilterRegexp } from '@intelstudios/text-utils';
 import { configToken, IsSelectConfig, IsSelectMultipleConfig } from '../is-select.interfaces';
 import { IsSelectOptionsService } from '../is-select.options.service';
 import { Inject } from '@angular/core';

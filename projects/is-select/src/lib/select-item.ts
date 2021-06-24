@@ -1,6 +1,6 @@
 import { IsSelectModelConfig } from './is-select.interfaces';
 import { stripTags } from './select-pipes';
-import { stripDiacritics } from 'is-text-utils';
+import { stripDiacritics } from '@intelstudios/text-utils';
 
 export class SelectItem {
   ID: string;
