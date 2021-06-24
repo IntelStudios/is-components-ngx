@@ -770,5 +770,8 @@
       }
     }
   },
-  "defaultProject": "is-components-ngx"
+  "defaultProject": "is-components-ngx",
+  "cli": {
+    "analytics": false
+  }
 }

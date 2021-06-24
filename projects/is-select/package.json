@@ -6,7 +6,7 @@
     "@angular/core": "^8.0.0",
     "@angular/cdk": "^8.0.0",
     "@intelstudios/cdk": "^8.0.0",
-    "is-text-utils":"^1.0.0",
+    "@intelstudios/text-utils":"^1.1.0",
     "is-core-ui":"^8.0.0"
   }
 }
