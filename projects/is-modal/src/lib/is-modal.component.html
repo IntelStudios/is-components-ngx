@@ -1,4 +1,4 @@
-<div [config]="config?.options" bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+<div [config]="config?.options" bsModal #modal="bs-modal" [class]="'modal fade ' + config?.options?.class" tabindex="-1" role="dialog"
   aria-labelledby="dialog-auto-name">
   <div class="modal-dialog">
     <div class="modal-content">
