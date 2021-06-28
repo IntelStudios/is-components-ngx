@@ -29,7 +29,6 @@ export class IsModalComponent implements OnInit, IsModalInstance {
 
   ngOnInit() {
     this.config = this.control.config;
-    console.log(this);
     this.modalRef = {
       close: () => {
         this.control.hide();
