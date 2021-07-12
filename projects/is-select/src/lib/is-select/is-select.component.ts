@@ -598,7 +598,8 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       }
     }
 
-    this._clickedOutsideListener = this.renderer.listen('document', 'click', ($event: MouseEvent) => {
+    // listen for a general mousedown to close all options (mousedown is generated e. g. when a movable modal drag is started)
+    this._clickedOutsideListener = this.renderer.listen('document', 'mousedown', ($event: MouseEvent) => {
       if (this.optionsOpened) {
         let el: HTMLElement = <HTMLElement>$event.target;
         let isThisEl = false;
