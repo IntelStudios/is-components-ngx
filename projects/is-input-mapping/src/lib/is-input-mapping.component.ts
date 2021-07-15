@@ -112,6 +112,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   @Input()
   service: IsInputMappingService; // taken from root element
 
+  @Input()
+  showOnlyFiltered: boolean = false;
+
   inputsAssignableFiltered: InputSchema[] = [];
   inputsAssigned: InputSchema[] = [];
   inputsFilled: InputSchema[] = [];

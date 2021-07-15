@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { IsInputMappingInput, IsInputMappingValue } from 'projects/is-input-mapping/src/public_api';
 import { FormControl } from '@angular/forms';
 
@@ -11,7 +11,7 @@ export class DemoInputMappingComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.27.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-input-mapping-7.2.28.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsInputMappingModule } from 'is-input-mapping';</pre>
@@ -494,11 +494,12 @@ export class DemoInputMappingComponent implements OnInit {
   formControl = new FormControl({InputSchemaMapping: {'Modified': 'Load files.Created'}, InputSchemaFilter: {}});
   currentValue = '';
   filtersAllowed = true;
+  showOnlyFiltered = false;
   validationError = null;
   val: IsInputMappingValue;
   currentDataset = this.MOCK_DATA;
 
-  constructor() { }
+  constructor(private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.formControl.valueChanges.subscribe((val: IsInputMappingValue) => {
@@ -555,6 +556,11 @@ export class DemoInputMappingComponent implements OnInit {
 
   toggleDisabled() {
     this.formControl.disabled ? this.formControl.enable() : this.formControl.disable({emitEvent: false});
+  }
+
+  toggleShowOnlyFiltered() {
+    this.showOnlyFiltered = !this.showOnlyFiltered;
+    this.cd.markForCheck();
   }
 
   filterFullpath() {

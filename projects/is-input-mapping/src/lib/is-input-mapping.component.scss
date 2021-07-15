@@ -30,6 +30,10 @@
       display: flex;
       align-items: center;
       margin-left: 4px;
+
+      &.filter-values-wrapper {
+        height: 20px;
+      }
     }
 
     .name {
