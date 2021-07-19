@@ -16,6 +16,7 @@ import {
   Renderer2,
   TemplateRef,
   ChangeDetectorRef,
+  HostBinding,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, interval, merge, Subscription, bindCallback, Subject } from 'rxjs';
@@ -140,16 +141,18 @@ export class IsTabDirective {
   selector: 'is-tabset',
   styleUrls: ['is-tabset.component.scss'],
   template: `
-    <ul [class]="tabClass" role="tablist" [class.stretched]="stretched">
-      <li class="nav-item" *ngFor="let tab of tabs" [class.disabled]="tab.disabled" [class.is-tab-invalid]="tab.valid === false">
-        <a [id]="tab.id" class="nav-link {{tab.titleClass}}" [ngClass]="{'active show' : tab.id === activeId}" (click)="select(tab.id)">
-          {{tab.title}}<ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
-        </a>
-      </li>
-    </ul>
+    <div class="tab-header">
+      <ul [class]="tabClass" role="tablist" [class.stretched]="stretched">
+        <li class="nav-item" *ngFor="let tab of tabs" [class.disabled]="tab.disabled" [class.is-tab-invalid]="tab.valid === false">
+          <a [id]="tab.id" class="nav-link {{tab.titleClass}}" [ngClass]="{'active show' : tab.id === activeId}" (click)="select(tab.id)">
+            {{tab.title}}<ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
+          </a>
+        </li>
+      </ul>
+      <div class="scroll-btn left"><i class="fas fa-chevron-left" (click)="scrollRight()" (mousedown)="startScrollRight()" (mouseup)="stopScroll()"></i></div>
+      <div class="scroll-btn right"><i class="fas fa-chevron-right" (click)="scrollLeft()" (mousedown)="startScrollLeft()" (mouseup)="stopScroll()"></i></div>
+    </div>
 
-    <div class="scroll-btn left"><i class="fas fa-chevron-left" (click)="scrollRight()" (mousedown)="startScrollRight()" (mouseup)="stopScroll()"></i></div>
-    <div class="scroll-btn right"><i class="fas fa-chevron-right" (click)="scrollLeft()" (mousedown)="startScrollLeft()" (mouseup)="stopScroll()"></i></div>
     <div *ngIf="tabsetInvalidLeft" class="tabset-invalid left">
       <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate || defaultInvalidTemplate">
       </ng-container>
@@ -204,6 +207,9 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
    * scroll. If disabled, tab titles will wrap.
    */
   @Input() nowrap: boolean = true;
+
+  @HostBinding('class.sticky-headers')
+  @Input() stickyHeaders = false;
 
   /**
    * A tab change event fired right before the tab selection happens. See NgbTabChangeEvent for payload details
@@ -363,7 +369,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   scrollRight() {
     this.elUL.scrollBy({ behavior: 'smooth', left: - SCROLL_BY });
   }
-  
+
   startScrollRight() {
     this._scrollSub = interval(100).subscribe(() => {
       this.elUL.scrollBy({ behavior: 'smooth', left: - SCROLL_BY });
@@ -391,7 +397,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
     if (!this.elUL) {
       return;
     }
-    
+
     if (this.elUL.scrollLeft === 0) {
       this.renderer.removeStyle(this.elBtnLeft, 'display');
       this.stopScroll();

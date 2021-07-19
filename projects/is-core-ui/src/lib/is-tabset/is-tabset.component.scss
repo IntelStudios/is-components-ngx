@@ -28,112 +28,124 @@
       right: 0;
     }
   }
-  > .scroll-btn {
-    position: absolute;
-    z-index: 1;
-    align-items: center;
-    display: none;
-    top: 0;
-    padding: 0px 12px;
 
-    &.right {
-      right: 0;
-      background: linear-gradient(90deg, rgba(255,255,255,0) 25%, $is-tabset-nav-bg-color);
-      border-top-right-radius: 4px;
-    }
-    &.left {
-      left: 0;
-      background: linear-gradient(90deg, $is-tabset-nav-bg-color 25%, rgba(255,255,255,0));
-      border-top-left-radius: 4px;
-    }
-    > i {
-      color: $is-control-handle-color;
-      cursor: pointer;
-      border-radius: 14px;
+  &.sticky-headers {
+    .tab-header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
   }
 
-  >ul.stretched {
-    >.nav-item {
-      flex: 1;
-    }
-  }
+  .tab-header {
+    > .scroll-btn {
+      position: absolute;
+      z-index: 1;
+      align-items: center;
+      display: none;
+      top: 0;
+      padding: 0px 12px;
 
-  >ul {
-
-    display: flex;
-    white-space: nowrap;
-    flex-wrap: nowrap;
-    overflow: auto;
-    overflow-y: hidden;
-    border-bottom: 1px solid $is-tabset-border-color;
-    -webkit-overflow-scrolling: touch;
-    @include hide-scroll();
-    background-color: $is-tabset-nav-bg-color;
-
-    &.nav-pills {
-      padding: $is-general-padding;
-      border-bottom: none;
-      > .nav-item {
-        > .nav-link {
-          &:hover {
-            &::before {
-              content: none;
-            }
-          }
-          &.active {
-            &::before {
-              content: none;
-            }
-          }
-        }
+      &.right {
+        right: 0;
+        background: linear-gradient(90deg, rgba(255,255,255,0) 25%, $is-tabset-nav-bg-color);
+        border-top-right-radius: 4px;
       }
-    }
-
-    >.nav-item {
-      text-align: center;
-      cursor: pointer;
-      position: relative;
-
-      .nav-link {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: transparent;
-        color: $is-tabset-item-fg-color;
+      &.left {
+        left: 0;
+        background: linear-gradient(90deg, $is-tabset-nav-bg-color 25%, rgba(255,255,255,0));
+        border-top-left-radius: 4px;
+      }
+      > i {
+        color: $is-control-handle-color;
         cursor: pointer;
-
-        &:hover {
-          color: $is-tabset-item-hover-fg-color;
-
-          &::before {
-            content: "";
-            width: 100%;
-            height: 2px;
-            background-color: $is-tabset-item-hover-border-color;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-          }
-        }
-
-        &.active {
-          font-weight: bold;
-          color: $is-general-text-default-color;
-
-          &::before {
-            content: "";
-            width: 100%;
-            height: 4px;
-            background-color: $is-tabset-item-active-border-color;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-          }
-        }
+        border-radius: 14px;
       }
     }
 
+    > ul.stretched {
+      > .nav-item {
+        flex: 1;
+      }
+    }
+
+    > ul {
+      display: flex;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+      overflow: auto;
+      overflow-y: hidden;
+      border-bottom: 1px solid $is-tabset-border-color;
+      -webkit-overflow-scrolling: touch;
+      @include hide-scroll();
+      background-color: $is-tabset-nav-bg-color;
+
+      &.nav-pills {
+        padding: $is-general-padding;
+        border-bottom: none;
+
+        > .nav-item {
+          > .nav-link {
+            &:hover {
+              &::before {
+                content: none;
+              }
+            }
+
+            &.active {
+              &::before {
+                content: none;
+              }
+            }
+          }
+        }
+      }
+
+      > .nav-item {
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+
+        .nav-link {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: transparent;
+          color: $is-tabset-item-fg-color;
+          cursor: pointer;
+
+          &:hover {
+            color: $is-tabset-item-hover-fg-color;
+
+            &::before {
+              content: "";
+              width: 100%;
+              height: 2px;
+              background-color: $is-tabset-item-hover-border-color;
+              position: absolute;
+              bottom: 0;
+              left: 0;
+            }
+          }
+
+          &.active {
+            font-weight: bold;
+            color: $is-general-text-default-color;
+
+            &::before {
+              content: "";
+              width: 100%;
+              height: 4px;
+              background-color: $is-tabset-item-active-border-color;
+              position: absolute;
+              bottom: 0;
+              left: 0;
+            }
+          }
+        }
+      }
+
+    }
   }
 
   .tab-content {
