@@ -294,6 +294,48 @@
 
 <div class="row">
   <div class="col-sm-12">
+    <h2>Tab with sticky header</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="sticky-tab-container">
+      <is-tabset [stickyHeaders]="true">
+        <ng-template TabsetInvalid><i class="fa fa-beer"></i></ng-template>
+        <is-tab title="Tab 1">
+          <ng-template TabContent>
+            <p>Line 1</p>
+            <p>Line 2</p>
+            <p>Line 3</p>
+            <p>Line 4</p>
+            <p>Line 5</p>
+            <p>Line 6</p>
+          </ng-template>
+        </is-tab>
+        <is-tab>
+          <ng-template TabTitle>
+            Second tab really long name so that we can trigger overflow
+          </ng-template>
+          <ng-template TabContent>
+            Second tab content
+          </ng-template>
+        </is-tab>
+        <is-tab>
+          <ng-template TabTitle>
+            Third tab
+          </ng-template>
+          <ng-template TabContent>
+            Third content
+          </ng-template>
+        </is-tab>
+      </is-tabset>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
     <h2>Hint</h2>
   </div>
 </div>
