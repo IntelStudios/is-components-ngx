@@ -3,6 +3,6 @@
 <div class="view-border cursor short-scroll" (click)="loadEditor()">
   <a class="btn btn-default btn-xs icon-load">
     <i class="fa fa-edit"></i>
-  </a>  
-  <iframe #iframe scrolling="no" width="100%" frameborder="0" [srcdoc]="htmlContent" (load)="resizeIframe(iframe)"></iframe>
+  </a>
+  <iframe #iframe scrolling="no" class="preview" width="100%" frameborder="0" [srcdoc]="htmlContent" (load)="resizeIframe(iframe)"></iframe>
 </div>
