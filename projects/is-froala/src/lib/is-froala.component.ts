@@ -137,8 +137,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   loadOnInit: boolean = true;
 
   @Input()
-  set html(value: string) {
-    this._html = this.sanitizer.bypassSecurityTrustHtml(value);
+  set html(value: string | null) {
+    this._html = this.sanitizer.bypassSecurityTrustHtml(value !== null ? value : '');
   }
 
   get htmlContent(): SafeHtml {
