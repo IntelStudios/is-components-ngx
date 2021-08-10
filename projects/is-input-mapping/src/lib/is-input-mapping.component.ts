@@ -113,7 +113,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   service: IsInputMappingService; // taken from root element
 
   @Input()
-  showOnlyFiltered: boolean = false;
+  showOnlyFiltered = false;
 
   inputsAssignableFiltered: InputSchema[] = [];
   inputsAssigned: InputSchema[] = [];
@@ -183,6 +183,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   ngOnInit() {
+    // Initialize service on root element
     if (!this.paintedPath) { // root element
       this.level = 0;
       this.paintedPath = [];
@@ -207,6 +208,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.collapsible = this.paintedStructure.Children.length > 0;
     }
 
+    // Get all assignable items and assign items saved from the service state
     if (this.level > 0) {
       this._inputsAssignable = this._data.InputSchema.slice().filter(input => this.paintedStructure.InputColumns.indexOf(input.Name) > -1);
       const alreadyAssignedNames = this.service.getAssignedItemNames();
@@ -215,12 +217,14 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.service.getAssignedItems(this.paintedStructure.Path).forEach(item => this.assignCallback(item));
     }
 
+    // Get correct icon
     if (!this.collapsible) {
       this.icon = this.getDataTypeIcon(this.paintedStructure.DataType);
     } else {
       this.icon = this.getTypeIcon(this.paintedStructure.Type); // folder
     }
 
+    // Check if disabled
     this.setDisabled(!this.service.isAssignable(this.paintedPath, this.collapsible), true);
 
     // debounce quick changes in mouseover states
@@ -286,12 +290,17 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.cd.markForCheck();
     }));
 
+    // apply new HTML changes if root node
     if (this.level === 0) {
       this.cd.markForCheck();
     }
   }
 
-  toggleCollapsed() {
+  /**
+   * Toggles collapsed status of this node
+   * Does nothing if not collapsible
+   */
+  toggleCollapsed(): void {
     if (!this.collapsible) {
       return;
     }
@@ -301,7 +310,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.cd.markForCheck();
   }
 
-  assignDropdownShown() {
+  /**
+   * Shows new item assign dropdown
+   * Does nothing if enabled
+   */
+  assignDropdownShow() {
     if (this.disabled) {
       return;
     }
@@ -309,7 +322,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.assignDropdownVisible = true;
   }
 
-  assignDropdownHide() {
+  /**
+   * Hides new item assign dropdown
+   * Does nothing if enabled
+   */
+  assignDropdownHide(): void {
     if (this.disabled) {
       return;
     }
@@ -317,7 +334,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.assignDropdownVisible = false;
   }
 
-  filterDropdownShown() {
+  /**
+   * Shows filtering dropdown
+   * Does nothing if enabled
+   */
+  filterDropdownShow(): void {
     if (this.disabled) {
       return;
     }
@@ -325,7 +346,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.filterDropdownVisible = true;
   }
 
-  filterDropdownHide() {
+  /**
+   * Hides filtering dropdown
+   * Does nothing if enabled
+   */
+  filterDropdownHide(): void {
     if (this.disabled) {
       return;
     }
@@ -333,7 +358,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.filterDropdownVisible = false;
   }
 
-  filterModalShow() {
+  /**
+   * Shows filtering modal
+   * Does nothing if enabled
+   */
+  filterModalShow(): void {
     if (this.disabled) {
       return;
     }
@@ -341,8 +370,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.newFilterModalVisible = true;
   }
 
-
-  filterModalHide() {
+  /**
+   * Hides filtering modal
+   * Does nothing if enabled
+   */
+  filterModalHide(): void {
     if (this.disabled) {
       return;
     }
@@ -350,11 +382,19 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.newFilterModalVisible = false;
   }
 
-
+  /**
+   * Assigns given item to this node by calling service
+   * @param item item to be assigned here
+   */
   assign(item: InputSchema) {
     this.service.assignItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
   }
 
+  /**
+   * Calls service to release given items from this node
+   * Does nothing if node is disabled
+   * @param item item to be released
+   */
   release(item: InputSchema) {
     if (this.disabled) {
       return;
@@ -362,6 +402,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.service.releaseItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
   }
 
+  /**
+   * Ges all assignable items and checks if they are assigned
+   */
   getAllItems(): {item: InputSchema; assigned: boolean}[] {
     if (!this.data) {
       return [];
@@ -370,6 +413,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     return this.data.InputSchema.map(item => ({item, assigned: assignedNames.indexOf(item.Name) > -1}));
   }
 
+  /**
+   * Get children paint path
+   * @param i index of the children to get the path of
+   * @returns painted path of the children
+   */
   getChildPath(i: number): number[] {
     const path = this.paintedPath.slice();
     path.push(i);
@@ -420,6 +468,10 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
   }
 
+  /**
+   * Gets all filter type names based of node type
+   * @param type node type
+   */
   getDataTypeFilters(type: number): string[] {
     switch (type) {
       case 2:
@@ -430,6 +482,10 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     return [];
   }
 
+  /**
+   * Tests if this node can apply any filters
+   * @param type node type to test
+   */
   hasDataTypeFilters(type: number): boolean {
     return this.getDataTypeFilters(type).length > 0;
   }
@@ -461,6 +517,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
   }
 
+  /**
+   * Propagates new value to FormValueAccessor after validator checking
+   */
   private propagateNewValue(): void {
     const value: IsInputMappingValue = {InputSchemaFilter: this.inputFilters, InputSchemaMapping: this.inputSchemaMap};
     if (this.level === 0 && this._validatorOnChange) {
@@ -471,6 +530,10 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
   }
 
+  /**
+   * Adds new filter to this node with given type
+   * @param filterType type of the filter
+   */
   createNewDataFilter(filterType: string) {
     this.newFilterModalType = filterType;
     this.newFilterModalValue.setValue(null);
@@ -478,6 +541,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.filterDropdownHide();
   }
 
+  /**
+   * Applies new filter to this node
+   */
   applyNewFilter(): void {
     if (!this.newFilterModalValue.value) {
       return;
@@ -498,6 +564,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.filterModalHide();
   }
 
+  /**
+   * Applies previously unapplied value and filters to all nodes by calling service
+   */
   applyValue(): void {
     const value = this._unappliedValue;
     const mappedValue = this._unappliedMappedValue;
@@ -562,7 +631,12 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.cd.markForCheck();
   }
 
-  releaseFilter(filter: IsInputSchemaFilter) {
+  /**
+   * Removes filter from this node
+   * Does not work if disabled
+   * @param filter filter to be released from this node
+   */
+  releaseFilter(filter: IsInputSchemaFilter): void {
     if (this.disabled) {
       return;
     }
@@ -621,6 +695,12 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.service.setDisabled(this.disabled);
   }
 
+  /**
+   * Callback for new assign request.
+   * If the request is meant to be assigned to this node, adds it to locally assigned
+   * For root node update value
+   * @param status request returned from mapping service
+   */
   private assignCallback(status: AssignStatus) {
     if (status.Path === this.paintedStructure.Path) {
       // assign this item here if it was meant for us
@@ -645,6 +725,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this._subscriptions.forEach(s => s.unsubscribe());
   }
 
+  /**
+   * Sets disabled state on this component
+   * @param value true if disabled, false if enabled
+   * @param clearFilters if set to true, then all filters of this node are released
+   */
   setDisabled(value: boolean, clearFilters = false): void {
     this.disabled = value;
     if (value && clearFilters) {
@@ -652,6 +737,10 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
   }
 
+  /**
+   * Validates if this components value if valid
+   * Always valid on non-root component
+   */
   validate(control: AbstractControl): ValidationErrors {
     if (this.level === 0) {
       return this._validator(control);
@@ -663,6 +752,11 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this._validatorOnChange = fn;
   }
 
+  /***
+   * Assigns all items that are meant to be assigned to this node (and possible its children)
+   * @param toAssign if null then all available items are used
+   * @return all assignable items to this node and its children
+   */
   autoassign(toAssign: Array<InputSchema> = null): Array<InputSchema> {
     if (this.disabled) {
       return toAssign;

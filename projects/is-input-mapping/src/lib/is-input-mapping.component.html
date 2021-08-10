@@ -35,7 +35,7 @@
     </span>
 
     <i *ngIf="!disabled && inputsAssignableFiltered.length > 0 && (mouseover || assignDropdownVisible) && !showOnlyFiltered"
-       class="fa fa-plus-square btn-attach-item" (click)="assignDropdownShown()">
+       class="fa fa-plus-square btn-attach-item" (click)="assignDropdownShow()">
     </i>
   </span>
 
@@ -69,7 +69,7 @@
 
     <i
       *ngIf="!disabled && filtersAllowed && hasDataTypeFilters(paintedStructure.DataType) && (mouseover || filterDropdownVisible || newFilterModalVisible) && !showOnlyFiltered"
-      class="filter fa fa-filter btn-attach-item" (click)="filterDropdownShown()">
+      class="filter fa fa-filter btn-attach-item" (click)="filterDropdownShow()">
     </i>
   </span>
 

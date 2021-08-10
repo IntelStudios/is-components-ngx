@@ -22,15 +22,26 @@ export class IsInputMappingService {
   disabledChange$ = this.disabledSource.asObservable();
   filterChange$ = this.filterSource.asObservable();
 
-  applyFilter(data: IsInputSchemaFilterStatus) {
+  /**
+   * Applies new filter and notifies components
+   * @param data filter data
+   */
+  applyFilter(data: IsInputSchemaFilterStatus): void {
     this.filterSource.next(data);
   }
 
-  releaseAllFilters() {
+  /**
+   * Removes all filters and notifies components without emitting ValueChangeAccessor change event
+   */
+  releaseAllFilters(): void {
     this.filterSource.next({Path: null, Filters: [], EmmitChange: false});
   }
 
-  assignItem(data: AssignStatus) {
+  /**
+   * Assigns new item, saves it into cache and notifies components
+   * @param data new assigned item data
+   */
+  assignItem(data: AssignStatus): void {
     if (!(data.Path in this.assignedCache)) {
       this.assignedCache[data.Path] = [];
     }
@@ -46,7 +57,11 @@ export class IsInputMappingService {
     this.assignSource.next(data);
   }
 
-  releaseItem(data: AssignStatus) {
+  /**
+   * Releases assigned item and notifies components and removes it from assigned cache
+   * @param data data of assigned item
+   */
+  releaseItem(data: AssignStatus): void {
     if (data.Path in this.assignedCache) {
       this.assignedCache[data.Path] = this.assignedCache[data.Path].filter(assign => assign.Item.Name !== data.Item.Name);
       if (this.assignedCache[data.Path].length === 0) {
@@ -56,7 +71,10 @@ export class IsInputMappingService {
     this.releaseSource.next(data);
   }
 
-  releaseAllItems() {
+  /**
+   * Releases all cached assigned elements and notifies components
+   */
+  releaseAllItems(): void {
     Object.keys(this.assignedCache).forEach(path => {
       this.assignedCache[path].forEach((data: AssignStatus) => {
         this.releaseItem(data);
@@ -64,16 +82,31 @@ export class IsInputMappingService {
     });
   }
 
+  /**
+   * Returns all cached assigned elements for given path
+   * @param path path of the node to get assigned items of
+   * @returns all cached assigned elements for given path
+   */
   getAssignedItems(path: string): AssignStatus[] {
     return path in this.assignedCache ? this.assignedCache[path] : [];
   }
 
+  /**
+   * Gets all cached assigned item names for all nodes
+   * @returns all cached assigned item names for all nodes
+   */
   getAssignedItemNames(): string[] {
     const names = [];
     Object.keys(this.assignedCache).map(key => this.assignedCache[key]).forEach(items => items.forEach(item => names.push(item.Item.Name)));
     return names;
   }
 
+  /**
+   * Tests if at least one item can be assigned to node on given painted path
+   * @param paintedPath painted path of the node to test
+   * @param isCollapsible if the tested node can be collapsed or not
+   * @returns true if at least one item can be assigned to given node
+   */
   isAssignable(paintedPath: number[], isCollapsible: boolean): boolean {
     if (this.isDisabled) {
       return false;
@@ -100,7 +133,13 @@ export class IsInputMappingService {
     return true;
   }
 
-  clearInvalidAssigns(validStructure: DataStructure, validNames: string[], filters: { [id: string]: IsInputSchemaFilter[] }) {
+  /**
+   * After input data change this remove all assigns that cannot be applied anymore
+   * @param validStructure new data structure
+   * @param validNames new possible item names
+   * @param filters new possible filters
+   */
+  clearInvalidAssigns(validStructure: DataStructure, validNames: string[], filters: { [id: string]: IsInputSchemaFilter[] }): void {
     const validPaths = [];
 
     function fetchValidPaths(structure: DataStructure) {
@@ -139,7 +178,11 @@ export class IsInputMappingService {
     });
   }
 
-  setDisabled(val: boolean) {
+  /**
+   * Sets disabled state and notifies components
+   * @param val true for disabled, false for enabled
+   */
+  setDisabled(val: boolean): void {
     this.isDisabled = val;
     this.disabledSource.next(val);
   }
