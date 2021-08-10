@@ -275,9 +275,13 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       }
 
       if (this.level === 0) {
-        this.inputFilters[filter.Path] = filter.Filters;
-        if (this.inputFilters[filter.Path].length === 0) {
-          delete this.inputFilters[filter.Path];
+        if (filter.Path === null && filter.Filters.length === 0) {
+          this.inputFilters = {};
+        } else {
+          this.inputFilters[filter.Path] = filter.Filters;
+          if (this.inputFilters[filter.Path].length === 0) {
+            delete this.inputFilters[filter.Path];
+          }
         }
         if (filter.EmmitChange) {
           this.propagateNewValue();
@@ -289,6 +293,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
       this.cd.markForCheck();
     }));
+
+    // apply filters from cache
+    this.service.applyCachedFilters(this.paintedStructure.Path);
 
     // apply new HTML changes if root node
     if (this.level === 0) {
@@ -559,7 +566,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       EmmitChange: true
     };
 
-    this.service.applyFilter(newStatus);
+    this.service.applyFilters(newStatus);
     this.filterDropdownHide();
     this.filterModalHide();
   }
@@ -624,7 +631,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
     if (value.InputSchemaFilter) {
       Object.keys(value.InputSchemaFilter).forEach((path: string) => {
-        this.service.applyFilter({Path: path, Filters: value.InputSchemaFilter[path], EmmitChange: false});
+        this.service.applyFilters({Path: path, Filters: value.InputSchemaFilter[path], EmmitChange: false});
       });
     }
 
@@ -647,7 +654,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       EmmitChange: true
     };
 
-    this.service.applyFilter(newStatus);
+    this.service.applyFilters(newStatus);
   }
 
   /*
@@ -733,7 +740,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   setDisabled(value: boolean, clearFilters = false): void {
     this.disabled = value;
     if (value && clearFilters) {
-      this.service.applyFilter({Path: this.paintedStructure.Path, Filters: [], EmmitChange: true});
+      this.service.applyFilters({Path: this.paintedStructure.Path, Filters: [], EmmitChange: true});
     }
   }
 
