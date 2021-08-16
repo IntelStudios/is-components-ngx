@@ -6,6 +6,12 @@ $is-froala-min-height: var(--is-froala-min-height, 249px);
 $is-froala-max-height: var(--is-froala-max-height, 1049px);
 is-froala {
   min-height: 189px;
+
+  &:not(.editing) {
+    // allow smaller user-set minimal height in preview mode
+    min-height: min(189px, #{$is-froala-min-height});
+  }
+
   display: block;
   border: 1px solid;
   @include is-input();
