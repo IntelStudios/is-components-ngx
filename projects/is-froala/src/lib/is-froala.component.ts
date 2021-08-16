@@ -101,7 +101,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   private _options: IIsFroalaOptions = null;
   // froala editor instance
-  private _editor: any;
+  @HostBinding('class.editing')
+  editor: any;
 
   private _eventListeners: string[] = [];
   // jquery wrapped element
@@ -152,11 +153,11 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   onCommand: EventEmitter<FroalaCommand> = new EventEmitter<FroalaCommand>();
 
   constructor(@Optional() @Inject(configToken) private froalaConfig: IsFroalaConfig,
-    private changeDetector: ChangeDetectorRef,
-    private el: ElementRef,
-    private zone: NgZone,
-    private sanitizer: DomSanitizer,
-    private  translate: TranslateService) {
+              private changeDetector: ChangeDetectorRef,
+              private el: ElementRef,
+              private zone: NgZone,
+              private sanitizer: DomSanitizer,
+              private  translate: TranslateService) {
     if (!froalaConfig) {
       console.warn(`IS-FROALA: Config not provided. Will not load license (use IsFroalaModule.forRoot() )`);
       this.froalaConfig = {
@@ -192,7 +193,11 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     setTimeout(() => {
       // takes too much space, but good for approximation
       const iframeHeight = iframe.scrollHeight;
-      const containerHeight = this.el.nativeElement.getBoundingClientRect().height;
+      const { parentElement } = iframe;
+      const parentStyle = window.getComputedStyle(parentElement);
+      const parentPaddingTop = parseInt(parentStyle.paddingTop, 10);
+      const parentPaddingBottom = parseInt(parentStyle.paddingBottom, 10);
+      const containerHeight = iframe.parentElement.getBoundingClientRect().height - parentPaddingTop - parentPaddingBottom - 8;
       // precise, but can be null during first initialization
       if (iframe.contentDocument && iframe.contentDocument.body && iframe.contentDocument.body.parentElement) {
         const iframeContentHeight = iframe.contentDocument.body.parentElement.getBoundingClientRect().height;
@@ -234,7 +239,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
-    if (this._editor) {
+    if (this.editor) {
       this._$element.froalaEditor(this.disabled ? 'edit.off' : 'edit.on');
     }
   }
@@ -242,7 +247,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   // End Validators methods
 
   private setEditorValue() {
-    if (this._editor) {
+    if (this.editor) {
       time('set value');
       this._$element.froalaEditor('html.set', this.value);
       // reset undo/history when value is set externally
@@ -439,16 +444,16 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
    * setup At.js intellisense
    */
   private setupAtJs() {
-    if (this._editor && this._atJsConfig) {
-      this._editor.$el
+    if (this.editor && this._atJsConfig) {
+      this.editor.$el
         .atwho(this._atJsConfig)
         .on('inserted.atwho', () => {
           // we need to edit also text, which was added by autocomplete
-          this._editor.$el.find('.atwho-inserted').removeAttr('contenteditable').removeAttr('data-atwho-at-query');
+          this.editor.$el.find('.atwho-inserted').removeAttr('contenteditable').removeAttr('data-atwho-at-query');
         })
 
-      this._editor.events.on('keydown', (e) => {
-        if (e.which == $.FroalaEditor.KEYCODE.ENTER && this._editor.$el.atwho('isSelecting')) {
+      this.editor.events.on('keydown', (e) => {
+        if (e.which == $.FroalaEditor.KEYCODE.ENTER && this.editor.$el.atwho('isSelecting')) {
           return false;
         }
       }, true);
@@ -457,7 +462,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   // create editor instance
   private createEditor() {
-    if (this._editor) {
+    if (this.editor) {
       return;
     }
     time('createEditor');
@@ -479,8 +484,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     // init editor
     time('runOutsideAngular')
     this.zone.runOutsideAngular(() => {
-      this._editor = this._$element.froalaEditor(this._froalaConfig).data('froala.editor');
-      debug('editor created', this._editor);
+      this.editor = this._$element.froalaEditor(this._froalaConfig).data('froala.editor');
+      debug('editor created', this.editor);
       this.setEditorValue();
       this.initAutocomplete();
 
@@ -491,8 +496,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
         this._$element.froalaEditor('html.insert', data, true);
         this._$element.froalaEditor('events.trigger', 'contentChanged', [], true);
       });
-      this._editor.cmdIntellisense = cmd;
-      this._editor.onCommand = this.onCommand;
+      this.editor.cmdIntellisense = cmd;
+      this.editor.onCommand = this.onCommand;
 
     });
     timeEnd('runOutsideAngular')
@@ -525,13 +530,13 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   }
 
   private destroyEditor() {
-    if (this._editor) {
+    if (this.editor) {
       debug('Destroy editor');
       this._$element.off(this._eventListeners.join(' '));
-      this._editor.$el.off('keyup');
+      this.editor.$el.off('keyup');
       this._$element.froalaEditor('destroy');
       this._eventListeners = [];
-      this._editor = null;
+      this.editor = null;
     }
   }
 

@@ -61,6 +61,7 @@ npm install --save froala-editor at.js font-awesome</pre>
   froalaConfigGerman = {id: 2, language: 'de'};
 
   control: FormControl = new FormControl();
+  controlLong: FormControl = new FormControl();
 
   constructor(private sanitizer: DomSanitizer) { }
 
@@ -74,6 +75,7 @@ npm install --save froala-editor at.js font-awesome</pre>
 
   ngOnInit() {
     this.control.setValue(this.html);
+    this.controlLong.setValue(this.usage);
   }
 
 

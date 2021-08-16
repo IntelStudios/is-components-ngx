@@ -32,3 +32,11 @@
     <is-froala [options]="froalaConfig" [formControl]="control" [loadOnInit]="false" (onCommand)="onFroalaCommand($event)"></is-froala>
   </div>
 </div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Disabled load on init - click for load with fixed height</h2>
+    <is-froala class="max-height" [formControl]="controlLong" [options]="froalaConfig" [loadOnInit]="false" (onCommand)="onFroalaCommand($event)"></is-froala>
+  </div>
+</div>
