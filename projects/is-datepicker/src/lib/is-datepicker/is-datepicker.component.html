@@ -1,4 +1,7 @@
-<div class="input-group">
+<div class="input-group"
+     [class.disabled]="disabled"
+     [class.open]="isOpen"
+>
   <input #input
     class="datepicker-input datepicker-value form-control align-{{alignment}}"
     [class.clearable]="allowClear"
@@ -8,7 +11,6 @@
     [showMaskTyped]="!!mask"
     (keyup)="onInputValueChange(input.value);"
     (click)="onInputClick()"
-    [class.open]="isOpen"
     [class.disabled]="disabled"
     [readonly]="!mask || disabled">
   <div class="input-group-append">

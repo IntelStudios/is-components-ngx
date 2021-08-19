@@ -19,6 +19,15 @@ is-datepicker {
     padding: 0 $is-general-padding-small 0 0;
     border-radius: 4px !important;
 
+    &.disabled {
+      @include is-input-disabled;
+      cursor: default;
+    }
+
+    &.open {
+      @include is-input-active;
+    }
+
     .datepicker-input {
       display: flex;
       align-items: center;
@@ -35,10 +44,6 @@ is-datepicker {
       border: none !important;
       outline: none !important;
       box-shadow: none !important;
-
-      &.open {
-        @include is-input-active;
-      }
 
       &.disabled {
         @include is-input-disabled;
