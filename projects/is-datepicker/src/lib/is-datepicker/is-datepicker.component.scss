@@ -13,23 +13,28 @@ is-datepicker {
   }
 
   .input-group {
-    .form-control {
-      border-radius: 4px !important;
-    }
+    border-width: 1px;
+    border-style: solid;
+    @include is-input();
+    padding: 0 $is-general-padding-small 0 0;
+    border-radius: 4px !important;
 
     .datepicker-input {
-      border-width: 1px;
-      border-style: solid;
-      @include is-input();
       display: flex;
       align-items: center;
       position: relative;
-      // cursor: pointer;
+      padding: $is-general-padding-small;
+      background: transparent;
       flex: 1;
       outline: 0;
       min-width: 0;
       white-space: nowrap;
       overflow: hidden;
+
+      // remove browser-styled border
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
 
       &.open {
         @include is-input-active;
@@ -45,12 +50,17 @@ is-datepicker {
       }
 
       &.align-center {
+        &.clearable {
+          padding-left: 48px !important;
+        }
+        &:not(.clearable) {
+          padding-left: 32px !important;
+        }
         text-align: center !important;
       }
 
       &.align-right {
         text-align: right !important;
-        padding-right: 48px;
       }
 
       &:not(.disabled):not(.readonly) {
@@ -61,35 +71,11 @@ is-datepicker {
         @include is-input-invalid();
       }
     }
-
-    // &.datepicker-value {
-    //   border: 0;
-    //   flex: 1;
-    //   outline: 0;
-    //   min-width: 0;
-    //   background: transparent;
-    //   white-space: nowrap;
-    //   overflow: hidden;
-
-
-    // }
-
-    >.btn-remove {
-      margin-left: #{$is-general-padding-small};
-      color: $is-control-handle-color;
-    }
   }
 
   .datepicker-icon {
-    position: absolute;
-    right: 8px;
     display: flex;
-    // magic numbers dont work well with variable height inputs, position like so
-    top: 50%;
-    transform: translateY(-50%);
-
-    margin-left: #{$is-general-padding-small};
-    z-index: 998;
+    right: 8px;
     cursor: pointer;
 
     >i {
@@ -107,12 +93,18 @@ is-datepicker {
   }
 
   .btn-remove {
+    visibility: hidden;
+
+    &.shown {
+      visibility: initial;
+    }
+
     cursor: pointer;
-    position: absolute;
-    right: 32px;
-    // magic numbers dont work well with variable height inputs, position like so
-    top: 50%;
-    transform: translateY(-50%);
     color: $is-control-handle-color;
+    margin-right: $is-general-padding-small;
+  }
+
+  .input-group-append {
+    align-items: center;
   }
 }

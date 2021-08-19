@@ -1,6 +1,7 @@
 <div class="input-group">
   <input #input
     class="datepicker-input datepicker-value form-control align-{{alignment}}"
+    [class.clearable]="allowClear"
     [value]="dateValue | date:viewFormat"
     [formControl]="dateControl"
     [mask]="mask"
@@ -10,6 +11,13 @@
     [class.open]="isOpen"
     [class.disabled]="disabled"
     [readonly]="!mask || disabled">
-  <i *ngIf="allowClear && !disabled && (input.value || dateValue)" class="fas fa-times btn-remove" (click)="onRemove($event)"></i>
-  <span class="datepicker-icon" [class.disabled]="disabled" (click)="openPopup()"><i class="fas fa-calendar-alt fa-fw"></i></span>
+  <div class="input-group-append">
+    <i *ngIf="allowClear"
+       [class.shown]="!disabled && (input.value || dateValue)"
+       class="fas fa-times btn-remove"
+       (click)="onRemove($event)"></i>
+    <span class="datepicker-icon" [class.disabled]="disabled" (click)="openPopup()">
+      <i class="fas fa-calendar-alt fa-fw"></i>
+    </span>
+  </div>
 </div>
