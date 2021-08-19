@@ -14,7 +14,7 @@ export class DemoCoreUIComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/8.x/package/is-core-ui-8.0.1.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/8.x/package/is-core-ui-8.1.3.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsCoreUIModule } from 'is-core-ui';</pre>
