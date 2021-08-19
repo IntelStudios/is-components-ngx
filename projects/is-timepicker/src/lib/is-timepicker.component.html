@@ -1,4 +1,7 @@
-<div class="input-group">
+<div class="input-group"
+     [class.open]="pickerOpened"
+     [class.disabled]="disabled"
+>
   <input #input
     class="timepicker-input timepicker-value form-control align-{{alignment}}"
     [class.clearable]="allowClear"
@@ -8,7 +11,6 @@
     [showMaskTyped]="true"
     (keyup)="onInputValueChange(input.value);"
     (click)="hidePicker()"
-    [class.active]="pickerOpened"
     [class.disabled]="disabled"
     [readOnly]="disabled">
   <div class="input-group-append">
