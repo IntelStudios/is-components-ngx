@@ -4,81 +4,107 @@
 :host {
   &.ng-invalid {
     .timepicker-input {
-      @include is-input-invalid;
+      @include is-input-invalid();
+    }
+
+    &:hover {
+      @include is-input-invalid();
     }
   }
 
   .input-group {
-    color: $is-control-fg-color;
-
-    .form-control {
-      border-radius: 4px !important;
-    }
+    border-width: 1px;
+    border-style: solid;
+    @include is-input();
+    padding: 0 $is-general-padding-small 0 0;
+    border-radius: 4px !important;
 
     .timepicker-input {
-      border-width: 1px;
-      border-style: solid;
-      @include is-input;
       display: flex;
       align-items: center;
       position: relative;
-      // cursor: pointer;
+      padding: $is-general-padding-small;
+      background: transparent;
+      flex: 1;
+      outline: 0;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
 
-      &.disabled {
-        @include is-input-disabled;
-        cursor: default;;
-      }
+      // remove browser-styled border
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
 
-      &.active {
-        background-color: $is-control-bg-color;
-        color: $is-control-fg-color;
+      &.open {
         @include is-input-active;
       }
 
-      &:not(.disabled)>.timepicker-value {
-        color: $is-control-fg-color;
+      &.disabled {
+        @include is-input-disabled;
+        cursor: default;
       }
-    }
-
-    .timepicker-value {
-      flex: 1;
-      overflow: hidden;
-      white-space: nowrap;
 
       &.align-left {
         text-align: left !important;
       }
 
       &.align-center {
+        &.clearable {
+          padding-left: 48px !important;
+        }
+        &:not(.clearable) {
+          padding-left: 32px !important;
+        }
         text-align: center !important;
       }
 
       &.align-right {
         text-align: right !important;
-        padding-right: 48px;
+      }
+
+      &:not(.disabled):not(.readonly) {
+        color: $is-control-fg-color;
+      }
+
+      &.ng-invalid {
+        @include is-input-invalid();
       }
     }
+  }
 
-    .btn-remove {
-      cursor: pointer;
-      position: absolute;
-      right: 32px;
-      top: 10px;
+  .timepicker-icon {
+    display: flex;
+    right: 8px;
+    cursor: pointer;
+
+    >i {
       color: $is-control-handle-color;
-      margin-left: #{$is-general-padding-small};
     }
 
-    .timepicker-icon {
-      cursor: pointer;
-      position: absolute;
-      right: 8px;
-      top: 6px;
-      z-index: 998;
-      margin-left: #{$is-general-padding-small};
-
-      >i {
-        color: $is-control-handle-color;
-      }
+    &.disabled {
+      pointer-events: none;
+      cursor: default;
     }
+  }
+
+  .timepicker-input.readonly+.timepicker-icon {
+    display: none;
+  }
+
+  .btn-remove {
+    visibility: hidden;
+
+    &.shown {
+      visibility: initial;
+    }
+
+    cursor: pointer;
+    color: $is-control-handle-color;
+    margin-right: $is-general-padding-small;
+  }
+
+  .input-group-append {
+    align-items: center;
   }
 }
