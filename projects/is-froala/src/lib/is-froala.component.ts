@@ -128,6 +128,44 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     return this._options;
   }
 
+  private _maxEditorHeightDefault = 210;
+  private _maxEditorHeight = this._maxEditorHeightDefault;
+
+  /**
+   * Sets the max height of the preview and editing window (excluding toolbar)
+   * @param value new max height, 0 or null for default value
+   */
+  @Input()
+  set maxHeight(value: number | null) {
+    const { style } = this.el.nativeElement;
+    if (value) {
+      this._maxEditorHeight = value;
+      style.setProperty('--is-froala-max-height', `${value}px`);
+    } else {
+      this._maxEditorHeight = this._maxEditorHeightDefault;
+      style.removeProperty('--is-froala-max-height');
+    }
+  }
+
+  private _minEditorHeightDefault = 210;
+  private _minEditorHeight = this._minEditorHeightDefault;
+
+  /**
+   * Sets the min height of the preview and editing window (excluding toolbar)
+   * @param value new min height, 0 or null for default value
+   */
+  @Input()
+  set minHeight(value: number | null) {
+    const { style } = this.el.nativeElement;
+    if (value) {
+      this._minEditorHeight = value;
+      style.setProperty('--is-froala-min-height', `${value}px`);
+    } else {
+      this._minEditorHeight = this._minEditorHeightDefault;
+      style.removeProperty('--is-froala-min-height');
+    }
+  }
+
   @Input()
   codeviewActiveValidationError: any = { codeViewActive: true };
 
@@ -268,8 +306,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       htmlAllowedTags: ['.*'],    // enable all html tags
       htmlRemoveTags: ['script'],       // do not remove any html tags
       htmlExecuteScripts: false, // disable script execution within froala
-      heightMin: 189,             // min height of editor
-      heightMax: 210,             // max height of editor - scrollbar appears
+      heightMin: this._minEditorHeight,             // min height of editor
+      heightMax: this._maxEditorHeight,             // max height of editor - scrollbar appears
       quickInsertTags: [''],      // disable quick insert button on the left edge of editor
       placeholderText: '',        // disable placeholder
       toolbarSticky: false,       // when scrolling toolbar does not appear on the top of the screen

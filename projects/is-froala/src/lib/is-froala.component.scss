@@ -97,9 +97,13 @@ is-froala {
     }
   }
 
-  .icon-load {
-    position: absolute;
-    top: 6px;
-    right: 6px;
+  .icon-load-container {
+    position: sticky;
+    overflow: visible;
+    display: flex;
+    justify-content: flex-end;
+    height: 0;
+    width: 100%;
+    top: 0;
   }
 }
