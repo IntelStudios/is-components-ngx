@@ -42,6 +42,10 @@ export interface IsModalConfig {
    */
   template: TemplateRef<any>;
   /**
+   * Panel custom css class
+   */
+   panelCssClass?: string;
+  /**
    * Button definitions on the left side
    */
   buttonsLeft?: IsModalButtonConfig[];
