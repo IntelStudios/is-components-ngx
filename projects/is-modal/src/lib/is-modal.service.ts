@@ -18,7 +18,7 @@ export class IsModalService {
 
   showComponent(component: Type<IsModalInstance>, config: IsModalConfig): IsModalRef {
 
-    const overlayRef: OverlayRef = this.over.create();
+    const overlayRef: OverlayRef = this.over.create(config.panelCssClass ? { panelClass: config.panelCssClass } : null);
 
     const ref: IsModalRef = {
       close: () => { },

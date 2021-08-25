@@ -2,7 +2,7 @@ import { Component, TemplateRef, ViewChild, OnInit, ChangeDetectionStrategy } fr
 import { IsModalMovableService } from 'projects/is-modal/src/lib/is-modal-movable.service';
 import { IsModalConfig, IsModalMovableConfig, IsModalRef, IsModalMovableRef, IsModalService } from 'projects/is-modal/src/public_api';
 import { Observable, of } from 'rxjs';
-import { delay, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { delay, map, tap } from 'rxjs/operators';
 import { DemoModalMovableComponent } from './demo-modal-movable.component';
 
 @Component({
