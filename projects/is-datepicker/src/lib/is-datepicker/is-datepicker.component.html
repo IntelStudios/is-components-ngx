@@ -1,17 +1,25 @@
-<div class="input-group">
+<div class="input-group" [class.readonly]="readonly" [class.open]="isOpen" [class.disabled]="disabled">
   <!-- readonly on input itself when mask is off since it breaks keyboard input -->
   <input #input
     class="datepicker-input datepicker-value form-control align-{{alignment}}"
+    [class.clearable]="allowClear"
     [value]="dateValue | date:viewFormat"
     [formControl]="dateControl"
     [mask]="mask"
     [showMaskTyped]="!!mask"
     (keyup)="onInputValueChange(input.value)"
     (click)="onInputClick()"
-    [class.open]="isOpen"
     [class.disabled]="disabled"
+    [readonly]="!mask || disabled || readonly"
     [class.readonly]="readonly"
-    [readonly]="!mask || disabled || readonly">
-  <i *ngIf="allowClear && !disabled && !readonly && input.value" class="fas fa-times btn-remove" (click)="onRemove($event)"></i>
-  <span class="datepicker-icon" [class.disabled]="disabled" [class.readonly]="readonly" (click)="openPopup()"><i class="fas fa-calendar-alt fa-fw"></i></span>
+  >
+  <div class="input-group-append">
+    <i *ngIf="allowClear"
+       [class.shown]="!disabled && (input.value || dateValue)"
+       class="fas fa-times btn-remove"
+       (click)="onRemove($event)"></i>
+    <span class="datepicker-icon" [class.disabled]="disabled" (click)="openPopup()">
+      <i class="fas fa-calendar-alt fa-fw"></i>
+    </span>
+  </div>
 </div>
