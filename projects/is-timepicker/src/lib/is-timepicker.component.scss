@@ -19,6 +19,9 @@
     padding: 0 $is-general-padding-small 0 0;
     border-radius: 4px !important;
 
+    // from Bootstrap's .form-control to keep correct size
+    height: calc(1.5em + 0.563rem + 2px);
+
     &.disabled {
       @include is-input-disabled;
       cursor: default;
