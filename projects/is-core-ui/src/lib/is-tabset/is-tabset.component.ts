@@ -166,7 +166,7 @@ export class IsTabDirective {
     <ng-template #defaultInvalidTemplate>
       <i class="fas fa-exclamation"></i>
     </ng-template>
-    <div class="tab-content" [class.pills]="pills" *ngIf="tabs.length > 0">
+    <div class="tab-content" [class.pills]="pills" *ngIf="tabs.length > 0" cdkScrollable>
       <ng-template ngFor let-tab [ngForOf]="tabs">
         <div class="tab-pane" [ngClass]="{'active show' : tab.id === activeId}" *ngIf="tab.loaded || tab.id === activeId" role="tabpanel" [attr.aria-labelledby]="tab.id">
           <ng-template [ngTemplateOutlet]="tab.contentTpl.templateRef"></ng-template>
