@@ -11,6 +11,4 @@ export interface IsCoreUIConfig {
   fieldErrorConfig? :FieldErrorConfig
 }
 
-export type IsTabsetScrollableMode = 'none' | 'sticky-headers' | 'scrollable-tabcontent';
-
 export const configToken = new InjectionToken<IsCoreUIConfig>('IsCoreUIConfig');

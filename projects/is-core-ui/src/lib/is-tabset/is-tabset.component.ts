@@ -19,9 +19,8 @@ import {
   HostBinding,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fromEvent, interval, merge, Subscription, bindCallback, Subject } from 'rxjs';
+import { fromEvent, interval, merge, Subscription, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { IsTabsetScrollableMode } from '../is-core-ui.interfaces';
 
 let nextId = 0;
 
@@ -47,6 +46,8 @@ export interface TabChangeEvent {
    */
   preventDefault: () => void;
 }
+
+export type IsTabsetScrollableMode = 'none' | 'sticky-headers' | 'scrollable-tabcontent';
 
 /**
  * This directive should be used to render invalid content, which appears
