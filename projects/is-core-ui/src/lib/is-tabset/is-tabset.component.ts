@@ -21,6 +21,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, interval, merge, Subscription, bindCallback, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { IsTabsetScrollableMode } from '../is-core-ui.interfaces';
 
 let nextId = 0;
 
@@ -215,7 +216,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
    * scrollable-tabcontent - tabcontent scrolling content (use when two tabsets in one row and want to scroll everyone separately)
    */
   @Input()
-  scrollableMode: 'none' | 'sticky-headers' | 'scrollable-tabcontent' = 'none';
+  scrollableMode: IsTabsetScrollableMode = 'none';
 
   /**
    * A tab change event fired right before the tab selection happens. See NgbTabChangeEvent for payload details
