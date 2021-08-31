@@ -208,8 +208,14 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
    */
   @Input() nowrap: boolean = true;
 
-  @HostBinding('class.sticky-headers')
-  @Input() stickyHeaders = false;
+  /**
+   * Set scrollable tabset feature.
+   * none - default scrolling type (scroll whole page)
+   * sticky-headers - sticky tabset headers (use when two tabsets in one row and want to scroll each other)
+   * scrollable-tabcontent - tabcontent scrolling content (use when two tabsets in one row and want to scroll everyone separately)
+   */
+  @Input()
+  scrollableMode: 'none' | 'sticky-headers' | 'scrollable-tabcontent' = 'none';
 
   /**
    * A tab change event fired right before the tab selection happens. See NgbTabChangeEvent for payload details
@@ -242,6 +248,10 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   }
 
   ngOnInit() {
+
+    if (this.scrollableMode && this.scrollableMode != 'none') {
+      this.el.nativeElement.classList.add(this.scrollableMode);
+    }
 
     if (this.nowrap) {
       this.elUL = this.el.nativeElement.querySelector('ul');

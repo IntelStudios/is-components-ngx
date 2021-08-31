@@ -3,4 +3,15 @@
     height: 10em;
     overflow: scroll;
   }
+
+  .tab-container-fixed-height {
+    height: 10em;
+    flex-wrap: nowrap;
+    overflow: auto;
+
+    > div {
+      display: flex;
+      overflow: auto;
+    }
+  }
 }
