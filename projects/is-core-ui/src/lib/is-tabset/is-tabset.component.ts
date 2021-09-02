@@ -47,6 +47,8 @@ export interface TabChangeEvent {
   preventDefault: () => void;
 }
 
+export type IsTabsetScrollableMode = 'none' | 'sticky-headers' | 'scrollable-tabcontent';
+
 /**
  * This directive should be used to render invalid content, which appears
  * when there is an invalid tab not visible by user because of wrap feature
@@ -126,7 +128,7 @@ export class IsTabDirective {
   constructor() {
 
   }
-  
+
   /**
    * *internal use only*
    */
@@ -165,7 +167,7 @@ export class IsTabDirective {
     <ng-template #defaultInvalidTemplate>
       <i class="fas fa-exclamation"></i>
     </ng-template>
-    <div class="tab-content" [class.pills]="pills" *ngIf="tabs.length > 0">
+    <div class="tab-content" [class.pills]="pills" *ngIf="tabs.length > 0" cdkScrollable>
       <ng-template ngFor let-tab [ngForOf]="tabs">
         <div class="tab-pane" [className]="tab.paneClass" [ngClass]="{'active show' : tab.id === activeId }" *ngIf="tab.loaded || tab.id === activeId" role="tabpanel" [attr.aria-labelledby]="tab.id">
           <ng-template [ngTemplateOutlet]="tab.contentTpl.templateRef"></ng-template>
@@ -209,8 +211,14 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
    */
   @Input() nowrap: boolean = true;
 
-  @HostBinding('class.sticky-headers')
-  @Input() stickyHeaders = false;
+  /**
+   * Set scrollable tabset feature.
+   * none - default scrolling type (scroll whole page)
+   * sticky-headers - sticky tabset headers (use when two tabsets in one row and want to scroll each other)
+   * scrollable-tabcontent - tabcontent scrolling content (use when two tabsets in one row and want to scroll everyone separately)
+   */
+   @Input()
+   scrollableMode: IsTabsetScrollableMode = 'none';
 
   /**
    * A tab change event fired right before the tab selection happens. See NgbTabChangeEvent for payload details
@@ -243,6 +251,9 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   }
 
   ngOnInit() {
+    if (this.scrollableMode && this.scrollableMode != 'none') {
+      this.el.nativeElement.classList.add(this.scrollableMode);
+    }
 
     if (this.nowrap) {
       this.elUL = this.el.nativeElement.querySelector('ul');

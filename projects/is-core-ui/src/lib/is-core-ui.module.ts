@@ -1,3 +1,4 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -26,7 +27,7 @@ import { IsTileComponent } from './is-tile/is-tile.component';
 
 @NgModule({
   imports: [
-    CommonModule, RouterModule, TranslateModule, PopoverModule, TooltipModule
+    CommonModule, RouterModule, TranslateModule, PopoverModule, ScrollingModule, TooltipModule
   ],
   declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
     IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsSwitchComponent, IsTileComponent],

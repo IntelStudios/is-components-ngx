@@ -37,6 +37,17 @@
     }
   }
 
+  &.scrollable-tabcontent {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+    > .tab-content {
+      display: flex;
+      overflow: auto;
+    }
+  }
+
   .tab-header {
     > .scroll-btn {
       position: absolute;
