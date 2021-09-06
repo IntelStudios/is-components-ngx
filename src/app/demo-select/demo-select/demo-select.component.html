@@ -97,8 +97,8 @@
         <div class="col-sm-6">
           <h3>Select multiple model (lazy load)</h3>
           <is-select [allowClear]="true" [multipleConfig]="{}" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)"
-            [items]="moreOptions$ | async" [formControl]="select6ControlMulti"
-            [modelConfig]="{idProp: 'ID', textProp: 'Value'}"></is-select>
+            [items]="moreOptions$ | async" searchPlaceholder="type: aaa" [formControl]="select6ControlMulti"
+            [modelConfig]="{idProp: 'ID', textProp: 'Value'}" (changed)="changed($event)"></is-select>
           <button class="btn btn-primary" (click)="selectFirstModelMulti()">Select unknown (model)</button>
           <p>Value: {{select6Control.valueChanges|async|json}}</p>
         </div>

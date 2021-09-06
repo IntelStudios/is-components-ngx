@@ -43,6 +43,7 @@ export class DemoSelectComponent implements OnInit {
     'Zagreb', 'Zaragoza', 'Łódź'];
 
   itemsObject = [
+
     { ID: 1, Value: 'red', background: 'red' },
     { ID: 2, Value: 'green', background: 'green' },
     { ID: 3, Value: 'black', background: 'black' }
@@ -59,9 +60,11 @@ export class DemoSelectComponent implements OnInit {
     { ID: 5, Value: '[primary_Primary]' }
   ];
 
-  itemsWithDesc = [{ ID: 1, Value: 'red', Description: 'Desc red' },
-  { ID: 2, Value: 'green', Description: 'Desc green' },
-  { ID: 3, Value: 'black', Description: 'Desc black' }]
+  itemsWithDesc = [
+    { ID: '', Value: 'Empty string ID' },
+    { ID: 1, Value: 'red', Description: 'Desc red' },
+    { ID: 2, Value: 'green', Description: 'Desc green' },
+    { ID: 3, Value: 'black', Description: 'Desc black' }]
 
   itemsGrouped: any[] = [];
   itemsGrouped$: Observable<any[]>;
@@ -78,9 +81,10 @@ export class DemoSelectComponent implements OnInit {
     const item1: any = {
       ID: '1', Value: 'Europe', children:
         [
-          { ID: '11', Value: 'Czech', children: [
-              {ID: '111', Value: 'Olomouc' },
-              {ID: '112', Value: 'Prague' },
+          {
+            ID: '11', Value: 'Czech', children: [
+              { ID: '111', Value: 'Olomouc' },
+              { ID: '112', Value: 'Prague' },
             ]
           },
           { ID: '12', Value: 'Poland', Disabled: true },
@@ -104,9 +108,9 @@ export class DemoSelectComponent implements OnInit {
         ]
     };
 
-    const item4 = {ID: '4', Value: 'Mars'};
+    const item4 = { ID: '4', Value: 'Mars' };
 
-    this.itemsGrouped = [item1, item2, item3, item4];
+    this.itemsGrouped = [{ ID: '', Value: 'Empty: ID = \'\'' }, item1, item2, item3, item4];
     this.changeDetector.markForCheck();
   }
 
@@ -193,6 +197,7 @@ export class DemoSelectComponent implements OnInit {
     console.log(`Loading options filter=${$event}`);
     setTimeout(() => {
       this.moreOptions$.next([
+        { ID: '', Value: 'aaaa => ID = \'\''},
         { ID: 1, Value: 'aaaaa' },
         { ID: 2, Value: 'aaaab' },
         { ID: 3, Value: 'aaaac' },

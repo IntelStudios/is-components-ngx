@@ -31,7 +31,11 @@ export class SelectItem {
           this.Description = source[modelConfig.descProp]
         }
       } else {
-        this.ID = String(source.ID || source.id);
+        if (typeof source.ID !== 'undefined') {
+          this.ID = source.ID ===  null ? null : String(source.ID)
+        } else {
+          this.ID = source.id ===  null ? null : String(source.id);
+        }
         this.Value = source.Value || source.value;
         this.Description = source.Description || source.description;
       }
@@ -62,7 +66,7 @@ export class SelectItem {
   static isItem(item: any, modelConfig?: IsSelectModelConfig): boolean {
     const isItem =
       (typeof item === 'string')
-      || (typeof item === 'object' && (item.ID || item.ID === 0 || item.id || item.id === 0) && (item.value || item.Value));
+      || (typeof item === 'object' && (item.ID || item.ID === 0 || item.ID === ''|| item.id || item.id === 0 || item.id === '') && (item.value || item.Value));
     if (!isItem && modelConfig) {
       return (item[modelConfig.idProp] || item[modelConfig.idProp] === 0) && item[modelConfig.textProp]
     }
