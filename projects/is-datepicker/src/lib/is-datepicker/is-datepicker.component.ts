@@ -209,6 +209,8 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     const valid = !isNaN(date.valueOf());
     if (!valid) {
       this.dateControl.setErrors({ 'dateInvalid': true });
+      this.dateValue = null;
+      this.changed.emit(null);
       return;
     }
     this.dateValue = date;
