@@ -62,8 +62,8 @@
           <p>Value: {{select6Control.valueChanges|async|json}}</p>
         </div>
         <div class="col-sm-6">
-          <h3>Select with descriptions</h3>
-          <is-select [allowClear]="true"
+          <h3>Select with descriptions (close options on scroll)</h3>
+          <is-select [allowClear]="true" [closeOptionsOnScroll]="true"
             [items]="itemsWithDesc" [formControl]="select7Control"
             [modelConfig]="{idProp: 'ID', textProp: 'Value', descProp: 'Description'}">
           </is-select>

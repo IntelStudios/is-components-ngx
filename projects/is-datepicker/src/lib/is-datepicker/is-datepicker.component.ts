@@ -1,4 +1,4 @@
-import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { CdkScrollable, ConnectedPosition, Overlay, OverlayRef, ScrollDispatcher } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { DatePipe } from '@angular/common';
 import {
@@ -34,6 +34,7 @@ import { Subscription } from 'rxjs';
 
 import { defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 const moment = m;
 
@@ -130,12 +131,14 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   private _clickedOutsideListener = null;
   private _changeSubscription: Subscription = null;
   private onTouched: Function;
+  private _scrollSub: Subscription;
   private _detachSub: Subscription;
   private validatorOnChangeFn: Function = null;
 
   constructor(
     @Optional() @Inject(configToken) private dpConfig: IsDatepickerConfig,
     private isCdk: IsCdkService,
+    private scrollDispatcher: ScrollDispatcher,
     private changeDetector: ChangeDetectorRef,
     private overlay: Overlay,
     private datePipe: DatePipe,
@@ -178,6 +181,9 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     }
     if (this._detachSub) {
       this._detachSub.unsubscribe();
+    }
+    if (this._scrollSub) {
+      this._scrollSub.unsubscribe();
     }
   }
 
@@ -309,15 +315,41 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       .withPositions([position])
       .withPush(true);
 
-    this.pickerOverlayRef = this.isCdk.create(
-      {
-        minWidth: `${optionsWidth}px`,
-        minHeight: `${optionsHeight}px`,
-        positionStrategy: positionStrategy,
-        scrollStrategy: this.overlay.scrollStrategies.close()
-      },
-      this.el
-    );
+    const ancScrolls: CdkScrollable[] = this.scrollDispatcher.getAncestorScrollContainers(this.el);
+    if (ancScrolls.length > 0) {
+      this.pickerOverlayRef = this.isCdk.create(
+        {
+          minWidth: `${optionsWidth}px`,
+          minHeight: `${optionsHeight}px`,
+          positionStrategy: positionStrategy
+        },
+        this.el
+      );
+
+      this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev: CdkScrollable) => {
+        if (ev) {
+          if (ancScrolls.filter(x=>x.getElementRef() === ev.getElementRef()).length > 0) {
+            this.closePopup();
+          }
+        }
+        else {
+          this.closePopup();
+        }
+
+        this.changeDetector.detectChanges();
+      })
+    } else {
+      this.pickerOverlayRef = this.isCdk.create(
+        {
+          minWidth: `${optionsWidth}px`,
+          minHeight: `${optionsHeight}px`,
+          positionStrategy: positionStrategy,
+          scrollStrategy: this.overlay.scrollStrategies.close()
+        },
+        this.el
+      );
+    }
+
     this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsDatepickerPopupComponent));
     const classes = this.el.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass;
     this.renderer.setAttribute(this.pickerInstanceRef.location.nativeElement, 'class', classes);
@@ -335,6 +367,10 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       if (this._clickedOutsideListener) {
         this._clickedOutsideListener();
         this._clickedOutsideListener = null;
+      }
+
+      if (this._scrollSub) {
+        this._scrollSub.unsubscribe();
       }
 
       this.changeDetector.markForCheck();

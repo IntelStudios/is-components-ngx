@@ -58,6 +58,10 @@ export interface IsSelectConfig {
    * When pasting to selects opts, attempts to split pasted stirng to match toknes opt ids to autoselect
    */
   onPasteSplitRegExp?: RegExp,
+  /**
+   * Close options when scrolling
+   */
+  closeOptionsOnScroll?: boolean;
 }
 
 export const configToken = new InjectionToken<IsSelectConfig>('IsSelectConfig');

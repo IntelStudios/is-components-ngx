@@ -1,4 +1,4 @@
-import { Overlay, OverlayRef, ConnectedPosition, OverlayConfig } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, ConnectedPosition, OverlayConfig, ScrollDispatcher, CdkScrollable } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ChangeDetectionStrategy,
@@ -26,6 +26,7 @@ import { IsSelectModelConfig, IsSelectMultipleConfig, configToken, IsSelectConfi
 import { SelectItem } from '../select-item';
 import { OptionsBehavior } from '../options-behavior';
 import { IsCdkService } from '@intelstudios/cdk';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 export const IS_SELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -50,6 +51,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input() isSearch: boolean = true;
   @Input() alignItems: 'left' | 'right' = 'left';
   @Input() readonly: boolean = false;
+  @Input() closeOptionsOnScroll: boolean = false;
 
   /**
    * When set, select will work in multi-select mode.
@@ -264,6 +266,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   private _clickedOutsideListener = null;
   private onTouched: Function;
   private _changeSubscription: Subscription = null;
+  private _scrollSub: Subscription;
   private _detachSub: Subscription;
   /**
    * internal value is used to store a value state in case we do not have options yet
@@ -278,6 +281,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     private overlay: Overlay,
     private renderer: Renderer2,
     private isCdk: IsCdkService,
+    private scrollDispatcher: ScrollDispatcher,
     @Optional() @Inject(configToken) private selectConfig: IsSelectConfig,
     private changeDetector: ChangeDetectorRef) {
       // trigger setter by default so we're initially in single select mode
@@ -288,6 +292,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       if (this.selectConfig?.allowClear !== undefined) {
         this.allowClear = this.selectConfig.allowClear;
       }
+      if (this.selectConfig?.closeOptionsOnScroll !== undefined) {
+        this.closeOptionsOnScroll = this.selectConfig.closeOptionsOnScroll;
+      }
   }
 
   ngOnInit() {
@@ -295,7 +302,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnDestroy() {
-
+    if (this._scrollSub) {
+      this._scrollSub.unsubscribe();
+    }
   }
 
   setReadonly(value: boolean) {
@@ -525,16 +534,52 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     const overlayConfig: OverlayConfig = {
       minWidth: `${rect.width + 2}px`,
       minHeight: '34px',
-      positionStrategy: positionStrategy,
-      scrollStrategy: this.overlay.scrollStrategies.reposition()
+      positionStrategy: positionStrategy
     };
+
     const oprionsOverflowClass = this.optionsOverflowWidth ? ' is-select-overflow-width': '';
     if (!this.optionsOverflowWidth) {
       overlayConfig.width = overlayConfig.minWidth;
       overlayConfig.minWidth = undefined;
     }
 
-    this.optionsOverlayRef = this.isCdk.create(overlayConfig, this.element);
+    if (this.closeOptionsOnScroll) {
+      const ancScrolls: CdkScrollable[] = this.scrollDispatcher.getAncestorScrollContainers(this.element);
+      if (ancScrolls.length > 0) {
+        this.optionsOverlayRef = this.isCdk.create(
+          overlayConfig,
+          this.element
+        );
+
+        this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev: CdkScrollable) => {
+          if (ev) {
+            if (ancScrolls.filter(x=>x.getElementRef() === ev.getElementRef()).length > 0) {
+              this.hideOptions();
+            }
+          }
+          else {
+            this.hideOptions();
+          }
+
+          this.changeDetector.detectChanges();
+        })
+      } else {
+        overlayConfig.scrollStrategy = this.overlay.scrollStrategies.close();
+
+        this.optionsOverlayRef = this.isCdk.create(
+          overlayConfig,
+          this.element
+        );
+      }
+    }
+    else {
+      overlayConfig.scrollStrategy = this.overlay.scrollStrategies.reposition();
+
+      this.optionsOverlayRef = this.isCdk.create(
+        overlayConfig,
+        this.element
+      );
+    }
 
     // subscribe to detach event
     // overlay can be detached by us (calling hidOptions()) or by reposition strategy
@@ -553,6 +598,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       if (this._minLoadChars > -1) {
         this.items = null; // clear lazy loaded items
       }
+
+      if (this._scrollSub) {
+        this._scrollSub.unsubscribe();
+      }
+
       this.changeDetector.markForCheck();
       this._detachSub.unsubscribe();
     });
