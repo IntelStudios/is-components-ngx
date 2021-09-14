@@ -11,7 +11,7 @@ export class DemoTimepickerComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/8.x/package/is-timepicker-8.1.2.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/8.x/package/is-timepicker-8.1.4.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsTimepickerModule } from 'is-timepicker';</pre>

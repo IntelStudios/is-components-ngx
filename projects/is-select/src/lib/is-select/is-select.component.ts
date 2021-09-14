@@ -1,4 +1,4 @@
-import { Overlay, OverlayRef, ConnectedPosition } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, ConnectedPosition, ScrollDispatcher, CdkScrollable } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ChangeDetectionStrategy,
@@ -24,6 +24,7 @@ import { IsSelectModelConfig, IsSelectMultipleConfig } from '../is-select.interf
 import { SelectItem } from '../select-item';
 import { OptionsBehavior } from '../options-behavior';
 import { IsCdkService } from '@intelstudios/cdk';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 export const IS_SELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -46,6 +47,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @Input() searchPlaceholder: string = 'Search a name or keyword';
   @Input() isSearch: boolean = true;
   @Input() alignItems: 'left' | 'right' = 'left';
+  @Input() closeOptionsOnScroll: boolean = false;
 
   /**
    * When set, select will work in multi-select mode.
@@ -256,6 +258,8 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   private onTouched: Function;
   private _changeSubscription: Subscription = null;
   private _detachSub: Subscription;
+  private _scrollSub: Subscription;
+
   /**
    * internal value is used to store a value state in case we do not have options yet
    */
@@ -268,6 +272,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   constructor(public element: ElementRef,
     private overlay: Overlay,
     private isCdk: IsCdkService,
+    private scrollDispatcher: ScrollDispatcher,
     private renderer: Renderer2,
     private changeDetector: ChangeDetectorRef) {
       // trigger setter by default so we're initially in single select mode
@@ -279,7 +284,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnDestroy() {
-
+    if (this._scrollSub) {
+      this._scrollSub.unsubscribe();
+    }
   }
 
   /**
@@ -489,15 +496,54 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       .withPositions([position])
       .withDefaultOffsetX(-1);
 
-    this.optionsOverlayRef = this.isCdk.create(
-      {
-        width: `${rect.width + 2}px`,
-        minHeight: '34px',
-        positionStrategy: positionStrategy,
-        scrollStrategy: this.overlay.scrollStrategies.reposition()
-      },
-      this.element
-    );
+    if (this.closeOptionsOnScroll) {
+      const ancScrolls: CdkScrollable[] = this.scrollDispatcher.getAncestorScrollContainers(this.element);
+      if (ancScrolls.length > 0) {
+        this.optionsOverlayRef = this.isCdk.create(
+          {
+            width: `${rect.width + 2}px`,
+            minHeight: '34px',
+            positionStrategy: positionStrategy
+          },
+          this.element
+        );
+
+        this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev: CdkScrollable) => {
+          if (ev) {
+            if (ancScrolls.filter(x=>x.getElementRef() === ev.getElementRef()).length > 0) {
+              this.hideOptions();
+            }
+          }
+          else {
+            this.hideOptions();
+          }
+
+          this.changeDetector.detectChanges();
+        })
+      } else {
+        this.optionsOverlayRef = this.isCdk.create(
+          {
+            width: `${rect.width + 2}px`,
+            minHeight: '34px',
+            positionStrategy: positionStrategy,
+            scrollStrategy: this.overlay.scrollStrategies.close()
+          },
+          this.element
+        );
+      }
+    }
+    else {
+      this.optionsOverlayRef = this.isCdk.create(
+        {
+          width: `${rect.width + 2}px`,
+          minHeight: '34px',
+          positionStrategy: positionStrategy,
+          scrollStrategy: this.overlay.scrollStrategies.reposition()
+        },
+        this.element
+      );
+    }
+
     // subscribe to detach event
     // overlay can be detached by us (calling hidOptions()) or by reposition strategy
     // we need to cleanup things
@@ -515,6 +561,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       if (this._minLoadChars > -1) {
         this.items = null; // clear lazy loaded items
       }
+
+      if (this._scrollSub) {
+        this._scrollSub.unsubscribe();
+      }
+
       this.changeDetector.markForCheck();
       this._detachSub.unsubscribe();
     });

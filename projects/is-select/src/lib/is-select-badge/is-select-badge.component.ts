@@ -54,6 +54,9 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
   isSearch: boolean = true;
 
   @Input()
+  closeOptionsOnScroll: boolean = false;
+
+  @Input()
   set value(value: any) {
     this._value = value;
     this.setValue();

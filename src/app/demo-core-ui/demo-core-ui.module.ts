@@ -6,12 +6,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { DemoCoreUIComponent } from './demo-core-ui/demo-core-ui.component';
 import { IsCoreUIModule } from 'projects/is-core-ui/src/public_api';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
+import { BsDatepickerModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
+import { IsDatepickerModule } from 'projects/is-datepicker/src/public_api';
+import { IsSelectModule } from 'projects/is-select/src/public_api';
+import { IsTimepickerModule } from 'projects/is-timepicker/src/public_api';
 
 @NgModule({
   declarations: [DemoCoreUIComponent],
   imports: [
-    CommonModule, IsCoreUIModule.forRoot(),
+    CommonModule, IsCoreUIModule.forRoot(), IsDatepickerModule, BsDatepickerModule.forRoot(),
+    IsSelectModule, IsTimepickerModule,
     PopoverModule.forRoot(),
     TooltipModule.forRoot(),
     ReactiveFormsModule,

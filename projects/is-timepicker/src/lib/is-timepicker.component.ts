@@ -1,4 +1,4 @@
-import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { CdkScrollable, ConnectedPosition, Overlay, OverlayRef, ScrollDispatcher } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ChangeDetectionStrategy,
@@ -21,6 +21,7 @@ import { IsCdkService } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
 
 import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 const moment = m;
 
@@ -82,10 +83,12 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   private _changeSubscription: Subscription = null;
   private _clickedOutsideListener = null;
   private _detachSub: Subscription;
+  private _scrollSub: Subscription;
   private validatorOnChangeFn: Function = null;
 
   constructor(
     private isCdk: IsCdkService,
+    private scrollDispatcher: ScrollDispatcher,
     private element: ElementRef,
     private renderer: Renderer2,
     private overlay: Overlay,
@@ -118,6 +121,9 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
     }
     if (this._detachSub) {
       this._detachSub.unsubscribe();
+    }
+    if (this._scrollSub) {
+      this._scrollSub.unsubscribe();
     }
   }
   /**
@@ -203,15 +209,41 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
       .withPositions([position])
       .withPush(true);
 
-    this.pickerOverlayRef = this.isCdk.create(
-      {
-        minWidth: `${pickerWidth}px`,
-        minHeight: `${pickerHeight}px`,
-        positionStrategy: positionStrategy,
-        scrollStrategy: this.overlay.scrollStrategies.close()
-      }, 
-      this.element
-    );
+    const ancScrolls: CdkScrollable[] = this.scrollDispatcher.getAncestorScrollContainers(this.element);
+    if (ancScrolls.length > 0) {
+      this.pickerOverlayRef = this.isCdk.create(
+        {
+          minWidth: `${pickerWidth}px`,
+          minHeight: `${pickerHeight}px`,
+          positionStrategy: positionStrategy
+        },
+        this.element
+      );
+
+      this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev: CdkScrollable) => {
+        if (ev) {
+          if (ancScrolls.filter(x=>x.getElementRef() === ev.getElementRef()).length > 0) {
+            this.hidePicker();
+          }
+        }
+        else {
+          this.hidePicker();
+        }
+
+        this.changeDetector.detectChanges();
+      })
+    } else {
+      this.pickerOverlayRef = this.isCdk.create(
+        {
+          minWidth: `${pickerWidth}px`,
+          minHeight: `${pickerHeight}px`,
+          positionStrategy: positionStrategy,
+          scrollStrategy: this.overlay.scrollStrategies.close()
+        },
+        this.element
+      );
+    }
+
     this.pickerInstanceRef = this.pickerOverlayRef.attach(new ComponentPortal(IsTimepickerPickerComponent));
     const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass;
     this.renderer.setAttribute(this.pickerInstanceRef.location.nativeElement, 'class', classes);
@@ -229,6 +261,10 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
       if (this._clickedOutsideListener) {
         this._clickedOutsideListener();
         this._clickedOutsideListener = null;
+      }
+
+      if (this._scrollSub) {
+        this._scrollSub.unsubscribe();
       }
 
       this.changeDetector.markForCheck();

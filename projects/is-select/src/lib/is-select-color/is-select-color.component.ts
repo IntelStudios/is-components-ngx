@@ -54,6 +54,9 @@ export class IsSelectColorComponent implements AfterViewInit, OnDestroy, Control
   placeholder: string = 'None';
 
   @Input()
+  closeOptionsOnScroll: boolean = false;
+
+  @Input()
   set value(value: any) {
     this._value = value;
     this.setValue();

@@ -326,10 +326,11 @@
 
 <div class="row tab-container-fixed-height">
   <div class="col-sm-6">
-    <is-tabset [scrollableMode]="'scrollable-tabcontent'">
+    <is-tabset id="tabLeft" [scrollableMode]="'scrollable-tabcontent'">
       <ng-template TabsetInvalid><i class="fa fa-beer"></i></ng-template>
       <is-tab title="Tab 1">
         <ng-template TabContent>
+          <is-select [items]="selectItems" [closeOptionsOnScroll]="true"></is-select>
           <p>Line 1</p>
           <p>Line 2</p>
           <p>Line 3</p>
@@ -357,16 +358,18 @@
     </is-tabset>
   </div>
   <div class="col-sm-6">
-    <is-tabset [scrollableMode]="'scrollable-tabcontent'">
+    <is-tabset id="tabRight" [scrollableMode]="'scrollable-tabcontent'">
       <ng-template TabsetInvalid><i class="fa fa-beer"></i></ng-template>
       <is-tab title="Tab 1">
         <ng-template TabContent>
+          <is-datepicker></is-datepicker>
           <p>Line 1</p>
           <p>Line 2</p>
           <p>Line 3</p>
           <p>Line 4</p>
           <p>Line 5</p>
           <p>Line 6</p>
+          <is-timepicker></is-timepicker>
         </ng-template>
       </is-tab>
       <is-tab>
