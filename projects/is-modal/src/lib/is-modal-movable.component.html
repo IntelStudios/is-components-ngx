@@ -1,8 +1,10 @@
 <app-modal #modal [class]="control.config.cssClass" [backdrop]="false" (closeModal)="closeModal($event)">
   <ng-container *ngIf="control.config.title" class="app-modal-header">{{control.config.title|translate}}</ng-container>
   <ng-container class="app-modal-body">
-    <ng-container [ngTemplateOutlet]="control.config.template" [ngTemplateOutletContext]="{$implicit: this, modal: this}">
-    </ng-container>
+    <div class="scrollable-content" cdkScrollable>
+      <ng-container [ngTemplateOutlet]="control.config.template" [ngTemplateOutletContext]="{$implicit: this, modal: this}">
+      </ng-container>
+    </div>
   </ng-container>
   <ng-container class="app-modal-footer">
     <div class="buttons">
