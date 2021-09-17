@@ -53,6 +53,20 @@ is-modal-movable {
         }
       }
 
+      .ui-modal-body {
+        max-height: initial;
+        overflow-y: initial;
+        padding: 0;
+
+        > .scrollable-content {
+          height: 100%;
+          max-height: calc(100vh - 12.5rem);
+          padding: .625rem 1rem;
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+      }
+
       .ui-modal-footer {
         display: flex;
         align-items: center;
