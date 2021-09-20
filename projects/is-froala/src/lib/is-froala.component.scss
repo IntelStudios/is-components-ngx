@@ -32,6 +32,12 @@ is-froala {
     }
   }
 
+  &.fr-fullscreen {
+    .CodeMirror {
+      max-height: inherit !important;
+    }
+  }
+
   iframe.fr-iframe {
     position: initial !important;
     min-height: 189px;
