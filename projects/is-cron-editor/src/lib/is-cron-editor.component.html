@@ -4,7 +4,7 @@
 <is-tabset (click)="onTouched()" class="tabbable-custom">
   <is-tab title="Seconds">
     <ng-template TabContent>
-      <is-select [formControl]="formControl.seconds.type" [items]="defaultSelectTypeValues"
+      <is-select [formControl]="formControl.seconds.type" [items]="randomAbleSelectTypeValues"
                  [isSearch]="false"></is-select>
       <div class="sub-content" *ngIf="formControl.seconds.type.value === 2">
         <label>
@@ -33,11 +33,26 @@
                  min="{{formControl.seconds.between.start.value}}" max="59">
         </label>
       </div>
+      <div class="sub-content" *ngIf="formControl.seconds.type.value === 6">
+        <label>
+          Run random second between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.between.start"
+                 min="0" max="60">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.between.end"
+                 min="{{formControl.seconds.between.start.value}}" max="59">
+        </label>
+        <label>
+          ; starting at second
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.everyX.staringAt"
+                 min="0" max="59">
+        </label>
+      </div>
     </ng-template>
   </is-tab>
   <is-tab title="Minutes">
     <ng-template TabContent>
-      <is-select [formControl]="formControl.minutes.type" [items]="defaultSelectTypeValues"
+      <is-select [formControl]="formControl.minutes.type" [items]="randomAbleSelectTypeValues"
                  [isSearch]="false"></is-select>
       <div class="sub-content" *ngIf="formControl.minutes.type.value === 2">
         <label>
@@ -64,6 +79,21 @@
           and
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.between.end"
                  min="{{formControl.minutes.between.start.value}}" max="59">
+        </label>
+      </div>
+      <div class="sub-content" *ngIf="formControl.minutes.type.value === 6">
+        <label>
+          Run random minute between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.between.start"
+                 min="0" max="60">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.between.end"
+                 min="{{formControl.minutes.between.start.value}}" max="59">
+        </label>
+        <label>
+          ; starting at minute
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.everyX.staringAt"
+                 min="0" max="59">
         </label>
       </div>
     </ng-template>
