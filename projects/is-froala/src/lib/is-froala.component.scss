@@ -21,6 +21,12 @@ is-froala {
     @include is-input-invalid();
   }
 
+  &.fr-fullscreen {
+    .CodeMirror {
+      max-height: inherit !important;
+    }
+  }
+
   &.disabled {
 
     .view-border {
