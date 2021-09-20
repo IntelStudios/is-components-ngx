@@ -16,7 +16,7 @@ export function mapNumbers(array: any[]): number[] {
   return a2;
 }
 
-export function cronExpressionValidator(): ValidatorFn {
+export function cronExpressionValidator(allowRandomExpressions = false): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.value || !control.value.length) {
       return null;
@@ -51,25 +51,51 @@ export function cronExpressionValidator(): ValidatorFn {
       }
 
       // validate seconds
+      // noinspection DuplicatedCode
       if (cronState.seconds === '*') {
-      } else if (cronState.seconds.indexOf('/') > -1) {
-        mapNumbers(cronState.seconds.split('/'));
-      } else if (cronState.seconds.indexOf('-') > -1) {
-
-        mapNumbers(cronState.seconds.split('-'));
+        // OK state
+      } else  if (allowRandomExpressions && cronState.seconds === 'R') {
+        // OK state
       } else {
-        mapNumbers(cronState.seconds.split(','));
+        let { seconds } = cronState;
+        if (seconds.indexOf('/') > -1) {
+          const shiftedParts = seconds.split('/');
+          mapNumbers(shiftedParts[0]);
+          seconds = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && seconds.startsWith('R(') && seconds.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          seconds = seconds.substring(2, seconds.length - 1);
+        }
+        if (seconds.indexOf('-') > -1) {
+          mapNumbers(seconds.split('-'));
+        } else {
+          mapNumbers(seconds.split(','));
+        }
       }
 
       // validate minutes
+      // noinspection DuplicatedCode
       if (cronState.minutes === '*') {
-      } else if (cronState.minutes.indexOf('/') > -1) {
-        mapNumbers(cronState.minutes.split('/'));
-      } else if (cronState.minutes.indexOf('-') > -1) {
-
-        mapNumbers(cronState.minutes.split('-'));
+        // OK state
+      } else if (allowRandomExpressions && cronState.minutes === 'R') {
+        // OK state
       } else {
-        mapNumbers(cronState.minutes.split(','));
+        let { minutes } = cronState;
+        if (minutes.indexOf('/') > -1) {
+          const shiftedParts = minutes.split('/');
+          mapNumbers(shiftedParts[0]);
+          minutes = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && minutes.startsWith('R(') && minutes.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          minutes = minutes.substring(2, minutes.length - 1);
+        }
+        if (minutes.indexOf('-') > -1) {
+          mapNumbers(minutes.split('-'));
+        } else {
+          mapNumbers(minutes.split(','));
+        }
       }
 
       // validate hours

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -6,14 +6,13 @@ import {
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
-  Validator
+  Validator, ValidatorFn
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { cronExpressionValidator, mapNumbers } from './is-cron-editor.validator';
+import {Subscription} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+import {cronExpressionValidator, mapNumbers} from './is-cron-editor.validator';
 
-const cronValidator = cronExpressionValidator();
-
+// noinspection DuplicatedCode
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'is-cron-editor',
@@ -24,13 +23,29 @@ const cronValidator = cronExpressionValidator();
     useExisting: IsCronEditorComponent,
     multi: true
   },
-  {
-    provide: NG_VALIDATORS,
-    useExisting: IsCronEditorComponent,
-    multi: true
-  }]
+    {
+      provide: NG_VALIDATORS,
+      useExisting: IsCronEditorComponent,
+      multi: true
+    }]
 })
 export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Validator {
+  get allowRandom(): boolean {
+    return this._allowRandom;
+  }
+
+  /**
+   * If set to true, assigning random extension values such as R(10-20) is allowed
+   */
+  @Input()
+  set allowRandom(value: boolean) {
+    this._allowRandom = value;
+    this.setRandoAbleValues();
+  }
+
+  private _allowRandom = false;
+
+  cronValidator: ValidatorFn;
 
   constructor() {
   }
@@ -121,25 +136,27 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   cronExpressionControl = new FormControl();
 
   defaultSelectTypeValues = [
-    { ID: 1, Value: 'Every' },
-    { ID: 2, Value: 'Every X' },
-    { ID: 4, Value: 'Every between' },
-    { ID: 3, Value: 'Specific' },
+    {ID: 1, Value: 'Every'},
+    {ID: 2, Value: 'Every X'},
+    {ID: 4, Value: 'Every between'},
+    {ID: 3, Value: 'Specific'},
   ];
 
+  randomAbleSelectTypeValues: { ID: number, Value: string }[];
+
   daySelectTypeValues = [
-    { ID: 1, Value: 'Every' },
-    { ID: 2, Value: 'Every weekday' },
-    { ID: 3, Value: 'Every X days starting on day of week' },
-    { ID: 4, Value: 'Every X days starting on Yth' },
-    { ID: 5, Value: 'Specific day of week' },
-    { ID: 12, Value: 'Specific day of month' },
-    { ID: 6, Value: 'Any last day of the month' },
-    { ID: 7, Value: 'Last weekday of the month' },
-    { ID: 8, Value: 'Last day of week of the month' },
-    { ID: 9, Value: 'X days before end of the moth' },
-    { ID: 10, Value: 'Nearest weekday to the Xth of the month' },
-    { ID: 11, Value: 'On the Xth day of the month' },
+    {ID: 1, Value: 'Every'},
+    {ID: 2, Value: 'Every weekday'},
+    {ID: 3, Value: 'Every X days starting on day of week'},
+    {ID: 4, Value: 'Every X days starting on Yth'},
+    {ID: 5, Value: 'Specific day of week'},
+    {ID: 12, Value: 'Specific day of month'},
+    {ID: 6, Value: 'Any last day of the month'},
+    {ID: 7, Value: 'Last weekday of the month'},
+    {ID: 8, Value: 'Last day of week of the month'},
+    {ID: 9, Value: 'X days before end of the moth'},
+    {ID: 10, Value: 'Nearest weekday to the Xth of the month'},
+    {ID: 11, Value: 'On the Xth day of the month'},
   ];
 
   values = {
@@ -149,28 +166,28 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     daysOfMonth: [],
 
     daysOfWeek: [
-      { ID: 2, Value: 'Monday' },
-      { ID: 3, Value: 'Tuesday' },
-      { ID: 4, Value: 'Wednesday' },
-      { ID: 5, Value: 'Thursday' },
-      { ID: 6, Value: 'Friday' },
-      { ID: 7, Value: 'Saturday' },
-      { ID: 1, Value: 'Sunday' },
+      {ID: 2, Value: 'Monday'},
+      {ID: 3, Value: 'Tuesday'},
+      {ID: 4, Value: 'Wednesday'},
+      {ID: 5, Value: 'Thursday'},
+      {ID: 6, Value: 'Friday'},
+      {ID: 7, Value: 'Saturday'},
+      {ID: 1, Value: 'Sunday'},
     ],
 
     months: [
-      { ID: 1, Value: 'January' },
-      { ID: 2, Value: 'February' },
-      { ID: 3, Value: 'March' },
-      { ID: 4, Value: 'April' },
-      { ID: 5, Value: 'May' },
-      { ID: 6, Value: 'June' },
-      { ID: 7, Value: 'July' },
-      { ID: 8, Value: 'August' },
-      { ID: 9, Value: 'September' },
-      { ID: 10, Value: 'October' },
-      { ID: 11, Value: 'November' },
-      { ID: 12, Value: 'December' },
+      {ID: 1, Value: 'January'},
+      {ID: 2, Value: 'February'},
+      {ID: 3, Value: 'March'},
+      {ID: 4, Value: 'April'},
+      {ID: 5, Value: 'May'},
+      {ID: 6, Value: 'June'},
+      {ID: 7, Value: 'July'},
+      {ID: 8, Value: 'August'},
+      {ID: 9, Value: 'September'},
+      {ID: 10, Value: 'October'},
+      {ID: 11, Value: 'November'},
+      {ID: 12, Value: 'December'},
     ],
   };
 
@@ -195,17 +212,19 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
   ngOnInit() {
     for (let i = 0; i < 60; i++) {
-      this.values.minutes.push({ ID: i, Value: `${i}` });
+      this.values.minutes.push({ID: i, Value: `${i}`});
     }
     for (let i = 0; i < 24; i++) {
-      this.values.hours.push({ ID: i, Value: `${i}` });
+      this.values.hours.push({ID: i, Value: `${i}`});
     }
     for (let i = 1; i <= 31; i++) {
-      this.values.daysOfMonth.push({ ID: i, Value: `${i}` });
+      this.values.daysOfMonth.push({ID: i, Value: `${i}`});
     }
     for (let i = (new Date()).getFullYear(); i < 2100; i++) {
-      this.values.years.push({ ID: i, Value: `${i}` });
+      this.values.years.push({ID: i, Value: `${i}`});
     }
+
+    this.setRandoAbleValues();
 
     this.subscribeToForms();
 
@@ -318,6 +337,15 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       case 4:
         this.cronState.seconds = `${this.formControl.seconds.between.start.value}-${this.formControl.seconds.between.end.value}`;
         break;
+      case 5:
+        this.cronState.seconds = 'R';
+        break;
+      case 6:
+        this.cronState.seconds = `R(${this.formControl.seconds.between.start.value}-${this.formControl.seconds.between.end.value})`;
+        if (this.formControl.seconds.everyX.staringAt.value > 0) {
+          this.cronState.seconds = `${this.formControl.seconds.everyX.staringAt.value}/` + this.cronState.seconds;
+        }
+        break;
     }
 
     switch (this.formControl.minutes.type.value) {
@@ -337,6 +365,15 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
         break;
       case 4:
         this.cronState.minutes = `${this.formControl.minutes.between.start.value}-${this.formControl.minutes.between.end.value}`;
+        break;
+      case 5:
+        this.cronState.minutes = 'R';
+        break;
+      case 6:
+        this.cronState.minutes = `R(${this.formControl.minutes.between.start.value}-${this.formControl.minutes.between.end.value})`;
+        if (this.formControl.minutes.everyX.staringAt.value > 0) {
+          this.cronState.minutes = `${this.formControl.minutes.everyX.staringAt.value}/` + this.cronState.minutes;
+        }
         break;
     }
 
@@ -492,48 +529,85 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       this.cronState.years = cronParts.length === 6 ? null : cronParts[6].trim();
 
       // parse seconds
-      if (this.cronState.seconds === '*') {
+      let {seconds} = this.cronState;
+      if (seconds === '*') {
         this.formControl.seconds.type.setValue(1);
-      } else if (this.cronState.seconds.indexOf('/') > -1) {
-        const split = mapNumbers(this.cronState.seconds.split('/'));
-
-        this.formControl.seconds.everyX.everyX.setValue(split[1]);
-        this.formControl.seconds.everyX.staringAt.setValue(split[0]);
-
-        this.formControl.seconds.type.setValue(2);
-      } else if (this.cronState.seconds.indexOf('-') > -1) {
-
-        const split = mapNumbers(this.cronState.seconds.split('-'));
-        this.formControl.seconds.between.start.setValue(split[0]);
-        this.formControl.seconds.between.end.setValue(split[1]);
-
-        this.formControl.seconds.type.setValue(4);
+      } else if (seconds === 'R') {
+        this.formControl.seconds.type.setValue(this.allowRandom ? 5 : 1);
       } else {
-        this.formControl.seconds.type.setValue(3);
-        this.formControl.seconds.specific.setValue(mapNumbers(this.cronState.seconds.split(',')));
+        if (seconds.indexOf('/') > -1 || seconds.indexOf('-') > -1) {
+          if (seconds.indexOf('/') > -1) {
+            const splitString = seconds.split('/');
+            if (seconds.indexOf('-') === -1) {
+              const split = mapNumbers(splitString);
+              this.formControl.seconds.everyX.everyX.setValue(split[1]);
+              this.formControl.seconds.everyX.staringAt.setValue(split[0]);
+
+              this.formControl.seconds.type.setValue(2);
+            } else {
+              this.formControl.seconds.everyX.staringAt.setValue(Number(splitString[0]));
+              seconds = seconds.substring(seconds.indexOf('/') + 1);
+            }
+          }
+          if (seconds.indexOf('-') > -1) {
+            let randomApplied = false;
+
+            if (seconds.startsWith('R(')) {
+              randomApplied = this.allowRandom;
+              seconds = seconds.substring(2, seconds.length - 1);
+            }
+
+            const split = mapNumbers(seconds.split('-'));
+            this.formControl.seconds.between.start.setValue(split[0]);
+            this.formControl.seconds.between.end.setValue(split[1]);
+
+            this.formControl.seconds.type.setValue(randomApplied ? 6 : 4);
+          }
+        } else {
+          this.formControl.seconds.type.setValue(3);
+          this.formControl.seconds.specific.setValue(mapNumbers(seconds.split(',')));
+        }
       }
 
       // parse minutes
-      if (this.cronState.minutes === '*') {
+      let {minutes} = this.cronState;
+      if (minutes === '*') {
         this.formControl.minutes.type.setValue(1);
-      } else if (this.cronState.minutes.indexOf('/') > -1) {
-        const split = mapNumbers(this.cronState.minutes.split('/'));
-
-        this.formControl.minutes.everyX.everyX.setValue(split[1]);
-        this.formControl.minutes.everyX.staringAt.setValue(split[0]);
-
-        this.formControl.minutes.type.setValue(2);
-      } else if (this.cronState.minutes.indexOf('-') > -1) {
-
-        const split = mapNumbers(this.cronState.minutes.split('-'));
-        this.formControl.minutes.between.start.setValue(split[0]);
-        this.formControl.minutes.between.end.setValue(split[1]);
-
-        this.formControl.minutes.type.setValue(4);
+      } else if (minutes === 'R') {
+        this.formControl.minutes.type.setValue(this.allowRandom ? 5 : 1);
       } else {
-        this.formControl.minutes.specific.setValue(mapNumbers(this.cronState.minutes.split(',')));
+        if (minutes.indexOf('/') > -1 || minutes.indexOf('-') > -1) {
+          if (minutes.indexOf('/') > -1) {
+            const splitString = minutes.split('/');
+            if (minutes.indexOf('-') === -1) {
+              const split = mapNumbers(splitString);
+              this.formControl.minutes.everyX.everyX.setValue(split[1]);
+              this.formControl.minutes.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.minutes.type.setValue(3);
+              this.formControl.minutes.type.setValue(2);
+            } else {
+              this.formControl.minutes.everyX.staringAt.setValue(Number(splitString[0]));
+              minutes = minutes.substring(minutes.indexOf('/') + 1);
+            }
+          }
+          if (minutes.indexOf('-') > -1) {
+            let randomApplied = false;
+
+            if (minutes.startsWith('R(')) {
+              randomApplied = this.allowRandom;
+              minutes = minutes.substring(2, minutes.length - 1);
+            }
+
+            const split = mapNumbers(minutes.split('-'));
+            this.formControl.minutes.between.start.setValue(split[0]);
+            this.formControl.minutes.between.end.setValue(split[1]);
+
+            this.formControl.minutes.type.setValue(randomApplied ? 6 : 4);
+          }
+        } else {
+          this.formControl.minutes.type.setValue(3);
+          this.formControl.minutes.specific.setValue(mapNumbers(minutes.split(',')));
+        }
       }
 
       // parse hours
@@ -680,7 +754,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       }
 
       // parse years
-      if (this.cronState.years === null ||  this.cronState.years === '' || this.cronState.years === '*') {
+      if (this.cronState.years === null || this.cronState.years === '' || this.cronState.years === '*') {
         this.formControl.years.type.setValue(1);
       } else if (this.cronState.years.indexOf('/') > -1) {
         const split = mapNumbers(this.cronState.years.split('/'));
@@ -709,6 +783,14 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       }
     }
     this._ignore_reading = false;
+  }
+
+  private setRandoAbleValues() {
+    this.randomAbleSelectTypeValues = this._allowRandom ?
+      [...this.defaultSelectTypeValues, {ID: 5, Value: 'Random'}, {ID: 6, Value: 'Random between'}]
+      : this.defaultSelectTypeValues;
+
+    this.cronValidator = cronExpressionValidator(this._allowRandom);
   }
 
   registerOnChange(fn: (_: any) => {}): void {
@@ -753,7 +835,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return cronValidator(control);
+    return this.cronValidator(control);
   }
 
 }

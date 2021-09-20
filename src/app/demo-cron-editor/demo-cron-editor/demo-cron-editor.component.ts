@@ -17,6 +17,7 @@ export class DemoCronEditorComponent implements OnInit {
 `;
 
   cronControl = new FormControl();
+  randomExtensionSwitch = false;
 
   constructor() {
   }
