@@ -40,7 +40,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   @Input()
   set allowRandom(value: boolean) {
     this._allowRandom = value;
-    this.setRandoAbleValues();
+    this.setRandomAbleValues();
   }
 
   private _allowRandom = false;
@@ -93,6 +93,10 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
         everyX: new FormControl(),
         staringAt: new FormControl()
       },
+      between: {
+        start: new FormControl(1),
+        end: new FormControl(31)
+      },
       everyXDay: {
         everyX: new FormControl(),
         staringAt: new FormControl()
@@ -135,29 +139,33 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
   cronExpressionControl = new FormControl();
 
-  defaultSelectTypeValues = [
+  _defaultSelectTypeValues = [
     {ID: 1, Value: 'Every'},
     {ID: 2, Value: 'Every X'},
     {ID: 4, Value: 'Every between'},
     {ID: 3, Value: 'Specific'},
   ];
 
+  defaultSelectTypeValues: { ID: number, Value: string }[];
+
   randomAbleSelectTypeValues: { ID: number, Value: string }[];
 
-  daySelectTypeValues = [
+  _daySelectTypeValues = [
     {ID: 1, Value: 'Every'},
     {ID: 2, Value: 'Every weekday'},
     {ID: 3, Value: 'Every X days starting on day of week'},
     {ID: 4, Value: 'Every X days starting on Yth'},
-    {ID: 5, Value: 'Specific day of week'},
+    {ID: 14, Value: 'Specific day of week'},
     {ID: 12, Value: 'Specific day of month'},
-    {ID: 6, Value: 'Any last day of the month'},
+    {ID: 13, Value: 'Any last day of the month'},
     {ID: 7, Value: 'Last weekday of the month'},
     {ID: 8, Value: 'Last day of week of the month'},
     {ID: 9, Value: 'X days before end of the moth'},
     {ID: 10, Value: 'Nearest weekday to the Xth of the month'},
     {ID: 11, Value: 'On the Xth day of the month'},
   ];
+
+  daySelectTypeValues: { ID: number, Value: string }[];
 
   values = {
     minutes: [],
@@ -224,7 +232,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       this.values.years.push({ID: i, Value: `${i}`});
     }
 
-    this.setRandoAbleValues();
+    this.setRandomAbleValues();
 
     this.subscribeToForms();
 
@@ -395,6 +403,15 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       case 4:
         this.cronState.hours = `${this.formControl.hours.between.start.value}-${this.formControl.hours.between.end.value}`;
         break;
+      case 5:
+        this.cronState.hours = 'R';
+        break;
+      case 6:
+        this.cronState.hours = `R(${this.formControl.hours.between.start.value}-${this.formControl.hours.between.end.value})`;
+        if (this.formControl.hours.everyX.staringAt.value > 0) {
+          this.cronState.hours = `${this.formControl.hours.everyX.staringAt.value}/` + this.cronState.hours;
+        }
+        break;
     }
 
     switch (this.formControl.days.type.value) {
@@ -414,7 +431,13 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
         this.cronState.dayOfWeek = '?';
         this.cronState.dayOfMonth = `${this.formControl.days.everyX.staringAt.value}/${this.formControl.days.everyX.everyX.value}`;
         break;
-      case 5:
+      case 6:
+        this.cronState.dayOfMonth = `R(${this.formControl.days.between.start.value}-${this.formControl.days.between.end.value})`;
+        if (this.formControl.days.everyX.staringAt.value > 0) {
+          this.cronState.dayOfMonth = `${this.formControl.days.everyX.staringAt.value}/` + this.cronState.dayOfMonth;
+        }
+        break;
+      case 14:
         const mapIDtoShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
         this.cronState.dayOfMonth = '?';
         if (this.formControl.days.specificDayOfWeek.value && this.formControl.days.specificDayOfWeek.value.length > 0) {
@@ -431,7 +454,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
           this.cronState.dayOfMonth = '1';
         }
         break;
-      case 6:
+      case 13:
         this.cronState.dayOfWeek = '?';
         this.cronState.dayOfMonth = 'L';
         break;
@@ -476,6 +499,12 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       case 4:
         this.cronState.months = `${this.formControl.months.between.start.value}-${this.formControl.months.between.end.value}`;
         break;
+      case 6:
+        this.cronState.months = `R(${this.formControl.months.between.start.value}-${this.formControl.months.between.end.value})`;
+        if (this.formControl.months.everyX.staringAt.value > 0) {
+          this.cronState.months = `${this.formControl.months.everyX.staringAt.value}/` + this.cronState.months;
+        }
+        break;
     }
 
     switch (this.formControl.years.type.value) {
@@ -495,6 +524,12 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
         break;
       case 4:
         this.cronState.years = `${this.formControl.years.between.start.value}-${this.formControl.years.between.end.value}`;
+        break;
+      case 6:
+        this.cronState.years = `R(${this.formControl.years.between.start.value}-${this.formControl.years.between.end.value})`;
+        if (this.formControl.years.everyX.staringAt.value > 0) {
+          this.cronState.years = `${this.formControl.years.everyX.staringAt.value}/` + this.cronState.years;
+        }
         break;
     }
 
@@ -611,79 +646,121 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       }
 
       // parse hours
-      if (this.cronState.hours === '*') {
+      let {hours} = this.cronState;
+      if (hours === '*') {
         this.formControl.hours.type.setValue(1);
-      } else if (this.cronState.hours.indexOf('/') > -1) {
-        const split = mapNumbers(this.cronState.hours.split('/'));
-
-        this.formControl.hours.everyX.everyX.setValue(split[1]);
-        this.formControl.hours.everyX.staringAt.setValue(split[0]);
-
-        this.formControl.hours.type.setValue(2);
-      } else if (this.cronState.hours.indexOf('-') > -1) {
-
-        const split = mapNumbers(this.cronState.hours.split('-'));
-        this.formControl.hours.between.start.setValue(split[0]);
-        this.formControl.hours.between.end.setValue(split[1]);
-
-        this.formControl.hours.type.setValue(4);
+      } else if (hours === 'R') {
+        this.formControl.hours.type.setValue(this.allowRandom ? 5 : 1);
       } else {
-        this.formControl.hours.specific.setValue(mapNumbers(this.cronState.hours.split(',')));
-        this.formControl.hours.type.setValue(3);
+        if (hours.indexOf('/') > -1 || hours.indexOf('-') > -1) {
+          if (hours.indexOf('/') > -1) {
+            const splitString = hours.split('/');
+            if (hours.indexOf('-') === -1) {
+              const split = mapNumbers(splitString);
+              this.formControl.hours.everyX.everyX.setValue(split[1]);
+              this.formControl.hours.everyX.staringAt.setValue(split[0]);
+
+              this.formControl.hours.type.setValue(2);
+            } else {
+              this.formControl.hours.everyX.staringAt.setValue(Number(splitString[0]));
+              hours = hours.substring(hours.indexOf('/') + 1);
+            }
+          }
+          if (hours.indexOf('-') > -1) {
+            let randomApplied = false;
+
+            if (hours.startsWith('R(')) {
+              randomApplied = this.allowRandom;
+              hours = hours.substring(2, hours.length - 1);
+            }
+
+            const split = mapNumbers(hours.split('-'));
+            this.formControl.hours.between.start.setValue(split[0]);
+            this.formControl.hours.between.end.setValue(split[1]);
+
+            this.formControl.hours.type.setValue(randomApplied ? 6 : 4);
+          }
+        } else {
+          this.formControl.hours.type.setValue(3);
+          this.formControl.hours.specific.setValue(mapNumbers(hours.split(',')));
+        }
       }
 
       // parse days
-      if (this.cronState.dayOfWeek === '*' && this.cronState.dayOfMonth === '?') {
+      // tslint:disable-next-line:prefer-const
+      let {dayOfMonth, dayOfWeek} = this.cronState;
+      if (dayOfWeek === '*' && dayOfMonth === '?') {
         this.formControl.days.type.setValue(1);
-      } else if (this.cronState.dayOfWeek === 'MON-FRI' && this.cronState.dayOfMonth === '?') {
+      } else if (dayOfWeek === 'MON-FRI' && dayOfMonth === '?') {
         this.formControl.days.type.setValue(2);
-      } else if (this.cronState.dayOfWeek.indexOf('/') > -1) {
+      } else if (dayOfWeek.indexOf('/') > -1) {
         const split = mapNumbers(this.cronState.dayOfWeek.split('/'));
 
         this.formControl.days.everyXDay.everyX.setValue(split[1]);
         this.formControl.days.everyXDay.staringAt.setValue(split[0]);
 
         this.formControl.days.type.setValue(3);
-      } else if (this.cronState.dayOfMonth.indexOf('/') > -1) {
-        const split = mapNumbers(this.cronState.dayOfMonth.split('/'));
+      } else if (dayOfMonth.indexOf('/') > -1 || dayOfMonth.indexOf('-') > -1) {
+        if (dayOfMonth.indexOf('/') > -1) {
+          const splitString = dayOfMonth.split('/');
+          if (dayOfMonth.indexOf('-') === -1) {
+            const split = mapNumbers(splitString);
+            this.formControl.days.everyX.everyX.setValue(split[1]);
+            this.formControl.days.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.days.everyX.everyX.setValue(split[1]);
-        this.formControl.days.everyX.staringAt.setValue(split[0]);
+            this.formControl.days.type.setValue(2);
+          } else {
+            this.formControl.days.everyX.staringAt.setValue(Number(splitString[0]));
+            dayOfMonth = dayOfMonth.substring(dayOfMonth.indexOf('/') + 1);
+          }
+        }
+        if (dayOfMonth.indexOf('-') > -1) {
+          let randomApplied = false;
 
-        this.formControl.days.type.setValue(4);
-      } else if (this.cronState.dayOfMonth === 'L') {
+          if (dayOfMonth.startsWith('R(')) {
+            randomApplied = this.allowRandom;
+            dayOfMonth = dayOfMonth.substring(2, dayOfMonth.length - 1);
+          }
+
+          const split = mapNumbers(dayOfMonth.split('-'));
+          this.formControl.days.between.start.setValue(split[0]);
+          this.formControl.days.between.end.setValue(split[1]);
+
+          this.formControl.days.type.setValue(randomApplied ? 6 : 4);
+        }
+      } else if (dayOfMonth === 'L') {
         this.formControl.days.type.setValue(6);
-      } else if (this.cronState.dayOfMonth === 'LW') {
+      } else if (dayOfMonth === 'LW') {
         this.formControl.days.type.setValue(7);
-      } else if (this.cronState.dayOfWeek.endsWith('L')) {
-        const dayNumber = mapNumbers([this.cronState.dayOfWeek.charAt(0)])[0];
+      } else if (dayOfWeek.endsWith('L')) {
+        const dayNumber = mapNumbers([dayOfWeek.charAt(0)])[0];
 
         this.formControl.days.lastDayOfWeekOfTheMonth.setValue(dayNumber);
         this.formControl.days.type.setValue(8);
-      } else if (this.cronState.dayOfMonth.startsWith('L-')) {
-        const dayOffset = mapNumbers([this.cronState.dayOfMonth.substr(2)]);
+      } else if (dayOfMonth.startsWith('L-')) {
+        const dayOffset = mapNumbers([dayOfMonth.substr(2)]);
 
         this.formControl.days.XBeforeEnd.setValue(dayOffset);
         this.formControl.days.type.setValue(9);
-      } else if (this.cronState.dayOfMonth.endsWith('W')) {
-        const day = mapNumbers([this.cronState.dayOfMonth.substr(0, this.cronState.dayOfMonth.length - 1)]);
+      } else if (dayOfMonth.endsWith('W')) {
+        const day = mapNumbers([dayOfMonth.substr(0, dayOfMonth.length - 1)]);
 
         this.formControl.days.nearestWeekdayTo.setValue(day);
         this.formControl.days.type.setValue(10);
-      } else if (this.cronState.dayOfWeek.indexOf('#') > -1) {
-        const split = mapNumbers(this.cronState.dayOfWeek.split('#'));
+      } else if (dayOfWeek.indexOf('#') > -1) {
+        const split = mapNumbers(dayOfWeek.split('#'));
 
         this.formControl.days.XthDay.day.setValue(split[0]);
         this.formControl.days.XthDay.x.setValue(split[1]);
 
         this.formControl.days.type.setValue(11);
       } else {
-        if (this.cronState.dayOfWeek.length > this.cronState.dayOfMonth.length) {
+        if (dayOfWeek.length > dayOfMonth.length) {
           const mapIDtoShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
           const values = [];
 
-          for (let day of this.cronState.dayOfWeek.split(',')) {
+          for (let day of dayOfWeek.split(',')) {
             day = day.trim();
             if (!day.length) {
               continue;
@@ -704,34 +781,49 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
           this.formControl.days.type.setValue(5);
           this.formControl.days.specificDayOfWeek.setValue(values);
         } else {
-          this.formControl.days.specificDayOfMonth.setValue(mapNumbers(this.cronState.dayOfMonth.split(',')));
+          this.formControl.days.specificDayOfMonth.setValue(mapNumbers(dayOfMonth.split(',')));
 
           this.formControl.days.type.setValue(12);
         }
       }
 
       // parse month
-      if (this.cronState.months === '*') {
+      let {months} = this.cronState;
+      if (months === '*') {
         this.formControl.months.type.setValue(1);
-      } else if (this.cronState.months.indexOf('/') > -1) {
-        const split = mapNumbers(this.cronState.months.split('/'));
+      } else if (months.indexOf('/') > -1 || months.indexOf('-') > -1) {
+        if (months.indexOf('/') > -1) {
+          const splitString = months.split('/');
+          if (months.indexOf('-') === -1) {
+            const split = mapNumbers(splitString);
+            this.formControl.months.everyX.everyX.setValue(split[1]);
+            this.formControl.months.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.months.everyX.everyX.setValue(split[1]);
-        this.formControl.months.everyX.staringAt.setValue(split[0]);
+            this.formControl.months.type.setValue(2);
+          } else {
+            this.formControl.months.everyX.staringAt.setValue(Number(splitString[0]));
+            months = months.substring(months.indexOf('/') + 1);
+          }
+        }
+        if (months.indexOf('-') > -1) {
+          let randomApplied = false;
 
-        this.formControl.months.type.setValue(2);
-      } else if (this.cronState.months.indexOf('-') > -1) {
+          if (months.startsWith('R(')) {
+            randomApplied = this.allowRandom;
+            months = months.substring(2, months.length - 1);
+          }
 
-        const split = mapNumbers(this.cronState.months.split('-'));
-        this.formControl.months.between.start.setValue(split[0]);
-        this.formControl.months.between.end.setValue(split[1]);
+          const split = mapNumbers(months.split('-'));
+          this.formControl.months.between.start.setValue(split[0]);
+          this.formControl.months.between.end.setValue(split[1]);
 
-        this.formControl.months.type.setValue(4);
+          this.formControl.months.type.setValue(randomApplied ? 6 : 4);
+        }
       } else {
         const mapIDtoShort = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
         const values = [];
 
-        for (let month of this.cronState.months.split(',')) {
+        for (let month of months.split(',')) {
           month = month.trim();
           if (!month.length) {
             continue;
@@ -754,29 +846,47 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       }
 
       // parse years
-      if (this.cronState.years === null || this.cronState.years === '' || this.cronState.years === '*') {
+      let {years} = this.cronState;
+      if (!years || years === '*') {
         this.formControl.years.type.setValue(1);
-      } else if (this.cronState.years.indexOf('/') > -1) {
-        const split = mapNumbers(this.cronState.years.split('/'));
-
-        this.formControl.years.everyX.everyX.setValue(split[1]);
-        this.formControl.years.everyX.staringAt.setValue(split[0]);
-
-        this.formControl.years.type.setValue(2);
-      } else if (this.cronState.years.indexOf('-') > -1) {
-
-        const split = mapNumbers(this.cronState.years.split('-'));
-        this.formControl.years.between.start.setValue(split[0]);
-        this.formControl.years.between.end.setValue(split[1]);
-
-        this.formControl.years.type.setValue(4);
+      } else if (years === 'R') {
+        this.formControl.years.type.setValue(this.allowRandom ? 5 : 1);
       } else {
-        this.formControl.years.specific.setValue(mapNumbers(this.cronState.years.split(',')));
+        if (years.indexOf('/') > -1 || years.indexOf('-') > -1) {
+          if (years.indexOf('/') > -1) {
+            const splitString = years.split('/');
+            if (years.indexOf('-') === -1) {
+              const split = mapNumbers(splitString);
+              this.formControl.years.everyX.everyX.setValue(split[1]);
+              this.formControl.years.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.years.type.setValue(3);
+              this.formControl.years.type.setValue(2);
+            } else {
+              this.formControl.years.everyX.staringAt.setValue(Number(splitString[0]));
+              years = years.substring(years.indexOf('/') + 1);
+            }
+          }
+          if (years.indexOf('-') > -1) {
+            let randomApplied = false;
+
+            if (years.startsWith('R(')) {
+              randomApplied = this.allowRandom;
+              years = years.substring(2, years.length - 1);
+            }
+
+            const split = mapNumbers(years.split('-'));
+            this.formControl.years.between.start.setValue(split[0]);
+            this.formControl.years.between.end.setValue(split[1]);
+
+            this.formControl.years.type.setValue(randomApplied ? 6 : 4);
+          }
+        } else {
+          this.formControl.years.type.setValue(3);
+          this.formControl.years.specific.setValue(mapNumbers(years.split(',')));
+        }
       }
     } catch (e) {
-      console.error(e.message);
+      console.error(e);
     } finally {
       if (this.validatorOnChangeFn) {
         this.validatorOnChangeFn();
@@ -785,10 +895,16 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     this._ignore_reading = false;
   }
 
-  private setRandoAbleValues() {
+  private setRandomAbleValues() {
     this.randomAbleSelectTypeValues = this._allowRandom ?
-      [...this.defaultSelectTypeValues, {ID: 5, Value: 'Random'}, {ID: 6, Value: 'Random between'}]
-      : this.defaultSelectTypeValues;
+      [...this._defaultSelectTypeValues, {ID: 5, Value: 'Random'}, {ID: 6, Value: 'Random between'}]
+      : this._defaultSelectTypeValues;
+    this.defaultSelectTypeValues = this._allowRandom ?
+      [...this._defaultSelectTypeValues, {ID: 6, Value: 'Random between'}]
+      : this._defaultSelectTypeValues;
+    this.daySelectTypeValues = this._allowRandom ?
+      [...this._daySelectTypeValues, {ID: 6, Value: 'Random between'}]
+      : this._daySelectTypeValues;
 
     this.cronValidator = cronExpressionValidator(this._allowRandom);
   }

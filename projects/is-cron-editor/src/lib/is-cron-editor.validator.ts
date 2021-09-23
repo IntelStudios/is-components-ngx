@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 /**
@@ -51,7 +53,6 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
       }
 
       // validate seconds
-      // noinspection DuplicatedCode
       if (cronState.seconds === '*') {
         // OK state
       } else  if (allowRandomExpressions && cronState.seconds === 'R') {
@@ -75,7 +76,6 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
       }
 
       // validate minutes
-      // noinspection DuplicatedCode
       if (cronState.minutes === '*') {
         // OK state
       } else if (allowRandomExpressions && cronState.minutes === 'R') {
@@ -100,13 +100,25 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
 
       // validate hours
       if (cronState.hours === '*') {
-      } else if (cronState.hours.indexOf('/') > -1) {
-        mapNumbers(cronState.hours.split('/'));
-      } else if (cronState.hours.indexOf('-') > -1) {
-
-        mapNumbers(cronState.hours.split('-'));
+        // OK state
+      } else if (allowRandomExpressions && cronState.hours === 'R') {
+        // OK state
       } else {
-        mapNumbers(cronState.hours.split(','));
+        let { hours } = cronState;
+        if (hours.indexOf('/') > -1) {
+          const shiftedParts = hours.split('/');
+          mapNumbers(shiftedParts[0]);
+          hours = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && hours.startsWith('R(') && hours.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          hours = hours.substring(2, hours.length - 1);
+        }
+        if (hours.indexOf('-') > -1) {
+          mapNumbers(hours.split('-'));
+        } else {
+          mapNumbers(hours.split(','));
+        }
       }
 
       // validate days
@@ -114,8 +126,22 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
       } else if (cronState.dayOfWeek === 'MON-FRI' && cronState.dayOfMonth === '?') {
       } else if (cronState.dayOfWeek.indexOf('/') > -1) {
         mapNumbers(cronState.dayOfWeek.split('/'));
-      } else if (cronState.dayOfMonth.indexOf('/') > -1) {
-        mapNumbers(cronState.dayOfMonth.split('/'));
+      } else if (cronState.dayOfMonth.indexOf('/') > -1 || cronState.dayOfMonth.indexOf('-') > -1 ) {
+        let { dayOfMonth } = cronState;
+        if (dayOfMonth.indexOf('/') > -1) {
+          const shiftedParts = dayOfMonth.split('/');
+          mapNumbers(shiftedParts[0]);
+          dayOfMonth = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && dayOfMonth.startsWith('R(') && dayOfMonth.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          dayOfMonth = dayOfMonth.substring(2, dayOfMonth.length - 1);
+        }
+        if (dayOfMonth.indexOf('-') > -1) {
+          mapNumbers(dayOfMonth.split('-'));
+        } else {
+          mapNumbers(dayOfMonth.split(','));
+        }
       } else if (cronState.dayOfMonth === 'L') {
       } else if (cronState.dayOfMonth === 'LW') {
       } else if (cronState.dayOfWeek.endsWith('L')) {
@@ -146,11 +172,22 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
 
       // validate month
       if (cronState.months === '*') {
-      } else if (cronState.months.indexOf('/') > -1) {
-        mapNumbers(cronState.months.split('/'));
-      } else if (cronState.months.indexOf('-') > -1) {
-
-        mapNumbers(cronState.months.split('-'));
+      } else if ((cronState.months.indexOf('/') > -1) || cronState.months.indexOf('-') > -1) {
+        let { months } = cronState;
+        if (months.indexOf('/') > -1) {
+          const shiftedParts = months.split('/');
+          mapNumbers(shiftedParts[0]);
+          months = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && months.startsWith('R(') && months.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          months = months.substring(2, months.length - 1);
+        }
+        if (months.indexOf('-') > -1) {
+          mapNumbers(months.split('-'));
+        } else {
+          mapNumbers(months.split(','));
+        }
       } else {
         const mapIDtoShort = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
@@ -168,14 +205,24 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
       }
 
       // validate years
-      if (cronState.years === null || cronState.years === '*') {
-      } else if (cronState.years.indexOf('/') > -1) {
-        mapNumbers(cronState.years.split('/'));
-      } else if (cronState.years.indexOf('-') > -1) {
-
-        mapNumbers(cronState.years.split('-'));
+      if (!cronState.years || cronState.years === '*') {
+        // OK state
       } else {
-        mapNumbers(cronState.years.split(','));
+        let { years } = cronState;
+        if (years.indexOf('/') > -1) {
+          const shiftedParts = years.split('/');
+          mapNumbers(shiftedParts[0]);
+          years = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && years.startsWith('R(') && years.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          years = years.substring(2, years.length - 1);
+        }
+        if (years.indexOf('-') > -1) {
+          mapNumbers(years.split('-'));
+        } else {
+          mapNumbers(years.split(','));
+        }
       }
       return null;
     } catch (e) {
