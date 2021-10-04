@@ -40,6 +40,11 @@ is-froala {
     iframe.fr-iframe {
       background-color: $is-control-disabled-bg-color;
     }
+
+    .CodeMirror {
+      pointer-events: none;
+      background-color: $is-control-disabled-bg-color;
+    }
   }
 
   iframe.fr-iframe {
