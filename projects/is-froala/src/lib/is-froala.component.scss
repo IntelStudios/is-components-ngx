@@ -36,6 +36,10 @@ is-froala {
     .icon-load {
       display: none;
     }
+
+    iframe.fr-iframe {
+      background-color: $is-control-disabled-bg-color;
+    }
   }
 
   iframe.fr-iframe {
