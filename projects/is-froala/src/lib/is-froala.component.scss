@@ -30,6 +30,15 @@ is-froala {
     .icon-load {
       display: none;
     }
+
+    iframe.fr-iframe {
+      background-color: $is-control-disabled-bg-color;
+    }
+
+    .CodeMirror {
+      pointer-events: none;
+      background-color: $is-control-disabled-bg-color;
+    }
   }
 
   &.fr-fullscreen {

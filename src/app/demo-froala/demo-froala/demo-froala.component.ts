@@ -13,7 +13,7 @@ export class DemoFroalaComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/9.x/package/is-froala-9.0.0.tgz
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/9.x/package/is-froala-9.0.1.tgz
 npm install --save froala-editor at.js font-awesome</pre>
 
 <h3>Import Module</h3>
