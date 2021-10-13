@@ -122,8 +122,6 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
       // validate days
       if (cronState.dayOfWeek === '*' && cronState.dayOfMonth === '?') {
       } else if (cronState.dayOfWeek === 'MON-FRI' && cronState.dayOfMonth === '?') {
-      } else if (cronState.dayOfWeek.indexOf('/') > -1) {
-        mapNumbers(cronState.dayOfWeek.split('/'));
       } else if (cronState.dayOfMonth.indexOf('/') > -1 || cronState.dayOfMonth.indexOf('-') > -1 ) {
         let { dayOfMonth } = cronState;
         if (dayOfMonth.indexOf('/') > -1) {
@@ -140,6 +138,22 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
         } else {
           mapNumbers(dayOfMonth.split(','));
         }
+      } else if (cronState.dayOfWeek.indexOf('/') > -1 || cronState.dayOfWeek.indexOf('-') > -1 ) {
+        let { dayOfWeek } = cronState;
+        if (dayOfWeek.indexOf('/') > -1) {
+          const shiftedParts = dayOfWeek.split('/');
+          mapNumbers(shiftedParts[0]);
+          dayOfWeek = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && dayOfWeek.startsWith('R(') && dayOfWeek.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          dayOfWeek = dayOfWeek.substring(2, dayOfWeek.length - 1);
+        }
+        if (dayOfWeek.indexOf('-') > -1) {
+          mapNumbers(dayOfWeek.split('-'));
+        } else {
+          mapNumbers(dayOfWeek.split(','));
+        }
       } else if (cronState.dayOfMonth === 'L') {
       } else if (cronState.dayOfMonth === 'LW') {
       } else if (cronState.dayOfWeek.endsWith('L')) {
@@ -150,20 +164,17 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
         mapNumbers([cronState.dayOfMonth.substr(0, cronState.dayOfMonth.length - 1)]);
       } else if (cronState.dayOfWeek.indexOf('#') > -1) {
         mapNumbers(cronState.dayOfWeek.split('#'));
-      } else {
-        if (cronState.dayOfWeek.length > cronState.dayOfMonth.length) {
-          const mapIDtoShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+      } else if (cronState.dayOfWeek !== '?') {
+        const mapIDtoShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-          for (let day of cronState.dayOfWeek.split(',')) {
-            day = day.trim();
-            if (!day.length) {
-              continue;
-            }
-            const dayIndex = mapIDtoShort.indexOf(day);
-            if (dayIndex === -1) {
-              // noinspection ExceptionCaughtLocallyJS
-              throw Error('this day does not exist');
-            }
+        for (let day of cronState.dayOfWeek.split(',')) {
+          day = day.trim();
+          if (!day.length) {
+            continue;
+          }
+          if (mapIDtoShort.indexOf(day) === -1 && isNaN(Number(day))) {
+            // noinspection ExceptionCaughtLocallyJS
+            throw Error('this day does not exist');
           }
         }
       }

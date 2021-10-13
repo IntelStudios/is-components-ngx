@@ -168,7 +168,7 @@
                  min="1" max="31">th
         </label>
       </div>
-      <div class="sub-content" *ngIf="formControl.days.type.value === 5">
+      <div class="sub-content" *ngIf="formControl.days.type.value === 14">
         <!--suppress AngularInvalidExpressionResultType -->
         <is-select [multiple]="true" placeholder="Select days at which will this expression run"
                          [formControl]="formControl.days.specificDayOfWeek"
@@ -222,6 +222,51 @@
           ; starting at day
           <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.everyX.staringAt"
                  min="0" max="31">
+        </label>
+      </div>
+      <div class="sub-content" *ngIf="formControl.days.type.value === 15">
+        <label>
+          Run every day of month between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.start"
+                 min="0" max="31">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.end"
+                 min="{{formControl.days.between.start.value}}" max="31">
+        </label>
+        <label>
+          ; starting at day
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.everyX.staringAt"
+                 min="0" max="31">
+        </label>
+      </div>
+      <div class="sub-content" *ngIf="formControl.days.type.value === 16">
+        <label>
+          Run every day of week between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.start"
+                 min="0" max="6">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.end"
+                 min="{{formControl.days.between.start.value}}" max="6">
+        </label>
+        <label>
+          ; starting at day
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.everyX.staringAt"
+                 min="0" max="6">
+        </label>
+      </div>
+      <div class="sub-content" *ngIf="formControl.days.type.value === 17">
+        <label>
+          Run random day of week between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.start"
+                 min="0" max="6">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.end"
+                 min="{{formControl.days.between.start.value}}" max="6">
+        </label>
+        <label>
+          ; starting at day
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.everyX.staringAt"
+                 min="0" max="6">
         </label>
       </div>
     </ng-template>

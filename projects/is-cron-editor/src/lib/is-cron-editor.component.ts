@@ -153,6 +153,8 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   _daySelectTypeValues = [
     {ID: 1, Value: 'Every'},
     {ID: 2, Value: 'Every weekday'},
+    {ID: 15, Value: 'Every day of month between'},
+    {ID: 16, Value: 'Every day of week between'},
     {ID: 3, Value: 'Every X days starting on day of week'},
     {ID: 4, Value: 'Every X days starting on Yth'},
     {ID: 14, Value: 'Specific day of week'},
@@ -475,6 +477,27 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
         this.cronState.dayOfWeek = `${this.formControl.days.XthDay.day.value}#${this.formControl.days.XthDay.x.value}`;
         this.cronState.dayOfMonth = '?';
         break;
+      case 15:
+        this.cronState.dayOfMonth = `${this.formControl.days.between.start.value}-${this.formControl.days.between.end.value}`;
+        if (this.formControl.days.everyX.staringAt.value > 0) {
+          this.cronState.dayOfMonth = `${this.formControl.days.everyX.staringAt.value}/${this.cronState.dayOfMonth}`;
+        }
+        this.cronState.dayOfWeek = '?';
+        break;
+      case 16:
+        this.cronState.dayOfWeek = `${this.formControl.days.between.start.value}-${this.formControl.days.between.end.value}`;
+        if (this.formControl.days.everyX.staringAt.value > 0) {
+          this.cronState.dayOfWeek = `${this.formControl.days.everyX.staringAt.value}/${this.cronState.dayOfWeek}`;
+        }
+        this.cronState.dayOfMonth = '?';
+        break;
+      case 17:
+        this.cronState.dayOfWeek = `R(${this.formControl.days.between.start.value}-${this.formControl.days.between.end.value})`;
+        if (this.formControl.days.everyX.staringAt.value > 0) {
+          this.cronState.dayOfWeek = `${this.formControl.days.everyX.staringAt.value}/${this.cronState.dayOfWeek}`;
+        }
+        this.cronState.dayOfMonth = '?';
+        break;
     }
 
     switch (this.formControl.months.type.value) {
@@ -682,19 +705,41 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       }
 
       // parse days
-      // tslint:disable-next-line:prefer-const
       let {dayOfMonth, dayOfWeek} = this.cronState;
       if (dayOfWeek === '*' && dayOfMonth === '?') {
         this.formControl.days.type.setValue(1);
       } else if (dayOfWeek === 'MON-FRI' && dayOfMonth === '?') {
         this.formControl.days.type.setValue(2);
-      } else if (dayOfWeek.indexOf('/') > -1) {
-        const split = mapNumbers(this.cronState.dayOfWeek.split('/'));
+      } else if (dayOfWeek.indexOf('/') > -1 || dayOfWeek.indexOf('-') > -1) {
+        if (dayOfWeek.indexOf('/') > -1) {
+          const splitString = dayOfWeek.split('/');
+          if (dayOfWeek.indexOf('-') === -1) {
+            const split = mapNumbers(splitString);
+            this.formControl.days.everyX.everyX.setValue(split[1]);
+            this.formControl.days.everyX.staringAt.setValue(split[0]);
 
-        this.formControl.days.everyXDay.everyX.setValue(split[1]);
-        this.formControl.days.everyXDay.staringAt.setValue(split[0]);
+            this.formControl.days.type.setValue(3);
+          } else {
+            this.formControl.days.everyX.staringAt.setValue(Number(splitString[0]));
+            dayOfWeek = dayOfWeek.substring(dayOfWeek.indexOf('/') + 1);
+          }
+        } else {
+          this.formControl.days.everyX.staringAt.setValue(0);
+        }
+        if (dayOfWeek.indexOf('-') > -1) {
+          let randomApplied = false;
 
-        this.formControl.days.type.setValue(3);
+          if (dayOfWeek.startsWith('R(')) {
+            randomApplied = this.allowRandom;
+            dayOfWeek = dayOfWeek.substring(2, dayOfWeek.length - 1);
+          }
+
+          const split = mapNumbers(dayOfWeek.split('-'));
+          this.formControl.days.between.start.setValue(split[0]);
+          this.formControl.days.between.end.setValue(split[1]);
+
+          this.formControl.days.type.setValue(randomApplied ? 17 : 16);
+        }
       } else if (dayOfMonth.indexOf('/') > -1 || dayOfMonth.indexOf('-') > -1) {
         if (dayOfMonth.indexOf('/') > -1) {
           const splitString = dayOfMonth.split('/');
@@ -721,7 +766,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
           this.formControl.days.between.start.setValue(split[0]);
           this.formControl.days.between.end.setValue(split[1]);
 
-          this.formControl.days.type.setValue(randomApplied ? 6 : 4);
+          this.formControl.days.type.setValue(randomApplied ? 6 : 15);
         }
       } else if (dayOfMonth === 'L') {
         this.formControl.days.type.setValue(6);
@@ -750,7 +795,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
         this.formControl.days.type.setValue(11);
       } else {
-        if (dayOfWeek.length > dayOfMonth.length) {
+        if (dayOfWeek !== '?') {
           const mapIDtoShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
           const values = [];
@@ -760,7 +805,10 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
             if (!day.length) {
               continue;
             }
-            const dayIndex = mapIDtoShort.indexOf(day);
+            let dayIndex = Number(day);
+            if (isNaN(dayIndex)) {
+              dayIndex = mapIDtoShort.indexOf(day);
+            }
             if (dayIndex === -1) {
               // noinspection ExceptionCaughtLocallyJS
               throw Error('this day does not exist');
@@ -773,7 +821,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
             }
           }
 
-          this.formControl.days.type.setValue(5);
+          this.formControl.days.type.setValue(14);
           this.formControl.days.specificDayOfWeek.setValue(values);
         } else {
           this.formControl.days.specificDayOfMonth.setValue(mapNumbers(dayOfMonth.split(',')));
@@ -898,7 +946,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       [...this._defaultSelectTypeValues, {ID: 6, Value: 'Random between'}]
       : this._defaultSelectTypeValues;
     this.daySelectTypeValues = this._allowRandom ?
-      [...this._daySelectTypeValues, {ID: 6, Value: 'Random between'}]
+      [...this._daySelectTypeValues, {ID: 6, Value: 'Random day of month between'}, {ID: 17, Value: 'Random day of week between'}]
       : this._daySelectTypeValues;
 
     this.cronValidator = cronExpressionValidator(this._allowRandom);
