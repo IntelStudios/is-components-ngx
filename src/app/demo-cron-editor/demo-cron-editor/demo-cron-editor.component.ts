@@ -10,7 +10,7 @@ export class DemoCronEditorComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-cron-editor-7.1.2.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-cron-editor-7.1.3.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsCronEditorModule } from 'is-cron-editor';</pre>
