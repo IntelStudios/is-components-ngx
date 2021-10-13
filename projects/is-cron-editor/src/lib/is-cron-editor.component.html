@@ -100,7 +100,7 @@
   </is-tab>
   <is-tab title="Hours">
     <ng-template TabContent>
-      <is-select [formControl]="formControl.hours.type" [items]="randomAbleSelectTypeValues"
+      <is-select [formControl]="formControl.hours.type" [items]="defaultSelectTypeValues"
                  [isSearch]="false"></is-select>
       <div class="sub-content" *ngIf="formControl.hours.type.value === 2">
         <label>

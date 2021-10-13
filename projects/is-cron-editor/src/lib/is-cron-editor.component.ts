@@ -403,9 +403,6 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       case 4:
         this.cronState.hours = `${this.formControl.hours.between.start.value}-${this.formControl.hours.between.end.value}`;
         break;
-      case 5:
-        this.cronState.hours = 'R';
-        break;
       case 6:
         this.cronState.hours = `R(${this.formControl.hours.between.start.value}-${this.formControl.hours.between.end.value})`;
         if (this.formControl.hours.everyX.staringAt.value > 0) {
@@ -649,8 +646,6 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       let {hours} = this.cronState;
       if (hours === '*') {
         this.formControl.hours.type.setValue(1);
-      } else if (hours === 'R') {
-        this.formControl.hours.type.setValue(this.allowRandom ? 5 : 1);
       } else {
         if (hours.indexOf('/') > -1 || hours.indexOf('-') > -1) {
           if (hours.indexOf('/') > -1) {

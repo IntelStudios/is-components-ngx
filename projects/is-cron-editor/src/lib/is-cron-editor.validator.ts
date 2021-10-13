@@ -101,8 +101,6 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
       // validate hours
       if (cronState.hours === '*') {
         // OK state
-      } else if (allowRandomExpressions && cronState.hours === 'R') {
-        // OK state
       } else {
         let { hours } = cronState;
         if (hours.indexOf('/') > -1) {
