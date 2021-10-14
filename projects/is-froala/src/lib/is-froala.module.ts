@@ -1,9 +1,14 @@
-import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { IsCdkModule } from '@intelstudios/cdk';
+
 import { IsFroalaComponent, configToken } from './is-froala.component';
 import { IsFroalaConfig } from './is-froala.interfaces';
 
 @NgModule({
   imports: [
+    CommonModule,
+    IsCdkModule,
   ],
   declarations: [IsFroalaComponent],
   exports: [IsFroalaComponent]

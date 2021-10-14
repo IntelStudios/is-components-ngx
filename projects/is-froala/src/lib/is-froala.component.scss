@@ -1,6 +1,5 @@
-@import '../../../styles/mixins';
-@import '../../../styles/variables';
-
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
 
 $is-froala-min-height: var(--is-froala-min-height, 249px);
 $is-froala-max-height: var(--is-froala-max-height, 1049px);
@@ -17,14 +16,16 @@ is-froala {
   @include is-input();
   padding: 0;
 
+  border-radius: $is-general-border-radius;
+
   &.ng-invalid {
     @include is-input-invalid();
   }
 
   &.disabled {
-
     .view-border {
       background-color: $is-control-disabled-bg-color;
+      cursor: default;
     }
 
     .icon-load {
@@ -53,13 +54,21 @@ is-froala {
   }
 
   .fr-toolbar {
-    border: 1px solid $is-control-boder-color;
+    border: none;
+    border-radius: 0;
+    border-top-left-radius: $is-general-border-radius !important;
+    border-top-right-radius: $is-general-border-radius !important;
+    border-bottom: 1px solid $is-control-boder-color;
     box-shadow: none !important;
   }
 
   .fr-wrapper {
     border: 0 !important;
     box-shadow: none !important;
+    border-radius: 0 !important;
+    border-bottom-left-radius: $is-general-border-radius !important;
+    border-bottom-right-radius: $is-general-border-radius !important;
+    background: $is-control-bg-color !important;
     @include short-scroll;
   }
 
@@ -93,11 +102,10 @@ is-froala {
     position: relative;
     font-size: 14px;
     font-weight: normal;
-    color: #333;
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
+    color: $is-control-fg-color;
+    background-color: $is-control-bg-color;
+    border-radius: $is-general-border-radius;
     box-shadow: none;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     padding-bottom: 6px;
     padding-left: 12px;
     padding-right: 12px;
@@ -106,7 +114,6 @@ is-froala {
     max-height: $is-froala-max-height;
     overflow-y: auto;
     cursor: pointer;
-
     .preview {
       pointer-events: none;
     }

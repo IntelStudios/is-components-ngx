@@ -87,7 +87,7 @@ export const configToken = new InjectionToken<IsFroalaConfig>('IsFroalaConfig');
 export class IsFroalaComponent implements ControlValueAccessor, Validator, OnInit, AfterViewInit, OnDestroy {
 
   // content of the editor
-  private value: string;
+  value: string;
 
   private _froalaConfig: any = null;
   private _intellisenseSub: Subscription;
@@ -112,6 +112,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   @HostBinding('class.disabled')
   disabled: boolean = false;
+
 
   @Input()
   set options(config: IIsFroalaOptions) {
@@ -227,27 +228,11 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
   }
 
-  resizeIframe(iframe: HTMLIFrameElement) {
-    setTimeout(() => {
-      // takes too much space, but good for approximation
-      const iframeHeight = iframe.scrollHeight;
-      const { parentElement } = iframe;
-      const parentStyle = window.getComputedStyle(parentElement);
-      const parentPaddingTop = parseInt(parentStyle.paddingTop, 10);
-      const parentPaddingBottom = parseInt(parentStyle.paddingBottom, 10);
-      const containerHeight = iframe.parentElement.getBoundingClientRect().height - parentPaddingTop - parentPaddingBottom - 8;
-      // precise, but can be null during first initialization
-      if (iframe.contentDocument && iframe.contentDocument.body && iframe.contentDocument.body.parentElement) {
-        const iframeContentHeight = iframe.contentDocument.body.parentElement.getBoundingClientRect().height;
-        const initialHeight = (iframeContentHeight || iframeHeight);
-        const height = Math.max(containerHeight, initialHeight);
-        iframe.height = `${height}px`;
-      }
-    });
-  }
 
   loadEditor() {
-    this.createEditor();
+    if (!this.disabled) {
+      this.createEditor();
+    }
   }
 
   // Begin ControlValueAccesor methods
@@ -277,6 +262,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
+    this.changeDetector.markForCheck();
     if (this.editor) {
       this._$element.froalaEditor(this.disabled ? 'edit.off' : 'edit.on');
     }
