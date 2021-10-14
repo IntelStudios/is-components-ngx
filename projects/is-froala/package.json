@@ -5,8 +5,8 @@
     "@angular/core": "^8.0.0",
     "@ngx-translate/core": "^11.0.1",
     "font-awesome": "^4.7.0",
-    "@intelstudios/cdk": "^9.0.1",
+    "@intelstudios/cdk": "^8.0.2",
     "froala-editor": "^2.9.5"
   },
-  "version": "8.1.7"
+  "version": "8.1.8"
 }
