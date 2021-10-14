@@ -57,11 +57,10 @@ npm install --save froala-editor at.js font-awesome</pre>
 ]</pre>
   `
 
-  froalaConfig: any = {id: 1};
-  froalaConfigGerman = {id: 2, language: 'de'};
+  froalaConfig: any = { id: 1 };
+  froalaConfigGerman = { id: 2, language: 'de' };
 
   control: FormControl = new FormControl();
-  controlLong: FormControl = new FormControl();
 
   constructor(private sanitizer: DomSanitizer) { }
 
@@ -71,13 +70,16 @@ npm install --save froala-editor at.js font-awesome</pre>
 	}
   </style>
   <p style="padding: 3px; border: 1px solid blue;">Hello how are you</p>
-  <div style="width: 10px; height: 1500px"></div>`;
+  <div style="width: 10px; height: 1500px"></div>
+  <p style="padding: 3px; border: 1px solid blue;">I should be fine</p>`;
 
   ngOnInit() {
-    this.control.setValue(this.html);
-    this.controlLong.setValue(this.usage);
+
   }
 
+  loadContent() {
+    this.control.setValue(this.html);
+  }
 
   onFroalaCommand($event) {
     console.log($event);
@@ -95,15 +97,15 @@ npm install --save froala-editor at.js font-awesome</pre>
     if (ctrl.errors) {
       ctrl.setErrors(null);
     } else {
-      ctrl.setErrors({invalid: true});
+      ctrl.setErrors({ invalid: true });
     }
   }
 
   enableCustomButtons() {
-    this.froalaConfig = {id: this.froalaConfig.id++, intellisenseModal: true};
+    this.froalaConfig = { id: this.froalaConfig.id++, intellisenseModal: true };
   }
 
   disableCustomButtons() {
-   this.froalaConfig = {id: this.froalaConfig.id++, intellisenseModal: false};
+    this.froalaConfig = { id: this.froalaConfig.id++, intellisenseModal: false };
   }
 }
