@@ -53,6 +53,12 @@ const timeEnd = DEBUG ? console.timeEnd : noop;
 
 const BTN_INTELLISENSE = 'intellisense';
 
+const DEFAULT_TOOLBAR = ['paragraphFormat', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|',
+  'fontFamily', 'fontSize', 'color', 'paragraphStyle', '|', 'align', 'formatOL',
+  'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly',
+  'insertTable', '|', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|',
+  'print', 'spellChecker', 'help', 'html', '|', 'fullscreen', '|', BTN_INTELLISENSE];
+
 interface ICustomButton {
   name: string;
   configProperty: string;
@@ -192,11 +198,11 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   onCommand: EventEmitter<FroalaCommand> = new EventEmitter<FroalaCommand>();
 
   constructor(@Optional() @Inject(configToken) private froalaConfig: IsFroalaConfig,
-              private changeDetector: ChangeDetectorRef,
-              private el: ElementRef,
-              private zone: NgZone,
-              private sanitizer: DomSanitizer,
-              private  translate: TranslateService) {
+    private changeDetector: ChangeDetectorRef,
+    private el: ElementRef,
+    private zone: NgZone,
+    private sanitizer: DomSanitizer,
+    private translate: TranslateService) {
     if (!froalaConfig) {
       console.warn(`IS-FROALA: Config not provided. Will not load license (use IsFroalaModule.forRoot() )`);
       this.froalaConfig = {
@@ -231,6 +237,14 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   loadEditor() {
     if (!this.disabled) {
+      if (this._minEditorHeight === this._minEditorHeightDefault) {
+        const toolbarRows = this.froalaConfig && this.froalaConfig.defaultToolbarButtons
+          ? this.froalaConfig.defaultToolbarButtons.filter((str) => str === '-').length + 1
+          : DEFAULT_TOOLBAR.filter((str) => str === '-').length + 1;
+        // measure current container - 38 (toolbar height - expecting 1 row)
+        this._minEditorHeight = parseInt(this.el.nativeElement.offsetHeight) - (toolbarRows * 38);
+        this._maxEditorHeight = this._minEditorHeight;
+      }
       this.createEditor();
     }
   }
@@ -297,11 +311,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       quickInsertTags: [''],      // disable quick insert button on the left edge of editor
       placeholderText: '',        // disable placeholder
       toolbarSticky: false,       // when scrolling toolbar does not appear on the top of the screen
-      toolbarButtons: ['paragraphFormat', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|',
-        'fontFamily', 'fontSize', 'color', 'paragraphStyle', '|', 'align', 'formatOL',
-        'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly',
-        'insertTable', '|', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|',
-        'print', 'spellChecker', 'help', 'html', '|', 'fullscreen', '|', BTN_INTELLISENSE],    // list of toolbar buttons
+      toolbarButtons: DEFAULT_TOOLBAR,    // list of toolbar buttons
       codeMirrorOptions: {
         indentWithTabs: true,
         lineNumbers: true,
