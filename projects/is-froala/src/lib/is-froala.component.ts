@@ -299,9 +299,13 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       },
       events: {},
     };
-
-    if (this.froalaConfig && this.froalaConfig.defaultToolbarButtons) {
-      defaults['toolbarButtons'] = this.froalaConfig.defaultToolbarButtons;
+    if (this.froalaConfig) {
+      if (this.froalaConfig.defaultToolbarButtons) {
+        defaults.toolbarButtons = this.froalaConfig.defaultToolbarButtons;
+      }
+      if (this.froalaConfig.htmlRemoveTags) {
+        defaults.htmlRemoveTags = this.froalaConfig.htmlRemoveTags;
+      }
     }
 
     if (this._options && this._options.language) {
