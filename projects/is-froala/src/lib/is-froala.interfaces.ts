@@ -6,10 +6,6 @@ export interface IsFroalaConfig {
    */
   getLicense(): string
   defaultToolbarButtons?: string[];
-  /**
-   * list of html tags to be removed from HTML content, default value is ['script']
-   */
-  htmlRemoveTags?: string[];
 }
 
 export interface IIsFroalaOptions {

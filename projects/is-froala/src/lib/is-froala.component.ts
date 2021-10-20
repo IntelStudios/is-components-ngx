@@ -303,9 +303,6 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       if (this.froalaConfig.defaultToolbarButtons) {
         defaults.toolbarButtons = this.froalaConfig.defaultToolbarButtons;
       }
-      if (this.froalaConfig.htmlRemoveTags) {
-        defaults.htmlRemoveTags = this.froalaConfig.htmlRemoveTags;
-      }
     }
 
     if (this._options && this._options.language) {
@@ -406,7 +403,11 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       .forEach(key => {
         const val = options[key];
         if (Array.isArray(val)) {
-          defaults[key].push(...val);
+          if (val.length === 0) {
+            defaults[key] = val;
+          } else {
+            defaults[key].push(...val);
+          }
         } else {
           defaults[key] = options[key];
         }
