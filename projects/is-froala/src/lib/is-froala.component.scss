@@ -1,30 +1,51 @@
-@import '../../../styles/mixins';
-@import '../../../styles/variables';
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
 
-$is-color-disabled-bg: var(--is-color-input-disabled-bg, #efefef);
-
+$is-froala-min-height: var(--is-froala-min-height, 249px);
+$is-froala-max-height: var(--is-froala-max-height, 1049px);
+$is-general-border-radius: var(--is-general-border-radius, 4px);
 is-froala {
   min-height: 189px;
+
+  &:not(.editing) {
+    // allow smaller user-set minimal height in preview mode
+    min-height: #{$is-froala-min-height};
+  }
+
   display: block;
-  border: none !important;
+  border: 1px solid;
+  @include is-input();
+  padding: 0;
+
+  border-radius: $is-general-border-radius;
+
+  &.ng-invalid {
+    @include is-input-invalid();
+  }
+
+  &.fr-fullscreen {
+    .CodeMirror {
+      max-height: inherit !important;
+    }
+  }
 
   &.disabled {
-
     .view-border {
       background-color: $is-color-disabled-bg;
+      cursor: default;
     }
 
     .icon-load {
       display: none;
     }
-  }
 
-  &.ng-invalid {
-    > .fr-wrapper {
-      border-color: $is-color-invalid !important;
+    iframe.fr-iframe {
+      background-color: $is-color-disabled-bg;
     }
-    > .fr-toolbar {
-      border-color: $is-color-invalid;
+
+    .CodeMirror {
+      pointer-events: none;
+      background-color: $is-color-disabled-bg;
     }
   }
 
@@ -33,43 +54,28 @@ is-froala {
     min-height: 189px;
   }
 
-  > .fr-wrapper {
+  .fr-toolbar {
+    border: none;
+    border-radius: 0;
+    border-top-left-radius: $is-general-border-radius !important;
+    border-top-right-radius: $is-general-border-radius !important;
+    border-bottom: 1px solid $is-color-border;
+    box-shadow: none !important;
+  }
+
+  .fr-wrapper {
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border-bottom-left-radius: $is-general-border-radius !important;
+    border-bottom-right-radius: $is-general-border-radius !important;
+    background: $is-color-bg !important;
     @include short-scroll;
-    border-color: $is-color-border !important;
-  }
-
-  > .fr-toolbar {
-    background-color: $is-color-bg;
-    border-color: $is-color-border;
-
-    .fr-newline:last-of-type {
-      display: none;
-    }
-
-    .fr-btn {
-      &:after {
-        border-top-color: $is-color-fg !important;
-      }
-      svg path {
-        fill: $is-color-fg !important;
-      }
-    }
-    .fr-dropdown-menu, .fr-sc-container {
-      background-color: $is-color-bg !important;
-      color: $is-color-fg;
-      @include short-scroll;
-    }
-  }
-
-  .second-toolbar {
-    display: none;
   }
 
   .is-button-hidden {
     display: none;
   }
-
-
 
   .CodeMirror {
     height: inherit !important;
@@ -97,24 +103,30 @@ is-froala {
     position: relative;
     font-size: 14px;
     font-weight: normal;
-    color: #333;
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
+    color: $is-color-fg;
+    background-color: $is-color-bg;
+    border-radius: $is-general-border-radius;
     box-shadow: none;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     padding-bottom: 6px;
     padding-left: 12px;
     padding-right: 12px;
     padding-top: 6px;
-    min-height: 249px;
-    max-height: 1049px;
+    min-height: $is-froala-min-height;
+    max-height: $is-froala-max-height;
     overflow-y: auto;
     cursor: pointer;
+    .preview {
+      pointer-events: none;
+    }
   }
 
-  .icon-load {
-    position: absolute;
-    top: 6px;
-    right: 6px;
+  .icon-load-container {
+    position: sticky;
+    overflow: visible;
+    display: flex;
+    justify-content: flex-end;
+    height: 0;
+    width: 100%;
+    top: 0;
   }
 }
