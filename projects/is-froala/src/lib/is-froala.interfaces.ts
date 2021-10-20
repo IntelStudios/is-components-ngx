@@ -1,8 +1,15 @@
 import { Observable } from 'rxjs';
 
 export interface IsFroalaConfig {
+  /**
+   * function which returns license key for froala editor
+   */
   getLicense(): string
   defaultToolbarButtons?: string[];
+  /**
+   * list of html tags to be removed from HTML content, default value is ['script']
+   */
+  htmlRemoveTags?: string[];
 }
 
 export interface IIsFroalaOptions {
