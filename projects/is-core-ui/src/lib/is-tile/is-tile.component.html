@@ -1,4 +1,4 @@
-<a class="tile" [title]="label" (click)="onClick($event)">
+<a class="tile" [title]="label" isPreventDblClick (click)="onClick($event)">
   <div class="tile-body">
     <i *ngIf="icon" [class]="icon"></i>
   </div>

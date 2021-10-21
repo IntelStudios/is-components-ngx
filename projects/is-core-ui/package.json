@@ -9,7 +9,8 @@
     "@angular/platform-browser": "^8.0.0",
     "@ngx-translate/core": "^11.0.0",
     "moment": "^2.22.2",
-    "ngx-bootstrap": "^5.1.2"
+    "ngx-bootstrap": "^5.1.2",
+    "@intelstudios/cdk": "^8.0.3"
   },
   "version": "8.1.8"
 }
