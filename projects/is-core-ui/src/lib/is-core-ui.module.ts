@@ -24,10 +24,11 @@ import {
   IsTabTitleDirective,
 } from './is-tabset/is-tabset.component';
 import { IsTileComponent } from './is-tile/is-tile.component';
+import { IsCdkModule } from '@intelstudios/cdk';
 
 @NgModule({
   imports: [
-    CommonModule, RouterModule, TranslateModule, PopoverModule, ScrollingModule, TooltipModule
+    CommonModule, RouterModule, TranslateModule, PopoverModule, ScrollingModule, TooltipModule, IsCdkModule
   ],
   declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
     IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsSwitchComponent, IsTileComponent],
