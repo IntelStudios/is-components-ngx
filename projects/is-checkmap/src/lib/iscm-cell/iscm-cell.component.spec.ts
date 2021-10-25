@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { IscmCellComponent } from './iscm-cell.component';
 
@@ -6,7 +6,7 @@ describe('IscmCellComponent', () => {
   let component: IscmCellComponent;
   let fixture: ComponentFixture<IscmCellComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ IscmCellComponent ]
     })

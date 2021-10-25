@@ -5,7 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
-import { IsSelectModule } from 'is-select';
+import { IsSelectModule } from '@intelstudios/select';
 import { IIsGridConfig } from './is-grid.interfaces';
 import { IsGridComponent, configToken } from './is-grid/is-grid.component';
 import { IsGridRowComponent } from './is-grid-row/is-grid-row.component';

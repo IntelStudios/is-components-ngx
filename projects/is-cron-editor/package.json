@@ -1,10 +1,13 @@
 {
-  "name": "is-cron-editor",
-  "version": "9.0.2",
+  "name": "@intelstudios/cron-editor",
+  "version": "11.0.0",
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "peerDependencies": {
-    "@angular/common": "^9.1.0",
-    "@angular/core": "^9.1.0",
-    "is-select": "^9.0.0",
-    "is-core-ui": "^9.0.0"
+    "@angular/common": "^11.2.0",
+    "@angular/core": "^11.2.0",
+    "is-select": "^11.0.0",
+    "is-core-ui": "^11.0.0"
   }
 }

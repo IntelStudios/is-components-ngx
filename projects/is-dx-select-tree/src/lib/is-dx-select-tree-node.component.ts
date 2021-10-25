@@ -9,7 +9,7 @@ import {
   Output,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TreeNode } from 'angular-tree-component';
+import { TreeNode } from '@circlon/angular-tree-component';
 import { Subscription } from 'rxjs';
 
 import { IsDXSelectTree, IsDXSelectTreeNode } from './is-dx-select-tree.models';

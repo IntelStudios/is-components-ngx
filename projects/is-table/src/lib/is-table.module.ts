@@ -5,7 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
-import { IsSelectModule } from 'is-select';
+import { IsSelectModule } from '@intelstudios/select';
 import { IIsTableConfig } from './is-table.interfaces';
 import { IsTableComponent, configToken } from './is-table/is-table.component';
 import {

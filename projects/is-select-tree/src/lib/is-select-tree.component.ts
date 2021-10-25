@@ -4,17 +4,13 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-  ViewEncapsulation,
+  OnDestroy, Output,
+  ViewChild
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { TreeComponent, TreeNode } from 'angular-tree-component';
+import { TreeComponent, TreeNode } from '@circlon/angular-tree-component';
 import { Subscription } from 'rxjs';
-
 import { IsSelectTree, IsSelectTreeChangeEvent, IsSelectTreeNode } from './is-select-tree.models';
+
 
 @Component({
   selector: 'is-select-tree',

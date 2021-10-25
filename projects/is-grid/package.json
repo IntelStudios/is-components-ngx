@@ -1,13 +1,16 @@
 {
-  "name": "is-grid",
-  "version": "7.0.0",
+  "name": "@intelstudios/grid",
+  "version": "11.0.0",
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "peerDependencies": {
-    "@angular/common": "^7.0.0",
-    "@angular/core": "^7.0.0",
-    "@angular/forms": "^7.0.0",
-    "@angular/platform-browser": "^7.0.0",
-    "ngx-bootstrap": "^3.0.0",
-    "@ngx-translate/core": "^11.0.0",
-    "is-select": "^7.0.0"
+    "@angular/common": "^11.2.0",
+    "@angular/core": "^11.2.0",
+    "@angular/forms": "^11.2.0",
+    "@angular/platform-browser": "^11.2.0",
+    "ngx-bootstrap": "^7.1.2",
+    "@ngx-translate/core": "^13.0.0",
+    "is-select": "^11.0.0"
   }
 }

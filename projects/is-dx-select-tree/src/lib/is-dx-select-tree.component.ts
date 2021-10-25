@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { TreeComponent, TreeNode } from 'angular-tree-component';
+import { TreeComponent, TreeNode } from '@circlon/angular-tree-component';
 import { Subscription } from 'rxjs';
 
 import { IsDXSelectTree, IsDXSelectTreeNode, IsDXSelectTreeChangeEvent } from './is-dx-select-tree.models';

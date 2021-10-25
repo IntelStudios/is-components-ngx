@@ -7,7 +7,7 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "module": "esnext",
+    "module": "es2020",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -20,85 +20,85 @@
       "dom"
     ],
     "paths": {
-      "is-select": [
+      "@intelstudios/select": [
         "dist/is-select"
       ],
-      "is-select/*": [
+      "@intelstudios/select/*": [
         "dist/is-select/*"
       ],
-      "is-codemirror": [
+      "@intelstudios/codemirror": [
         "dist/is-codemirror"
       ],
-      "is-codemirror/*": [
+      "@intelstudios/codemirror/*": [
         "dist/is-codemirror/*"
       ],
-      "is-froala": [
+      "@intelstudios/froala": [
         "dist/is-froala"
       ],
-      "is-froala/*": [
+      "@intelstudios/froala/*": [
         "dist/is-froala/*"
       ],
-      "is-core-ui": [
+      "@intelstudios/core-ui": [
         "dist/is-core-ui"
       ],
-      "is-core-ui/*": [
+      "@intelstudios/core-ui/*": [
         "dist/is-core-ui/*"
       ],
-      "is-datepicker": [
+      "@intelstudios/datepicker": [
         "dist/is-datepicker"
       ],
-      "is-datepicker/*": [
+      "@intelstudios/datepicker/*": [
         "dist/is-datepicker/*"
       ],
-      "is-bootstrap-switch": [
+      "@intelstudios/bootstrap-switch": [
         "dist/is-bootstrap-switch"
       ],
-      "is-bootstrap-switch/*": [
+      "@intelstudios/bootstrap-switch/*": [
         "dist/is-bootstrap-switch/*"
       ],
-      "is-select-tree": [
+      "@intelstudios/select-tree": [
         "dist/is-select-tree"
       ],
-      "is-select-tree/*": [
+      "@intelstudios/select-tree/*": [
         "dist/is-select-tree/*"
       ],
-      "is-modal": [
+      "@intelstudios/modal": [
         "dist/is-modal"
       ],
-      "is-modal/*": [
+      "@intelstudios/modal/*": [
         "dist/is-modal/*"
       ],
-      "is-grid": [
+      "@intelstudios/grid": [
         "dist/is-grid"
       ],
-      "is-grid/*": [
+      "@intelstudios/grid/*": [
         "dist/is-grid/*"
       ],
-      "is-timepicker": [
+      "@intelstudios/timepicker": [
         "dist/is-timepicker"
       ],
-      "is-cron-editor": [
+      "@intelstudios/cron-editor": [
         "dist/is-cron-editor"
       ],
-      "is-cron-editor/*": [
+      "@intelstudios/cron-editor/*": [
         "dist/is-cron-editor/*"
       ],
       "is-checkmap": [
         "dist/is-checkmap"
       ],
-      "is-checkmap/*": [
+      "@intelstudios/checkmap/*": [
         "dist/is-checkmap/*"
       ],
-      "is-input-mapping": [
+      "@intelstudios/input-mapping": [
         "dist/is-input-mapping"
       ],
-      "is-input-mapping/*": [
+      "@intelstudios/input-mapping/*": [
         "dist/is-input-mapping/*"
       ],
-      "is-editable-textbox": [
+      "@intelstudios/editable-textbox": [
         "dist/is-editable-textbox"
       ],
-      "is-editable-textbox/*": [
+      "@intelstudios/editable-textbox/*": [
         "dist/is-editable-textbox/*"
       ],
       "@intelstudios/cdk": [

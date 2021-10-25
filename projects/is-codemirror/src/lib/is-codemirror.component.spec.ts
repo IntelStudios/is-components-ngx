@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { IsCodemirrorComponent } from './is-codemirror.component';
 
@@ -6,7 +6,7 @@ describe('IsCodemirrorComponent', () => {
   let component: IsCodemirrorComponent;
   let fixture: ComponentFixture<IsCodemirrorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ IsCodemirrorComponent ]
     })

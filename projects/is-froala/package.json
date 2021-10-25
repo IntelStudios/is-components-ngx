@@ -1,12 +1,15 @@
 {
-  "name": "is-froala",
+  "name": "@intelstudios/froala",
   "peerDependencies": {
-    "@angular/common": "^9.0.0",
-    "@angular/core": "^9.0.0",
-    "@ngx-translate/core": "^11.0.1",
+    "@angular/common": "^11.2.0",
+    "@angular/core": "^11.2.0",
+    "@ngx-translate/core": "^13.0.0",
     "font-awesome": "^4.7.0",
-    "@intelstudios/cdk": "^9.0.1",
+    "@intelstudios/cdk": "^11.0.0",
     "froala-editor": "^2.9.5"
   },
-  "version": "9.0.1"
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "version": "11.0.0"
 }

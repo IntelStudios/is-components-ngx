@@ -1,12 +1,15 @@
 {
-  "name": "is-select",
-  "version": "9.2.9",
+  "name": "@intelstudios/select",
+  "version": "11.0.0",
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "peerDependencies": {
-    "@angular/common": "^9.0.0",
-    "@angular/core": "^9.0.0",
-    "@angular/cdk": "^9.0.0",
-    "@intelstudios/cdk": "^9.0.0",
+    "@angular/common": "^11.2.0",
+    "@angular/core": "^11.2.0",
+    "@angular/cdk": "^11.2.0",
+    "@intelstudios/cdk": "^11.0.0",
     "@intelstudios/text-utils": "^1.1.0",
-    "is-core-ui": "^9.0.0"
+    "@intelstudios/core-ui": "^11.0.0"
   }
 }

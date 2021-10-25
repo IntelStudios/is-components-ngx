@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { IscmTreeNodeComponent } from './iscm-tree-node.component';
 
@@ -6,7 +6,7 @@ describe('IscmTreeNodeComponent', () => {
   let component: IscmTreeNodeComponent;
   let fixture: ComponentFixture<IscmTreeNodeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ IscmTreeNodeComponent ]
     })

@@ -9,7 +9,7 @@ import { IsSelectOptionsComponent } from './is-select-options/is-select-options.
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from './is-select.directives';
 import { IsSelectComponent } from './is-select/is-select.component';
 import { HighlightPipe } from './select-pipes';
-import { IsCoreUIModule } from 'is-core-ui';
+import { IsCoreUIModule } from '@intelstudios/core-ui';
 import { IsSelectOptionComponent } from './is-select-option/is-select-option.component';
 import { IsSelectConfig, configToken } from './is-select.interfaces';
 import { IsCdkModule } from '@intelstudios/cdk';

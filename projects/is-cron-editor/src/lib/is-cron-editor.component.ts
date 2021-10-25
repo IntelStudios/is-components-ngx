@@ -11,7 +11,7 @@ import {
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { cronExpressionValidator, mapNumbers } from './is-cron-editor.validator';
-import { IsSelectMultipleConfig } from 'is-select';
+import { IsSelectMultipleConfig } from '@intelstudios/select';
 
 const cronValidator = cronExpressionValidator();
 

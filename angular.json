@@ -92,9 +92,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
@@ -183,7 +181,7 @@
       "prefix": "is",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-select/tsconfig.lib.json",
             "project": "projects/is-select/ng-package.json"
@@ -223,7 +221,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-codemirror/tsconfig.lib.json",
             "project": "projects/is-codemirror/ng-package.json"
@@ -263,7 +261,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-froala/tsconfig.lib.json",
             "project": "projects/is-froala/ng-package.json"
@@ -303,7 +301,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-core-ui/tsconfig.lib.json",
             "project": "projects/is-core-ui/ng-package.json"
@@ -343,7 +341,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-datepicker/tsconfig.lib.json",
             "project": "projects/is-datepicker/ng-package.json"
@@ -383,7 +381,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-bootstrap-switch/tsconfig.lib.json",
             "project": "projects/is-bootstrap-switch/ng-package.json"
@@ -423,7 +421,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-select-tree/tsconfig.lib.json",
             "project": "projects/is-select-tree/ng-package.json"
@@ -463,7 +461,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-dx-select-tree/tsconfig.lib.json",
             "project": "projects/is-dx-select-tree/ng-package.json"
@@ -503,7 +501,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-modal/tsconfig.lib.json",
             "project": "projects/is-modal/ng-package.json"
@@ -543,7 +541,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-grid/tsconfig.lib.json",
             "project": "projects/is-grid/ng-package.json"
@@ -583,7 +581,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-table/tsconfig.lib.json",
             "project": "projects/is-table/ng-package.json"
@@ -623,7 +621,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-timepicker/tsconfig.lib.json",
             "project": "projects/is-timepicker/ng-package.json"
@@ -663,7 +661,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-cron-editor/tsconfig.lib.json",
             "project": "projects/is-cron-editor/ng-package.json"
@@ -703,7 +701,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-checkmap/tsconfig.lib.json",
             "project": "projects/is-checkmap/ng-package.json"
@@ -743,7 +741,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-input-mapping/tsconfig.lib.json",
             "project": "projects/is-input-mapping/ng-package.json"
@@ -783,7 +781,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-editable-textbox/tsconfig.lib.json",
             "project": "projects/is-editable-textbox/ng-package.json"
@@ -823,7 +821,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/is-cdk/tsconfig.lib.json",
             "project": "projects/is-cdk/ng-package.json"

@@ -1,9 +1,12 @@
 {
-  "name": "is-dx-select-tree",
-  "version": "7.0.1",
+  "name": "@intelstudios/dx-select-tree",
+  "version": "11.0.0",
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "peerDependencies": {
-    "@angular/common": "^7.0.0",
-    "@angular/core": "^7.0.0",
-    "angular-tree-component": "^8.2.0"
+    "@angular/common": "^11.2.0",
+    "@angular/core": "^11.2.0",
+    "@circlon/angular-tree-component": "^11.0.0"
   }
 }

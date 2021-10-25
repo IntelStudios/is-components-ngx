@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { TreeModule } from 'angular-tree-component';
+import { TreeModule } from '@circlon/angular-tree-component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
@@ -37,8 +37,8 @@ export const routes: Routes = [
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
-    RouterModule.forRoot(routes, { useHash: true }),
-    TreeModule.forRoot(),
+    RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' }),
+    TreeModule,
     ReactiveFormsModule, FormsModule,
     TranslateModule.forRoot(),
     ModalModule.forRoot(),

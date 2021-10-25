@@ -1,22 +1,14 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
+  Component, Input,
   OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-  ViewEncapsulation,
+  OnInit
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TreeComponent, TreeNode } from 'angular-tree-component';
+import { TreeNode } from '@circlon/angular-tree-component';
 import { Subscription } from 'rxjs';
-
 import { IsSelectField, IsSelectTree, IsSelectTreeChangeEvent, IsSelectTreeNode } from './is-select-tree.models';
-
 
 @Component({
   selector: 'is-select-tree-node',
