@@ -14,7 +14,7 @@
     "publish.input-mapping": "ng build --prod is-input-mapping && npm publish dist/is-input-mapping",
     "publish.codemirror": "ng build --prod is-codemirror && npm publish dist/is-codemirror",
     "publish.froala": "ng build --prod is-froala && npm publish dist/is-froala",
-    "publish.core-ui": "ng build --prod is-core-ui && node copy-styles.js && node copy-styles.js && npm publish dist/is-core-ui",
+    "publish.core-ui": "ng build --prod is-core-ui && node copy-styles.js && npm publish dist/is-core-ui",
     "publish.datepicker": "ng build --prod is-datepicker && npm publish dist/is-datepicker",
     "publish.bootstrap-switch": "ng build --prod is-bootstrap-switch && npm publish dist/is-bootstrap-switch",
     "publish.modal": "ng build --prod is-modal && npm publish dist/is-modal",
