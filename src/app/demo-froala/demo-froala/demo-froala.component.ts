@@ -70,6 +70,7 @@ npm install --save froala-editor at.js font-awesome</pre>
 	}
   </style>
   <p style="padding: 3px; border: 1px solid blue;">Hello how are you</p>
+  <a href="https://is.xeelo.online" target="_blank">Link to click</a>
   <div style="width: 10px; height: 1500px"></div>
   <p style="padding: 3px; border: 1px solid blue;">I should be fine</p>`;
 
