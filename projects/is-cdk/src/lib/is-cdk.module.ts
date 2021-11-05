@@ -4,12 +4,13 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { IsCdkService } from './is-cdk.service';
 import { IsIFrameResizeDirective } from './directives/iframe-resize.directive';
 import { PreventDoubleclickDirective } from './directives/prevent-dblclick.directive';
+import { IsIFrameClickDirective } from './directives/iframe-click.directive';
 @NgModule({
   imports: [
     CommonModule, OverlayModule,
   ],
-  declarations: [IsIFrameResizeDirective, PreventDoubleclickDirective],
-  exports: [IsIFrameResizeDirective, PreventDoubleclickDirective],
+  declarations: [IsIFrameResizeDirective, PreventDoubleclickDirective, IsIFrameClickDirective],
+  exports: [IsIFrameResizeDirective, PreventDoubleclickDirective, IsIFrameClickDirective],
   providers: [IsCdkService]
 })
 export class IsCdkModule { }
