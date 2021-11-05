@@ -282,6 +282,18 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
   }
 
+  onIframeClick(e: MouseEvent): void  {
+    const isLink = (e.target as HTMLElement).localName === 'a';
+    if (isLink) {
+      const target = e.target as HTMLAnchorElement;
+      window.open(target.href, '_blank');
+      return;
+    }
+    if (!this.disabled) {
+      this.loadEditor();
+    }
+  }
+
   // End Validators methods
 
   private setEditorValue() {

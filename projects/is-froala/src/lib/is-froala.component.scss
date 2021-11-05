@@ -114,9 +114,6 @@ is-froala {
     max-height: $is-froala-max-height;
     overflow-y: auto;
     cursor: pointer;
-    .preview {
-      pointer-events: none;
-    }
   }
 
   .icon-load-container {
