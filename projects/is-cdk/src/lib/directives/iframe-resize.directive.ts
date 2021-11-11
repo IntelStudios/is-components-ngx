@@ -46,7 +46,6 @@ export class IsIFrameResizeDirective implements AfterViewInit, OnDestroy {
   private checkForIntersection = (entries: Array<IntersectionObserverEntry>) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting && entry.target === this.el.nativeElement) {
-        this.disconnectInterserctionObserver();
         this.resizeIframe();
       }
     });
