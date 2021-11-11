@@ -235,7 +235,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   }
 
 
-  loadEditor() {
+  loadEditor(setFofucs = false) {
     if (!this.disabled) {
       if (this._minEditorHeight === this._minEditorHeightDefault) {
         const toolbarRows = this.froalaConfig && this.froalaConfig.defaultToolbarButtons
@@ -245,7 +245,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
         this._minEditorHeight = parseInt(this.el.nativeElement.offsetHeight) - (toolbarRows * 38);
         this._maxEditorHeight = this._minEditorHeight;
       }
-      this.createEditor();
+      this.createEditor(setFofucs);
     }
   }
 
@@ -290,7 +290,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       return;
     }
     if (!this.disabled) {
-      this.loadEditor();
+      this.loadEditor(true);
     }
   }
 
@@ -512,7 +512,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   }
 
   // create editor instance
-  private createEditor() {
+  private createEditor(setFocus = false) {
     if (this.editor) {
       return;
     }
@@ -549,6 +549,11 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       });
       this.editor.cmdIntellisense = cmd;
       this.editor.onCommand = this.onCommand;
+      if (setFocus) {
+        setTimeout(() => {
+          this._$element.froalaEditor('events.focus');
+        }, 100);
+      }
 
     });
     timeEnd('runOutsideAngular')
