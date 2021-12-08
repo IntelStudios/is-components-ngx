@@ -7,17 +7,16 @@ const ZINDEX_STEP = 10;
 @Injectable()
 export class IsCdkService {
 
-  private overlayRefs: OverlayRef[] = [];
+  private static overlayRefs: OverlayRef[] = [];
 
   constructor(private overlay: Overlay) {
-
   }
 
   /**
    * Dispose (close) all previously created (and attached) overlayRefs
    */
   disposeAllOverlays() {
-    this.overlayRefs.forEach((ref) => {
+    IsCdkService.overlayRefs.forEach((ref) => {
       ref.dispose();
     })
   }
@@ -33,7 +32,7 @@ export class IsCdkService {
     if (parentEl) {
       this.adjustZindex(parentEl, ref.hostElement)
     }
-    this.overlayRefs.push(ref);
+    IsCdkService.overlayRefs.push(ref);
     ref.detachments()
       .pipe(
         take(1)
@@ -46,7 +45,7 @@ export class IsCdkService {
   }
 
   private unsetOverlayRef(ref: OverlayRef) {
-    this.overlayRefs = this.overlayRefs.filter((r) => r !== ref);
+    IsCdkService.overlayRefs = IsCdkService.overlayRefs.filter((r) => r !== ref);
   }
 
   private adjustZindex(parentElement: ElementRef<HTMLElement>, element: HTMLElement): void {
