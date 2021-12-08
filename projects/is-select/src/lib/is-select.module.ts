@@ -11,20 +11,9 @@ import { IsSelectComponent } from './is-select/is-select.component';
 import { HighlightPipe } from './select-pipes';
 import { IsCoreUIModule } from '@intelstudios/core-ui';
 import { IsSelectOptionComponent } from './is-select-option/is-select-option.component';
-import { IsSelectConfig, configToken } from './is-select.interfaces';
+import { IsSelectConfig, configToken, createDefaultConfig } from './is-select.interfaces';
 import { IsCdkModule } from '@intelstudios/cdk';
 
-const defaultConfig = (): IsSelectConfig => ({
-  attemptToProcessPasteMultipleSearch: false,
-  defaultModelConfig: {
-    idProp: 'ID',
-    textProp: 'Value',
-    objectProp: 'Object',
-  },
-  optionsOverflowWidth: false,
-  onPasteSplitRegExp: /\s+|[,;|]/g,
-  allowClear: false,
-});
 
 @NgModule({
   imports: [
@@ -39,7 +28,7 @@ export class IsSelectModule {
     return {
       ngModule: IsSelectModule,
       providers: [
-        { provide: configToken, useValue: { ...defaultConfig(), ...config } },
+        { provide: configToken, useValue: { ...createDefaultConfig(), ...config } },
       ]
     }
   }

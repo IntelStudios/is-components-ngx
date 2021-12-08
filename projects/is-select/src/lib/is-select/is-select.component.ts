@@ -22,7 +22,7 @@ import { Subscription } from 'rxjs';
 
 import { IsSelectOptionsComponent } from '../is-select-options/is-select-options.component';
 import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from '../is-select.directives';
-import { IsSelectModelConfig, IsSelectMultipleConfig, configToken, IsSelectConfig } from '../is-select.interfaces';
+import { IsSelectModelConfig, IsSelectMultipleConfig, configToken, IsSelectConfig, createDefaultConfig } from '../is-select.interfaces';
 import { SelectItem } from '../select-item';
 import { OptionsBehavior } from '../options-behavior';
 import { IsCdkService } from '@intelstudios/cdk';
@@ -284,15 +284,18 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     private scrollDispatcher: ScrollDispatcher,
     @Optional() @Inject(configToken) private selectConfig: IsSelectConfig,
     private changeDetector: ChangeDetectorRef) {
+      if (!this.selectConfig) {
+        this.selectConfig = createDefaultConfig();
+      }
       // trigger setter by default so we're initially in single select mode
       this.multipleConfig = undefined;
-      if (this.selectConfig?.optionsOverflowWidth !== undefined) {
+      if (this.selectConfig.optionsOverflowWidth !== undefined) {
         this.optionsOverflowWidth = this.selectConfig.optionsOverflowWidth;
       }
-      if (this.selectConfig?.allowClear !== undefined) {
+      if (this.selectConfig.allowClear !== undefined) {
         this.allowClear = this.selectConfig.allowClear;
       }
-      if (this.selectConfig?.closeOptionsOnScroll !== undefined) {
+      if (this.selectConfig.closeOptionsOnScroll !== undefined) {
         this.closeOptionsOnScroll = this.selectConfig.closeOptionsOnScroll;
       }
   }

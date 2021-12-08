@@ -18,6 +18,18 @@ export interface IsSelectModelConfig {
   baseModel?: any;
 }
 
+export const createDefaultConfig = (): IsSelectConfig => ({
+  attemptToProcessPasteMultipleSearch: false,
+  defaultModelConfig: {
+    idProp: 'ID',
+    textProp: 'Value',
+    objectProp: 'Object',
+  },
+  optionsOverflowWidth: false,
+  onPasteSplitRegExp: /\s+|[,;|]/g,
+  allowClear: false,
+});
+
 export type IsSelectButtonConfig = {
   label: string;
   cssClass: string;
