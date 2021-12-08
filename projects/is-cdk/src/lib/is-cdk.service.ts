@@ -1,15 +1,26 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ElementRef, Injectable } from '@angular/core';
+import { take } from 'rxjs/operators';
 
 const ZINDEX_STEP = 10;
 
 @Injectable()
 export class IsCdkService {
 
+  private overlayRefs: OverlayRef[] = [];
+
   constructor(private overlay: Overlay) {
 
   }
 
+  /**
+   * Dispose (close) all previously created (and attached) overlayRefs
+   */
+  disposeAllOverlays() {
+    this.overlayRefs.forEach((ref) => {
+      ref.dispose();
+    })
+  }
 
 /**
  * create @angular/cdk overlayRef
@@ -22,7 +33,20 @@ export class IsCdkService {
     if (parentEl) {
       this.adjustZindex(parentEl, ref.hostElement)
     }
+    this.overlayRefs.push(ref);
+    ref.detachments()
+      .pipe(
+        take(1)
+      ).subscribe({
+        next: () => {
+          this.unsetOverlayRef(ref);
+        }
+      });
     return ref;
+  }
+
+  private unsetOverlayRef(ref: OverlayRef) {
+    this.overlayRefs = this.overlayRefs.filter((r) => r !== ref);
   }
 
   private adjustZindex(parentElement: ElementRef<HTMLElement>, element: HTMLElement): void {
