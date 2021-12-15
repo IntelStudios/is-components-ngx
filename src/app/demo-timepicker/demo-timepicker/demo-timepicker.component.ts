@@ -24,7 +24,7 @@ export class DemoTimepickerComponent implements OnInit {
 
   constructor() {
     this.timepickerControl = new FormControl();
-    this.timepickerControl1 = new FormControl();
+    this.timepickerControl1 = new FormControl('12:00:00');
     this.timepickerControl2 = new FormControl();
   }
 

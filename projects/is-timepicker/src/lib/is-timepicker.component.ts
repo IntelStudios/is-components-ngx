@@ -131,7 +131,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   * Implemented as part of ControlValueAccessor.
   */
   writeValue(value: string | Date): void {
-    this.setValue(value);
+    this.setValue(value, false);
   }
 
   /**
@@ -210,7 +210,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
       .withPositions([position])
       .withPush(true);
 
-      const ancScrolls: CdkScrollable[] = this.scrollDispatcher.getAncestorScrollContainers(this.element);
+    const ancScrolls: CdkScrollable[] = this.scrollDispatcher.getAncestorScrollContainers(this.element);
     if (ancScrolls.length > 0) {
       this.pickerOverlayRef = this.isCdk.create(
         {
@@ -223,7 +223,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
 
       this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev: CdkScrollable) => {
         if (ev) {
-          if (ancScrolls.filter(x=>x.getElementRef() === ev.getElementRef()).length > 0) {
+          if (ancScrolls.filter(x => x.getElementRef() === ev.getElementRef()).length > 0) {
             this.hidePicker();
           }
         }
@@ -321,7 +321,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setValue(value: any): void {
+  private setValue(value: any, emitEvent = true): void {
     if (value) {
       if (this.stringMode && typeof value === 'string') {
         const input = value.split(':');
@@ -342,16 +342,29 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
       }
 
       const val = moment(value, TIME_FORMAT);
-      this.viewValue = val.format(TIME_FORMAT);
-      this.timeValue = value;
+      if (val.isValid()) {
+        this.viewValue = val.format(TIME_FORMAT);
+        this.timeValue = value;
+      } else {
+        this.viewValue = '';
+        this.timeValue = null;
+      }
+      if (emitEvent) {
+        this.changed.emit(this.stringMode ? moment(value).format(TIME_FORMAT) : value);
+      }
+      setTimeout(() => {
+        if (this.input) {
+          this.input.nativeElement.value = this.viewValue;
+        }
+      });
 
-      this.changed.emit(this.stringMode ? moment(value).format(TIME_FORMAT) : value);
     }
     else {
       this.viewValue = '';
       this.timeValue = null;
-
-      this.changed.emit(null);
+      if (emitEvent) {
+        this.changed.emit(null);
+      }
     }
 
     this.changeDetector.markForCheck();
