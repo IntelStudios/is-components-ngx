@@ -8,7 +8,8 @@ import {
   OnInit,
   Optional,
   HostBinding,
-  ViewChild
+  ViewChild,
+  Renderer2
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -86,6 +87,7 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
 
   constructor(@Optional() @Inject(configToken) coreUiConfig: IsCoreUIConfig,
     private cd: ChangeDetectorRef,
+    private renderer: Renderer2,
     private translate: TranslateService) {
     if (coreUiConfig && coreUiConfig.fieldErrorConfig) {
       this.transPrefix = coreUiConfig.fieldErrorConfig.translationPrefix;
@@ -140,6 +142,9 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
     if (this.isShown && this.iconOnly && this.instantTooltip) {
       setTimeout(() => {
         this.tooltip.show();
+        document.addEventListener('click', () => {
+          this.tooltip.hide();
+        }, { once: true, passive: true });
       });
     }
   }
