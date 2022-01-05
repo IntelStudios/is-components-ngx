@@ -7,11 +7,14 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  HostBinding
+  HostBinding,
+  ViewChild
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription, merge } from 'rxjs';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
+import { TooltipContainerComponent } from 'ngx-bootstrap/tooltip';
+import { Subscription, merge, of } from 'rxjs';
 
 import { configToken, IsCoreUIConfig } from '../is-core-ui.interfaces';
 import { IsFieldError } from './is-field-error.model';
@@ -24,12 +27,12 @@ import { IsFieldError } from './is-field-error.model';
 })
 export class IsFieldErrorComponent implements OnInit, OnDestroy {
 
-/**
- * Attach a FormControl to listen on status/value changes and display correct error
- */
+  /**
+   * Attach a FormControl to listen on status/value changes and display correct error
+   */
   @Input()
   set control(value: FormControl) {
-    this._control= value;
+    this._control = value;
     if (value) {
       this.unbindControl();
       this.bindControl();
@@ -41,11 +44,20 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
 
   private _control: FormControl;
 
+  @Input()
+  faIcon = 'fas fa-fw fa-exclamation-triangle';
   /**
    * set wheather this component will appear as Icon (default) or Icon + error message
    */
   @Input()
   iconOnly: boolean = true;
+
+  /**
+   * Instantly display tooltip error (so user does not need to hover)
+   * applies only in [iconOnly]="true" mode
+   */
+  @Input()
+  instantTooltip = false;
 
   /**
    * tooltip placement (see ngx-bootstrap tooltip/popover placement)
@@ -61,17 +73,22 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
 
   isShown: boolean = false;
 
+  @ViewChild('tooltip')
+  tooltip: PopoverDirective;
+
   @HostBinding('class.hidden')
   get isHidden() {
     return !this.isShown;
   }
 
-  private translationPrefix: string = 'field-error.';
+  private transPrefix: string = 'field-error.';
   private _sub: Subscription;
 
-  constructor(@Optional() @Inject(configToken) coreUiConfig: IsCoreUIConfig, private changeDetector: ChangeDetectorRef, public translate: TranslateService) {
-    if(coreUiConfig && coreUiConfig.fieldErrorConfig) {
-      this.translationPrefix = coreUiConfig.fieldErrorConfig.translationPrefix;
+  constructor(@Optional() @Inject(configToken) coreUiConfig: IsCoreUIConfig,
+    private cd: ChangeDetectorRef,
+    private translate: TranslateService) {
+    if (coreUiConfig && coreUiConfig.fieldErrorConfig) {
+      this.transPrefix = coreUiConfig.fieldErrorConfig.translationPrefix;
     }
   }
 
@@ -86,7 +103,7 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   }
 
   private bindControl() {
-    this._sub = merge(this.control.valueChanges, this.control.statusChanges)
+    this._sub = merge(this.control.valueChanges, this.control.statusChanges, of(this.control.status))
       .subscribe(() => {
         this.detectChanges();
       });
@@ -110,7 +127,7 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
           highestPriorityError = this.control.errors[key];
         }
       });
-      const key = this.translationPrefix + highestPriorityError.key;
+      const key = this.transPrefix + highestPriorityError.key;
       const translated: string = this.translate.instant(key, highestPriorityError.params);
 
       if (translated !== key) {
@@ -119,6 +136,11 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
         this.error = highestPriorityError.message || '';
       }
     }
-    this.changeDetector.detectChanges();
+    this.cd.detectChanges();
+    if (this.isShown && this.iconOnly && this.instantTooltip) {
+      setTimeout(() => {
+        this.tooltip.show();
+      });
+    }
   }
 }

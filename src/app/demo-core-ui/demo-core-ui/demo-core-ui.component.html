@@ -423,6 +423,9 @@
 <label>Type something and delete it: <is-field-error [iconOnly]="false" class="align-right" [control]="formControl1"></is-field-error></label>
 <br>
 <input type="text" [formControl]="formControl1">
+<label>Type something and delete it: <is-field-error [instantTooltip]="true" [control]="formControl1"></is-field-error></label>
+<br>
+<input type="text" [formControl]="formControl1">
 <br>
 <p>You can use predefined validators from is-field-error.service or you can define custom.</p>
 <label>Custom validator, input must contain word 'custom': <is-field-error [control]="formControl2"></is-field-error>
