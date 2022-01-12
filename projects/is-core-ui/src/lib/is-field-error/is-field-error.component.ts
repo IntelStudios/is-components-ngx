@@ -143,8 +143,10 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
     if (this.isShown && this.iconOnly && this.instantTooltip) {
       setTimeout(() => {
-        this.tooltip.show();
-        document.addEventListener('click', this.hideTooltipOnClick, { once: true, passive: true });
+        if (this.tooltip) {
+          this.tooltip.show();
+          document.addEventListener('click', this.hideTooltipOnClick, { once: true, passive: true });
+        }
       });
     }
   }
