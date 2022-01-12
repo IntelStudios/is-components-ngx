@@ -92,6 +92,7 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
     if (coreUiConfig && coreUiConfig.fieldErrorConfig) {
       this.transPrefix = coreUiConfig.fieldErrorConfig.translationPrefix;
     }
+    this.hideTooltipOnClick = this.hideTooltipOnClick.bind(this);
   }
 
   ngOnInit() {
@@ -117,6 +118,7 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
       this._sub.unsubscribe();
       this._sub = null;
     }
+    document.removeEventListener('click', this.hideTooltipOnClick);
   }
 
   private detectChanges() {
@@ -142,10 +144,14 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
     if (this.isShown && this.iconOnly && this.instantTooltip) {
       setTimeout(() => {
         this.tooltip.show();
-        document.addEventListener('click', () => {
-          this.tooltip.hide();
-        }, { once: true, passive: true });
+        document.addEventListener('click', this.hideTooltipOnClick, { once: true, passive: true });
       });
+    }
+  }
+
+  private hideTooltipOnClick() {
+    if (this.tooltip) {
+      this.tooltip.hide();
     }
   }
 }
