@@ -6,7 +6,7 @@
     "start": "ng serve --port 4201",
     "build": "node build-local-package.js",
     "build.local": "node local-deps.js",
-    "publish.prod": "node local-deps.js && ng build --prod",
+    "build.prod": "node local-deps.js && ng build --prod",
     "publish.select": "ng build --prod is-select && npm publish ./dist/is-select",
     "test.select": "ng test is-select --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "publish.select-tree": "ng build --prod is-select-tree && npm publish ./dist/is-select-tree",
