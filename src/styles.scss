@@ -7,6 +7,7 @@
 @import '../node_modules/froala-editor/css/froala_editor.pkgd.min.css';
 @import '../node_modules/froala-editor/css/froala_style.min.css';
 @import '../node_modules/froala-editor/css/plugins/code_view.min.css';
+@import '../node_modules/froala-editor/css/themes/dark.css';
 
 @import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 
@@ -198,6 +199,9 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --is-select-multi-item-bg-color: var(--xe-dark-24);
   --is-select-multi-item-fg-color: var(--xe-dark-100);
 
+  --is-froala-toolbar-bg-color: var(--xe-white);
+  --is-froala-toolbar-fg-color: var(--xe-dark-100);
+  --is-froala-toolbar-separator: #ebebeb;
 
   --is-search-bg-color: var(--xe-dark-08);
   --is-search-fg-color: var(--xe-dark-64);
@@ -270,6 +274,10 @@ body.is-theme-dark {
   --is-control-active-item-bg-color: #{transparentize(#72BCFF, 0.8)};
   --is-control-disabled-bg-color: #304558;
   --is-control-disabled-fg-color: #{transparentize(#fff, 0.7)};
+
+  --is-froala-toolbar-bg-color: var(--xe-dark-100);
+  --is-froala-toolbar-fg-color: var(--xe-white);
+  --is-froala-toolbar-separator: var(--xe-dark-100);
 
   --is-select-multi-item-bg-color: #72BCFF;
   --is-select-multi-item-fg-color: #000;
