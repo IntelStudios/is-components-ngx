@@ -57,8 +57,10 @@ npm install --save froala-editor at.js font-awesome</pre>
 ]</pre>
   `
 
-  froalaConfig: any = { id: 1 };
-  froalaConfigGerman = { id: 2, language: 'de' };
+  readonly froalaTheme = document.body.classList.contains('is-theme-dark') ? 'dark' : null;
+
+  froalaConfig: any = { id: 1, theme: this.froalaTheme };
+  froalaConfigGerman = { id: 2, theme: this.froalaTheme };
 
   control: FormControl = new FormControl();
 
@@ -75,7 +77,6 @@ npm install --save froala-editor at.js font-awesome</pre>
   <p style="padding: 3px; border: 1px solid blue;">I should be fine</p>`;
 
   ngOnInit() {
-
   }
 
   loadContent() {

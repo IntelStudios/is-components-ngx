@@ -64,6 +64,12 @@ interface ICustomButton {
   configProperty: string;
 }
 
+interface HTMLEventListener {
+  element: HTMLElement;
+  type: string;
+  callback: () => any;
+}
+
 const CUSTOM_BUTTONS: ICustomButton[] = [
   { name: BTN_INTELLISENSE, configProperty: 'intellisenseModal' }
 ];
@@ -115,6 +121,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   private _$element: any;
 
   private _html: SafeHtml;
+
+  private _htmlEventListeners: HTMLEventListener[] = [];
 
   @HostBinding('class.disabled')
   disabled: boolean = false;
@@ -196,6 +204,23 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   @Output()
   onCommand: EventEmitter<FroalaCommand> = new EventEmitter<FroalaCommand>();
+
+
+  private static getTransitionEndEventName(): string {
+    // https://betterprogramming.pub/detecting-the-end-of-css-transition-events-in-javascript-8653ae230dc7
+    const transitions = {
+      'transition'      : 'transitionend',
+      'OTransition'     : 'oTransitionEnd',
+      'MozTransition'   : 'transitionend',
+      'WebkitTransition': 'webkitTransitionEnd'
+    };
+    const bodyStyle = document.body.style;
+    for (const transition in transitions) {
+      if (bodyStyle[transition] !== undefined) {
+        return transitions[transition];
+      }
+    }
+  }
 
   constructor(@Optional() @Inject(configToken) private froalaConfig: IsFroalaConfig,
     private changeDetector: ChangeDetectorRef,
@@ -341,6 +366,10 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       }
     }
 
+    if (this._options?.theme) {
+      defaults.theme = this.options.theme;
+    }
+
     if (this._options && this._options.language) {
       defaults.language = this._options.language;
     } else {
@@ -379,6 +408,23 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       if (this.disabled) {
         editor.edit.off();
       }
+
+      /*
+        Copy default background and color from .fr-wrapper
+        The process is performed now and after wrapper CSS transition
+       */
+      const elFrWrapper = (this.el.nativeElement as HTMLElement).querySelector('.fr-wrapper') as HTMLElement;
+      const iframeBody = (editor.$html[0] as HTMLElement).querySelector('body');
+
+      const setContentStyle = () => {
+        const {background, color, transition} = window.getComputedStyle(elFrWrapper, null);
+        iframeBody.style.background = background;
+        iframeBody.style.color = color;
+        iframeBody.style.transition = transition;
+      };
+
+      this.addEventListener(elFrWrapper, IsFroalaComponent.getTransitionEndEventName(), () => setContentStyle());
+      setContentStyle();
     }).bind(this);
 
     // before we use blur event, but it is not fire event when style of content was changed
@@ -592,8 +638,14 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       this.editor.$el.off('keyup');
       this._$element.froalaEditor('destroy');
       this._eventListeners = [];
+      this._htmlEventListeners.forEach((listener) => listener.element.removeEventListener(listener.type, listener.callback));
+      this._htmlEventListeners = [];
       this.editor = null;
     }
   }
 
+  private addEventListener(element: HTMLElement, type: string, callback: () => void): void {
+    element.addEventListener(type, callback);
+    this._htmlEventListeners.push({ element, type, callback });
+  }
 }
