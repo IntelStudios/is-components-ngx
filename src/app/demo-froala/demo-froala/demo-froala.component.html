@@ -21,7 +21,7 @@
     <ng-template TabContent>
       <div class="row">
         <div class="col-sm-12">
-          <is-froala [options]="froalaConfig" [formControl]="control" (onCommand)="onFroalaCommand($event)"></is-froala>
+          <is-froala [options]="froalaConfig" [formControl]="control" (onCommand)="onFroalaCommand($event)" [theme]="froalaTheme"></is-froala>
         </div>
       </div>
 
@@ -35,6 +35,7 @@
         <div class="col-sm-12">
           <h2>Disabled load on init - click for load with fixed height</h2>
           <is-froala [maxHeight]="150" [minHeight]="150" [formControl]="control" [options]="froalaConfig"
+                     [theme]="froalaTheme"
             [loadOnInit]="false" (onCommand)="onFroalaCommand($event)"></is-froala>
         </div>
       </div>
@@ -47,7 +48,8 @@
     <ng-template TabContent>
       <div class="row">
         <div class="col-sm-12">
-          <is-froala [options]="froalaConfigGerman" [formControl]="control" (onCommand)="onFroalaCommand($event)">
+          <is-froala [options]="froalaConfigGerman" [formControl]="control" (onCommand)="onFroalaCommand($event)"
+                     [theme]="froalaTheme">
           </is-froala>
         </div>
       </div>
@@ -60,7 +62,8 @@
     <ng-template TabContent>
       <div class="row">
         <div class="col-sm-12">
-          <is-froala [options]="froalaConfig" [formControl]="control" [loadOnInit]="false" (onCommand)="onFroalaCommand($event)"></is-froala>
+          <is-froala [options]="froalaConfig" [formControl]="control" [loadOnInit]="false" (onCommand)="onFroalaCommand($event)"
+                     [theme]="froalaTheme"></is-froala>
         </div>
       </div>
 
