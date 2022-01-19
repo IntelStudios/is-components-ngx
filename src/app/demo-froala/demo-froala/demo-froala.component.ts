@@ -59,8 +59,8 @@ npm install --save froala-editor at.js font-awesome</pre>
 
   readonly froalaTheme = document.body.classList.contains('is-theme-dark') ? 'dark' : null;
 
-  froalaConfig: any = { id: 1, theme: this.froalaTheme };
-  froalaConfigGerman = { id: 2, theme: this.froalaTheme };
+  froalaConfig: any = { id: 1 };
+  froalaConfigGerman = { id: 2 };
 
   control: FormControl = new FormControl();
 

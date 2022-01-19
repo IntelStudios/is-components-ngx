@@ -199,6 +199,9 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     return this._html;
   }
 
+  @Input()
+  theme?: 'dark' | null = null;
+
   @Output()
   change: EventEmitter<string> = new EventEmitter<string>();
 
@@ -366,8 +369,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       }
     }
 
-    if (this._options?.theme) {
-      defaults.theme = this.options.theme;
+    if (this.theme) {
+      defaults.theme = this.theme;
     }
 
     if (this._options && this._options.language) {

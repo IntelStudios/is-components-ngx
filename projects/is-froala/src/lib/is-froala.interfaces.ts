@@ -44,8 +44,6 @@ export interface IIsFroalaOptions {
    * Client language
    */
   language?: string;
-
-  theme?: 'dark' | null;
 }
 
 export class IsFroalaOptions {
