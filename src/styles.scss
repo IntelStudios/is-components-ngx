@@ -1,39 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../node_modules/codemirror/lib/codemirror.css';
-@import '../node_modules/codemirror/addon/hint/show-hint.css';
-@import '../node_modules/codemirror/addon/lint/lint.css';
+@import "../node_modules/codemirror/lib/codemirror.css";
+@import "../node_modules/codemirror/addon/hint/show-hint.css";
+@import "../node_modules/codemirror/addon/lint/lint.css";
 
+@import "../node_modules/froala-editor/css/froala_editor.pkgd.min.css";
+@import "../node_modules/froala-editor/css/froala_style.min.css";
+@import "../node_modules/froala-editor/css/plugins/code_view.min.css";
+@import "../node_modules/froala-editor/css/themes/dark.css";
 
-@import '../node_modules/froala-editor/css/froala_editor.pkgd.min.css';
-@import '../node_modules/froala-editor/css/froala_style.min.css';
-@import '../node_modules/froala-editor/css/plugins/code_view.min.css';
-@import '../node_modules/froala-editor/css/themes/dark.css';
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
-@import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
-
-@import '~@circlon/angular-tree-component/css/angular-tree-component.css';
+@import "~@circlon/angular-tree-component/css/angular-tree-component.css";
 
 // import angular/cdk styles, but override overlay z-index
 // to work with bootstrap overlay z-index
-@import '~@angular/cdk/overlay';
+@import "~@angular/cdk/overlay";
 $cdk-z-index-overlay-container: 1055;
 $cdk-z-index-overlay: 1055;
 $cdk-z-index-overlay-bakcdrop: 1055;
 @include cdk-overlay();
 
-
 // @import '../node_modules/pretty-checkbox/src/pretty-checkbox.scss';
 
-@import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
 
-@import 'bootstrap';
+@import "bootstrap";
 
 body {
   background-color: #fff;
   font-size: 14px;
 }
 
-@import '../projects/styles/mixins';
+@import "../projects/styles/mixins";
 
 .short-scroll {
   @include short-scroll();
@@ -41,7 +39,9 @@ body {
 
 // theme styles
 
-.btn-group>.dropdown-menu:after, .dropdown-toggle>.dropdown-menu:after, .dropdown>.dropdown-menu:after {
+.btn-group > .dropdown-menu:after,
+.dropdown-toggle > .dropdown-menu:after,
+.dropdown > .dropdown-menu:after {
   border-bottom-color: var(--is-control-bg-color);
 }
 
@@ -52,12 +52,12 @@ body {
   }
 }
 
-
 // override font-family for is-check/radio to font-awesome free
-is-checkbox, is-radio {
+is-checkbox,
+is-radio {
   > label {
     > input {
-      font-family: 'Font Awesome 5 Free' !important;
+      font-family: "Font Awesome 5 Free" !important;
     }
   }
 }
@@ -67,7 +67,7 @@ button {
 }
 
 h3 {
-  margin-top:  1rem;
+  margin-top: 1rem;
   font-size: 1.25rem;
 }
 
@@ -75,108 +75,104 @@ h3 {
   padding: 16px;
 }
 
-
-
 // theme definitions
 
-
 // light (default) theme
-$light-base-color: #7D90A3;
+$light-base-color: #7d90a3;
 $light-border-color: transparentize($light-base-color, 0.7);
 $light-hover-color: transparentize($light-base-color, 0.5);
 $light-handle-color: transparentize($light-base-color, 0.5);
 $light-focused-color: transparentize($light-base-color, 0.1);
 
 :root {
-
   // general colors
 
-  --xe-dark-100: #2B3642;
-  --xe-dark-96: #333D49;
-  --xe-dark-88: #444E58;
-  --xe-dark-80: #555E67;
-  --xe-dark-72: #656D76;
-  --xe-dark-64: #777E85;
-  --xe-dark-56: #878D94;
-  --xe-dark-48: #999EA4;
-  --xe-dark-40: #A9AEB2;
-  --xe-dark-32: #BABDC1;
-  --xe-dark-24: #CCCFD1;
-  --xe-dark-16: #DCDEDF;
-  --xe-dark-08: #EDEEEF;
-  --xe-dark-04: #F5F6F6;
-  --xe-white: #FFFFFF;
+  --xe-dark-100: #2b3642;
+  --xe-dark-96: #333d49;
+  --xe-dark-88: #444e58;
+  --xe-dark-80: #555e67;
+  --xe-dark-72: #656d76;
+  --xe-dark-64: #777e85;
+  --xe-dark-56: #878d94;
+  --xe-dark-48: #999ea4;
+  --xe-dark-40: #a9aeb2;
+  --xe-dark-32: #babdc1;
+  --xe-dark-24: #cccfd1;
+  --xe-dark-16: #dcdedf;
+  --xe-dark-08: #edeeef;
+  --xe-dark-04: #f5f6f6;
+  --xe-white: #ffffff;
   --xe-white-04: #{transparentize(#fff, 0.96)};
 
-  --xe-blue-100: #4674BE;
-  --xe-blue-96: #4D79C0;
-  --xe-blue-88: #5C84C5;
-  --xe-blue-80: #6A8FCA;
-  --xe-blue-72: #799AD0;
-  --xe-blue-64: #88A5D5;
-  --xe-blue-56: #96B0DA;
-  --xe-blue-48: #A6BCE0;
-  --xe-blue-40: #B4C7E4;
-  --xe-blue-32: #C3D1E9;
-  --xe-blue-24: #D2DDEF;
-  --xe-blue-16: #E0E8F4;
-  --xe-blue-08: #EFF3F9;
+  --xe-blue-100: #4674be;
+  --xe-blue-96: #4d79c0;
+  --xe-blue-88: #5c84c5;
+  --xe-blue-80: #6a8fca;
+  --xe-blue-72: #799ad0;
+  --xe-blue-64: #88a5d5;
+  --xe-blue-56: #96b0da;
+  --xe-blue-48: #a6bce0;
+  --xe-blue-40: #b4c7e4;
+  --xe-blue-32: #c3d1e9;
+  --xe-blue-24: #d2ddef;
+  --xe-blue-16: #e0e8f4;
+  --xe-blue-08: #eff3f9;
 
   --xe-green-100: #158915;
-  --xe-green-96: #1E8D1E;
+  --xe-green-96: #1e8d1e;
   --xe-green-88: #319731;
-  --xe-green-80: #43A043;
-  --xe-green-72: #55A955;
-  --xe-green-64: #69B369;
-  --xe-green-56: #7BBC7B;
-  --xe-green-48: #8EC68E;
-  --xe-green-40: #A0CFA0;
-  --xe-green-32: #B3D8B3;
-  --xe-green-24: #C6E2C6;
-  --xe-green-16: #D8EBD8;
-  --xe-green-08: #EBF5EB;
+  --xe-green-80: #43a043;
+  --xe-green-72: #55a955;
+  --xe-green-64: #69b369;
+  --xe-green-56: #7bbc7b;
+  --xe-green-48: #8ec68e;
+  --xe-green-40: #a0cfa0;
+  --xe-green-32: #b3d8b3;
+  --xe-green-24: #c6e2c6;
+  --xe-green-16: #d8ebd8;
+  --xe-green-08: #ebf5eb;
 
-  --xe-orange-100: #E87E04;
-  --xe-orange-96: #E8830D;
-  --xe-orange-88: #EA8D22;
-  --xe-orange-80: #EC9736;
-  --xe-orange-72: #EEA149;
-  --xe-orange-64: #F0AC5E;
-  --xe-orange-56: #F2B671;
-  --xe-orange-48: #F3C186;
-  --xe-orange-40: #F5CB9A;
-  --xe-orange-32: #F7D5AD;
-  --xe-orange-24: #F9DFC2;
-  --xe-orange-16: #FBE9D5;
-  --xe-orange-08: #FDF4EA;
+  --xe-orange-100: #e87e04;
+  --xe-orange-96: #e8830d;
+  --xe-orange-88: #ea8d22;
+  --xe-orange-80: #ec9736;
+  --xe-orange-72: #eea149;
+  --xe-orange-64: #f0ac5e;
+  --xe-orange-56: #f2b671;
+  --xe-orange-48: #f3c186;
+  --xe-orange-40: #f5cb9a;
+  --xe-orange-32: #f7d5ad;
+  --xe-orange-24: #f9dfc2;
+  --xe-orange-16: #fbe9d5;
+  --xe-orange-08: #fdf4ea;
 
-  --xe-red-100: #DF303E;
-  --xe-red-96: #E03845;
-  --xe-red-88: #E24955;
-  --xe-red-80: #E55964;
-  --xe-red-72: #E76973;
-  --xe-red-64: #EA7A83;
-  --xe-red-56: #ED8A92;
-  --xe-red-48: #EF9BA2;
-  --xe-red-40: #F2ABB1;
-  --xe-red-32: #F4BBC0;
-  --xe-red-24: #F7CCD0;
-  --xe-red-16: #F9DDDF;
-  --xe-red-08: #FCEEEF;
+  --xe-red-100: #df303e;
+  --xe-red-96: #e03845;
+  --xe-red-88: #e24955;
+  --xe-red-80: #e55964;
+  --xe-red-72: #e76973;
+  --xe-red-64: #ea7a83;
+  --xe-red-56: #ed8a92;
+  --xe-red-48: #ef9ba2;
+  --xe-red-40: #f2abb1;
+  --xe-red-32: #f4bbc0;
+  --xe-red-24: #f7ccd0;
+  --xe-red-16: #f9dddf;
+  --xe-red-08: #fceeef;
 
-  --xe-purple-100: #A824EB;
-  --xe-purple-96: #AB2CEB;
-  --xe-purple-88: #B23EED;
-  --xe-purple-80: #B94FEE;
-  --xe-purple-72: #C060F0;
-  --xe-purple-64: #C773F2;
-  --xe-purple-56: #CE84F4;
-  --xe-purple-48: #D596F5;
-  --xe-purple-40: #DBA6F6;
-  --xe-purple-32: #E3B8F9;
-  --xe-purple-24: #E9C9FA;
-  --xe-purple-16: #F0DBFB;
-  --xe-purple-08: #F7EDFD;
+  --xe-purple-100: #a824eb;
+  --xe-purple-96: #ab2ceb;
+  --xe-purple-88: #b23eed;
+  --xe-purple-80: #b94fee;
+  --xe-purple-72: #c060f0;
+  --xe-purple-64: #c773f2;
+  --xe-purple-56: #ce84f4;
+  --xe-purple-48: #d596f5;
+  --xe-purple-40: #dba6f6;
+  --xe-purple-32: #e3b8f9;
+  --xe-purple-24: #e9c9fa;
+  --xe-purple-16: #f0dbfb;
+  --xe-purple-08: #f7edfd;
 
   --is-general-border-radius: 4px;
   --is-general-padding: 16px;
@@ -188,12 +184,12 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --is-control-border-hover-color: var(--xe-dark-88);
   --is-control-invalid-fg-color: var(--xe-red-100);
   --is-control-invalid-border-color: var(--xe-red-88);
-  --is-control-border-pending-color: #F0C330;
+  --is-control-border-pending-color: #f0c330;
   --is-control-fg-color: var(--xe-dark-88);
   --is-control-placeholder-color: var(--xe-dark-64);
   --is-control-handle-color: var(--xe-dark-64);
   --is-control-selected-item-color: var(--xe-dark-24);
-  --is-control-active-item-bg-color: var( --xe-dark-04);
+  --is-control-active-item-bg-color: var(--xe-dark-04);
   --is-control-disabled-bg-color: var(--xe-dark-04);
   --is-control-disabled-fg-color: var(--xe-dark-64);
   --is-select-multi-item-bg-color: var(--xe-dark-24);
@@ -220,7 +216,7 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --is-badge-danger-color: var(--xe-red-24);
   --is-badge-success-color: var(--xe-green-24);
   --is-badge-default-color: var(--xe-dark-24);
-  --is-badge-primary-color: #374F65;
+  --is-badge-primary-color: #374f65;
 
   --is-tabset-nav-bg-color: var(--xe-white);
   --is-tabset-border-color: var(--xe-dark-08);
@@ -248,30 +244,32 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --is-movable-modal-box-shadow-dragging-color: var(--xe-dark-64);
 }
 
-
 // dark theme
-$dark-background: #2C3E50;
-$dark-base-color: #72BCFF;
+$dark-background: #2c3e50;
+$dark-base-color: #72bcff;
 $dark-border-color: transparentize($dark-base-color, 0.5);
 $dark-hover-color: transparentize($dark-base-color, 0.3);
 $dark-handle-color: transparentize(#fff, 0.5);
 
 body.is-theme-dark {
-
   background-color: $dark-background;
 
-  h1, h2, h3, h4, h5 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     color: #fff;
   }
   --is-control-border-color: #{$dark-border-color};
-  --is-control-bg-color: #374F65;
+  --is-control-bg-color: #374f65;
   --is-control-fg-color: #fff;
   --is-control-border-color: #{$dark-border-color};
   --is-control-border-focus-color: #{$dark-base-color};
   --is-control-border-hover-color: #{$dark-hover-color};
   --is-control-handle-color: #{$dark-handle-color};
-  --is-control-selected-item-color: #{transparentize(#FFF, 0.8)};;
-  --is-control-active-item-bg-color: #{transparentize(#72BCFF, 0.8)};
+  --is-control-selected-item-color: #{transparentize(#fff, 0.8)};
+  --is-control-active-item-bg-color: #{transparentize(#72bcff, 0.8)};
   --is-control-disabled-bg-color: #304558;
   --is-control-disabled-fg-color: #{transparentize(#fff, 0.7)};
 
@@ -279,7 +277,17 @@ body.is-theme-dark {
   --is-froala-toolbar-fg-color: var(--xe-white);
   --is-froala-toolbar-separator: var(--xe-dark-100);
 
-  --is-select-multi-item-bg-color: #72BCFF;
+  --is-select-multi-item-bg-color: #72bcff;
   --is-select-multi-item-fg-color: #000;
 
+  --is-datepicker-fg-color: #fff;
+  --is-datepicker-bg-color: #{$dark-background};
+  --is-datepicker-inline-body-bg-color: #{$dark-background};
+  --is-datepicker-hover-bg-color: #000;
+  --is-datepicker-border-color: #{$dark-border-color};
+  --is-datepicker-day-fg-color: #fff;
+  --is-datepicker-day-active-fg-color: #000;
+  --is-datepicker-day-active-bg-color: red;
+  --is-datepicker-day-today-fg-color: #fff;
+  --is-datepicker-day-outside-fg-color: #fff;
 }
