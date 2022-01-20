@@ -40,6 +40,9 @@ is-froala {
       pointer-events: none;
       background-color: $is-control-disabled-bg-color;
     }
+    .fr-wrapper, .preview {
+      background: $is-control-disabled-bg-color !important;
+    }
   }
 
   &.fr-fullscreen {

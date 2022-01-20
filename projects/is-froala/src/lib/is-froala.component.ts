@@ -212,9 +212,9 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   private static getTransitionEndEventName(): string {
     // https://betterprogramming.pub/detecting-the-end-of-css-transition-events-in-javascript-8653ae230dc7
     const transitions = {
-      'transition'      : 'transitionend',
-      'OTransition'     : 'oTransitionEnd',
-      'MozTransition'   : 'transitionend',
+      'transition': 'transitionend',
+      'OTransition': 'oTransitionEnd',
+      'MozTransition': 'transitionend',
       'WebkitTransition': 'webkitTransitionEnd'
     };
     const bodyStyle = document.body.style;
@@ -309,7 +309,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
   }
 
-  onIframeClick(e: MouseEvent): void  {
+  onIframeClick(e: MouseEvent): void {
     const isLink = (e.target as HTMLElement).localName === 'a';
     if (isLink) {
       const target = e.target as HTMLAnchorElement;
@@ -323,7 +323,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
 
   onIframeLoad(e: Event): void {
     const iframeEl = e.target as HTMLIFrameElement;
-    this.copyThemeStyleToIframe(iframeEl.contentDocument.querySelector('body'), iframeEl);
+    this.copyThemeStyleToIframe(iframeEl.contentDocument.querySelector('body'), iframeEl, true);
   }
 
   // End Validators methods
@@ -644,10 +644,12 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
   }
 
-  private copyThemeStyleToIframe(iframeBodyEl: HTMLBodyElement, styleSourceEl: HTMLElement): void {
+  private copyThemeStyleToIframe(iframeBodyEl: HTMLBodyElement, styleSourceEl: HTMLElement, skipBg = false): void {
     const setContentStyle = () => {
-      const {background, color, transition} = window.getComputedStyle(styleSourceEl, null);
-      iframeBodyEl.style.background = background;
+      const { background, color, transition } = window.getComputedStyle(styleSourceEl, null);
+      if (!skipBg) {
+        iframeBodyEl.style.background = background;
+      }
       iframeBodyEl.style.color = color;
       iframeBodyEl.style.transition = transition;
     };
