@@ -53,12 +53,19 @@ is-froala {
     min-height: 189px;
   }
 
+  .fr-wrapper, .preview {
+    // transition is required for iframe styles to work
+    transition: color 0.01s, background-color 0.01s;
+    background: $is-control-bg-color !important;
+    color: $is-control-fg-color !important;
+  }
+
   .fr-toolbar {
-    border: none;
+    border: none !important;
     border-radius: 0;
     border-top-left-radius: $is-general-border-radius !important;
     border-top-right-radius: $is-general-border-radius !important;
-    border-bottom: 1px solid $is-control-boder-color;
+    border-bottom: 1px solid $is-control-boder-color !important;
     box-shadow: none !important;
   }
 
@@ -84,11 +91,6 @@ is-froala {
     border-radius: 0 !important;
     border-bottom-left-radius: $is-general-border-radius !important;
     border-bottom-right-radius: $is-general-border-radius !important;
-    // transition is required for iframe styles to work
-    transition: color 0.01s, background-color 0.01s;
-    background: $is-control-bg-color !important;
-    color: $is-control-fg-color !important;
-
     @include short-scroll;
   }
 
