@@ -41,7 +41,7 @@ is-datepicker-popup {
       .bs-datepicker-body {
         border: none;
         border-top: 1px solid $is-datepicker-border-color;
-
+        background: $is-datepicker-bg-color;
         table {
           >thead>tr>th {
             font-size: 12px;
@@ -50,16 +50,17 @@ is-datepicker-popup {
           }
 
           >tbody>tr>td {
-
             &.is-highlighted {
               > span {
                 background-color: $is-datepicker-hover-bg-color;
               }
             }
-
             >span {
               color: $is-datepicker-day-fg-color;
               border-radius: $is-general-border-radius;
+              &.is-highlighted, &.is-active-other-month {
+                background-color: $is-datepicker-hover-bg-color;
+              }
               &.is-other-month, &.disabled {
                 color: $is-datepicker-day-outside-fg-color;
               }
