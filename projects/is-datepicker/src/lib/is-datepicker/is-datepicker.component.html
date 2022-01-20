@@ -7,7 +7,7 @@
     [formControl]="dateControl"
     [mask]="mask"
     [showMaskTyped]="!!mask"
-    (keyup)="onInputValueChange(input.value)"
+    (keyup)="onInputValueChange($event)"
     (click)="onInputClick()"
     [class.disabled]="disabled"
     [readonly]="!mask || disabled || readonly"

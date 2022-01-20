@@ -191,12 +191,27 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     return !!this.pickerOverlayRef;
   }
 
-  onInputValueChange($event: string): void {
-    if (this.dateControl.invalid || !$event) {
+  onInputValueChange($event: KeyboardEvent): void {
+    const { value, readOnly } = $event.target as HTMLInputElement;
+    // UP/DOWN arrows to incr/decr date
+    if (!readOnly && this.dateValue) {
+      if ($event.key === 'ArrowUp') {
+        this.dateValue = moment(this.dateValue).add(1, 'day').toDate();
+        this.onValueChange();
+        return;
+      }
+      if ($event.key === 'ArrowDown') {
+        this.dateValue = moment(this.dateValue).add(-1, 'day').toDate();
+        this.onValueChange();
+        return;
+      }
+    }
+
+    if (this.dateControl.invalid || !value) {
       // if date is invalid or empty, result value will be null
       this.changed.emit(null);
 
-      if (!$event) {
+      if (!value) {
         this.dateValue = null;
         this.input.nativeElement.value = null;
       }
@@ -205,7 +220,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       return;
     }
 
-    const date = moment($event, DATE_FORMAT).toDate();
+    const date = moment(value, DATE_FORMAT).toDate();
     const valid = !isNaN(date.valueOf());
     if (!valid) {
       this.dateControl.setErrors({ 'dateInvalid': true });
