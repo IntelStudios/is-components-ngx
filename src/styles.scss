@@ -242,6 +242,9 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --is-movable-modal-header-fg-color: var(--xe-dark-100);
   --is-movable-modal-border-color: var(--xe-dark-08);
   --is-movable-modal-box-shadow-dragging-color: var(--xe-dark-64);
+
+  // APP DEMO THEMING
+  --app-content-bg: var(--xe-dark-08);
 }
 
 // dark theme
@@ -290,4 +293,14 @@ body.is-theme-dark {
   --is-datepicker-day-active-bg-color: red;
   --is-datepicker-day-today-fg-color: #fff;
   --is-datepicker-day-outside-fg-color: #fff;
+
+  // APP DEMO THEMING
+  --app-content-bg: var(--xe-dark-88);
+
+  pre {
+    color: var(--xe-dark-08);
+  }
+  a {
+    color: var(--xe-blue-08);
+  }
 }
