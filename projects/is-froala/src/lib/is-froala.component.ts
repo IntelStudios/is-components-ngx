@@ -24,6 +24,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import {
   FroalaCommand,
+  FroalaTheme,
   IAtJSConfig,
   IIsFroalaOptions,
   IntellisenseSuggestion,
@@ -127,7 +128,6 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   @HostBinding('class.disabled')
   disabled: boolean = false;
 
-
   @Input()
   set options(config: IIsFroalaOptions) {
     if (config) {
@@ -200,7 +200,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   }
 
   @Input()
-  theme?: 'dark' | null = null;
+  theme?: FroalaTheme;
 
   @Output()
   change: EventEmitter<string> = new EventEmitter<string>();
@@ -262,7 +262,6 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
   }
 
-
   loadEditor(setFofucs = false) {
     if (!this.disabled) {
       if (this._minEditorHeight === this._minEditorHeightDefault) {
@@ -322,6 +321,11 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
   }
 
+  onIframeLoad(e: Event): void {
+    const iframeEl = e.target as HTMLIFrameElement;
+    this.copyThemeStyleToIframe(iframeEl.contentDocument.querySelector('body'), iframeEl);
+  }
+
   // End Validators methods
 
   private setEditorValue() {
@@ -369,8 +373,10 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       }
     }
 
-    if (this.theme) {
+    if (this.theme !== undefined) {
       defaults.theme = this.theme;
+    } else if (this.froalaConfig.getTheme !== undefined) {
+      defaults.theme = this.froalaConfig.getTheme();
     }
 
     if (this._options && this._options.language) {
@@ -417,17 +423,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
         The process is performed now and after wrapper CSS transition
        */
       const elFrWrapper = (this.el.nativeElement as HTMLElement).querySelector('.fr-wrapper') as HTMLElement;
-      const iframeBody = (editor.$html[0] as HTMLElement).querySelector('body');
-
-      const setContentStyle = () => {
-        const {background, color, transition} = window.getComputedStyle(elFrWrapper, null);
-        iframeBody.style.background = background;
-        iframeBody.style.color = color;
-        iframeBody.style.transition = transition;
-      };
-
-      this.addEventListener(elFrWrapper, IsFroalaComponent.getTransitionEndEventName(), () => setContentStyle());
-      setContentStyle();
+      const iframe = (editor.$html[0] as HTMLElement).querySelector('body');
+      this.copyThemeStyleToIframe(iframe, elFrWrapper);
     }).bind(this);
 
     // before we use blur event, but it is not fire event when style of content was changed
@@ -645,6 +642,18 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
       this._htmlEventListeners = [];
       this.editor = null;
     }
+  }
+
+  private copyThemeStyleToIframe(iframeBodyEl: HTMLBodyElement, styleSourceEl: HTMLElement): void {
+    const setContentStyle = () => {
+      const {background, color, transition} = window.getComputedStyle(styleSourceEl, null);
+      iframeBodyEl.style.background = background;
+      iframeBodyEl.style.color = color;
+      iframeBodyEl.style.transition = transition;
+    };
+
+    this.addEventListener(styleSourceEl, IsFroalaComponent.getTransitionEndEventName(), () => setContentStyle());
+    setContentStyle();
   }
 
   private addEventListener(element: HTMLElement, type: string, callback: () => void): void {

@@ -4,7 +4,8 @@ export interface IsFroalaConfig {
   /**
    * function which returns license key for froala editor
    */
-  getLicense(): string
+  getLicense(): string;
+  getTheme?: () => FroalaTheme;
   defaultToolbarButtons?: string[];
 }
 
@@ -88,3 +89,5 @@ export interface IAtJSConfig {
   intellisense?: Observable<IntellisenseSuggestion[]>;
   intellisenseModal?: boolean;
 }
+
+export type FroalaTheme = 'dark' | null;
