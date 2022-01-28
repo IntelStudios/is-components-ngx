@@ -1,7 +1,7 @@
 <div class="input-group" [class.readonly]="readonly" [class.open]="isOpen" [class.disabled]="disabled">
   <!-- readonly on input itself when mask is off since it breaks keyboard input -->
   <input #input
-    class="datepicker-input datepicker-value form-control align-{{alignment}}"
+    class="datepicker-input datepicker-value align-{{alignment}}"
     [class.clearable]="allowClear"
     [value]="dateValue | date:viewFormat"
     [formControl]="dateControl"
