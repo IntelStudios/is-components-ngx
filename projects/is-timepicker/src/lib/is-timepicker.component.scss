@@ -18,7 +18,7 @@
     @include is-input();
     padding: 0 $is-general-padding-small 0 0;
     border-radius: 4px !important;
-
+    height: 32px;
     &.disabled {
       @include is-input-disabled;
       cursor: default;
@@ -32,7 +32,7 @@
       display: flex;
       align-items: center;
       position: relative;
-      padding: $is-general-padding-small;
+      padding: 0 $is-general-padding-small;
       background: transparent;
       flex: 1;
       outline: 0;
