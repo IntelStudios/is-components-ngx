@@ -208,6 +208,8 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   @Output()
   onCommand: EventEmitter<FroalaCommand> = new EventEmitter<FroalaCommand>();
 
+  @Output()
+  onImagePreview: EventEmitter<string> = new EventEmitter();
 
   private static getTransitionEndEventName(): string {
     // https://betterprogramming.pub/detecting-the-end-of-css-transition-events-in-javascript-8653ae230dc7
@@ -310,10 +312,15 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   }
 
   onIframeClick(e: MouseEvent): void {
-    const isLink = (e.target as HTMLElement).localName === 'a';
-    if (isLink) {
-      const target = e.target as HTMLAnchorElement;
+    const el = e.target as HTMLElement;
+    if (el.localName === 'a') {
+      const target = el as HTMLAnchorElement;
       window.open(target.href, '_blank');
+      return;
+    }
+    if (el.localName === 'img') {
+      const img = el as HTMLImageElement;
+      this.zone.run(() => this.onImagePreview.next(img.src));
       return;
     }
     if (!this.disabled) {
