@@ -1,5 +1,6 @@
 import { TemplateRef } from '@angular/core';
 import { ModalDirective, ModalOptions } from 'ngx-bootstrap/modal';
+import { Observable } from 'rxjs';
 
 export interface IsModalRef {
   close: () => void;
@@ -94,5 +95,6 @@ export interface IsModalMovableRef {
    * center movable modal on the screen
    */
   center:() => void;
+  onClosed$: Observable<void>;
   closed: boolean;
 }
