@@ -118,6 +118,13 @@ export class IsFieldErrorFactory {
     return { passwordDoNotMatch: error };
   }
 
+  static dateInvalidError() {
+    const error = new IsFieldError('dateInvalid', false).withPriority(50);
+    error.message = 'Date value is invalid';
+
+    return { dateInvalid: error };
+  }
+
   static invalidCronError() {
     const error = new IsFieldError('invalidCron', false).withPriority(40);
     error.message = 'Invalid CRON expression';

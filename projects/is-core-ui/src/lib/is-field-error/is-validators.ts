@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { IsFieldErrorFactory } from './is-field-error.service';
+import { IsFieldErrorFactory } from 'projects/is-cdk/src/public-api';
 
 export function isEmptyInputValue(value: any): boolean {
   // we don't check for string here so it also works with arrays

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
+import { IsFieldError, IsFieldErrorFactory } from 'projects/is-cdk/src/public-api';
 import { of } from 'rxjs';
 
-import { IsFieldError, IsFieldErrorFactory } from 'projects/is-core-ui/src/public_api';
 
 @Component({
   selector: 'app-demo-core-ui',

@@ -35,6 +35,7 @@ import { Subscription } from 'rxjs';
 import { defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { IsFieldErrorFactory } from 'projects/is-cdk/src/public-api';
 
 const moment = m;
 
@@ -223,7 +224,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     const date = moment(value, DATE_FORMAT).toDate();
     const valid = !isNaN(date.valueOf());
     if (!valid) {
-      this.dateControl.setErrors({ 'dateInvalid': true });
+      this.dateControl.setErrors(IsFieldErrorFactory.dateInvalidError());
       this.dateValue = null;
       this.changed.emit(null);
       return;

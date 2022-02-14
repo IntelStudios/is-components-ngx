@@ -15,10 +15,10 @@ import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { TooltipContainerComponent } from 'ngx-bootstrap/tooltip';
+import { IsFieldError } from 'projects/is-cdk/src/public-api';
 import { Subscription, merge, of } from 'rxjs';
 
 import { configToken, IsCoreUIConfig } from '../is-core-ui.interfaces';
-import { IsFieldError } from './is-field-error.model';
 
 @Component({
   selector: 'is-field-error',
