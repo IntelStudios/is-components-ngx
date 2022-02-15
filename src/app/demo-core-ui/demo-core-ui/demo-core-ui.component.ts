@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { IsFieldError, IsFieldErrorFactory } from 'projects/is-cdk/src/public-api';
+import { IsFieldError, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { of } from 'rxjs';
 
 

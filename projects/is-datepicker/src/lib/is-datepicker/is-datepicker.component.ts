@@ -29,13 +29,12 @@ import {
 } from '@angular/forms';
 import * as m from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { IsCdkService } from '@intelstudios/cdk';
+import { IsCdkService, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
 
 import { defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { IsFieldErrorFactory } from 'projects/is-cdk/src/public-api';
 
 const moment = m;
 
@@ -481,7 +480,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     if (control.valid && this.dateControl.valid) {
       return null;
     } else {
-      return { 'dateInvalid': true };
+      return IsFieldErrorFactory.dateInvalidError();
     }
   }
 
