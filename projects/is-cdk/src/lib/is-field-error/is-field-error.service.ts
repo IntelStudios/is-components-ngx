@@ -11,9 +11,18 @@ export class IsFieldErrorFactory {
 
   static inputMaskMatchError(mask: string) {
     const error = new IsFieldError('maskDoesNotMatch', false).withPriority(0);
-    error.message = 'Value does not match required mask';
     error.params = { mask: mask };
+    error.message = 'Value does not match required mask';
+
     return { maskDoesNotMatch: error };
+  }
+
+  static minLengthError(minLength: number, actualLength: number) {
+    const error: IsFieldError = new IsFieldError('minLength', false).withPriority(10);
+    error.params = { requiredLength: minLength, actualLength: actualLength };
+    error.message = `Minimum allowed characters is ${minLength}`;
+
+    return { minLength: error };
   }
 
   static maxLengthError(maxLength: number, actualLength: number) {
@@ -46,30 +55,33 @@ export class IsFieldErrorFactory {
     return { notANumber: error };
   }
 
+  static emailError() {
+    const error: IsFieldError = new IsFieldError('emailInvalid', false).withPriority(10);
+    error.message = 'Value is not a valid email';
+
+    return { emailInvalid: error };
+  }
+
+  static patternError(pattern: string, actual: string) {
+    const error: IsFieldError = new IsFieldError('patternInvalid', false).withPriority(10);
+    error.params = { requiredPattern: pattern, actual: actual };
+    error.message = `Required pattern is ${pattern}`;
+
+    return { patternInvalid: error };
+  }
+
   static maxNumberError(maxNum: number, actual: number) {
     const error: IsFieldError = new IsFieldError('maxNumber', false).withPriority(20);
     error.params = { requiredMax: maxNum, actual: actual };
+    error.message = `Maximum allowed number is ${maxNum}`;
 
     return { maxNumber: error };
-  }
-
-  static maxFileSizeError(maxSize: string) {
-    const error: IsFieldError = new IsFieldError('maxFileSize', false).withPriority(20);
-    error.params = { maxSize: maxSize };
-
-    return { maxFileSize: error };
-  }
-
-  static unsupportedFileType(supportedTypes: string) {
-    const error: IsFieldError = new IsFieldError('unsupportedFileType', false).withPriority(20);
-    error.params = { supportedTypes: supportedTypes };
-
-    return { unsupportedFileType: error };
   }
 
   static minNumberError(minNum: number, actual: number) {
     const error: IsFieldError = new IsFieldError('minNumber', false).withPriority(20);
     error.params = { requiredMin: minNum, actual: actual };
+    error.message = `Minimum allowed number is ${minNum}`;
 
     return { minNumber: error };
   }
@@ -77,8 +89,25 @@ export class IsFieldErrorFactory {
   static minMaxNumberError(minNum: number, maxNum: number, actual: number) {
     const error: IsFieldError = new IsFieldError('minMaxNumber', false).withPriority(20);
     error.params = { requiredMin: minNum, requiredMax: maxNum, actual: actual };
+    error.message = `Number value must be between ${minNum} and ${maxNum}`;
 
     return { minMaxNumber: error };
+  }
+
+  static maxFileSizeError(maxSize: string) {
+    const error: IsFieldError = new IsFieldError('maxFileSize', false).withPriority(20);
+    error.params = { maxSize: maxSize };
+    error.message = `Maximum file size is ${maxSize}`;
+
+    return { maxFileSize: error };
+  }
+
+  static unsupportedFileType(supportedTypes: string) {
+    const error: IsFieldError = new IsFieldError('unsupportedFileType', false).withPriority(20);
+    error.params = { supportedTypes: supportedTypes };
+    error.message = 'Unsupported file type';
+
+    return { unsupportedFileType: error };
   }
 
   static recordWithSameValueAlreadyExistsError() {
@@ -123,6 +152,13 @@ export class IsFieldErrorFactory {
     error.message = 'Date value is invalid';
 
     return { dateInvalid: error };
+  }
+
+  static timeInvalidError() {
+    const error = new IsFieldError('timeInvalid', false).withPriority(50);
+    error.message = 'Time value is invalid';
+
+    return { timeInvalid: error };
   }
 
   static invalidCronError() {

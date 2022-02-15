@@ -207,12 +207,13 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       }
     }
 
-    if (this.dateControl.invalid || !value) {
+    if (this.dateControl.invalid || !this.dateControl.value) {
       // if date is invalid or empty, result value will be null
       this.changed.emit(null);
 
-      if (!value) {
+      if (!this.dateControl.value) {
         this.dateValue = null;
+        this.dateControl.setErrors(null);
         this.input.nativeElement.value = null;
       }
 

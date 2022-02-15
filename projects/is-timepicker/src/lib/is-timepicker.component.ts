@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 import * as m from 'moment';
-import { IsCdkService } from '@intelstudios/cdk';
+import { IsCdkService, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
 
 import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
@@ -163,12 +163,13 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   }
 
   onInputValueChange($event: string): void {
-    if (this.timeControl.invalid || !$event) {
+    if (this.timeControl.invalid || !this.timeControl.value) {
       // if time is invalid or empty, result value will be null
       this.changed.emit(null);
 
-      if (!$event) {
+      if (!this.timeControl.value) {
         this.input.nativeElement.value = null;
+        this.timeControl.setErrors(null);
         this.setValue(null);
       }
 
@@ -317,7 +318,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
     if (control.valid && this.timeControl.valid) {
       return null;
     } else {
-      return { 'timeInvalid': true };
+      return IsFieldErrorFactory.timeInvalidError();
     }
   }
 

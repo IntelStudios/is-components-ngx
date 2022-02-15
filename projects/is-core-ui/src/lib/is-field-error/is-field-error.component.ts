@@ -14,8 +14,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
-import { TooltipContainerComponent } from 'ngx-bootstrap/tooltip';
-import { IsFieldError } from '@intelstudios/cdk';
+import { IsFieldError, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { Subscription, merge, of } from 'rxjs';
 
 import { configToken, IsCoreUIConfig } from '../is-core-ui.interfaces';
@@ -125,10 +124,20 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
     this.isShown = this.control.invalid; // && (this.control.touched || this.control.dirty);
 
     if (this.control.errors !== null) {
-      let highestPriorityError: IsFieldError = null;
+      let remapped = {};
+      // replace base angular validator errors to is-field-errors
       Object.keys(this.control.errors).forEach((key) => {
-        if (highestPriorityError === null || highestPriorityError.priority > this.control.errors[key].priority) {
-          highestPriorityError = this.control.errors[key];
+        if (this.control.errors[key] instanceof IsFieldError) {
+          remapped = {...{key: this.control.errors[key] }};
+        }
+        else {
+          remapped = {...this.replaceAngularValidatorError(key, this.control.errors[key]) };
+        }
+      });
+      let highestPriorityError: IsFieldError = null;
+      Object.keys(remapped).forEach((key) => {
+        if (highestPriorityError === null || highestPriorityError.priority <= remapped[key].priority) {
+          highestPriorityError = remapped[key];
         }
       });
       const key = this.transPrefix + highestPriorityError.key;
@@ -153,5 +162,24 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
 
   private hideTooltipOnClick() {
     this.tooltip?.hide();
+  }
+
+  private replaceAngularValidatorError(key: string, error: any) {
+    switch (key) {
+      case 'min':
+        return IsFieldErrorFactory.minNumberError(error.min, error.actual);
+      case 'max':
+        return IsFieldErrorFactory.maxNumberError(error.max, error.actual);
+      case 'required':
+        return IsFieldErrorFactory.requiredError();
+      case 'email':
+        return IsFieldErrorFactory.emailError();
+      case 'minlength':
+        return IsFieldErrorFactory.minLengthError(error.requiredLength, error.actualLength);
+      case 'maxlength':
+        return IsFieldErrorFactory.maxLengthError(error.requiredLength, error.actualLength);
+      case 'pattern':
+        return IsFieldErrorFactory.patternError(error.requiredPattern, error.actualValue);
+    }
   }
 }
