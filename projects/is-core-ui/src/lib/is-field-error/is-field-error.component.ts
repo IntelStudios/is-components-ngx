@@ -180,6 +180,8 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
         return IsFieldErrorFactory.maxLengthError(error.requiredLength, error.actualLength);
       case 'pattern':
         return IsFieldErrorFactory.patternError(error.requiredPattern, error.actualValue);
+      default:
+        return IsFieldErrorFactory.unspecifiedError({ key: key, error: error });
     }
   }
 }

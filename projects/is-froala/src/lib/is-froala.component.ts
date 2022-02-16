@@ -31,6 +31,7 @@ import {
   IsFroalaConfig,
 } from './is-froala.interfaces';
 import { TranslateService } from '@ngx-translate/core';
+import { IsFieldErrorFactory } from '@intelstudios/cdk';
 
 declare var $: any;
 
@@ -182,7 +183,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   }
 
   @Input()
-  codeviewActiveValidationError: any = { codeViewActive: true };
+  codeviewActiveValidationError: any = IsFieldErrorFactory.codeViewIsActiveWarning();
 
   @Input()
   licenseKey: string;

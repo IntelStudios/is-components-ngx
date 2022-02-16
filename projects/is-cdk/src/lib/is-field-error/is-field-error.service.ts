@@ -189,6 +189,13 @@ export class IsFieldErrorFactory {
     return { prefillOrTemplateRequired: error };
   }
 
+  static unspecifiedError(err: any) {
+    const error = new IsFieldError('unspecified', false).withPriority(50);
+    error.message = `Unspecified error (${JSON.stringify(err)})`;
+
+    return { unspecified: error };
+  }
+
   static codeViewIsActiveWarning() {
     const error = new IsFieldError('codeViewIsActive', false).withPriority(50);
     error.message = 'Please switch editor to WYSIWYG mode before saving';
