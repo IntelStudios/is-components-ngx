@@ -276,6 +276,13 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
     this.pickerInstanceRef.instance.control = {
       timeValue: this.timeValue,
       onChange: (value: Date) => {
+        if (value) {
+          this.timeControl.setErrors(null);
+        }
+        else {
+          this.timeControl.setErrors(IsFieldErrorFactory.timeInvalidError());
+        }
+
         this.setValue(value);
       }
     }
