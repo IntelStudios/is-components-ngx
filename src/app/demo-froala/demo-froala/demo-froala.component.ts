@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -69,6 +69,8 @@ npm install --save froala-editor at.js font-awesome</pre>
 
   control: FormControl = new FormControl();
 
+  control1: FormControl = new FormControl();
+
   constructor(private sanitizer: DomSanitizer) { }
 
   html = `<style>
@@ -82,6 +84,8 @@ npm install --save froala-editor at.js font-awesome</pre>
   <p style="padding: 3px; border: 1px solid blue;">I should be fine</p>`;
 
   ngOnInit() {
+    this.control1.setValidators(Validators.required);
+    this.control1.updateValueAndValidity();
   }
 
   loadContent() {

@@ -433,3 +433,28 @@
 <br>
 <input type="text" [formControl]="formControl2">
 <br>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Form fields validation</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <label>required and number min = 10 and number max = 100: <is-field-error [iconOnly]="false" [control]="formControl3"></is-field-error></label>
+    <br>
+    <input type="number" [formControl]="formControl3">
+  </div>
+  <div class="col-sm-6">
+    <label>min length = 3: <is-field-error [iconOnly]="false" [control]="formControl4"></is-field-error></label>
+    <br>
+    <input type="text" [formControl]="formControl4">
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <label>required and custom validator (input must contain word 'custom'): <is-field-error [iconOnly]="false" [control]="formControl5"></is-field-error></label>
+    <br>
+    <input type="text" [formControl]="formControl5">
+  </div>
+</div>

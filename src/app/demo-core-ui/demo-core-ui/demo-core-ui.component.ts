@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, Validators } from '@angular/forms';
 import { IsFieldError, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { of } from 'rxjs';
 
@@ -39,6 +39,9 @@ export class DemoCoreUIComponent implements OnInit {
 
   formControl1: FormControl;
   formControl2: FormControl;
+  formControl3: FormControl;
+  formControl4: FormControl;
+  formControl5: FormControl;
   passwordControl: FormControl;
   checkboxControl: FormControl = new FormControl();
   checkboxIndeterminate = false;
@@ -61,6 +64,16 @@ export class DemoCoreUIComponent implements OnInit {
   constructor() {
     this.formControl1 = new FormControl();
     this.formControl2 = new FormControl();
+    this.formControl3 = new FormControl();
+    this.formControl3.setValidators([Validators.required, Validators.min(10), Validators.max(100)]);
+    this.formControl3.updateValueAndValidity();
+    this.formControl4 = new FormControl();
+    this.formControl4.setValidators(Validators.minLength(3));
+    this.formControl4.updateValueAndValidity();
+    this.formControl5 = new FormControl();
+    this.formControl5.setValidators(Validators.required);
+    this.formControl5.updateValueAndValidity();
+
     this.passwordControl = new FormControl();
 
     let inputRequiredValidator = (control: AbstractControl) => {
@@ -83,6 +96,7 @@ export class DemoCoreUIComponent implements OnInit {
     };
 
     this.formControl2.setAsyncValidators(customValidator);
+    this.formControl5.setAsyncValidators(customValidator);
   }
 
   ngOnInit() {

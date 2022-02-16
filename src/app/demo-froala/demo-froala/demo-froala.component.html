@@ -71,4 +71,16 @@
 
   </is-tab>
 
+  <is-tab title="With Validation">
+    <ng-template TabContent>
+      <div class="row">
+        <div class="col-sm-12">
+          <is-field-error [iconOnly]="false" class="align-right" [control]="control1"></is-field-error>
+          <is-froala [options]="froalaConfig" [formControl]="control1" (onCommand)="onFroalaCommand($event)" [theme]="froalaTheme"></is-froala>
+        </div>
+      </div>
+
+    </ng-template>
+
+  </is-tab>
 </is-tabset>

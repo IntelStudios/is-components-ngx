@@ -75,6 +75,18 @@
     <is-datepicker-inline [formControl]="control" [config]="config"></is-datepicker-inline>
   </div>
 </div>
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Date Picker with required validator</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <is-field-error [iconOnly]="false" class="align-right" [control]="control4"></is-field-error>
+    <is-datepicker [mask]="'00-00-0000'" [readonly]="readonly" [formControl]="control4" [allowClear]="true" viewFormat="dd-MM-yyyy"></is-datepicker>
+    <span>selected value: {{control4.value}}</span>
+  </div>
+</div>
 
 
 <div style="height: 100vh;"></div>

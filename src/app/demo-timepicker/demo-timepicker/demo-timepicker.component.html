@@ -29,4 +29,16 @@
     <is-timepicker [allowClear]="true" [stringMode]="true" alignment="right" [formControl]="timepickerControl"></is-timepicker>
   </div>
 </div>
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Time Picker with required validator</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <is-field-error [iconOnly]="false" class="align-right" [control]="timepickerControl3"></is-field-error>
+    <is-timepicker [allowClear]="true" [stringMode]="true" [formControl]="timepickerControl3"></is-timepicker>
+    <span>selected value: {{timepickerControl3.value}}</span>
+  </div>
+</div>
 <div style="height: 100vh;"></div>

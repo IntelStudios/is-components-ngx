@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
@@ -26,6 +26,8 @@ export class DemoDatepickerComponent implements OnInit {
 
   control3: FormControl = new FormControl();
 
+  control4: FormControl = new FormControl();
+
   config: Partial<BsDatepickerConfig> = { minDate: new Date() };
 
   readonly = false;
@@ -34,6 +36,8 @@ export class DemoDatepickerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.control4.setValidators(Validators.required);
+    this.control4.updateValueAndValidity();
   }
 
   onClearDate() {
