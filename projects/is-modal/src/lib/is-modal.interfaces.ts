@@ -45,7 +45,7 @@ export interface IsModalConfig {
   /**
    * Panel custom css class
    */
-   panelCssClass?: string;
+  panelCssClass?: string;
   /**
    * Button definitions on the left side
    */
@@ -68,7 +68,7 @@ export interface IsModalInstance {
 export interface IsModalControl {
   config: IsModalConfig;
   initialState?: any;
-  hide:() => void;
+  hide: () => void;
 }
 
 export interface IsModalMovableConfig extends IsModalConfig {
@@ -76,25 +76,34 @@ export interface IsModalMovableConfig extends IsModalConfig {
    * Modal css class, if not set nothing will be added
    */
   cssClass?: string;
+  /**
+   * initial position of modal, if not set, modal is centered to screen
+   */
+  position?: Partial<{
+    height: string;
+    width: string;
+    left: string;
+    top: string;
+  }>;
 }
 
 export interface IsModalMovableInstance {
   control: IsModalMovableControl;
-  center:() => void;
+  center: () => void;
 }
 
 export interface IsModalMovableControl {
   config: IsModalMovableConfig;
   initialState?: any;
-  hide:() => void;
+  hide: () => void;
 }
 
 export interface IsModalMovableRef {
-  close:() => void;
+  close: () => void;
   /**
    * center movable modal on the screen
    */
-  center:() => void;
+  center: () => void;
   onClosed$: Observable<void>;
   closed: boolean;
 }

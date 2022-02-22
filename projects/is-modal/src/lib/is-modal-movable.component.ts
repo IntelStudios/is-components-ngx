@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ModalComponent } from 'ng-modal-lib';
 
 import { IsModalButtonConfig, IsModalMovableControl, IsModalMovableInstance, IsModalRef } from './is-modal.interfaces';
@@ -10,7 +10,7 @@ import { IsModalButtonConfig, IsModalMovableControl, IsModalMovableInstance, IsM
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class IsModalMovableComponent implements OnInit, IsModalMovableInstance {
+export class IsModalMovableComponent implements OnInit, AfterViewInit, IsModalMovableInstance {
 
   control: IsModalMovableControl;
 
@@ -21,7 +21,7 @@ export class IsModalMovableComponent implements OnInit, IsModalMovableInstance {
 
   closed: boolean = false;
 
-  constructor() { }
+  constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.modalRef = {
@@ -31,6 +31,9 @@ export class IsModalMovableComponent implements OnInit, IsModalMovableInstance {
     }
 
     if (this.control.config) {
+      if (this.control.config.position) { // disable initial centering
+        this.modal.executePostDisplayActions = false;
+      }
       this.modal.show();
     }
   }
@@ -38,6 +41,19 @@ export class IsModalMovableComponent implements OnInit, IsModalMovableInstance {
   center(): void {
     if (this.modal) {
       this.modal.center();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (this.control.config?.position) {
+      const modalEl = this.el.nativeElement.querySelector('div.ui-modal') as HTMLDivElement;
+      console.log(modalEl);
+      const { position } = this.control.config;
+      this.renderer.setStyle(modalEl, 'top', position.top);
+      this.renderer.setStyle(modalEl, 'left', position.left);
+      this.renderer.setStyle(modalEl, 'width', position.width);
+      this.renderer.setStyle(modalEl, 'height', position.height);
+      this.modal.calcBodyHeight();
     }
   }
 
