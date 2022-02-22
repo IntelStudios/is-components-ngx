@@ -80,8 +80,6 @@ export interface IsModalMovableConfig extends IsModalConfig {
    * initial position of modal, if not set, modal is centered to screen
    */
   position?: Partial<{
-    height: string;
-    width: string;
     left: string;
     top: string;
   }>;

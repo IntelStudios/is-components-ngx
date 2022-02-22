@@ -47,13 +47,9 @@ export class IsModalMovableComponent implements OnInit, AfterViewInit, IsModalMo
   ngAfterViewInit(): void {
     if (this.control.config?.position) {
       const modalEl = this.el.nativeElement.querySelector('div.ui-modal') as HTMLDivElement;
-      console.log(modalEl);
       const { position } = this.control.config;
       this.renderer.setStyle(modalEl, 'top', position.top);
       this.renderer.setStyle(modalEl, 'left', position.left);
-      this.renderer.setStyle(modalEl, 'width', position.width);
-      this.renderer.setStyle(modalEl, 'height', position.height);
-      this.modal.calcBodyHeight();
     }
   }
 

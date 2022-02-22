@@ -147,7 +147,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       template: ref,
       title: 'Modal Title',
       cssClass: 'modal-lg',
-      position: { top: '10%', left: '100px', height: '70vh' },
+      position: { top: '10%', left: '100px' },
       buttonsLeft: [
         {
           title: 'Just a button',
