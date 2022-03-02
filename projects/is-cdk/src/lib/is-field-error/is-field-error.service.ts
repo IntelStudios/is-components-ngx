@@ -94,6 +94,13 @@ export class IsFieldErrorFactory {
     return { minMaxNumber: error };
   }
 
+  static minDateError(minDate: string, actual: string) {
+    const error: IsFieldError = new IsFieldError('minDate', false).withPriority(20);
+    error.params = { requiredMin: minDate, actual };
+
+    return { minDate: error };
+  }
+
   static maxFileSizeError(maxSize: string) {
     const error: IsFieldError = new IsFieldError('maxFileSize', false).withPriority(20);
     error.params = { maxSize: maxSize };
