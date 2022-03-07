@@ -78,11 +78,6 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   * Implemented as part of ControlValueAccessor.
   */
   writeValue(value: string | Date): void {
-    if (!value) {
-      this.timeValue = null;
-      this.viewValue = '';
-      return;
-    }
     this.setValue(value);
   }
 
