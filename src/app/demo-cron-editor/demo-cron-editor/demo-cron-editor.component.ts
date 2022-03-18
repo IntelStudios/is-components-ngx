@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
+import { CronState } from 'projects/is-cron-editor/src/public_api';
 
 @Component({
   selector: 'app-demo-cron-editor',
@@ -19,6 +20,8 @@ export class DemoCronEditorComponent implements OnInit {
   cronControl = new FormControl();
   randomExtensionSwitch = false;
 
+  fixedState?: CronState = undefined;
+
   constructor() {
   }
 
@@ -33,5 +36,9 @@ export class DemoCronEditorComponent implements OnInit {
 
   nullIt() {
     this.cronControl.setValue(null);
+  }
+
+  switchFixedState() {
+    this.fixedState = this.fixedState ? undefined : {minutes: '0'};
   }
 }

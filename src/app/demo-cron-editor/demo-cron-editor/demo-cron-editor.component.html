@@ -6,10 +6,11 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-cron-editor [formControl]="cronControl" [allowRandom]="randomExtensionSwitch"></is-cron-editor>
+    <is-cron-editor [formControl]="cronControl" [allowRandom]="randomExtensionSwitch" [fixedState]="fixedState"></is-cron-editor>
   </div>
   <div class="col-sm-6">
     <button class="btn btn-primary" (click)="runOnChristmas()">Run on Christmas dinner</button>
+    <button class="btn btn-primary" (click)="switchFixedState()">Switch fixed zero minutes</button>
     <button class="btn btn-primary" (click)="nullIt()">Set to null</button>
     <button class="btn btn-primary"
             (click)="randomExtensionSwitch = !randomExtensionSwitch">

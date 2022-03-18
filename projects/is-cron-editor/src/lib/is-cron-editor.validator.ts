@@ -1,6 +1,7 @@
 // noinspection DuplicatedCode
 
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
+import { CronState } from './is-cron-editor.models';
 
 /**
  * Maps an array of strings into numbers, throwing an Error if some element was not a number
@@ -18,7 +19,7 @@ export function mapNumbers(array: any[]): number[] {
   return a2;
 }
 
-export function cronExpressionValidator(allowRandomExpressions = false): ValidatorFn {
+export function cronExpressionValidator(allowRandomExpressions = false, fixedState?: CronState): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.value || !control.value.length) {
       return null;
@@ -40,6 +41,15 @@ export function cronExpressionValidator(allowRandomExpressions = false): Validat
         dayOfWeek: cronParts[5].trim().toUpperCase(),
         years: cronParts.length === 6 ? null : cronParts[6].trim()
       };
+
+      if (fixedState) {
+        for (const key of Object.keys(fixedState)) {
+          if (fixedState[key] !== cronState[key]) {
+            // noinspection ExceptionCaughtLocallyJS
+            throw Error(`state ${key} is fixed to ${fixedState[key]}`);
+          }
+        }
+      }
 
       for (const k of Object.keys(cronState)) {
         if (cronState[k] !== null && !cronState[k].length) {

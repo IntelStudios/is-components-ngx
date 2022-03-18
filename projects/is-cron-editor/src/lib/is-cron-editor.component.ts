@@ -6,11 +6,13 @@ import {
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
-  Validator, ValidatorFn
+  Validator,
+  ValidatorFn
 } from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {cronExpressionValidator, mapNumbers} from './is-cron-editor.validator';
+import { CronState } from './is-cron-editor.models';
 
 // noinspection DuplicatedCode
 @Component({
@@ -45,7 +47,6 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
   private _allowRandom = false;
 
-  cronValidator: ValidatorFn;
 
   constructor() {
   }
@@ -201,7 +202,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     ],
   };
 
-  cronState = {
+  cronState: CronState = {
     seconds: '0',
     minutes: '0',
     hours: '*',
@@ -211,14 +212,37 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     years: '*',
   };
 
+  cronValidator: ValidatorFn = cronExpressionValidator();
+
   @Input() value: string;
   @Output() private valueChange = this.cronExpressionControl.valueChanges;
+
+  /**
+   * By setting a fixed state to a defined value, every defined member of the value will be required to match the cron state.
+   * If fixed state is not the same as current state then validation error is raised.
+   * @param value undefined to disable, pass a CronState object to set required values for every field
+   * @example
+   * fixedState = {minutes: '0'} // will fail validation of minutes is set to anything other than '0', seconds can be anything
+   */
+  @Input()
+  set fixedState(value: CronState | undefined) {
+    this._fixedState = value;
+    this.cronValidator = cronExpressionValidator(this._allowRandom, value);
+    if (this.validatorOnChangeFn) {
+      this.validatorOnChangeFn();
+    }
+  }
+
+  get fixedState(): CronState | undefined {
+    return this._fixedState;
+  }
 
   onTouched: Function;
   private _changeSubscription: Subscription = null;
   private _value: string;
   private _ignore_reading = false;
   private validatorOnChangeFn: Function = null;
+  private _fixedState?: CronState;
 
   ngOnInit() {
     for (let i = 0; i < 60; i++) {
@@ -237,14 +261,12 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     this.setRandomAbleValues();
 
     this.subscribeToForms();
-
     this.setDefaults();
     if (this.value) {
       this.writeValue(this.value);
     } else {
       this.readState();
     }
-
     this.cronExpressionControl.valueChanges.pipe(debounceTime(500)).subscribe((val) => this.parseState(val));
   }
 
@@ -949,7 +971,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       [...this._daySelectTypeValues, {ID: 6, Value: 'Random day of month between'}, {ID: 17, Value: 'Random day of week between'}]
       : this._daySelectTypeValues;
 
-    this.cronValidator = cronExpressionValidator(this._allowRandom);
+    this.cronValidator = cronExpressionValidator(this._allowRandom, this.fixedState);
   }
 
   registerOnChange(fn: (_: any) => {}): void {

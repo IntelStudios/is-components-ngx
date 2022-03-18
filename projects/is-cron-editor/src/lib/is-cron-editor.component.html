@@ -2,7 +2,7 @@
 <input [formControl]="cronExpressionControl" class="form-control is-input cron-expression" type="text">
 
 <is-tabset (click)="onTouched()" class="tabbable-custom">
-  <is-tab title="Seconds">
+  <is-tab *ngIf="!fixedState?.seconds" title="Seconds">
     <ng-template TabContent>
       <is-select [formControl]="formControl.seconds.type" [items]="randomAbleSelectTypeValues"
                  [isSearch]="false"></is-select>
@@ -50,7 +50,7 @@
       </div>
     </ng-template>
   </is-tab>
-  <is-tab title="Minutes">
+  <is-tab *ngIf="!fixedState?.minutes" title="Minutes">
     <ng-template TabContent>
       <is-select [formControl]="formControl.minutes.type" [items]="randomAbleSelectTypeValues"
                  [isSearch]="false"></is-select>
@@ -98,7 +98,7 @@
       </div>
     </ng-template>
   </is-tab>
-  <is-tab title="Hours">
+  <is-tab *ngIf="!fixedState?.hours" title="Hours">
     <ng-template TabContent>
       <is-select [formControl]="formControl.hours.type" [items]="defaultSelectTypeValues"
                  [isSearch]="false"></is-select>
@@ -146,7 +146,7 @@
       </div>
     </ng-template>
   </is-tab>
-  <is-tab title="Days">
+  <is-tab *ngIf="!fixedState?.dayOfMonth && !fixedState?.dayOfWeek" title="Days">
     <ng-template TabContent>
       <is-select [formControl]="formControl.days.type" [items]="daySelectTypeValues" [isSearch]="false"></is-select>
       <div class="sub-content" *ngIf="formControl.days.type.value === 3">
@@ -271,7 +271,7 @@
       </div>
     </ng-template>
   </is-tab>
-  <is-tab title="Months">
+  <is-tab *ngIf="!fixedState?.months" title="Months">
     <ng-template TabContent>
       <is-select [formControl]="formControl.months.type" [items]="defaultSelectTypeValues"
                  [isSearch]="false"></is-select>
@@ -319,7 +319,7 @@
       </div>
     </ng-template>
   </is-tab>
-  <is-tab title="Year">
+  <is-tab *ngIf="!fixedState?.years" title="Year">
     <ng-template TabContent>
       <is-select [formControl]="formControl.years.type" [items]="defaultSelectTypeValues"></is-select>
       <div class="sub-content" *ngIf="formControl.years.type.value === 2">
