@@ -18,6 +18,12 @@ is-froala {
 
   border-radius: $is-general-border-radius;
 
+  // workaround forala video icon name
+  i.fa-video-camera {
+    &::before {
+      content: "\f03d";
+    }
+  }
   &.ng-invalid {
     @include is-input-invalid();
   }
