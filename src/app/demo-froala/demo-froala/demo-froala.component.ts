@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-demo-froala',
@@ -64,7 +65,7 @@ npm install --save froala-editor at.js font-awesome</pre>
 
   readonly froalaTheme = document.body.classList.contains('is-theme-dark') ? 'dark' : null;
 
-  froalaConfig: any = { id: 1 };
+  froalaConfig: any = { id: 1, intellisense: of([{ Code: 'help', Label: 'Help me', Description: 'Help me'}]) };
   froalaConfigGerman = { id: 2 };
 
   control: FormControl = new FormControl();
