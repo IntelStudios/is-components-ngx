@@ -554,8 +554,17 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
         .atwho(this._atJsConfig)
         .on('inserted.atwho', () => {
           // we need to edit also text, which was added by autocomplete
-          this.editor.$el.find('.atwho-inserted').removeAttr('contenteditable').removeAttr('data-atwho-at-query');
-        })
+          // at.js generates stupid <span ...>&nbsp; .. get rid of those
+          const span = this.editor.$el.find('.atwho-inserted')[0] as HTMLSpanElement;
+          if (span) {
+            const parent = span.parentElement;
+            const text = this.editor.$doc[0].createTextNode(span.innerText);
+            parent.insertBefore(text, span);
+            // remove &nbsp;
+            span.nextSibling?.remove();
+            span.remove();
+          }
+        });
 
       this.editor.events.on('keydown', (e) => {
         if (e.which == $.FroalaEditor.KEYCODE.ENTER && this.editor.$el.atwho('isSelecting')) {
