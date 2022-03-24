@@ -28,6 +28,7 @@ import {
   IIsFroalaOptions,
   IntellisenseSuggestion,
   IsFroalaConfig,
+  IsFroalaRemoteCommand,
 } from './is-froala.interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { IsFroalaService } from './is-froala.service';
@@ -212,8 +213,10 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
     // jquery wrap and store element
     this._$element = (<any>$(this.el.nativeElement));
     this.service.onCommand()
-      .subscribe({
-        next: (cmd) => {
+      .pipe(
+        takeUntil(this.ends$),
+      ).subscribe({
+        next: (cmd: IsFroalaRemoteCommand) => {
           if (cmd.type === 'close-codeview' && this._htmlEditorActive) {
             this.editor.commands.exec('html');
           }
@@ -586,3 +589,7 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
   }
 
 }
+function takeUntil(ends$: Subject<unknown>): any {
+  throw new Error('Function not implemented.');
+}
+
