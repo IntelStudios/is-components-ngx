@@ -12,7 +12,7 @@ import { DemoFroalaComponent } from './demo-froala/demo-froala.component';
 @NgModule({
   declarations: [DemoFroalaComponent],
   imports: [
-    CommonModule, IsFroalaModule, ReactiveFormsModule, IsCoreUIModule, IsCdkModule,
+    CommonModule, IsFroalaModule.forRoot({ getLicense: () => ''}), ReactiveFormsModule, IsCoreUIModule, IsCdkModule,
   ]
 })
 export class DemoFroalaModule { }

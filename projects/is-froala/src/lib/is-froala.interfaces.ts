@@ -47,6 +47,11 @@ export interface IIsFroalaOptions {
   language?: string;
 }
 
+export type IsFroalaCommandType = 'close-codeview'
+export interface IsFroalaRemoteCommand {
+  type: IsFroalaCommandType;
+}
+
 export class IsFroalaOptions {
 
   static stylesStripped(): IIsFroalaOptions {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { IsFroalaService } from 'projects/is-froala/src/lib/is-froala.service';
 import { of } from 'rxjs';
 
 @Component({
@@ -72,7 +73,7 @@ npm install --save froala-editor at.js font-awesome</pre>
 
   control1: FormControl = new FormControl();
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer, private froalaService: IsFroalaService) { }
 
   html = `<style>
 	body {
@@ -95,6 +96,11 @@ npm install --save froala-editor at.js font-awesome</pre>
 
   onFroalaCommand($event) {
     console.log($event);
+  }
+
+  closeHtmlEditor() {
+    this.froalaService.executeRemoteCommand({ type: 'close-codeview'});
+    console.log(this.control.value);
   }
 
   toggleDisabled() {

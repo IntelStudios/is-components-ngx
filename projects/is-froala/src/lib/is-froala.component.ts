@@ -18,9 +18,9 @@ import {
   SecurityContext,
   ViewEncapsulation,
 } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 import {
   FroalaCommand,
@@ -32,6 +32,7 @@ import {
 } from './is-froala.interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { IsFieldErrorFactory } from '@intelstudios/cdk';
+import { IsFroalaService } from './is-froala.service';
 
 declare var $: any;
 
@@ -82,23 +83,17 @@ const IS_FROALA_EDITOR_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-const IS_FROALA_EDITOR_VALIDATORS: any = {
-  provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => IsFroalaComponent),
-  multi: true
-}
-
 export const configToken = new InjectionToken<IsFroalaConfig>('IsFroalaConfig');
 
 @Component({
   selector: 'is-froala',
   templateUrl: 'is-froala.component.html',
-  providers: [IS_FROALA_EDITOR_VALUE_ACCESSOR, IS_FROALA_EDITOR_VALIDATORS],
+  providers: [IS_FROALA_EDITOR_VALUE_ACCESSOR],
   styleUrls: ['./is-froala.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class IsFroalaComponent implements ControlValueAccessor, Validator, OnInit, AfterViewInit, OnDestroy {
+export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
   // content of the editor
   value: string;
@@ -182,8 +177,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     }
   }
 
-  @Input()
-  codeviewActiveValidationError: any = IsFieldErrorFactory.codeViewIsActiveWarning();
+  private ends$: Subject<unknown> = new Subject();
 
   @Input()
   licenseKey: string;
@@ -232,6 +226,7 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
     private changeDetector: ChangeDetectorRef,
     private el: ElementRef,
     private zone: NgZone,
+    private service: IsFroalaService,
     private sanitizer: DomSanitizer,
     private translate: TranslateService) {
     if (!froalaConfig) {
@@ -247,13 +242,22 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   ngOnInit() {
     // jquery wrap and store element
     this._$element = (<any>$(this.el.nativeElement));
+    this.service.onCommand()
+      .subscribe({
+        next: (cmd) => {
+          if (cmd.type === 'close-codeview' && this._htmlEditorActive) {
+            this.editor.commands.exec('html');
+          }
+        },
+      });
   }
 
   ngOnDestroy() {
     if (this._intellisenseSub) {
       this._intellisenseSub.unsubscribe();
     }
-
+    this.ends$.next(null);
+    this.ends$.complete();
     this.destroyEditor();
   }
 
@@ -294,15 +298,6 @@ export class IsFroalaComponent implements ControlValueAccessor, Validator, OnIni
   registerOnChange(fn: (_: any) => void): void { this.onChange = fn; }
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
   // End ControlValueAccesor methods
-
-  // Begin Validators methods
-  validate(c: AbstractControl) {
-    return this._htmlEditorActive ? this.codeviewActiveValidationError : null;
-  }
-
-  registerOnValidatorChange(fn: any) {
-    this.onValidatorChangeFn = fn;
-  }
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;

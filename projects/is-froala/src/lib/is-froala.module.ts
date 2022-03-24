@@ -4,6 +4,7 @@ import { IsCdkModule } from '@intelstudios/cdk';
 
 import { IsFroalaComponent, configToken } from './is-froala.component';
 import { IsFroalaConfig } from './is-froala.interfaces';
+import { IsFroalaService } from './is-froala.service';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ export class IsFroalaModule {
     return {
       ngModule: IsFroalaModule,
       providers: [
-        { provide: configToken, useValue: config }
+        { provide: configToken, useValue: config },
+        IsFroalaService,
       ]
     }
   }
