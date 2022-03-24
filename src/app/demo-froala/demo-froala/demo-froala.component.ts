@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { IsFroalaService } from 'projects/is-froala/src/lib/is-froala.service';
 
 @Component({
   selector: 'app-demo-froala',
@@ -42,7 +43,7 @@ npm install --save froala-editor font-awesome</pre>
 
   control: FormControl = new FormControl();
 
-  constructor() { }
+  constructor(private froalaService: IsFroalaService) { }
 
   html: string = '<p style="padding: 3px; border: 1px solid blue;">Hello how are you</p>';
 
@@ -51,6 +52,11 @@ npm install --save froala-editor font-awesome</pre>
 
   onFroalaCommand($event) {
     console.log($event);
+  }
+
+  closeHtmlEditor() {
+    this.froalaService.executeRemoteCommand({ type: 'close-codeview'});
+    console.log(this.control.value);
   }
 
   toggleDisabled() {

@@ -9,6 +9,7 @@
   <div class="col-sm-12">
     <is-froala [options]="froalaConfig" [formControl]="control" (onCommand)="onFroalaCommand($event)"></is-froala>
   </div>
+  <button (click)="closeHtmlEditor()">Remote Command: Close codeview</button>
 </div>
 <div class="row">
   <div class="col-sm-12">
