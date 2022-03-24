@@ -47,7 +47,7 @@
     "codemirror": "^5.43.0",
     "core-js": "^2.6.5",
     "font-awesome": "^4.7.0",
-    "froala-editor": "^3.0.4",
+    "froala-editor": "^2.8.5",
     "is-text-utils": "https://github.com/IntelStudios/is-text-utils/raw/master/package/is-text-utils-1.0.3.tgz",
     "moment": "^2.24.0",
     "ngx-bootstrap": "^4.3.0",
