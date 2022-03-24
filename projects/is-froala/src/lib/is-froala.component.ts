@@ -243,6 +243,9 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
     // jquery wrap and store element
     this._$element = (<any>$(this.el.nativeElement));
     this.service.onCommand()
+      .pipe(
+        takeUntil(this.ends$),
+      )
       .subscribe({
         next: (cmd) => {
           if (cmd.type === 'close-codeview' && this._htmlEditorActive) {
@@ -675,3 +678,7 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
     this._htmlEventListeners.push({ element, type, callback });
   }
 }
+function takeUntil(ends$: Subject<unknown>): any {
+  throw new Error('Function not implemented.');
+}
+
