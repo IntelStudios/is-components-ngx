@@ -4,3 +4,4 @@
 export * from './lib/is-froala.interfaces';
 export * from './lib/is-froala.component';
 export * from './lib/is-froala.module';
+export * from './lib/is-froala.service';
