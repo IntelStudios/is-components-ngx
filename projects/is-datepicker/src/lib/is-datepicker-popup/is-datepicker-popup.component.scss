@@ -2,7 +2,13 @@
 @import '../../../../styles/variables';
 
 is-datepicker-popup {
-
+  position: absolute;
+  top: 4px;
+  display: block;
+  &.is-datepicker-popup-dropup {
+    top: initial;
+    bottom: 4px;
+  }
   // dropdown container style
   .bs-datepicker {
     box-shadow: none;
