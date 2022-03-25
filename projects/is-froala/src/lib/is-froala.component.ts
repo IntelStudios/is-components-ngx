@@ -29,6 +29,7 @@ import {
   IIsFroalaOptions,
   IntellisenseSuggestion,
   IsFroalaConfig,
+  IsFroalaRemoteCommand,
 } from './is-froala.interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { IsFieldErrorFactory } from '@intelstudios/cdk';
@@ -247,7 +248,7 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
         takeUntil(this.ends$),
       )
       .subscribe({
-        next: (cmd) => {
+        next: (cmd: IsFroalaRemoteCommand) => {
           if (cmd.type === 'close-codeview' && this._htmlEditorActive) {
             this.editor.commands.exec('html');
           }
