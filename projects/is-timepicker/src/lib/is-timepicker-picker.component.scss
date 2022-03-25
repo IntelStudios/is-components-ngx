@@ -2,6 +2,14 @@
 @import '../../../styles/variables';
 
 is-timepicker-picker {
+  position: absolute;
+  display: block;
+  top: 4px;
+  right: 0;
+  &.is-timepicker-popup-dropup {
+    top: initial;
+    bottom: 4px;
+  }
   .ng-timepicker {
     background-color: $is-control-bg-color;
     padding: $is-general-padding;
