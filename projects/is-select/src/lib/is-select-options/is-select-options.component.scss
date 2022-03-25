@@ -5,11 +5,13 @@
 :host {
   display: block;
   width: 100%;
+  padding-left: 1px;
+  padding-right: 1px;
 
   &.is-select-options-dropup {
     >.ui-select-choices-container {
-      border-bottom: none;
-      border-top: 2px solid;
+      bottom: 4px;
+      top: initial;
       > .ui-select-search {
         order: 1;
       }
@@ -23,17 +25,6 @@
     }
   }
 
-  &.is-select-overflow-width {
-    >.ui-select-choices-container {
-      border-top: 2px solid;
-    }
-
-    &.is-select-options-dropup {
-      >.ui-select-choices-container {
-        border-bottom: 2px solid;
-      }
-    }
-  }
 
   .ui-select-choices-container {
     width: 100%;
@@ -43,15 +34,13 @@
     display: flex;
     flex-flow: column;
     left: initial;
-    top: initial;
+    top: 4px;
     position: relative;
-    border-width: 2px;
-    border-style: solid;
+    border: 1px solid var(--is-control-border-focus-color);
+    @include is-input-active;
     &:before, &:after {
       content: none;
     }
-    border-color: var(--is-control-border-focus-color);
-    border-top: none;
     padding: $is-general-padding-small 0px;
 
     >.ui-select-search {
@@ -62,6 +51,7 @@
         color: $is-control-fg-color;
         background-color: $is-select-search-bg-color;
         border: none;
+        padding-left: 0;
       }
       > i {
         color: $is-control-handle-color;

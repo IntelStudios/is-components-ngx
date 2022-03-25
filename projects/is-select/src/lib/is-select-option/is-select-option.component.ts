@@ -32,6 +32,8 @@ export class IsSelectOptionComponent implements OnInit {
   isActive$: Observable<boolean>;
   isSelected$: Observable<boolean>;
 
+  dividers: unknown[];
+
   @HostBinding('class.multiple')
   multiple: boolean;
 
@@ -41,6 +43,7 @@ export class IsSelectOptionComponent implements OnInit {
     this.multiple = !!this.control.multipleConfig;
     this.isActive$ = this.optionsService.isActive(this.option);
     this.isSelected$ = this.optionsService.isSingleValueSelected(this.option);
+    this.dividers = new Array(this.level + 1);
   }
 
   selectActive() {

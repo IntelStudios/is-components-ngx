@@ -140,7 +140,6 @@ $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);
     &.open {
       >.ui-select-match {
         @include is-input-active;
-        border-bottom-color: $is-select-search-bg-color;
       }
 
     }

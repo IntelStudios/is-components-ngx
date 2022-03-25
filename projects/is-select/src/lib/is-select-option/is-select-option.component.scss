@@ -4,6 +4,24 @@
 is-select-option {
   display: block;
 
+  .dropdown-header {
+    display: flex;
+    align-items: center;
+    flex-flow: row;
+    gap: 4px;
+    font-size: 12px;
+    color: $is-select-item-group-color;
+    padding: 0 $is-general-padding-small;
+    > .group-divider {
+      background-color: $is-select-item-group-divider-color;
+      height: 1px;
+      min-width: $is-general-padding-small;
+      &.end {
+        flex: 1;
+      }
+    }
+  }
+
   &.multiple {
     .ui-select-choices-row {
       > a {
@@ -21,7 +39,9 @@ is-select-option {
     text-align: right;
     .ui-select-choices-row {
       &.active {
-        transform: translateX(-4px);
+        > a > div {
+          transform: translateX(-4px);
+        }
       }
     }
   }
@@ -31,24 +51,28 @@ is-select-option {
   &.left {
     .ui-select-choices-row {
       &.active {
-        transform: translateX(4px);
+        > a > div {
+          transform: translateX(4px);
+        }
+
       }
     }
   }
 
   .ui-select-choices-row {
-    padding: 0px $is-general-padding-small;
-    transition: transform 0.15s;
     >a {
       display: block;
       padding: 4px $is-general-padding-small;
+      
       clear: both;
       font-weight: 400;
       line-height: 1.42857143;
       color: $is-control-fg-color;
       text-decoration: none;
       cursor: pointer;
-
+      > div {
+        transition: transform 0.15s;
+      }
       > .item-desc {
         color: $is-select-item-desc-fg-color;
         font-size: 10px;
