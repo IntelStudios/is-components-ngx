@@ -32,6 +32,7 @@ import {
 } from './is-froala.interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { IsFroalaService } from './is-froala.service';
+import { takeUntil } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -588,8 +589,5 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
     }
   }
 
-}
-function takeUntil(ends$: Subject<unknown>): any {
-  throw new Error('Function not implemented.');
 }
 
