@@ -1,16 +1,16 @@
 {
   "name": "@intelstudios/timepicker",
-  "version": "11.0.5",
+  "version": "13.0.0",
   "dependencies": {
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/common": "^11.2.0",
-    "@angular/core": "^11.2.0",
+    "@angular/common": "^13.3.1",
+    "@angular/core": "^13.3.1",
     "moment": "^2.24.0",
-    "ngx-bootstrap": "^7.1.2",
-    "@angular/cdk":"^11.2.0",
-    "@intelstudios/cdk": "^11.0.5",
-    "ngx-mask": "^11.1.5"
+    "ngx-bootstrap": "^8.0.0",
+    "@angular/cdk":"^13.3.2",
+    "@intelstudios/cdk": "^13.0.0",
+    "ngx-mask": "^13.1.4"
   }
 }

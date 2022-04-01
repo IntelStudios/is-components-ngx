@@ -15,6 +15,9 @@
       font-weight: bold;
       border: none;
       background-color: transparent;
+      &:focus {
+        box-shadow: none;
+      }
     }
     .input-group-addon {
       padding-right: 8px;

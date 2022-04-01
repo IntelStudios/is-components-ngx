@@ -12,13 +12,12 @@ import { configToken, IsDatepickerConfig } from './is-datepicker.interfaces';
 import { IsDatepickerComponent } from './is-datepicker/is-datepicker.component';
 
 @NgModule({
-  imports: [
-    CommonModule, BsDatepickerModule, ReactiveFormsModule, OverlayModule, ScrollingModule, NgxMaskModule.forRoot(), IsCdkModule,
-  ],
-  providers: [DatePipe],
-  declarations: [IsDatepickerComponent, IsDatepickerPopupComponent, IsDatepickerInlineComponent],
-  exports: [IsDatepickerComponent, IsDatepickerInlineComponent],
-  entryComponents: [IsDatepickerPopupComponent]
+    imports: [
+        CommonModule, BsDatepickerModule, ReactiveFormsModule, OverlayModule, ScrollingModule, NgxMaskModule.forRoot(), IsCdkModule,
+    ],
+    providers: [DatePipe],
+    declarations: [IsDatepickerComponent, IsDatepickerPopupComponent, IsDatepickerInlineComponent],
+    exports: [IsDatepickerComponent, IsDatepickerInlineComponent]
 })
 export class IsDatepickerModule {
   static forRoot(config?: IsDatepickerConfig): ModuleWithProviders<IsDatepickerModule> {

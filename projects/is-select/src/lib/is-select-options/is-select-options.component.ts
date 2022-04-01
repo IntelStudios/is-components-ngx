@@ -7,25 +7,8 @@ import { createFilterRegexp } from '@intelstudios/text-utils';
 import { configToken, IsSelectConfig, IsSelectMultipleConfig } from '../is-select.interfaces';
 import { IsSelectOptionsService } from '../is-select.options.service';
 import { Inject } from '@angular/core';
+import { ISelectOptionsControl } from '../is-select.internal.interfaces';
 
-export interface ISelectOptionsControl {
-  active: SelectItem | SelectItem[];
-  optionTemplate: IsSelectOptionDirective;
-  searchPlaceholder: string;
-  options: SelectItem[];
-  alignItems: 'left' | 'right';
-  alignment: 'left' | 'right' | 'center';
-  minLoadChars: number;
-  isGroupOptions: boolean;
-  isSearch: boolean;
-  multipleConfig: IsSelectMultipleConfig;
-  onClosed: () => void;
-  onLoadOptions: (filter: string) => void;
-  onItemSelected: (item: SelectItem) => void;
-  onItemUnselected: (item: SelectItem) => void;
-  onItemsSelected: () => void;
-  onItemsDeselected: () => void;
-}
 
 @Component({
   selector: 'is-select-options',

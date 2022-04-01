@@ -11,12 +11,11 @@ import { Overlay } from '@angular/cdk/overlay';
 import { IsModalService } from './is-modal.service';
 
 @NgModule({
-  imports: [
-    CommonModule, ModalModule, ModalLibModule, TranslateModule, ScrollingModule
-  ],
-  declarations: [IsModalComponent, IsModalMovableComponent],
-  exports: [IsModalComponent, IsModalMovableComponent],
-  providers: [IsModalMovableService, Overlay, IsModalService],
-  entryComponents: [IsModalComponent, IsModalMovableComponent]
+    imports: [
+        CommonModule, ModalModule, ModalLibModule, TranslateModule, ScrollingModule
+    ],
+    declarations: [IsModalComponent, IsModalMovableComponent],
+    exports: [IsModalComponent, IsModalMovableComponent],
+    providers: [IsModalMovableService, Overlay, IsModalService]
 })
 export class IsModalModule { }

@@ -5,6 +5,6 @@ const exec = require('child_process').execSync;
 console.info(`Building local modules ${modules.length}`);
 modules.forEach(m => {
   console.info(`Building: ${m}`);
-  exec(`ng build ${m} --prod`);
+  exec(`ng build ${m} --configuration production`);
 });
 console.info('Finished');

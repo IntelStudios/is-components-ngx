@@ -9,11 +9,10 @@ import { ModalModule as ModalLibModule } from 'ng-modal-lib';
 import { DemoModalMovableComponent } from './demo-modal/demo-modal-movable.component';
 
 @NgModule({
-  declarations: [DemoModalComponent, DemoModalMovableComponent],
-  imports: [
-    CommonModule, IsModalModule, ModalLibModule, ModalModule.forRoot()
-  ],
-  entryComponents: [ DemoModalMovableComponent]
+    declarations: [DemoModalComponent, DemoModalMovableComponent],
+    imports: [
+        CommonModule, IsModalModule, ModalLibModule, ModalModule.forRoot()
+    ]
 })
 export class DemoModalModule { }
 

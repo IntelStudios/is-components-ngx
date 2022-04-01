@@ -15,7 +15,7 @@
 @import '../node_modules/at.js/dist/css/jquery.atwho.min.css';
 // import angular/cdk styles, but override overlay z-index
 // to work with bootstrap overlay z-index
-@import "~@angular/cdk/overlay";
+@import "../node_modules/@angular/cdk/overlay/index";
 $cdk-z-index-overlay-container: 1055;
 $cdk-z-index-overlay: 1055;
 $cdk-z-index-overlay-bakcdrop: 1055;
@@ -25,7 +25,7 @@ $cdk-z-index-overlay-bakcdrop: 1055;
 
 @import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
 
-@import "bootstrap";
+@import "bootstrap/dist/css/bootstrap.css";
 
 body {
   background-color: #fff;

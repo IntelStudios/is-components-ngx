@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation, Input, T
 import { SelectItem } from '../select-item';
 import { IsSelectOptionsService } from '../is-select.options.service';
 import { Observable } from 'rxjs';
-import { ISelectOptionsControl } from '../is-select-options/is-select-options.component';
+import { ISelectOptionsControl } from '../is-select.internal.interfaces';
 
 @Component({
   selector: 'is-select-option',

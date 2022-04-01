@@ -1,19 +1,19 @@
 {
   "name": "@intelstudios/core-ui",
   "peerDependencies": {
-    "@angular/cdk": "^11.2.0",
-    "@angular/common": "^11.2.0",
-    "@angular/core": "^11.2.0",
-    "@angular/animations": "^11.2.0",
-    "@angular/router": "^11.2.0",
-    "@angular/platform-browser": "^11.2.0",
-    "@ngx-translate/core": "^13.0.0",
+    "@angular/cdk": "^13.3.2",
+    "@angular/common": "^13.3.1",
+    "@angular/core": "^13.3.1",
+    "@angular/animations": "^13.3.1",
+    "@angular/router": "^13.3.1",
+    "@angular/platform-browser": "^13.3.1",
+    "@ngx-translate/core": "^14.0.0",
     "moment": "^2.22.2",
-    "ngx-bootstrap": "^7.1.2",
-    "@intelstudios/cdk": "^11.0.5"
+    "ngx-bootstrap": "^8.0.0",
+    "@intelstudios/cdk": "^13.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
   },
-  "version": "11.0.3"
+  "version": "13.0.0"
 }

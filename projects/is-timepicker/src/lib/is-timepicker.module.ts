@@ -11,11 +11,10 @@ import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
 import { IsTimepickerComponent } from './is-timepicker.component';
 
 @NgModule({
-  imports: [
-    CommonModule, OverlayModule, TimepickerModule.forRoot(), FormsModule, ScrollingModule, ReactiveFormsModule, NgxMaskModule.forRoot(), IsCdkModule,
-  ],
-  declarations: [IsTimepickerComponent, IsTimepickerPickerComponent],
-  exports: [IsTimepickerComponent],
-  entryComponents: [IsTimepickerPickerComponent]
+    imports: [
+        CommonModule, OverlayModule, TimepickerModule.forRoot(), FormsModule, ScrollingModule, ReactiveFormsModule, NgxMaskModule.forRoot(), IsCdkModule,
+    ],
+    declarations: [IsTimepickerComponent, IsTimepickerPickerComponent],
+    exports: [IsTimepickerComponent]
 })
 export class IsTimepickerModule { }

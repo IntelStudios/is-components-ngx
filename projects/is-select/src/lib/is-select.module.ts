@@ -16,12 +16,11 @@ import { IsCdkModule } from '@intelstudios/cdk';
 
 
 @NgModule({
-  imports: [
-    CommonModule, OverlayModule, IsCoreUIModule, ScrollingModule, IsCdkModule,
-  ],
-  declarations: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent, IsSelectOptionsComponent, IsSelectOptionComponent],
-  exports: [ScrollingModule, IsSelectComponent, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent],
-  entryComponents: [IsSelectOptionsComponent]
+    imports: [
+        CommonModule, OverlayModule, IsCoreUIModule, ScrollingModule, IsCdkModule,
+    ],
+    declarations: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent, IsSelectOptionsComponent, IsSelectOptionComponent],
+    exports: [ScrollingModule, IsSelectComponent, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent]
 })
 export class IsSelectModule {
   static forRoot(config?: IsSelectConfig): ModuleWithProviders<IsSelectModule> {
