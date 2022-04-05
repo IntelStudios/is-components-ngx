@@ -3,6 +3,23 @@ export interface IsInputMappingInput {
   DataStructure: DataStructure;
 }
 
+export interface IsInputMappingValue {
+  // Mapping is always internally converted to the Map
+  InputSchemaMapping: Map<string, string> | { [id: string]: string };
+  InputSchemaFilter?: { [id: string]: IsInputSchemaFilter[] };
+}
+
+export interface IsInputSchemaFilter {
+  Type: string;
+  Value: string;
+}
+
+export interface IsInputSchemaFilterStatus {
+  Path?: string;
+  Filters: IsInputSchemaFilter[];
+  EmmitChange: boolean;
+}
+
 export interface InputSchema {
   Name: string;
   DataType: number;
@@ -14,6 +31,7 @@ export interface DataStructure {
   Children: DataStructure[];
   Path: string;
   Name: string;
+  Description?: string;
   Type: number;
   DataType: number;
   InputColumns: string[];
@@ -23,4 +41,5 @@ export interface AssignStatus {
   Item: InputSchema;
   PaintedPath: number[];
   Path: string;
+  EmmitChange?: boolean;
 }

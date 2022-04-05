@@ -6,13 +6,24 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-  <is-input-mapping [data]="mock_tree_data" [formControl]="formControl"></is-input-mapping>
-</div>
-<div class="col-sm-6">
-  <span>Value: {{currentValue}}</span>
-</div>
+    <is-input-mapping [data]="currentDataset" [formControl]="formControl" [filtersAllowed]="filtersAllowed" [showOnlyFiltered]="showOnlyFiltered"></is-input-mapping>
+  </div>
   <div class="col-sm-6">
-  <button class="btn btn-primary" (click)="nullIt()">Select nothing</button>
+    <span>Value: {{currentValue}}</span>
+  </div>
+  <div class="col-sm-6">
+    <button class="btn btn-primary" (click)="nullIt()">Select nothing</button>
+    <button class="btn btn-primary" (click)="emptyMap()">Write empty map</button>
+    <button class="btn btn-primary" (click)="toggleDisabled()">Disable</button>
+    <button class="btn btn-primary" (click)="toggleShowOnlyFiltered()">Show only filtered</button>
     <button class="btn btn-primary" (click)="modified2Created()">Modified to Created</button>
-</div>
+    <button class="btn btn-primary" (click)="switchDataset()">Switch dataset</button>
+    <button class="btn btn-primary" (click)="deleteDataset()">Delete dataset</button>
+    <button class="btn btn-primary" (click)="filterFullpath()">Filter fullpath</button>
+    <button class="btn btn-primary" (click)="switchFilters()">Switch filters</button>
+    <button class="btn btn-primary" (click)="logState()">Log state</button>
+  </div>
+  <div class="col-sm-6">
+    <span>{{validationError}}</span>
+  </div>
 </div>
