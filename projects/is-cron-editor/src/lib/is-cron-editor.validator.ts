@@ -1,4 +1,7 @@
+// noinspection DuplicatedCode
+
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
+import { CronState } from './is-cron-editor.models';
 
 /**
  * Maps an array of strings into numbers, throwing an Error if some element was not a number
@@ -16,7 +19,7 @@ export function mapNumbers(array: any[]): number[] {
   return a2;
 }
 
-export function cronExpressionValidator(): ValidatorFn {
+export function cronExpressionValidator(allowRandomExpressions = false, fixedState?: CronState): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.value || !control.value.length) {
       return null;
@@ -39,6 +42,15 @@ export function cronExpressionValidator(): ValidatorFn {
         years: cronParts.length === 6 ? null : cronParts[6].trim()
       };
 
+      if (fixedState) {
+        for (const key of Object.keys(fixedState)) {
+          if (fixedState[key] !== cronState[key]) {
+            // noinspection ExceptionCaughtLocallyJS
+            throw Error(`state ${key} is fixed to ${fixedState[key]}`);
+          }
+        }
+      }
+
       for (const k of Object.keys(cronState)) {
         if (cronState[k] !== null && !cronState[k].length) {
           if (k === 'years') {
@@ -52,44 +64,106 @@ export function cronExpressionValidator(): ValidatorFn {
 
       // validate seconds
       if (cronState.seconds === '*') {
-      } else if (cronState.seconds.indexOf('/') > -1) {
-        mapNumbers(cronState.seconds.split('/'));
-      } else if (cronState.seconds.indexOf('-') > -1) {
-
-        mapNumbers(cronState.seconds.split('-'));
+        // OK state
+      } else  if (allowRandomExpressions && cronState.seconds === 'R') {
+        // OK state
       } else {
-        mapNumbers(cronState.seconds.split(','));
+        let { seconds } = cronState;
+        if (seconds.indexOf('/') > -1) {
+          const shiftedParts = seconds.split('/');
+          mapNumbers(shiftedParts[0]);
+          seconds = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && seconds.startsWith('R(') && seconds.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          seconds = seconds.substring(2, seconds.length - 1);
+        }
+        if (seconds.indexOf('-') > -1) {
+          mapNumbers(seconds.split('-'));
+        } else {
+          mapNumbers(seconds.split(','));
+        }
       }
 
       // validate minutes
       if (cronState.minutes === '*') {
-      } else if (cronState.minutes.indexOf('/') > -1) {
-        mapNumbers(cronState.minutes.split('/'));
-      } else if (cronState.minutes.indexOf('-') > -1) {
-
-        mapNumbers(cronState.minutes.split('-'));
+        // OK state
+      } else if (allowRandomExpressions && cronState.minutes === 'R') {
+        // OK state
       } else {
-        mapNumbers(cronState.minutes.split(','));
+        let { minutes } = cronState;
+        if (minutes.indexOf('/') > -1) {
+          const shiftedParts = minutes.split('/');
+          mapNumbers(shiftedParts[0]);
+          minutes = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && minutes.startsWith('R(') && minutes.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          minutes = minutes.substring(2, minutes.length - 1);
+        }
+        if (minutes.indexOf('-') > -1) {
+          mapNumbers(minutes.split('-'));
+        } else {
+          mapNumbers(minutes.split(','));
+        }
       }
 
       // validate hours
       if (cronState.hours === '*') {
-      } else if (cronState.hours.indexOf('/') > -1) {
-        mapNumbers(cronState.hours.split('/'));
-      } else if (cronState.hours.indexOf('-') > -1) {
-
-        mapNumbers(cronState.hours.split('-'));
+        // OK state
       } else {
-        mapNumbers(cronState.hours.split(','));
+        let { hours } = cronState;
+        if (hours.indexOf('/') > -1) {
+          const shiftedParts = hours.split('/');
+          mapNumbers(shiftedParts[0]);
+          hours = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && hours.startsWith('R(') && hours.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          hours = hours.substring(2, hours.length - 1);
+        }
+        if (hours.indexOf('-') > -1) {
+          mapNumbers(hours.split('-'));
+        } else {
+          mapNumbers(hours.split(','));
+        }
       }
 
       // validate days
       if (cronState.dayOfWeek === '*' && cronState.dayOfMonth === '?') {
       } else if (cronState.dayOfWeek === 'MON-FRI' && cronState.dayOfMonth === '?') {
-      } else if (cronState.dayOfWeek.indexOf('/') > -1) {
-        mapNumbers(cronState.dayOfWeek.split('/'));
-      } else if (cronState.dayOfMonth.indexOf('/') > -1) {
-        mapNumbers(cronState.dayOfMonth.split('/'));
+      } else if (cronState.dayOfMonth.indexOf('/') > -1 || cronState.dayOfMonth.indexOf('-') > -1 ) {
+        let { dayOfMonth } = cronState;
+        if (dayOfMonth.indexOf('/') > -1) {
+          const shiftedParts = dayOfMonth.split('/');
+          mapNumbers(shiftedParts[0]);
+          dayOfMonth = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && dayOfMonth.startsWith('R(') && dayOfMonth.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          dayOfMonth = dayOfMonth.substring(2, dayOfMonth.length - 1);
+        }
+        if (dayOfMonth.indexOf('-') > -1) {
+          mapNumbers(dayOfMonth.split('-'));
+        } else {
+          mapNumbers(dayOfMonth.split(','));
+        }
+      } else if (cronState.dayOfWeek.indexOf('/') > -1 || cronState.dayOfWeek.indexOf('-') > -1 ) {
+        let { dayOfWeek } = cronState;
+        if (dayOfWeek.indexOf('/') > -1) {
+          const shiftedParts = dayOfWeek.split('/');
+          mapNumbers(shiftedParts[0]);
+          dayOfWeek = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && dayOfWeek.startsWith('R(') && dayOfWeek.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          dayOfWeek = dayOfWeek.substring(2, dayOfWeek.length - 1);
+        }
+        if (dayOfWeek.indexOf('-') > -1) {
+          mapNumbers(dayOfWeek.split('-'));
+        } else {
+          mapNumbers(dayOfWeek.split(','));
+        }
       } else if (cronState.dayOfMonth === 'L') {
       } else if (cronState.dayOfMonth === 'LW') {
       } else if (cronState.dayOfWeek.endsWith('L')) {
@@ -100,31 +174,39 @@ export function cronExpressionValidator(): ValidatorFn {
         mapNumbers([cronState.dayOfMonth.substr(0, cronState.dayOfMonth.length - 1)]);
       } else if (cronState.dayOfWeek.indexOf('#') > -1) {
         mapNumbers(cronState.dayOfWeek.split('#'));
-      } else {
-        if (cronState.dayOfWeek.length > cronState.dayOfMonth.length) {
-          const mapIDtoShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+      } else if (cronState.dayOfWeek !== '?') {
+        const mapIDtoShort = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-          for (let day of cronState.dayOfWeek.split(',')) {
-            day = day.trim();
-            if (!day.length) {
-              continue;
-            }
-            const dayIndex = mapIDtoShort.indexOf(day);
-            if (dayIndex === -1) {
-              // noinspection ExceptionCaughtLocallyJS
-              throw Error('this day does not exist');
-            }
+        for (let day of cronState.dayOfWeek.split(',')) {
+          day = day.trim();
+          if (!day.length) {
+            continue;
+          }
+          if (mapIDtoShort.indexOf(day) === -1 && isNaN(Number(day))) {
+            // noinspection ExceptionCaughtLocallyJS
+            throw Error('this day does not exist');
           }
         }
       }
 
       // validate month
       if (cronState.months === '*') {
-      } else if (cronState.months.indexOf('/') > -1) {
-        mapNumbers(cronState.months.split('/'));
-      } else if (cronState.months.indexOf('-') > -1) {
-
-        mapNumbers(cronState.months.split('-'));
+      } else if ((cronState.months.indexOf('/') > -1) || cronState.months.indexOf('-') > -1) {
+        let { months } = cronState;
+        if (months.indexOf('/') > -1) {
+          const shiftedParts = months.split('/');
+          mapNumbers(shiftedParts[0]);
+          months = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && months.startsWith('R(') && months.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          months = months.substring(2, months.length - 1);
+        }
+        if (months.indexOf('-') > -1) {
+          mapNumbers(months.split('-'));
+        } else {
+          mapNumbers(months.split(','));
+        }
       } else {
         const mapIDtoShort = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
@@ -142,14 +224,24 @@ export function cronExpressionValidator(): ValidatorFn {
       }
 
       // validate years
-      if (cronState.years === null || cronState.years === '*') {
-      } else if (cronState.years.indexOf('/') > -1) {
-        mapNumbers(cronState.years.split('/'));
-      } else if (cronState.years.indexOf('-') > -1) {
-
-        mapNumbers(cronState.years.split('-'));
+      if (!cronState.years || cronState.years === '*') {
+        // OK state
       } else {
-        mapNumbers(cronState.years.split(','));
+        let { years } = cronState;
+        if (years.indexOf('/') > -1) {
+          const shiftedParts = years.split('/');
+          mapNumbers(shiftedParts[0]);
+          years = shiftedParts[1].trim();
+        }
+        if (allowRandomExpressions && years.startsWith('R(') && years.endsWith(')')) {
+          // transform R(1-50) => 1-50
+          years = years.substring(2, years.length - 1);
+        }
+        if (years.indexOf('-') > -1) {
+          mapNumbers(years.split('-'));
+        } else {
+          mapNumbers(years.split(','));
+        }
       }
       return null;
     } catch (e) {

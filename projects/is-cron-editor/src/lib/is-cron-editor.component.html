@@ -1,10 +1,10 @@
 <!--suppress HtmlFormInputWithoutLabel, AngularUndefinedTag, AngularUndefinedBinding -->
 <input [formControl]="cronExpressionControl" class="form-control is-input cron-expression" type="text">
 
-<is-tabset (click)="onTouched()">
-  <is-tab title="Seconds">
+<is-tabset (click)="onTouched()" class="tabbable-custom">
+  <is-tab *ngIf="!fixedState?.seconds" title="Seconds">
     <ng-template TabContent>
-      <is-select [formControl]="formControl.seconds.type" [items]="defaultSelectTypeValues"
+      <is-select [formControl]="formControl.seconds.type" [items]="randomAbleSelectTypeValues"
                  [isSearch]="false"></is-select>
       <div class="sub-content" *ngIf="formControl.seconds.type.value === '2'">
         <label>
@@ -33,11 +33,26 @@
                  min="{{formControl.seconds.between.start.value}}" max="59">
         </label>
       </div>
+      <div class="sub-content" *ngIf="formControl.seconds.type.value === '6'">
+        <label>
+          Run random second between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.between.start"
+                 min="0" max="60">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.between.end"
+                 min="{{formControl.seconds.between.start.value}}" max="59">
+        </label>
+        <label>
+          ; starting at second
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.seconds.everyX.staringAt"
+                 min="0" max="59">
+        </label>
+      </div>
     </ng-template>
   </is-tab>
-  <is-tab title="Minutes">
+  <is-tab *ngIf="!fixedState?.minutes" title="Minutes">
     <ng-template TabContent>
-      <is-select [formControl]="formControl.minutes.type" [items]="defaultSelectTypeValues"
+      <is-select [formControl]="formControl.minutes.type" [items]="randomAbleSelectTypeValues"
                  [isSearch]="false"></is-select>
       <div class="sub-content" *ngIf="formControl.minutes.type.value === '2'">
         <label>
@@ -66,11 +81,26 @@
                  min="{{formControl.minutes.between.start.value}}" max="59">
         </label>
       </div>
+      <div class="sub-content" *ngIf="formControl.minutes.type.value === '6'">
+        <label>
+          Run random minute between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.between.start"
+                 min="0" max="60">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.between.end"
+                 min="{{formControl.minutes.between.start.value}}" max="59">
+        </label>
+        <label>
+          ; starting at minute
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.minutes.everyX.staringAt"
+                 min="0" max="59">
+        </label>
+      </div>
     </ng-template>
   </is-tab>
-  <is-tab title="Hours">
+  <is-tab *ngIf="!fixedState?.hours" title="Hours">
     <ng-template TabContent>
-      <is-select [formControl]="formControl.hours.type" [items]="defaultSelectTypeValues"
+      <is-select [formControl]="formControl.hours.type" [items]="_defaultSelectTypeValues"
                  [isSearch]="false"></is-select>
       <div class="sub-content" *ngIf="formControl.hours.type.value === '2'">
         <label>
@@ -99,9 +129,24 @@
                  min="{{formControl.hours.between.start.value}}" max="23">
         </label>
       </div>
+      <div class="sub-content" *ngIf="formControl.hours.type.value === '6'">
+        <label>
+          Run random hour between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.hours.between.start"
+                 min="0" max="23">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.hours.between.end"
+                 min="{{formControl.hours.between.start.value}}" max="23">
+        </label>
+        <label>
+          ; starting at hour
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.hours.everyX.staringAt"
+                 min="0" max="23">
+        </label>
+      </div>
     </ng-template>
   </is-tab>
-  <is-tab title="Days">
+  <is-tab *ngIf="!fixedState?.dayOfMonth && !fixedState?.dayOfWeek" title="Days">
     <ng-template TabContent>
       <is-select [formControl]="formControl.days.type" [items]="daySelectTypeValues" [isSearch]="false"></is-select>
       <div class="sub-content" *ngIf="formControl.days.type.value === '3'">
@@ -123,7 +168,7 @@
                  min="1" max="31">th
         </label>
       </div>
-      <div class="sub-content" *ngIf="formControl.days.type.value === '5'">
+      <div class="sub-content" *ngIf="formControl.days.type.value === '14'">
         <!--suppress AngularInvalidExpressionResultType -->
         <is-select [multipleConfig]="isSelectMultiple" placeholder="Select days at which will this expression run"
                          [formControl]="formControl.days.specificDayOfWeek"
@@ -164,11 +209,71 @@
         </label>
         <is-select [items]="values.daysOfWeek" [formControl]="formControl.days.XthDay.day"></is-select>
       </div>
+      <div class="sub-content" *ngIf="formControl.days.type.value === '6'">
+        <label>
+          Run random day between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.start"
+                 min="0" max="31">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.end"
+                 min="{{formControl.days.between.start.value}}" max="31">
+        </label>
+        <label>
+          ; starting at day
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.everyX.staringAt"
+                 min="0" max="31">
+        </label>
+      </div>
+      <div class="sub-content" *ngIf="formControl.days.type.value === '15'">
+        <label>
+          Run every day of month between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.start"
+                 min="0" max="31">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.end"
+                 min="{{formControl.days.between.start.value}}" max="31">
+        </label>
+        <label>
+          ; starting at day
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.everyX.staringAt"
+                 min="0" max="31">
+        </label>
+      </div>
+      <div class="sub-content" *ngIf="formControl.days.type.value === '16'">
+        <label>
+          Run every day of week between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.start"
+                 min="0" max="6">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.end"
+                 min="{{formControl.days.between.start.value}}" max="6">
+        </label>
+        <label>
+          ; starting at day
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.everyX.staringAt"
+                 min="0" max="6">
+        </label>
+      </div>
+      <div class="sub-content" *ngIf="formControl.days.type.value === '17'">
+        <label>
+          Run random day of week between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.start"
+                 min="0" max="6">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.between.end"
+                 min="{{formControl.days.between.start.value}}" max="6">
+        </label>
+        <label>
+          ; starting at day
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.days.everyX.staringAt"
+                 min="0" max="6">
+        </label>
+      </div>
     </ng-template>
   </is-tab>
-  <is-tab title="Months">
+  <is-tab *ngIf="!fixedState?.months" title="Months">
     <ng-template TabContent>
-      <is-select [formControl]="formControl.months.type" [items]="defaultSelectTypeValues"
+      <is-select [formControl]="formControl.months.type" [items]="_defaultSelectTypeValues"
                  [isSearch]="false"></is-select>
       <div class="sub-content" *ngIf="formControl.months.type.value === '2'">
         <label>
@@ -197,11 +302,26 @@
         </label>
         <is-select [items]="values.months" [formControl]="formControl.months.between.end"></is-select>
       </div>
+      <div class="sub-content" *ngIf="formControl.months.type.value === '6'">
+        <label>
+          Run random month between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.months.between.start"
+                 min="0" max="12">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.months.between.end"
+                 min="{{formControl.months.between.start.value}}" max="12">
+        </label>
+        <label>
+          ; starting at month
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.months.everyX.staringAt"
+                 min="0" max="12">
+        </label>
+      </div>
     </ng-template>
   </is-tab>
-  <is-tab title="Year">
+  <is-tab *ngIf="!fixedState?.years" title="Year">
     <ng-template TabContent>
-      <is-select [formControl]="formControl.years.type" [items]="defaultSelectTypeValues"></is-select>
+      <is-select [formControl]="formControl.years.type" [items]="_defaultSelectTypeValues"></is-select>
       <div class="sub-content" *ngIf="formControl.years.type.value === '2'">
         <label>
           Every
@@ -227,6 +347,21 @@
           and
           <input class="form-control is-input four-digit-number" type="number" [formControl]="formControl.years.between.end"
                  min="{{formControl.years.between.start.value}}" max="2099">
+        </label>
+      </div>
+      <div class="sub-content" *ngIf="formControl.years.type.value === '6'">
+        <label>
+          Run random year between
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.years.between.start"
+                 min="0" max="60">
+          and
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.years.between.end"
+                 min="{{formControl.years.between.start.value}}" max="59">
+        </label>
+        <label>
+          ; starting at year
+          <input class="form-control is-input two-digit-number" type="number" [formControl]="formControl.years.everyX.staringAt"
+                 min="0" max="59">
         </label>
       </div>
     </ng-template>

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
+import { CronState } from 'projects/is-cron-editor/src/public_api';
 
 @Component({
   selector: 'app-demo-cron-editor',
@@ -10,13 +11,16 @@ export class DemoCronEditorComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-cron-editor-7.1.0.tgz</pre>
+<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-cron-editor-7.2.0.tgz</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsCronEditorModule } from 'is-cron-editor';</pre>
 `;
 
   cronControl = new FormControl();
+  randomExtensionSwitch = false;
+
+  fixedState?: CronState = undefined;
 
   constructor() {
   }
@@ -32,5 +36,9 @@ export class DemoCronEditorComponent implements OnInit {
 
   nullIt() {
     this.cronControl.setValue(null);
+  }
+
+  switchFixedState() {
+    this.fixedState = this.fixedState ? undefined : {minutes: '0'};
   }
 }
