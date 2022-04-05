@@ -1,0 +1,9 @@
+is-input-mapping {
+  display: block;
+  padding-left: 2px;
+}
+
+is-input-mapping.ng-invalid {
+  border-left: 1px solid #e43a45;
+  padding-left: 1px;
+}
