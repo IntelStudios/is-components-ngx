@@ -2,6 +2,7 @@
   <div class="col-sm-12">
     <h2>Usage</h2>
     <div [innerHTML]="usage"></div>
+    <is-switch (change)="small = $event.checked">Regular / Small</is-switch>
   </div>
 </div>
 <div class="row">
@@ -11,11 +12,11 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-timepicker [allowClear]="true" [stringMode]="true" [formControl]="timepickerControl"></is-timepicker>
+    <is-timepicker [allowClear]="true" [class.is-input-small]="small" [stringMode]="true" [formControl]="timepickerControl"></is-timepicker>
     <span>selected value: {{timepickerControl.value}}</span>
   </div>
   <div class="col-sm-6">
-    <is-timepicker [formControl]="timepickerControl1" [stringMode]="true"></is-timepicker>
+    <is-timepicker [formControl]="timepickerControl1" [class.is-input-small]="small" [stringMode]="true"></is-timepicker>
     <span>selected value when stringMode is ON: {{timepickerControl1.value}}</span>
     <button class="btn btn-default" (click)="setValue()">Set 02:00:00</button>
     <button class="btn btn-default" (click)="disableToggle()">Disable</button>
@@ -23,10 +24,10 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-timepicker [formControl]="timepickerControl2" [stringMode]="true" [allowClear]="true"></is-timepicker>
+    <is-timepicker [formControl]="timepickerControl2" [class.is-input-small]="small" [stringMode]="true" [allowClear]="true"></is-timepicker>
   </div>
   <div class="col-sm-6">
-    <is-timepicker [allowClear]="true" [stringMode]="true" alignment="right" [formControl]="timepickerControl"></is-timepicker>
+    <is-timepicker [allowClear]="true" [class.is-input-small]="small" [stringMode]="true" alignment="right" [formControl]="timepickerControl"></is-timepicker>
   </div>
 </div>
 <div class="row">
@@ -37,7 +38,7 @@
 <div class="row">
   <div class="col-sm-6">
     <is-field-error [iconOnly]="false" class="align-right" [control]="timepickerControl3"></is-field-error>
-    <is-timepicker [allowClear]="true" [stringMode]="true" [formControl]="timepickerControl3"></is-timepicker>
+    <is-timepicker [allowClear]="true" [class.is-input-small]="small" [stringMode]="true" [formControl]="timepickerControl3"></is-timepicker>
     <span>selected value: {{timepickerControl3.value}}</span>
   </div>
 </div>

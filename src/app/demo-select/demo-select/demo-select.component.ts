@@ -16,8 +16,10 @@ export class DemoSelectComponent implements OnInit {
 <pre>npm install --save @intelstudios/select</pre>
 
 <h3>Import Module</h3>
-<pre>import { IsSelectModule } from 'is-select';</pre>
+<pre>import { IsSelectModule } from '@intelstudios/select';</pre>
 `
+
+  small = false;
 
   select1Control: FormControl = new FormControl();
   select2Control: FormControl = new FormControl();

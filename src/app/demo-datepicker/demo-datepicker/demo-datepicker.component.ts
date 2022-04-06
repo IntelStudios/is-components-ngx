@@ -16,10 +16,11 @@ export class DemoDatepickerComponent implements OnInit {
 <pre>npm install --save @intelstudios/datepicker</pre>
 
 <h3>Import Module</h3>
-<pre>import { IsDatepickerModule } from 'is-datepicker';</pre>
+<pre>import { IsDatepickerModule } from '@intelstudios/datepicker';</pre>
 
   `
 
+  small = false;
   control: FormControl = new FormControl();
 
   control2: FormControl = new FormControl();

@@ -2,6 +2,7 @@
   <div class="col-sm-12">
     <h2>Usage</h2>
     <div [innerHTML]="usage"></div>
+    <is-switch (change)="small = $event.checked">Regular / Small</is-switch>
   </div>
 </div>
 <is-tabset>
@@ -10,7 +11,7 @@
       <div class="row">
         <div class="col-sm-6">
           <h3>Select a single city align right</h3>
-          <is-select #select1 [alignment]="'right'" class="select-with-some-class" [formControl]="select1Control"
+          <is-select #select1 [alignment]="'right'" class="select-with-some-class" [class.is-input-small]="small" [formControl]="select1Control"
             [placeholderShow]="false" [allowClear]="true" [items]="items" (changed)="changed($event)"
             placeholder="No city selected">
           </is-select>
@@ -21,14 +22,14 @@
         </div>
         <div class="col-sm-3">
           <h3>Select with overflowOptions</h3>
-          <is-select [optionsOverflowWidth]="true" [alignment]="'right'" class="select-with-some-class" [formControl]="select1Control"
+          <is-select [optionsOverflowWidth]="true" [alignment]="'right'" [class.is-input-small]="small" class="select-with-some-class" [formControl]="select1Control"
             [placeholderShow]="false" [allowClear]="true" [items]="items" (changed)="changed($event)"
             placeholder="No city selected">
           </is-select>
         </div>
         <div class="col-sm-6">
           <h3>Select color - load items</h3>
-          <is-select [allowClear]="true" [formControl]="select2Control" [items]="colors" (changed)="changed($event)"
+          <is-select [allowClear]="true" [class.is-input-small]="small" [formControl]="select2Control" [items]="colors" (changed)="changed($event)"
             placeholder="No color selected">
             <ng-template is-select-option let-item>
               <div [style.background]="item.source.background">{{item.Value}} (option)</div>
@@ -42,7 +43,7 @@
         </div>
         <div class="col-sm-6">
           <h3>Select a single color (lazy load search)</h3>
-          <is-select [allowClear]="true" [minLoadChars]="2" [items]="colors$ | async" (loadOptions)="loadMoreAsync()"
+          <is-select [allowClear]="true" [class.is-input-small]="small" [minLoadChars]="2" [items]="colors$ | async" (loadOptions)="loadMoreAsync()"
             (changed)="changed($event)" placeholder="No color selected">
             <ng-template is-select-option let-item>
               <div [style.background]="item.source.background">{{item.Value}} (option)</div>
@@ -54,7 +55,7 @@
         </div>
         <div class="col-sm-6">
           <h3>Select model (lazy load)</h3>
-          <is-select [allowClear]="true" [minLoadChars]="0" (loadOptions)="onOptionsRequired($event)"
+          <is-select [allowClear]="true" [class.is-input-small]="small" [minLoadChars]="0" (loadOptions)="onOptionsRequired($event)"
             [items]="moreOptions$ | async" [formControl]="select6Control"
             [modelConfig]="{idProp: 'ID', textProp: 'Value'}">
           </is-select>
@@ -63,7 +64,7 @@
         </div>
         <div class="col-sm-6">
           <h3>Select with descriptions (close options on scroll)</h3>
-          <is-select [allowClear]="true" [closeOptionsOnScroll]="true"
+          <is-select [allowClear]="true" [class.is-input-small]="small" [closeOptionsOnScroll]="true"
             [items]="itemsWithDesc" [formControl]="select7Control"
             [modelConfig]="{idProp: 'ID', textProp: 'Value', descProp: 'Description'}">
           </is-select>
@@ -71,7 +72,7 @@
         </div>
         <div class="col-sm-6">
           <h3>Readonly select</h3>
-          <is-select [items]="items" [formControl]="select1Control" [allowClear]="true" [allowHide]="true" [readonly]="true">
+          <is-select [items]="items" [class.is-input-small]="small" [formControl]="select1Control" [allowClear]="true" [allowHide]="true" [readonly]="true">
           </is-select>
         </div>
       </div>
@@ -84,19 +85,19 @@
       <div class="row">
         <div class="col-sm-6">
           <h3>Select multiple cities</h3>
-          <is-select [multipleConfig]="{showButtons: true}" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true"
+          <is-select [multipleConfig]="{showButtons: true}"  [class.is-input-small]="small" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true"
             [items]="items" (changed)="changed($event)" placeholder="0 cities selected">
           </is-select>
         </div>
         <div class="col-sm-6">
           <h3>Select multiple cities (fixed height)</h3>
-          <is-select [multipleConfig]="{showButtons: true}" [resize]="false" [formControl]="select1Control" [placeholderShow]="false"
+          <is-select [multipleConfig]="{showButtons: true}" [class.is-input-small]="small" [resize]="false" [formControl]="select1Control" [placeholderShow]="false"
             [allowClear]="true" [items]="items" (changed)="changed($event)" placeholder="0 cities selected">
           </is-select>
         </div>
         <div class="col-sm-6">
           <h3>Select multiple model (lazy load)</h3>
-          <is-select [allowClear]="true" [multipleConfig]="{}" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)"
+          <is-select [allowClear]="true" [class.is-input-small]="small" [multipleConfig]="{}" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)"
             [items]="moreOptions$ | async" searchPlaceholder="type: aaa" [formControl]="select6ControlMulti"
             [modelConfig]="{idProp: 'ID', textProp: 'Value'}" (changed)="changed($event)"></is-select>
           <button class="btn btn-primary" (click)="selectFirstModelMulti()">Select unknown (model)</button>
@@ -112,31 +113,31 @@
       <div class="row">
         <div class="col-sm-6">
           <h3>Groups including disabled items</h3>
-          <is-select #select3 [formControl]="select3Control" [allowClear]="true" [items]="itemsGrouped"
+          <is-select #select3 [formControl]="select3Control" [class.is-input-small]="small" [allowClear]="true" [items]="itemsGrouped"
             (changed)="changed($event)" placeholder="No item selected"></is-select>
           <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
         </div>
         <div class="col-sm-6">
           <h3>Delayed load</h3>
-          <is-select #select3 [formControl]="select3Control" [allowClear]="true" [items]="itemsGrouped$ | async"
+          <is-select #select3 [formControl]="select3Control" [class.is-input-small]="small" [allowClear]="true" [items]="itemsGrouped$ | async"
             (changed)="changed($event)" placeholder="No item selected"></is-select>
           <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
           <button class="btn btn-primary" (click)="loadItemsGrouped()">Load Items</button>
         </div>
         <div class="col-sm-6">
           <h3>Groups multi select</h3>
-          <is-select [formControl]="select3Control" [multipleConfig]="{showButtons: true}" [allowClear]="true" [items]="itemsGrouped"
+          <is-select [formControl]="select3Control" [class.is-input-small]="small" [multipleConfig]="{showButtons: true}" [allowClear]="true" [items]="itemsGrouped"
             (changed)="changed($event)" placeholder="No item selected"></is-select>
           <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
         </div>
         <div class="col-sm-6">
           <h3>Groups lazy load (search)</h3>
-          <is-select [formControl]="select3Control" [minLoadChars]="2" [isSearch]="true" [allowClear]="true" [items]="itemsGrouped$ | async"
+          <is-select [formControl]="select3Control" [class.is-input-small]="small" [minLoadChars]="2" [isSearch]="true" [allowClear]="true" [items]="itemsGrouped$ | async"
             (changed)="changed($event)" (loadOptions)="loadItemsGrouped()" placeholder="No item selected"></is-select>
         </div>
         <div class="col-sm-6">
           <h3>Groups multi select delayed load</h3>
-          <is-select [formControl]="select3Control" [multipleConfig]="{showButtons: true}" [allowClear]="true" [items]="itemsGrouped$ | async"
+          <is-select [formControl]="select3Control" [class.is-input-small]="small" [multipleConfig]="{showButtons: true}" [allowClear]="true" [items]="itemsGrouped$ | async"
                      (changed)="changed($event)" placeholder="No item selected"></is-select>
           <button class="btn btn-primary" (click)="selectNetherlands()">Select Netherlands</button>
           <button class="btn btn-primary" (click)="loadItemsGrouped()">Load Items</button>
@@ -150,16 +151,16 @@
       <div class="row">
         <div class="col-sm-6">
           <h3>Select Color</h3>
-          <is-select-color [allowClear]="true" [formControl]="selectColorControl" (valueChange)="changed($event)"></is-select-color>
+          <is-select-color [allowClear]="true" [selectClass]="small ? 'is-input-small' : ''" [formControl]="selectColorControl" (valueChange)="changed($event)"></is-select-color>
         </div>
         <div class="col-sm-6">
           <h3>Select Color (no lables)</h3>
-          <is-select-color [allowClear]="true" [showLabel]="false" [isSearch]="false" (valueChange)="changed($event)">
+          <is-select-color [allowClear]="true" [selectClass]="small ? 'is-input-small' : ''" [showLabel]="false" [isSearch]="false" (valueChange)="changed($event)">
           </is-select-color>
         </div>
         <div class="col-sm-6">
           <h3>Select model (colors)</h3>
-          <is-select [allowClear]="true" [items]="colors" [formControl]="select4Control" (changed)="changed($event)"
+          <is-select [allowClear]="true" [items]="colors" [class.is-input-small]="small" [formControl]="select4Control" (changed)="changed($event)"
             [modelConfig]="{idProp: 'Data', textProp: 'Name', 'baseModel':{'baseModelProp':'baseModelPropValue'}}">
           </is-select>
           <button class="btn btn-primary" (click)="loadMore()">Load Items</button>
@@ -168,7 +169,7 @@
         </div>
         <div class="col-sm-6">
           <h3>Select multiple model (colors)</h3>
-          <is-select [allowClear]="true" [multipleConfig]="{}" [items]="colors" [formControl]="select4ControlMulti"
+          <is-select [allowClear]="true" [multipleConfig]="{}" [class.is-input-small]="small" [items]="colors" [formControl]="select4ControlMulti"
             (valueChange)="changed($event)"
             [modelConfig]="{idProp: 'Data', textProp: 'Name', 'baseModel':{'baseModelProp':'baseModelPropValue'}}">
           </is-select>
@@ -185,12 +186,12 @@
       <div class="row">
         <div class="col-sm-6">
           <h3>Select (with badges)</h3>
-          <is-select-badge class="light-gray" [formControl]="select5Control" [allowClear]="true" [items]="itemsBadges"
+          <is-select-badge class="light-gray" [selectClass]="small ? 'is-input-small' : ''" [formControl]="select5Control" [allowClear]="true" [items]="itemsBadges"
             (valueChange)="changed($event)"> </is-select-badge>
         </div>
         <div class="col-sm-6">
           <h3>Select multiple (with badges)</h3>
-          <is-select-badge [formControl]="select5ControlMulti" [multiple]="true" [useModels]="true" [allowClear]="true" [items]="itemsBadges"
+          <is-select-badge [formControl]="select5ControlMulti" [selectClass]="small ? 'is-input-small' : ''" [multiple]="true" [useModels]="true" [allowClear]="true" [items]="itemsBadges"
             (valueChange)="changed($event)">
           </is-select-badge>
         </div>
@@ -204,7 +205,7 @@
         <div style="height: 100vh;"></div>
       <div class="row">
         <div class="col-sm-6">
-          <is-select class="select-with-some-class" [formControl]="select1Control" [placeholderShow]="false"
+          <is-select class="select-with-some-class" [class.is-input-small]="small" [formControl]="select1Control" [placeholderShow]="false"
       [allowClear]="true" [items]="items" (changed)="changed($event)" placeholder="No city selected">
     </is-select>
         </div>
@@ -219,7 +220,7 @@
 <div class="row">
   <div class="col-sm-6">
     <h3>Select on page bottom</h3>
-    <is-select class="select-with-some-class" [formControl]="select1Control" [placeholderShow]="false"
+    <is-select class="select-with-some-class" [class.is-input-small]="small" [formControl]="select1Control" [placeholderShow]="false"
       [allowClear]="true" [items]="items" (changed)="changed($event)" placeholder="No city selected">
     </is-select>
   </div>

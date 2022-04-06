@@ -19,7 +19,7 @@ export class DemoFroalaComponent implements OnInit {
 npm install --save froala-editor at.js font-awesome</pre>
 
 <h3>Import Module</h3>
-<pre>import { IsFroalaModule } from 'is-froala';
+<pre>import { IsFroalaModule } from '@intelstudios/froala';
   imports: [IsFroalaModule.forRoot({
     getLicense: () => {
       return 'your license key';

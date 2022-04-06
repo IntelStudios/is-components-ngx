@@ -18,6 +18,7 @@ export class DemoTimepickerComponent implements OnInit {
 
   `
 
+  small = false;
   timepickerControl: FormControl;
   timepickerControl1: FormControl;
   timepickerControl2: FormControl;

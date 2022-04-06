@@ -11,16 +11,16 @@ export class DemoCronEditorComponent implements OnInit {
   usage = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-cron-editor-7.2.0.tgz</pre>
+<pre>npm install --save @intelstudios/cron-editor</pre>
 
 <h3>Import Module</h3>
-<pre>import { IsCronEditorModule } from 'is-cron-editor';</pre>
+<pre>import { IsCronEditorModule } from '@intelstudios/cron-editor';</pre>
 `;
 
   cronControl = new FormControl();
   randomExtensionSwitch = false;
 
-  fixedState?: CronState = undefined;
+fixedState?: CronState = undefined;
 
   constructor() {
   }

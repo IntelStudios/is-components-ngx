@@ -2,6 +2,7 @@
   <div class="col-sm-12">
     <h2>Usage</h2>
     <div [innerHTML]="usage"></div>
+    <is-switch (change)="small = $event.checked">Regular / Small</is-switch>
   </div>
 </div>
 <div class="row">
@@ -21,7 +22,7 @@
   </div>
 
   <div class="col-sm-12">
-    <input type="text" class="form-control is-input" />
+    <input type="text" class="form-control is-input" [class.is-input-small]="small" />
   </div>
 </div>
 <div class="row">
@@ -78,7 +79,7 @@
   </div>
 
   <div class="col-sm-12">
-    <is-search [placeholder]="'Search placeholder'"></is-search>
+    <is-search [placeholder]="'Search placeholder'" [class.is-input-small]="small"></is-search>
   </div>
 </div>
 <div class="row">

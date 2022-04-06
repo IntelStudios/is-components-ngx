@@ -2,6 +2,7 @@
   <div class="col-sm-12">
     <h2>Usage</h2>
     <div [innerHTML]="usage"></div>
+    <is-switch (change)="small = $event.checked">Regular / Small</is-switch>
   </div>
 </div>
 <div class="row">
@@ -11,7 +12,7 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-datepicker [readonly]="readonly" [formControl]="control" [alignment]="'right'" [allowClear]="true"></is-datepicker>
+    <is-datepicker [readonly]="readonly" [class.is-input-small]="small" [formControl]="control" [alignment]="'right'" [allowClear]="true"></is-datepicker>
     <div style="margin-top: 5px;">
       <button class="btn btn-primary pull-right" (click)="onClearDate()">Clear date</button>
       <button class="btn btn-primary" (click)="toggleInvalid()">Invalid</button>
@@ -21,7 +22,7 @@
     </div>
   </div>
   <div class="col-sm-6 datepicker-colors">
-    <is-datepicker [mask]="'00-00-0000'" [readonly]="readonly" [allowClear]="true" viewFormat="dd. MM. yyyy"></is-datepicker>
+    <is-datepicker [mask]="'00-00-0000'" [class.is-input-small]="small" [readonly]="readonly" [allowClear]="true" viewFormat="dd. MM. yyyy"></is-datepicker>
   </div>
 </div>
 <div class="row">
@@ -40,13 +41,13 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-datepicker [formControl]="control2" [stringMode]="true" [allowClear]="true"></is-datepicker>
+    <is-datepicker [formControl]="control2" [class.is-input-small]="small" [stringMode]="true" [allowClear]="true"></is-datepicker>
     <div style="margin-top: 5px;">
       <button class="btn btn-primary" (click)="setTomorrow(control2)">Set tomorrow</button>
     </div>
   </div>
   <div class="col-sm-6">
-    <is-datepicker [formControl]="control3" [localDateMode]="true" [allowClear]="true"></is-datepicker>
+    <is-datepicker [formControl]="control3" [class.is-input-small]="small" [localDateMode]="true" [allowClear]="true"></is-datepicker>
     <div style="margin-top: 5px;">
       <button class="btn btn-primary" (click)="setTomorrow(control3)">Set tomorrow</button>
     </div>
@@ -83,7 +84,7 @@
 <div class="row">
   <div class="col-sm-6">
     <is-field-error [iconOnly]="false" class="align-right" [control]="control4"></is-field-error>
-    <is-datepicker [mask]="'00-00-0000'" [readonly]="readonly" [formControl]="control4" [allowClear]="true" viewFormat="dd-MM-yyyy"></is-datepicker>
+    <is-datepicker [mask]="'00-00-0000'" [class.is-input-small]="small" [readonly]="readonly" [formControl]="control4" [allowClear]="true" viewFormat="dd-MM-yyyy"></is-datepicker>
     <span>selected value: {{control4.value}}</span>
   </div>
 </div>

@@ -14,7 +14,7 @@ export class DemoEditableTextboxComponent implements OnInit {
 <pre>npm install --save @intelstudios/editable-textbox</pre>
 
 <h3>Import Module</h3>
-<pre>import { IsEditableTextboxModule } from 'is-editable-textbox';</pre>`;
+<pre>import { IsEditableTextboxModule } from '@intelstudios/editable-textbox';</pre>`;
 
   control = new FormControl();
 

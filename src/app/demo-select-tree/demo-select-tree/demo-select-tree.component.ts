@@ -14,10 +14,10 @@ export class DemoSelectTreeComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/7.x/package/is-select-tree-7.0.0.tgz</pre>
+<pre>npm install --save @intelstudios/select-tree</pre>
 
 <h3>Import Module</h3>
-<pre>import { IsSelectTreeModule } from 'is-select-tree';</pre>
+<pre>import { IsSelectTreeModule } from '@intelstudios/select-tree';</pre>
 `
 
   tree1: IsSelectTree = IsSelectTree.deserializeTree(

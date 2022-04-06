@@ -11,11 +11,11 @@ export class DemoCodemirrorComponent implements OnInit {
   usage: string = `
 
 <h3>Installation</h3>
-<pre>npm install --save https://github.com/IntelStudios/is-components-ngx/raw/9.x/package/is-codemirror-9.0.2.tgz
+<pre>npm install --save @intelstudios/codemirror
 npm install --save codemirror</pre>
 
 <h3>Import Module</h3>
-<pre>import { IsCodemirrorModule } from 'is-codemirror';</pre>
+<pre>import { IsCodemirrorModule } from '@intelstudios/codemirror';</pre>
 
 <h3>Package CodeMirror</h3>
 <pre>

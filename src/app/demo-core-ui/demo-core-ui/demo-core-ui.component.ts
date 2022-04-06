@@ -17,7 +17,7 @@ export class DemoCoreUIComponent implements OnInit {
 <pre>npm install --save @intelstudios/core-ui</pre>
 
 <h3>Import Module</h3>
-<pre>import { IsCoreUIModule } from 'is-core-ui';</pre>
+<pre>import { IsCoreUIModule } from '@intelstudios/core-ui';</pre>
 
 <h3>Import Styles</h3>
 <pre>
@@ -36,6 +36,8 @@ export class DemoCoreUIComponent implements OnInit {
       <li>Item 3</li>
     </ul>
   `;
+
+  small = false;
 
   formControl1: FormControl;
   formControl2: FormControl;
