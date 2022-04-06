@@ -12,6 +12,11 @@ is-datepicker {
     }
   }
 
+  &.is-input-small {
+    > .input-group {
+      @include is-input-small();
+    }
+  }
   .input-group {
     border-width: 1px;
     border-style: solid;

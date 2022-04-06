@@ -25,7 +25,8 @@ $is-control-readonly-border-width: var(--is-control-readonly-border-width, 0);
 $is-control-readonly-border-color: var(--is-control-readonly-border-color, transparent);
 $is-control-readonly-spacing: var(--is-control-readonly-padding, 0.3rem 0);
 
-$is-select-search-bg-color: var(--is-select-search-bg-color, #efefef);
+$is-select-search-bg-color: var(--is-select-search-bg-color, #fff);
+$is-select-search-border-color: var( --is-select-search-border-color, #aaa);
 $is-select-item-desc-fg-color: var(--is-select-item-desc-fg-color, #333);
 $is-select-item-group-color: var(--is-select-item-group-color, #777E85);
 $is-select-item-group-divider-color: var(--is-select-item-group-divider-color, #aaa);
@@ -77,4 +78,7 @@ $is-movable-modal-zindex: var(--is-movable-modal-zindex, 1055);
 $is-movable-modal-header-fg-color: var(--is-movable-modal-header-fg-color, #000);
 $is-movable-modal-border-color: var(--is-movable-modal-border-color, #ccc);
 $is-movable-modal-box-shadow-dragging-color: var(--is-movable-modal-box-shadow-dragging-color, #666);
+
+$is-input-height-regular: 32px;
+$is-input-height-small: 24px;
 

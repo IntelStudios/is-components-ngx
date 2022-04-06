@@ -77,6 +77,9 @@ export class IsSelectColorComponent implements AfterViewInit, OnDestroy, Control
     return this._items;
   }
 
+  @Input()
+  selectClass: string;
+
   @Output()
   valueChange: EventEmitter<any> = new EventEmitter<any>();
 

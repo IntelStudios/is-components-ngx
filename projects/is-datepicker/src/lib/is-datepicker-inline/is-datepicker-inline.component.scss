@@ -3,6 +3,7 @@
 
 is-datepicker-inline {
   >is-datepicker-popup {
+    position: initial;
     .bs-datepicker {
       box-shadow: none;
       border: none;

@@ -1,5 +1,5 @@
 <div [innerHtml]="styleContent()"></div>
-<is-select #select [placeholder]="placeholder" [allowClear]="allowClear" [items]="items"
+<is-select #select [placeholder]="placeholder" [class]="selectClass" [allowClear]="allowClear" [items]="items"
   (changed)="onValueChanged($event)" [class.disabled]="disabled" [disabled]="disabled"
   [isSearch]="isSearch">
   <ng-template is-select-option let-item *ngIf="showLabel">

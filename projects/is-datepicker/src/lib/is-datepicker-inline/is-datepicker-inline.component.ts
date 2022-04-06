@@ -14,15 +14,13 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as m from 'moment';
+import moment from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
 import { defaultDatePickerConfig, DatepickerPopupControl } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { IsDatepickerConfig, configToken } from '../is-datepicker.interfaces';
 import { DATE_FORMAT, defaultDatePickerRootConfig } from '../is-datepicker/is-datepicker.component';
-
-const moment = m;
 
 export const NG_DATEPICKER_INLINE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

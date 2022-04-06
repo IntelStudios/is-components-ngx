@@ -2,14 +2,21 @@
 @import '../../../../styles/variables';
 
 :host {
+  &.is-input-small {
+    > .input-group-search { 
+      @include is-input-small();
+    }
+  }
    .input-group-search {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    
     background-color: $is-search-bg-color;
     border-color: $is-search-bg-color;
-
+    height: $is-input-height-regular;
     > input {
+      @include is-input();
       color: $is-search-fg-color;
       font-size: 14px;
       font-weight: bold;
@@ -17,6 +24,7 @@
       background-color: transparent;
       &:focus {
         box-shadow: none;
+        background-color: transparent;
       }
     }
     .input-group-addon {

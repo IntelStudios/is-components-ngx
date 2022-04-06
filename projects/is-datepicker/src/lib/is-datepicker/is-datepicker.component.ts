@@ -27,7 +27,7 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
 } from '@angular/forms';
-import * as m from 'moment';
+import moment from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { IsCdkService, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
@@ -35,8 +35,6 @@ import { Subscription } from 'rxjs';
 import { defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 import { distinctUntilChanged } from 'rxjs/operators';
-
-const moment = m;
 
 export const DATE_FORMAT = 'DD-MM-YYYY';
 

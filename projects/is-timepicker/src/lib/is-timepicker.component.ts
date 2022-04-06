@@ -16,14 +16,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { AbstractControl, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
-import * as m from 'moment';
+import moment from 'moment';
 import { IsCdkService, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
 
 import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
 import { distinctUntilChanged } from 'rxjs/operators';
-
-const moment = m;
 
 export const TIME_FORMAT = 'HH:mm:ss';
 

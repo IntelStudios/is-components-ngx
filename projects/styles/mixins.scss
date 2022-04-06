@@ -39,8 +39,12 @@
   border-color:$is-control-boder-color;
   background-color: $is-control-bg-color;
   color: $is-control-fg-color;
-  padding: $is-general-padding-small;
+  padding: 4px 8px;
+  height: $is-input-height-regular;
   font-size: 14px;
+  &.is-input-small {
+    @include is-input-small();
+  }
     &::placeholder {
       color: $is-control-placeholder-color;
     }
@@ -53,6 +57,10 @@
       color: $is-control-fg-color;
       @include is-input-active;
     }
+}
+
+@mixin is-input-small {
+  height: $is-input-height-small;
 }
 
 @mixin is-input-invalid {

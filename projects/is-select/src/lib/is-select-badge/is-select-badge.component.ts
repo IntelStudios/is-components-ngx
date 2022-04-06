@@ -5,6 +5,7 @@ import {
   Component,
   EventEmitter,
   forwardRef,
+  HostBinding,
   Input,
   OnDestroy,
   Output,
@@ -78,7 +79,7 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
   }
 
   @Input()
-  class: string;
+  selectClass: string;
 
   @Output()
   valueChange: EventEmitter<any> = new EventEmitter<any>();

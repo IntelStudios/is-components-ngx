@@ -47,6 +47,7 @@
       display: flex;
       margin: 0px $is-general-padding-small;
       background-color: $is-select-search-bg-color;
+      border: 1px solid #{$is-select-search-border-color};
       > input {
         color: $is-control-fg-color;
         background-color: $is-select-search-bg-color;
@@ -59,7 +60,7 @@
       > i {
         color: $is-control-handle-color;
         align-self: center;
-        padding: $is-general-padding-small 13px;
+        padding: $is-general-padding-small;
       }
     }
 
@@ -151,6 +152,7 @@
     > button {
       line-height: 1;
       height: 24px;
+      padding: 0px 4px;
     }
   }
 }
