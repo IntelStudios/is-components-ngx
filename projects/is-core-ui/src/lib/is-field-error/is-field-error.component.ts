@@ -12,9 +12,9 @@ import {
   Renderer2
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { IsFieldErrorFactory } from '@intelstudios/cdk';
 import { TranslateService } from '@ngx-translate/core';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
-import { IsFieldError, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { Subscription, merge, of } from 'rxjs';
 
 import { configToken, IsCoreUIConfig } from '../is-core-ui.interfaces';
@@ -123,33 +123,11 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   private detectChanges() {
     this.isShown = this.control.invalid; // && (this.control.touched || this.control.dirty);
 
-    if (this.control.errors !== null) {
-      let remapped = {};
-      // replace base angular validator errors to is-field-errors
-      Object.keys(this.control.errors).forEach((key) => {
-        if (this.control.errors[key] instanceof IsFieldError) {
-          remapped = {...{key: this.control.errors[key] }};
-        }
-        else {
-          remapped = {...this.replaceAngularValidatorError(key, this.control.errors[key]) };
-        }
-      });
-      let highestPriorityError: IsFieldError = null;
-      Object.keys(remapped).forEach((key) => {
-        if (highestPriorityError === null || highestPriorityError.priority <= remapped[key].priority) {
-          highestPriorityError = remapped[key];
-        }
-      });
-      const key = this.transPrefix + highestPriorityError.key;
-      const translated: string = this.translate.instant(key, highestPriorityError.params);
+    const errs: string[] = IsFieldErrorFactory.getErrors(this.control, this.transPrefix, this.translate);
+    this.error = errs[0];
 
-      if (translated !== key) {
-        this.error = translated;
-      } else {
-        this.error = highestPriorityError.message || '';
-      }
-    }
     this.cd.detectChanges();
+
     if (this.isShown && this.iconOnly && this.instantTooltip) {
       setTimeout(() => {
         if (this.tooltip) {
@@ -162,26 +140,5 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
 
   private hideTooltipOnClick() {
     this.tooltip?.hide();
-  }
-
-  private replaceAngularValidatorError(key: string, error: any) {
-    switch (key) {
-      case 'min':
-        return IsFieldErrorFactory.minNumberError(error.min, error.actual);
-      case 'max':
-        return IsFieldErrorFactory.maxNumberError(error.max, error.actual);
-      case 'required':
-        return IsFieldErrorFactory.requiredError();
-      case 'email':
-        return IsFieldErrorFactory.emailError();
-      case 'minlength':
-        return IsFieldErrorFactory.minLengthError(error.requiredLength, error.actualLength);
-      case 'maxlength':
-        return IsFieldErrorFactory.maxLengthError(error.requiredLength, error.actualLength);
-      case 'pattern':
-        return IsFieldErrorFactory.patternError(error.requiredPattern, error.actualValue);
-      default:
-        return IsFieldErrorFactory.unspecifiedError({ key: key, error: error });
-    }
   }
 }

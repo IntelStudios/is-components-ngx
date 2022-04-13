@@ -1,3 +1,5 @@
+import { FormControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { IsFieldError } from './is-field-error.model';
 
 export class IsFieldErrorFactory {
@@ -208,5 +210,77 @@ export class IsFieldErrorFactory {
     error.message = 'Please switch editor to WYSIWYG mode before saving';
 
     return { codeViewIsActive: error };
+  }
+
+  static getErrors(control: FormControl, prefix: string, translate: TranslateService, onlyHighest: boolean = true): string[] {
+    let ret: string[] = [];
+
+    if (control.errors !== null) {
+      let remapped = {};
+      // replace base angular validator errors to is-field-errors
+      Object.keys(control.errors).forEach((key) => {
+        if (control.errors[key] instanceof IsFieldError) {
+          remapped = {...{key: control.errors[key] }};
+        }
+        else {
+          remapped = {...this.replaceAngularValidatorError(key, control.errors[key]) };
+        }
+      });
+
+      if (onlyHighest) {
+        let highestPriorityError: IsFieldError = null;
+        Object.keys(remapped).forEach((key) => {
+          if (highestPriorityError === null || highestPriorityError.priority <= remapped[key].priority) {
+            highestPriorityError = remapped[key];
+          }
+        });
+
+        const key = prefix + highestPriorityError.key;
+        const translated: string = translate.instant(key, highestPriorityError.params);
+
+        if (translated !== key) {
+          ret.push(translated);
+        } else {
+          ret.push(highestPriorityError.message || '');
+        }
+      }
+      else {
+        Object.keys(remapped).forEach((key) => {
+          let actError: IsFieldError = remapped[key];
+
+          const prefixedKey = prefix + actError.key;
+          const translated: string = translate.instant(prefixedKey, actError.params);
+
+          if (translated !== prefixedKey) {
+            ret.push(translated);
+          } else {
+            ret.push(actError.message || '');
+          }
+        })
+      }
+    }
+
+    return ret;
+  }
+
+  private static replaceAngularValidatorError(key: string, error: any) {
+    switch (key) {
+      case 'min':
+        return IsFieldErrorFactory.minNumberError(error.min, error.actual);
+      case 'max':
+        return IsFieldErrorFactory.maxNumberError(error.max, error.actual);
+      case 'required':
+        return IsFieldErrorFactory.requiredError();
+      case 'email':
+        return IsFieldErrorFactory.emailError();
+      case 'minlength':
+        return IsFieldErrorFactory.minLengthError(error.requiredLength, error.actualLength);
+      case 'maxlength':
+        return IsFieldErrorFactory.maxLengthError(error.requiredLength, error.actualLength);
+      case 'pattern':
+        return IsFieldErrorFactory.patternError(error.requiredPattern, error.actualValue);
+      default:
+        return IsFieldErrorFactory.unspecifiedError({ key: key, error: error });
+    }
   }
 }
