@@ -11,7 +11,7 @@
       <div class="row">
         <div class="col-sm-6">
           <h3>Select a single city align right</h3>
-          <is-select #select1 [alignment]="'right'" class="select-with-some-class" [class.is-input-small]="small" [formControl]="select1Control"
+          <is-select #select1 [alignment]="'right'"  icon="fa fa-user" class="select-with-some-class" [class.is-input-small]="small" [formControl]="select1Control"
             [placeholderShow]="false" [allowClear]="true" [items]="items" (changed)="changed($event)"
             placeholder="No city selected">
           </is-select>
@@ -85,7 +85,7 @@
       <div class="row">
         <div class="col-sm-6">
           <h3>Select multiple cities</h3>
-          <is-select [multipleConfig]="{showButtons: true}"  [class.is-input-small]="small" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true"
+          <is-select [multipleConfig]="{showButtons: true}" icon="fa fa-user" [class.is-input-small]="small" [formControl]="select1Control" [placeholderShow]="false" [allowClear]="true"
             [items]="items" (changed)="changed($event)" placeholder="0 cities selected">
           </is-select>
         </div>
@@ -102,6 +102,24 @@
             [modelConfig]="{idProp: 'ID', textProp: 'Value'}" (changed)="changed($event)"></is-select>
           <button class="btn btn-primary" (click)="selectFirstModelMulti()">Select unknown (model)</button>
           <p>Value: {{select6Control.valueChanges|async|json}}</p>
+        </div>
+        <div class="col-sm-6">
+          <h3>[unsetNoMatch]=false</h3>
+          <is-select [multipleConfig]="{showButtons: true}" [unsetNoMatch]="false" [class.is-input-small]="small" [resize]="false" [formControl]="select8Control" [placeholderShow]="false"
+            [allowClear]="true" [useModels]="true" [items]="moreOptions$ | async" (changed)="changed($event)" searchPlaceholder="type: aaa" [minLoadChars]="2" (loadOptions)="onOptionsRequired($event)">
+          </is-select>
+          <p>Value: {{select8Control.valueChanges|async|json}}</p>
+          <button (click)="select8Control.setValue([{ID: 'XXX', Value: 'XXX'}])">Set XXX</button>
+          <button (click)="select8Control.setValue([{ID: 'XXX', Value: 'XXX'}, {ID: 1, Value: 'aaaa'}])">Set XXX, aaaa</button>
+        </div>
+        <div class="col-sm-6">
+          <h3>[unsetNoMatch]=true</h3>
+          <is-select [multipleConfig]="{showButtons: true}" [unsetNoMatch]="true" [class.is-input-small]="small" [resize]="false" [formControl]="select9Control" [placeholderShow]="false"
+            [allowClear]="true" [useModels]="true" [items]="moreOptions$ | async" (changed)="changed($event)" searchPlaceholder="type: aaa" [minLoadChars]="2" (loadOptions)="onOptionsRequired($event)">
+          </is-select>
+          <p>Value: {{select9Control.valueChanges|async|json}}</p>
+          <button (click)="select9Control.setValue([{ID: 'XXX', Value: 'XXX'}])">Set XXX</button>
+          <button (click)="select9Control.setValue([{ID: 'XXX', Value: 'XXX'}, {ID: 1, Value: 'aaaa'}])">Set XXX, aaaa</button>
         </div>
       </div>
     </ng-template>

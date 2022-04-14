@@ -99,7 +99,9 @@ $is-select-multi-selection-max-width: var(--is-select-multi-selection-max-width,
         >.ui-select-match-text {
           color: $is-control-fg-color;
         }
-
+        >i {
+          padding-right: 4px;
+        }
       }
 
       &.multiple {

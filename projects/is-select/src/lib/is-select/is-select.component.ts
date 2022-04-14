@@ -72,6 +72,11 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   /**
+   * state icon
+   */
+  @Input()
+  icon: string;
+  /**
    * When enabled (default) main input is resized based on
    * selected options. When disabled, main input keeps it's height
    * Applies only when [multiple]="true"
@@ -146,22 +151,22 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         }
         else {
           // multiple values
+          const current = this._active as SelectItem[];
           if (this.isGroupOptions) {
             const allAtomicOptions = OptionsBehavior.getLeafOptions(this.options)
             active = allAtomicOptions.filter(o => this._value.indexOf(o.ID) > -1);
           } else {
-            active = this.options.filter(o => this._value.indexOf(o.ID) > -1);
+            if (!this._active || this.unsetNoMatch) {
+              active = this.options.filter(o => this._value.indexOf(o.ID) > -1);
+            }
           }
-
           if (active) {
+            const origLen = current ? current.length : 0;
             this._active = active;
-          }
-
-          if (!active && this.unsetNoMatch) {
-            console.warn('[unsetNoMatch]="true" does not (yet) work together with [multiple]="true"')
-            // // there was a value, but given options did not contain it
-            // this._active = active;
-            // this.emitChange(); // emit change
+            if (origLen !== active.length) {
+              this.emitChange();
+              this.updatePosition();
+            }
           }
         }
       }
@@ -784,28 +789,25 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
       if (this.options && this.options.length > 0) {
         let active: Array<SelectItem>;
-
+        const current = this._active as SelectItem[];
         if (this.isGroupOptions) {
           const allAtomicOptions: SelectItem[] = OptionsBehavior.getLeafOptions(this.options);
 
           active = allAtomicOptions.filter(o => this._value.indexOf(o.ID) > -1);
         } else {
-          active = this.options.filter(o => this._value.indexOf(o.ID) > -1);
+          if (!this._active || this.unsetNoMatch) {
+            active = this.options.filter(o => this._value.indexOf(o.ID) > -1);
+          }
         }
-
         if (active) {
           this._active = active;
-        }
-
-        if (!active && this.unsetNoMatch) {
-          console.warn('[unsetNoMatch]="true" does not (yet) work together with [multiple]="true"')
-          // // there was a value, but given options did not contain it
-          // this._active = active;
-          // this.emitChange(); // emit change
-        } else if (!active && this.modelConfig) {
-          // value was set, we have options, but none matches and we have modelConfig
-          // still set active item to look like the option is set
-          this._active = values.map(v => new SelectItem(v, this.modelConfig));
+          if (current?.length !== active.length) {
+            const activeIDs = active.map((a) => a.ID);
+            const rejected = this._value.filter((a) => !activeIDs.includes(a));
+            this._value = activeIDs;
+            console.warn(`Values [${rejected}] were not accepted by [is-select] because they do not belong to [items] and [unsetNoMatch] is set to true`);
+            this.emitChange();
+          }
         }
 
       } else {
@@ -825,7 +827,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     if (this.optionsOpened) {
       this.optionsOverlayRef.updatePosition();
     }
-    if (this.resize === false) {
+    if (this.resize === false && this.multiple) {
       const elWrap = this.element.nativeElement.querySelector('.ui-select-match');
       const wrapRect = elWrap.getBoundingClientRect();
       const el = this.element.nativeElement.querySelector('.ui-select-toggle');

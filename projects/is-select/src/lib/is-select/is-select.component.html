@@ -5,6 +5,7 @@
     <span tabindex="-1" class="ui-select-toggle"
       [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}"
       >
+      <i *ngIf="icon" [class]="icon"></i>
       <span *ngIf="!multiActive && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
       <div *ngFor="let it of multiActive" class="ui-select-match-text {{it.cssClass}}">
         <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateSelection"
@@ -23,6 +24,7 @@
       <span tabindex="-1" class="ui-select-toggle"
         [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}"
         >
+        <i *ngIf="icon" [class]="icon"></i>
         <span *ngIf="!singleActive && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
         <span *ngIf="singleActive" class="ui-select-match-text {{singleActive.cssClass}}">
           <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateSelection"
@@ -36,8 +38,6 @@
         [ngClass]="{'fa-chevron-down': !optionsOpened, 'fa-chevron-up': optionsOpened}"></i>
     </div>
   </ng-template>
-
-
 </div>
 
 <ng-template #defaultTemplateSelection let-item="item">
