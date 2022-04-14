@@ -186,8 +186,12 @@ export class DemoSelectComponent implements OnInit {
     this.select6Control.setValue({ ID: 666, Value: 'xxx (unknown model)' });
   }
 
-  selectFirstModelMulti() {
+  selectUnknownModelMulti() {
     this.select6ControlMulti.setValue([{ ID: 666, Value: 'xxx (unknown model)' }]);
+  }
+
+  selectFirstModelMulti() {
+    this.select6ControlMulti.setValue([{ ID: 1, Value: '(first, but unknown model)' }]);
   }
 
   moreOptions$: BehaviorSubject<any[]> = new BehaviorSubject(null);

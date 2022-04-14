@@ -91,7 +91,7 @@
         </div>
         <div class="col-sm-6">
           <h3>Select multiple cities (fixed height)</h3>
-          <is-select [multipleConfig]="{showButtons: true}" [class.is-input-small]="small" [resize]="false" [formControl]="select1Control" [placeholderShow]="false"
+          <is-select [multipleConfig]="{showButtons: true}" icon="fa fa-user" [class.is-input-small]="small" [resize]="false" [formControl]="select1Control" [placeholderShow]="false"
             [allowClear]="true" [items]="items" (changed)="changed($event)" placeholder="0 cities selected">
           </is-select>
         </div>
@@ -100,8 +100,9 @@
           <is-select [allowClear]="true" [class.is-input-small]="small" [multipleConfig]="{}" [minLoadChars]="3" (loadOptions)="onOptionsRequired($event)"
             [items]="moreOptions$ | async" searchPlaceholder="type: aaa" [formControl]="select6ControlMulti"
             [modelConfig]="{idProp: 'ID', textProp: 'Value'}" (changed)="changed($event)"></is-select>
-          <button class="btn btn-primary" (click)="selectFirstModelMulti()">Select unknown (model)</button>
-          <p>Value: {{select6Control.valueChanges|async|json}}</p>
+          <button class="btn btn-primary" (click)="selectUnknownModelMulti()">Select unknown (model)</button>
+          <button class="btn btn-primary" (click)="selectFirstModelMulti()">Select first (model)</button>
+          <p>Value: {{select6ControlMulti.valueChanges|async|json}}</p>
         </div>
         <div class="col-sm-6">
           <h3>[unsetNoMatch]=false</h3>

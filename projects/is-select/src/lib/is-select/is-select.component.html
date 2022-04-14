@@ -6,7 +6,7 @@
       [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}"
       >
       <i *ngIf="icon" [class]="icon"></i>
-      <span *ngIf="!multiActive && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
+      <span *ngIf="(!multiActive || multiActive.length === 0) && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
       <div *ngFor="let it of multiActive" class="ui-select-match-text {{it.cssClass}}">
         <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateSelection"
           [ngTemplateOutletContext]="{$implicit: it, index: 0, item: it}">

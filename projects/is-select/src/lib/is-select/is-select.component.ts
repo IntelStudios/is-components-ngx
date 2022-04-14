@@ -156,7 +156,15 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
             const allAtomicOptions = OptionsBehavior.getLeafOptions(this.options)
             active = allAtomicOptions.filter(o => this._value.indexOf(o.ID) > -1);
           } else {
-            if (!this._active || this.unsetNoMatch) {
+            if (this._active) {
+              active = current.map((a) => {
+                const opt = this.options.find((o) => o.ID === a.ID);
+                if (opt) {
+                  a.Value = opt.Value;
+                }
+                return a;
+              });
+            } else if (this.unsetNoMatch) {
               active = this.options.filter(o => this._value.indexOf(o.ID) > -1);
             }
           }
@@ -165,9 +173,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
             this._active = active;
             if (origLen !== active.length) {
               this.emitChange();
-              this.updatePosition();
             }
           }
+          setTimeout(() => this.updatePosition());
         }
       }
     }
