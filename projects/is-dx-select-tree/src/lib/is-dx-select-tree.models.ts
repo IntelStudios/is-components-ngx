@@ -33,7 +33,7 @@ export class IsDXSelectTreeNode {
   }
 
   static createRoot(): IsDXSelectTreeNode {
-    return new IsDXSelectTreeNode(0, 'All', false, '').withIcon('fa fa-star-o');
+    return new IsDXSelectTreeNode(0, 'All', false, '').withIcon('fa-regular fa-star');
   }
 
   static deserialize(root: IISTreeNode, defaultIcon: string = null, ...fields: IsDXSelectField[]): IsDXSelectTreeNode {
@@ -328,8 +328,8 @@ export class IsDXSelectField {
   static selected(): IsDXSelectField {
     let sf: IsDXSelectField = new IsDXSelectField();
     sf.name = 'shared.select-tree.selected';
-    sf.iconOn = 'fa-check-square-o';
-    sf.iconOff = 'fa-square-o';
+    sf.iconOn = 'fa-regular fa-square-check';
+    sf.iconOff = 'fa-regular fa-square';
     sf.fieldName = 'IsSelected';
     return sf;
   }
