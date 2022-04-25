@@ -26,7 +26,7 @@ export class IsSelectTreeNode {
   }
 
   static createRoot(): IsSelectTreeNode {
-    return new IsSelectTreeNode(0, 'All').withIcon('fa fa-star-o');
+    return new IsSelectTreeNode(0, 'All').withIcon('fa-regular fa-star');
   }
 
   static deserialize(root: IISTreeNode, defaultIcon: string = null, ...fields: IsSelectField[]): IsSelectTreeNode {
@@ -321,8 +321,8 @@ export class IsSelectField {
   static selected(): IsSelectField {
     let sf: IsSelectField = new IsSelectField();
     sf.name = 'shared.select-tree.selected';
-    sf.iconOn = 'fa-check-square-o';
-    sf.iconOff = 'fa-square-o';
+    sf.iconOn = 'fa-regular fa-square-check';
+    sf.iconOff = 'fa-regular fa-square';
     sf.fieldName = 'IsSelected';
     return sf;
   }
@@ -330,8 +330,8 @@ export class IsSelectField {
   static applicable(): IsSelectField {
     let sf: IsSelectField = new IsSelectField();
     sf.name = 'shared.select-tree.selected';
-    sf.iconOn = 'fa-check-square-o';
-    sf.iconOff = 'fa-square-o';
+    sf.iconOn = 'fa-regular fa-square-check';
+    sf.iconOff = 'fa-regular fa-square';
     sf.fieldName = 'IsApplicable';
     return sf;
   }
@@ -339,8 +339,8 @@ export class IsSelectField {
   static allowed(): IsSelectField {
     let sf: IsSelectField = new IsSelectField();
     sf.name = 'shared.select-tree.allowed';
-    sf.iconOn = 'fa-check-square-o';
-    sf.iconOff = 'fa-square-o';
+    sf.iconOn = 'fa-regular fa-square-check';
+    sf.iconOff = 'fa-regular fa-square';
     sf.fieldName = 'IsAllowed';
     return sf;
   }
@@ -348,8 +348,8 @@ export class IsSelectField {
   static editable(): IsSelectField {
     let sf: IsSelectField = new IsSelectField();
     sf.name = 'shared.select-tree.editable';
-    sf.iconOn = 'fa-pencil-square-o';
-    sf.iconOff = 'fa-square-o';
+    sf.iconOn = 'fa-regular fa-pen-to-square';
+    sf.iconOff = 'fa-regular fa-square';
     sf.fieldName = 'IsEditable';
     return sf;
   }

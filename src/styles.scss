@@ -8,7 +8,7 @@
 @import "../node_modules/froala-editor/css/plugins/code_view.min.css";
 @import "../node_modules/froala-editor/css/themes/dark.css";
 
-@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "../node_modules/@intelstudios/font-awesome/fontawesome/css/all.css";
 
 @import "~@circlon/angular-tree-component/css/angular-tree-component.css";
 
@@ -58,7 +58,7 @@ is-checkbox,
 is-radio {
   > label {
     > input {
-      font-family: "Font Awesome 5 Free" !important;
+      font-family: "Font Awesome 6 Pro" !important;
     }
   }
 }
