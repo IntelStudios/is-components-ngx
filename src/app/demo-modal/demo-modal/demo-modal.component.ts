@@ -80,7 +80,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       ],
       options: { class: 'modal-sm' }
     };
-    this.modalService.show(config);
+    this.modalService.showMovable(config);
   }
 
   openDialog2() {
@@ -88,7 +88,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       template: this.template,
       options: { class: 'modal-sm' },
     };
-    this.modalService.show(config);
+    this.modalService.showMovable(config);
   }
 
   openModal(ref: TemplateRef<any>) {
@@ -133,7 +133,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       options: { class: 'modal-lg' },
     };
 
-    this.modalService.show(config);
+    this.modalService.showMovable(config);
   }
 
   openMovableComponentModal() {

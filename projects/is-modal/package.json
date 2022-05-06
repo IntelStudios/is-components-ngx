@@ -9,7 +9,6 @@
     "@angular/core": "^13.3.1",
     "ngx-bootstrap": "^8.0.0",
     "@angular/cdk": "^13.3.2",
-    "@ngx-translate/core": "^14.0.0",
-    "ng-modal-lib": "^0.0.8"
+    "@ngx-translate/core": "^14.0.0"
   }
 }

@@ -83,7 +83,7 @@ export class DemoBootstrapSwitchComponent implements OnInit {
       }
     };
 
-    this.modalService.show(config);
+    this.modalService.showMovable(config);
   }
 
   setValue(value: string) {

@@ -1,6 +1,13 @@
 import { TemplateRef } from '@angular/core';
 import { ModalDirective, ModalOptions } from 'ngx-bootstrap/modal';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+
+export interface IsDialogComponent<I, O> {
+  modal: ModalDirective;
+  modalConfig: ModalOptions;
+  input: I;
+  output: Observable<O>;
+}
 
 export interface IsModalRef {
   close: () => void;

@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ModalComponent } from 'ng-modal-lib';
 
 import { IsModalButtonConfig, IsModalMovableControl, IsModalMovableInstance, IsModalRef } from './is-modal.interfaces';
+import { MovableModalComponent } from './movable/modal/modal.component';
 
 @Component({
   selector: 'is-modal-movable',
@@ -15,7 +15,7 @@ export class IsModalMovableComponent implements OnInit, AfterViewInit, IsModalMo
   control: IsModalMovableControl;
 
   @ViewChild('modal', { static: true })
-  modal: ModalComponent;
+  modal: MovableModalComponent;
 
   modalRef: IsModalRef;
 

@@ -7,3 +7,4 @@ export * from './lib/is-modal.interfaces';
 export * from './lib/is-modal-movable.service';
 export * from './lib/is-modal.service';
 export * from './lib/is-modal.module';
+export * from './lib/movable/modal/modal.component';
