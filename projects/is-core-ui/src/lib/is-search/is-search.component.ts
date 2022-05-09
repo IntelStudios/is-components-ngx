@@ -26,7 +26,7 @@ export const IS_SEARCH_VALUE_ACCESSOR: any = {
 export class IsSearchComponent {
 
   @Input()
-  placeholder: string = '';
+  placeholder = 'Search keyword';
 
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
@@ -39,6 +39,13 @@ export class IsSearchComponent {
 
   constructor(public el: ElementRef, private changeDetector: ChangeDetectorRef) {
 
+  }
+
+  focus(): void {
+    const input = this.el.nativeElement.querySelector('input');
+    if (input) {
+      input.focus();
+    }
   }
 
   // change events from the input

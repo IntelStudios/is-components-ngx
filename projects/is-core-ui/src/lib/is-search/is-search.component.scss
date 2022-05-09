@@ -11,17 +11,13 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    
-    background-color: $is-search-bg-color;
-    border-color: $is-search-bg-color;
-    height: $is-input-height-regular;
+    @include is-input();
     > input {
       @include is-input();
-      color: $is-search-fg-color;
       font-size: 14px;
-      font-weight: bold;
       border: none;
       background-color: transparent;
+      padding-left: 0;
       &:focus {
         box-shadow: none;
         background-color: transparent;
@@ -33,9 +29,7 @@
       >i {
         font-size: 14px;
         border: none;
-        padding-right: 8px;
         background-color: transparent;
-        color: $is-search-icon-color;
       }
     }
   }
