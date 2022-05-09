@@ -52,7 +52,7 @@
       border-color: $is-control-boder-hover-color;
     }
 
-    &:active, &:focus {
+    &:active, &:focus, &:focus-within {
       background-color: $is-control-bg-color;
       color: $is-control-fg-color;
       @include is-input-active;

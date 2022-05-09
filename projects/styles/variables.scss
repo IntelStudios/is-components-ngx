@@ -31,10 +31,6 @@ $is-select-item-desc-fg-color: var(--is-select-item-desc-fg-color, #333);
 $is-select-item-group-color: var(--is-select-item-group-color, #777E85);
 $is-select-item-group-divider-color: var(--is-select-item-group-divider-color, #aaa);
 
-$is-search-bg-color: var(--is-search-bg-color, #EDEEEF);
-$is-search-fg-color: var(--is-search-fg-color, #777E85);
-$is-search-icon-color: var(--is-search-icon-color, #2B3642);
-
 $is-froala-toolbar-bg-color: var(--is-froala-toolbar-bg-color, #fff);
 $is-froala-toolbar-fg-color: var(--is-froala-toolbar-fg-color, #000);
 $is-froala-toolbar-separator: var(--is-froala-toolbar-separator, #ebebeb);
@@ -69,10 +65,13 @@ $is-timepicker-fg-color: var(--is-timepicker-fg-color, #333);
 $is-timepicker-hover-fg-color: var(--is-timepicker-hover-fg-color, #000);
 $is-timepicker-bg-color: var(--is-timepicker-bg-color, #ccc);
 
-$is-switch-border: var(--is-switch-border, $is-control-fg-color);
-$is-switch-backdrop: var(--is-switch-backdrop, #fff);
-$is-switch-checked: var(--is-switch-checked, $is-control-fg-color);
 $is-switch-disabled: var(--is-switch-disabled, $is-control-disabled-fg-color);
+$is-switch-bg-color: var(--is-switch-bg-color, #fff);
+$is-switch-active-bg-color: var(--is-switch-active-bg-color,#14891B);
+$is-switch-border-color: var(--is-switch-border-color, #777E85);
+$is-switch-border-hover-color: var(--is-switch-border-hover-color,#55A955);
+$is-switch-toggle-color: var(--is-switch-toggle-color,#2B3642);
+$is-switch-toggle-active-color: var(--is-switch-toggle-active-color, #fff);
 
 $is-movable-modal-zindex: var(--is-movable-modal-zindex, 1055);
 $is-movable-modal-header-fg-color: var(--is-movable-modal-header-fg-color, #000);
