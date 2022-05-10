@@ -1,6 +1,6 @@
 const argv = require("yargs").string("project").argv;
 
-const dist = "dist";
+const dist = "../dist";
 
 const project = argv.project;
 if (!project) {
