@@ -1,5 +1,7 @@
 @import '../../../../styles/variables';
 
+@import '../../../assets/style.scss';
+
 $info: var(--is-badge-info-color, #72BCFF);
 $warning: var(--is-badge-warning-color, #F0C330);
 $danger: var(--is-badge-danger-color, #EB6C77);
@@ -7,107 +9,37 @@ $success: var(--is-badge-success-color, #40C6D2);
 $default: var(--is-badge-default-color, #40C6D2);
 $primary: var(--is-badge-primary-color, #40C6D2);
 
+@include is-select-badge(is-badge-danger, $danger, initial);
+@include is-select-badge(is-badge-warning, $warning, initial);
+@include is-select-badge(is-badge-success, $success, initial);
+@include is-select-badge(is-badge-primary, $primary, #fff);
+@include is-select-badge(is-badge-default, $default, initial);
+@include is-select-badge(is-badge-info, $info, initial);
+
+$badge-font-size: 12px;
+$badge-padding: 2px 4px;
+
 is-select-badge {
+  display: block;
   &.ng-invalid {
     border: none !important;
   }
 
   is-select {
     .ui-select-match-text {
-      &.is-badge {
-        font-size: 11px;
-        padding: 2px 4px;
-      }
-
-      &.is-badge-danger {
-        background-color: $danger !important;
-
-        .btn-remove {
-          background: $danger !important;
-        }
-      }
-
-      &.is-badge-warning {
-        background-color: $warning !important;
-
-        .btn-remove {
-          background: $warning !important;
-        }
-      }
-
-      &.is-badge-info {
-        background-color: $info !important;
-
-        .btn-remove {
-          background: $info !important;
-        }
-      }
-
-      &.is-badge-success {
-        background-color: $success !important;
-
-        .btn-remove {
-          background: $success !important;
-        }
-      }
-      &.is-badge-primary {
-        background-color: $primary !important;
-        color: #fff !important;
-        .btn-remove {
-          color: #fff !important;
-          background: $primary !important;
-        }
-      }
-      &.is-badge-default {
-        background-color: $default !important;
-        .btn-remove {
-          background: $default !important;
-        }
-      }
+      font-size: $badge-font-size;
+      padding: $badge-padding;
     }
   }
 }
 
 is-select-options {
-  a.is-badge {
-    >span {
-      font-size: 11px;
-      padding: 2px 4px;
-    }
-  }
-
-  a.is-badge-danger {
-    >span {
-      background-color: $danger;
-    }
-  }
-
-  a.is-badge-warning {
-    >span {
-      background-color: $warning;
-    }
-  }
-
-  a.is-badge-info {
-    >span {
-      background-color: $info;
-    }
-  }
-
-  a.is-badge-success {
-    >span {
-      background-color: $success;
-    }
-  }
-  a.is-badge-primary {
-    >span {
-      background-color: $primary;
-      color: #fff;
-    }
-  }
-  a.is-badge-default {
-    >span {
-      background-color: $default;
+  &.is-select-badge {
+    a.dropdown-item {
+      > span {
+        font-size: $badge-font-size;
+        padding: $badge-padding;
+      }
     }
   }
 }

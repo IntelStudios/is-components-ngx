@@ -4,19 +4,17 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  forwardRef,
-  HostBinding,
-  Input,
+  forwardRef, Input,
   OnDestroy,
   Output,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
-
+import { IsSelectBadgeItem } from '../is-select.interfaces';
 import { IsSelectComponent } from '../is-select/is-select.component';
 import { SelectItem } from '../select-item';
+
 
 export const IS_SELECT_BADGE_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -49,10 +47,19 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
   useModels: boolean;
 
   @Input()
+  unsetNoMatch: boolean;
+
+  @Input()
   placeholder: string = 'None';
 
   @Input()
   isSearch: boolean = true;
+
+  @Input()
+  icon: string;
+
+  @Input()
+  resize: boolean;
 
   @Input()
   set value(value: any) {
@@ -64,13 +71,14 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
   }
 
   @Input()
-  set items(items: SelectItem[]) {
+  set items(items: IsSelectBadgeItem[]) {
     if (!items || items.length === 0) {
       return;
     }
     this._items = this.parseItems(items);
+    console.log(this._items)
     //if (String(this._value) || this.multiple) {
-      this.setValue();
+    this.setValue();
     //}
   }
 
@@ -95,7 +103,7 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
   /** Called when the combo is blurred. Needed to properly implement ControlValueAccessor. */
   onTouched: () => any = () => { return; };
 
-  constructor(private changeDetector: ChangeDetectorRef, private sanitizer: DomSanitizer) {
+  constructor(private cd: ChangeDetectorRef) {
     return;
   }
 
@@ -109,14 +117,15 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
     return;
   }
 
-  private parseItems(items: SelectItem[]): SelectItem[] {
+  private parseItems(items: IsSelectBadgeItem[]): SelectItem[] {
     return items.map((it: SelectItem) => {
       const result = new RegExp(/\[(\w+)_(.+?)\]/g).exec(it.Value);
       if (result) {
-        return new SelectItem({...it, cssClass: `is-badge is-badge-${result[1].toLowerCase()}`, Value: result[2]});
+        return new SelectItem({ ...it, cssClass: `is-badge is-badge-${result[1].toLowerCase()}`, Value: result[2] });
+      } else {
+        return new SelectItem({ ...it });
       }
-      return it;
-    })
+    });
   }
 
   /**
@@ -146,7 +155,7 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
    */
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
-    this.changeDetector.markForCheck();
+    this.cd.markForCheck();
   }
 
   onValueChanged($event: any) {
@@ -168,7 +177,7 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
         this.valueChange.next(Number(this.value));
       }
     }
-    this.changeDetector.markForCheck();
+    this.cd.markForCheck();
   }
 
   private setValue() {
@@ -199,6 +208,6 @@ export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, Control
       //this.select.active = [];
     }
 
-    this.changeDetector.markForCheck();
+    this.cd.markForCheck();
   }
 }

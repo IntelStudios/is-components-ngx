@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { IsSelectBadgeItem } from 'projects/is-select/src/public_api';
 import { of, Observable, Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-demo-select',
   templateUrl: './demo-select.component.html',
   styleUrls: ['./demo-select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class DemoSelectComponent implements OnInit {
 
@@ -62,6 +64,11 @@ export class DemoSelectComponent implements OnInit {
     { ID: 3, Value: '[info_Info]' },
     { ID: 4, Value: '[success_Success]' },
     { ID: 5, Value: '[primary_Primary]' }
+  ];
+
+  customBadges: IsSelectBadgeItem[] = [
+    { ID: 0, Value: 'Default', icon: 'fas fa-user', cssClass: 'is-badge default-badge-custom' },
+    { ID: 1, Value: 'Danger', icon: 'fas fa-beer', cssClass: 'is-badge danger-badge-custom' },
   ];
 
   itemsWithDesc = [

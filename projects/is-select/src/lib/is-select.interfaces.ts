@@ -6,6 +6,13 @@ export interface IsColorItem {
   Object: string;
 }
 
+export interface IsSelectBadgeItem {
+  icon?: string;
+  ID: string | number;
+  Value: string;
+  cssClass: string;
+}
+
 export interface IsSelectModelConfig {
   idProp: string;
   textProp: string;

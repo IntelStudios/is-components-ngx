@@ -215,6 +215,19 @@
           </is-select-badge>
         </div>
       </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Custom badge</h3>
+          <is-select-badge class="light-gray" [selectClass]="small ? 'is-input-small' : ''" [formControl]="select5Control" [allowClear]="true" [items]="customBadges"
+            (valueChange)="changed($event)"> </is-select-badge>
+        </div>
+        <div class="col-sm-6">
+          <h3>Custom badge (multiple)</h3>
+          <is-select-badge [formControl]="select5ControlMulti" [selectClass]="small ? 'is-input-small' : ''" [multiple]="true" [useModels]="true" [allowClear]="true" [items]="customBadges"
+            (valueChange)="changed($event)">
+          </is-select-badge>
+        </div>
+      </div>
     </ng-template>
   </is-tab>
 

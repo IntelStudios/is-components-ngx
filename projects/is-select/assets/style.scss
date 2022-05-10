@@ -1,0 +1,22 @@
+@mixin is-select-badge($className, $bgColor, $fgColor) {
+  is-select-badge {
+    is-select {
+      .ui-select-match-text {
+        &.#{$className} {
+          --is-select-multi-item-bg-color: #{$bgColor};
+          --is-select-multi-item-fg-color: #{$fgColor};
+          background-color: #{$bgColor};
+          --is-control-fg-color: #{$fgColor};
+        }
+      }
+    }
+  }
+  is-select-options {
+    .#{$className} {
+      > span {
+        background-color: #{$bgColor};
+        color: #{$fgColor};
+      }
+    }
+  }
+}

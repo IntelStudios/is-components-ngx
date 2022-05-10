@@ -1,3 +1,4 @@
-:host {
+@import 'projects/is-select/assets/style.scss';
 
-}
+@include is-select-badge(default-badge-custom, blue, white);
+@include is-select-badge(danger-badge-custom, red, white);

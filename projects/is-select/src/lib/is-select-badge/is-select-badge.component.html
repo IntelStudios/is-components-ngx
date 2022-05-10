@@ -1,6 +1,15 @@
-<is-select #select [multipleConfig]="multiple ? {} : undefined" [class]="selectClass" [useModels]="useModels" [placeholder]="placeholder" [allowClear]="allowClear" [items]="items"
-  (changed)="onValueChanged($event)" [class.disabled]="disabled" [disabled]="disabled" [isSearch]="isSearch">
+<is-select #select [icon]="icon" [multipleConfig]="multiple ? {} : undefined" [class]="selectClass + ' is-select-badge'" [useModels]="useModels" [placeholder]="placeholder" [allowClear]="allowClear" [items]="items"
+  (changed)="onValueChanged($event)" [resize]="resize" [unsetNoMatch]="unsetNoMatch" [class.disabled]="disabled" [disabled]="disabled" [isSearch]="isSearch">
   <ng-template is-select-option let-item>
-    <span>{{item.Value}}</span>
+    <span>
+      <i [class]="item.source.source.icon"></i>
+      {{item.Value}}
+    </span>
+  </ng-template>
+  <ng-template is-select-selection let-item>
+    <span>
+      <i [class]="item.source.source.icon"></i>
+      {{item.Value}}
+    </span>
   </ng-template>
 </is-select>
