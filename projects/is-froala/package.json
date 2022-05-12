@@ -5,11 +5,11 @@
     "@angular/core": "^13.3.1",
     "@ngx-translate/core": "^14.0.0",
     "font-awesome": "^4.7.0",
-    "@intelstudios/cdk": "^13.0.2",
+    "@intelstudios/cdk": "^13.0.3",
     "froala-editor": "^2.9.5"
   },
   "dependencies": {
     "tslib": "^2.0.0"
   },
-  "version": "13.0.1"
+  "version": "13.0.2"
 }
