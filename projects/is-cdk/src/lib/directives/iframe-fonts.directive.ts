@@ -27,7 +27,7 @@ export class IsIFrameFontsDirective implements AfterViewInit, OnDestroy {
     const doc = iframe.contentDocument;
 
     document['fonts'].forEach((value) => {
-      doc['fonts'].add(value);
+      (doc['fonts'] as any).add(value);
     })
   }
 }
