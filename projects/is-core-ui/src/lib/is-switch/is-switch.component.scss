@@ -8,7 +8,10 @@ $disabled-opacity: 0.6;
 :host {
   display: flex;
   position: relative;
-
+  height: $is-input-height-regular;
+  &.is-input-small {
+    height: $is-input-height-small;
+  }
   input {
     border: 0;
     clip: rect(1px, 1px, 1px, 1px);
