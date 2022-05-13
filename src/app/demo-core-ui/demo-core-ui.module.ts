@@ -11,10 +11,12 @@ import { IsDatepickerModule } from 'projects/is-datepicker/src/public_api';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { IsTimepickerModule } from 'projects/is-timepicker/src/public_api';
 import { IsSelectModule } from 'projects/is-select/src/public_api';
+import { IsCdkModule } from 'projects/is-cdk/src/public-api';
 
 @NgModule({
   declarations: [DemoCoreUIComponent],
   imports: [
+    IsCdkModule,
     CommonModule, IsCoreUIModule.forRoot(),
     IsDatepickerModule, BsDatepickerModule.forRoot(),
     IsSelectModule, IsTimepickerModule,

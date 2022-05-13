@@ -37,6 +37,18 @@ export class DemoCoreUIComponent implements OnInit {
     </ul>
   `;
 
+  encapsulatedHtml1 = `
+  <style>body { color: red;}</style>
+  <h3>Encapsulated HTML 1</h3>
+<pre>npm install --save @intelstudios/core-ui</pre>
+  `;
+
+  encapsulatedHtml2 = `
+  <style>pre { color: blue;}</style>
+  <h3>Encapsulated HTML 2</h3>
+<pre>npm install --save @intelstudios/core-ui</pre>
+  `;
+
   small = false;
 
   formControl1: FormControl;
@@ -106,7 +118,7 @@ export class DemoCoreUIComponent implements OnInit {
 
   toggleInvalid(ctrl: FormControl) {
     if (ctrl.valid) {
-      ctrl.setErrors({invalid: true})
+      ctrl.setErrors({ invalid: true })
     } else {
       ctrl.setErrors(null);
     }
