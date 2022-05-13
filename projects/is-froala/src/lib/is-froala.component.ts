@@ -312,26 +312,10 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
     }
   }
 
-  onIframeClick(e: MouseEvent): void {
-    const el = e.target as HTMLElement;
-    if (el.localName === 'a') {
-      const target = el as HTMLAnchorElement;
-      window.open(target.href, '_blank');
-      return;
-    }
-    if (el.localName === 'img') {
-      const img = el as HTMLImageElement;
-      this.zone.run(() => this.onImagePreview.next(img.src));
-      return;
-    }
+  onReadonlyContentClick(e: MouseEvent): void {
     if (!this.disabled) {
       this.loadEditor(true);
     }
-  }
-
-  onIframeLoad(e: Event): void {
-    const iframeEl = e.target as HTMLIFrameElement;
-    this.copyThemeStyleToIframe(iframeEl.contentDocument.querySelector('body'), iframeEl, true);
   }
 
   // End Validators methods
