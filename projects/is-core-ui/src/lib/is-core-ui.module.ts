@@ -25,15 +25,16 @@ import {
 import { IsTileComponent } from './is-tile/is-tile.component';
 import { IsCdkModule } from '@intelstudios/cdk';
 import { IsHintComponent } from './is-hint/is-hint.component';
+import { IsInputSecretComponent } from './is-input-secret/is-input-secret.component';
 
 @NgModule({
   imports: [
     CommonModule, RouterModule, TranslateModule, PopoverModule, ScrollingModule, TooltipModule, IsCdkModule
   ],
   declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsHintComponent, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective,  IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsSwitchComponent, IsTileComponent],
+    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective,  IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsSwitchComponent, IsTileComponent, IsInputSecretComponent],
   exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsSwitchComponent, IsTileComponent]
+    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsSwitchComponent, IsTileComponent, IsInputSecretComponent]
 })
 export class IsCoreUIModule {
   static forRoot(config?: IsCoreUIConfig): ModuleWithProviders<IsCoreUIModule> {

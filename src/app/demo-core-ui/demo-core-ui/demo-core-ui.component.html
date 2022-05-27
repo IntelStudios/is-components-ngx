@@ -7,6 +7,14 @@
 </div>
 <div class="row">
   <div class="col-sm-12">
+    <h3>Type secret and click on the eye</h3>
+    <is-input-secret [formControl]="passwordControl" [class.is-input-small]="small" [placeholder]="'This is placeholder...'">
+    </is-input-secret>
+    <button (click)="toggleInvalid(passwordControl)">Toggle Invalid</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
     <h2>Tile</h2>
   </div>
 </div>

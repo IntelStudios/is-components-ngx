@@ -10,7 +10,8 @@
     "@ngx-translate/core": "^14.0.0",
     "moment": "^2.22.2",
     "ngx-bootstrap": "^8.0.0",
-    "@intelstudios/cdk": "^13.0.1"
+    "@intelstudios/cdk": "^13.0.1",
+    "text-security": "^3.2.1"
   },
   "dependencies": {
     "tslib": "^2.0.0"
