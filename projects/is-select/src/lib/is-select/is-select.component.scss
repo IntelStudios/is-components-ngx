@@ -48,6 +48,7 @@ $is-select-multi-selection-max-width: var(--is-select-multi-selection-max-width,
   }
 
   >.ui-select-container {
+    position: relative;
     >.ui-select-match {
 
       display: flex;
