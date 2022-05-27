@@ -76,11 +76,6 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   @ViewChild('tooltip')
   tooltip: PopoverDirective;
 
-  @HostBinding('class.hidden')
-  get isHidden() {
-    return !this.isShown;
-  }
-
   private transPrefix: string = 'field-error.';
   private _sub: Subscription;
 

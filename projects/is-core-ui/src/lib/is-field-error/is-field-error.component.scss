@@ -4,9 +4,6 @@
   display: flex;
   align-items: center;
   font-size: var(--is-field-error-msg-font-size, 14px);
-  &.hidden {
-    display: none !important;
-  }
   i {
     color: $is-control-invalid-fg-color;
   }
