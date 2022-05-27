@@ -1,4 +1,4 @@
-<label>
+<label [class.disabled]="disabled">
   <input #inputEl [type]="type" [name]="_name" [checked]="checked" [value]="value" [disabled]="disabled"
     (change)="_onChange($event, inputEl.checked, inputEl.value)" />
   <span>

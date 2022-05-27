@@ -11,7 +11,9 @@
     align-items: center;
     margin: 0;
     cursor: pointer;
-
+    &.disabled {
+      pointer-events: none;
+    }
     input[type=checkbox],
     input[type=radio] {
       position: relative;
