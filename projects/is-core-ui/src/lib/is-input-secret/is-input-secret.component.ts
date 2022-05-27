@@ -44,7 +44,7 @@ export class IsInputSecretComponent {
   private _onChangeCallback = (_: any) => { };
   onTouched = () => { };
 
-  constructor(private changeDetector: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef) {
 
   }
 
@@ -58,7 +58,7 @@ export class IsInputSecretComponent {
 
   togglePassword() {
     this.showPassword = !this.showPassword;
-    this.changeDetector.markForCheck();
+    this.cd.markForCheck();
   }
 
   /**
@@ -68,8 +68,8 @@ export class IsInputSecretComponent {
     if (!value) {
       return;
     }
-
     this.value = value;
+    this.cd.markForCheck();
   }
 
   /**
@@ -84,7 +84,7 @@ export class IsInputSecretComponent {
    */
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
-    this.changeDetector.markForCheck();
+    this.cd.markForCheck();
   }
 
   /**`
