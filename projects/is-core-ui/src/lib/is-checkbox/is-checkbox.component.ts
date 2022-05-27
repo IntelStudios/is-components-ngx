@@ -36,6 +36,7 @@ export class IsRadioGroupDirective implements ControlValueAccessor, AfterViewIni
   @ContentChildren(forwardRef(() => IsCheckboxComponent), { descendants: true })
   _radios: QueryList<IsCheckboxComponent>;
 
+  @Input()
   disabled: boolean = false;
 
   @Input()
