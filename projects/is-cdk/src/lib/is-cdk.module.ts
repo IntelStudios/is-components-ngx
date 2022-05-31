@@ -6,13 +6,14 @@ import { PreventDoubleclickDirective } from './directives/prevent-dblclick.direc
 import { IsIFrameClickDirective } from './directives/iframe-click.directive';
 import { IsCdkService } from './is-cdk.service';
 import { IsEncapsulatedComponent } from './components/is-encapsulated.component';
+import { StopPropagationDirective } from './directives/stop-propagation.directive';
 
 @NgModule({
   imports: [
     CommonModule, OverlayModule,
   ],
-  declarations: [IsIFrameResizeDirective, PreventDoubleclickDirective, IsIFrameClickDirective, IsEncapsulatedComponent],
-  exports: [IsIFrameResizeDirective, PreventDoubleclickDirective, IsIFrameClickDirective, IsEncapsulatedComponent],
+  declarations: [IsIFrameResizeDirective, PreventDoubleclickDirective, IsIFrameClickDirective, IsEncapsulatedComponent, StopPropagationDirective],
+  exports: [IsIFrameResizeDirective, PreventDoubleclickDirective, IsIFrameClickDirective, IsEncapsulatedComponent, StopPropagationDirective],
   providers: [IsCdkService],
 })
 export class IsCdkModule { }
