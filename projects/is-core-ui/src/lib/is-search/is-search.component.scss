@@ -25,11 +25,12 @@
     }
     .input-group-addon {
       padding-right: 8px;
-
+      &.right {
+        padding-right: 0px;
+        cursor: pointer;
+      }
       >i {
         font-size: 14px;
-        border: none;
-        background-color: transparent;
       }
     }
   }

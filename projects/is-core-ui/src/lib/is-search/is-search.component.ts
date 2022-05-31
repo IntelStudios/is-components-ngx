@@ -7,6 +7,7 @@ import {
   forwardRef,
   Input,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -29,7 +30,10 @@ export class IsSearchComponent {
   placeholder = 'Search keyword';
 
   @Output()
-  changed: EventEmitter<any> = new EventEmitter<any>();
+  change: EventEmitter<string> = new EventEmitter();
+
+  @ViewChild('inputEl', { static: true })
+  input: ElementRef<HTMLInputElement>;
 
   public value: string = '';
 
@@ -37,24 +41,27 @@ export class IsSearchComponent {
   private _onChangeCallback = (_: any) => { };
   private _onTouchedCallback = (_: any) => { };
 
-  constructor(public el: ElementRef, private changeDetector: ChangeDetectorRef) {
+  constructor(public el: ElementRef, private cd: ChangeDetectorRef) {
 
   }
 
   focus(): void {
-    const input = this.el.nativeElement.querySelector('input');
-    if (input) {
-      input.focus();
+    if (this.input) {
+      this.input.nativeElement.focus();
     }
   }
 
   // change events from the input
   onChange(event: any) {
     if (event) {
-      // this.value = event.target.value;
-      this.changed.next(event.target.value);
-      this._onChangeCallback(event.target.value);
+      this.value = event.target.value;
+      this.emitChange();
     }
+  }
+
+  clear(): void {
+    this.writeValue('');
+    this.emitChange();
   }
 
   /**
@@ -62,7 +69,8 @@ export class IsSearchComponent {
    */
   writeValue(value: string): void {
     this.value = value;
-    this.changeDetector.markForCheck();
+    this.input.nativeElement.value = value;
+    this.cd.markForCheck();
   }
 
   /**
@@ -77,5 +85,10 @@ export class IsSearchComponent {
    */
   registerOnTouched(fn: (_: any) => {}): void {
     this._onTouchedCallback = fn;
+  }
+
+  private emitChange() {
+    this.change.next(this.value);
+    this._onChangeCallback(this.value);
   }
 }
