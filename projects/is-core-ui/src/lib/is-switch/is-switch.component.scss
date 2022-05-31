@@ -8,6 +8,7 @@ $disabled-opacity: 0.6;
 :host {
   display: flex;
   position: relative;
+  align-items: center;
   height: $is-input-height-regular;
   &.is-input-small {
     height: $is-input-height-small;
