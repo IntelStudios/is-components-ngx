@@ -3,7 +3,7 @@
     <i class="fa-solid fa-fw fa-search"></i>
   </div>
   <input type="text" #inputEl class="form-control" [placeholder]="placeholder" (keyup)="onChange($event)">
-  <div class="input-group-addon right" *ngIf="inputEl.value" (click)="clear()">
+  <div class="input-group-addon right" [class.show-clear]="inputEl.value" (click)="clear()">
     <i class="fa-solid fa-fw fa-close"></i>
   </div>
 </div>
