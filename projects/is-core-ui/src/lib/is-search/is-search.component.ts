@@ -54,6 +54,10 @@ export class IsSearchComponent {
   // change events from the input
   onChange(event: any) {
     if (event) {
+      if (event.key === 'Escape') {
+        this.clear();
+        return;
+      }
       this.value = event.target.value;
       this.emitChange();
     }
