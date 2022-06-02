@@ -22,12 +22,13 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.html.currentValue) {
+    if (changes.html.currentValue !== changes.html.previousValue) {
       const contentChild = this.el.nativeElement.querySelector('div');
       const doc = document.createElement('div');
       const className = `enc-content-${instanceCounter}`
       doc.className = className;
       doc.innerHTML = this.html;
+      let isError = false;
       doc.querySelectorAll('style').forEach((styleEl) => {
         try {
           const parsedCss = parseCss(styleEl.innerText);
@@ -41,9 +42,25 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
           newStyle.innerText = stringifyCss(parsedCss).replace(/\n/g, '');
           styleEl.parentNode.replaceChild(newStyle, styleEl);
         } catch (e) {
+          isError = true;
           console.error(e);
+          const errorComment = document.createComment(`CSS ERROR (${e}): "${styleEl.innerText}"`);
+          styleEl.parentNode.replaceChild(errorComment, styleEl);
         }
       });
+      if (isError) {
+        const errorMark = document.createElement('span');
+        errorMark.style.backgroundColor = 'red';
+        errorMark.style.color = 'white';
+        errorMark.innerText = 'CSS Error';
+        errorMark.style.position  = 'absolute';
+        errorMark.style.top = '0px';
+        errorMark.style.padding = '2px 4px';
+        errorMark.style.fontSize = '75%';
+        errorMark.style.borderRadius = '2px';
+        doc.style.position = 'relative';
+        doc.appendChild(errorMark);
+      }
       this.el.nativeElement.replaceChild(doc, contentChild);
     }
   }

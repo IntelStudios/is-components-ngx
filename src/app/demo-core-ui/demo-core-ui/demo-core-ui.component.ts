@@ -49,6 +49,12 @@ export class DemoCoreUIComponent implements OnInit {
 <pre>npm install --save @intelstudios/core-ui</pre>
   `;
 
+  encapsulatedHtml3 = `
+  <style>pre { color blue;}</style>
+  <h3>Encapsulated HTML (CSS Error)</h3>
+<pre>npm install --save @intelstudios/core-ui</pre>
+  `;
+
   small = false;
 
   formControl1: FormControl;
