@@ -11,6 +11,7 @@ import {
 import {
   AbstractControl,
   ControlValueAccessor,
+  FormControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
@@ -126,6 +127,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   filterDropdownVisible = false;
   newFilterModalVisible = false;
   newFilterModalType: string;
+  newFilterModalValue: FormControl = new FormControl();
 
   // the value of this element, only used in the root instance
   inputSchemaMap: Map<string, string> = new Map<string, string>();
@@ -498,7 +500,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   getFilterTypeIcon(type: string): string {
     switch (type) {
       case 'StringEq':
-        return 'fas fa-equals';
+        return 'fas fa-equal';
       case 'StringNotEq':
         return 'fas fa-not-equal';
     }
@@ -541,6 +543,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
    */
   createNewDataFilter(filterType: string) {
     this.newFilterModalType = filterType;
+    this.newFilterModalValue.setValue(null);
     this.filterModalShow();
     this.filterDropdownHide();
   }
@@ -548,16 +551,14 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   /**
    * Applies new filter to this node
    */
-  applyNewFilter(event: KeyboardEvent | MouseEvent): void {
-    const { value } = (event.target as HTMLInputElement);
-
-    if (!value) {
+  applyNewFilter(): void {
+    if (!this.newFilterModalValue.value) {
       return;
     }
     const newFilters = this.filters.slice();
     newFilters.push({
       Type: this.newFilterModalType,
-      Value: value
+      Value: this.newFilterModalValue.value
     });
     const newStatus: IsInputSchemaFilterStatus = {
       Path: this.paintedStructure.Path,

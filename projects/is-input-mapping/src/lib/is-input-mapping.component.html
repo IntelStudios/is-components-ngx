@@ -1,12 +1,11 @@
 <div *ngIf="level > 0"
-     class="node"
-     [class.folder]="paintedStructure.Children.length > 0"
-     [class.disabled]="disabled"
-     (mouseover)="mouseover = true"
-     (mouseout)="mouseover = false"
->
-  <span
-    (click)="toggleCollapsed()">
+    class="node"
+    [class.folder]="paintedStructure.Children.length > 0"
+    [class.disabled]="disabled"
+    (mouseover)="mouseover = true"
+    (mouseout)="mouseover = false"
+  >
+  <span (click)="toggleCollapsed()">
     <i class="node-icon {{icon}}"></i>
     <span>{{paintedStructure.Name}}</span>
     <span *ngIf="paintedStructure.Description" class="description">{{paintedStructure.Description}}</span>
@@ -17,14 +16,12 @@
 
     <!--suppress HtmlUnknownTarget -->
     <img *ngIf="!disabled && paintedStructure.Children.length > 0 && (mouseover || assignDropdownVisible) && !showOnlyFiltered"
-         class="map-all"
-         src="assets/svg/ico-map_all.svg"
-         (click)="autoassign(); $event.stopPropagation()"
-         alt="map all">
+      class="map-all" src="assets/svg/ico-map_all.svg" (click)="autoassign(); $event.stopPropagation()" alt="map all">
   </span>
 
   <span>
     <span class="assigned-item" *ngFor="let item of inputsAssigned">
+      <!--suppress HtmlUnknownTag -->
       <div>
         <span class="name">{{item.Name}}</span>
         <span class="delete">
@@ -34,7 +31,7 @@
     </span>
 
     <i *ngIf="!disabled && inputsAssignableFiltered.length > 0 && (mouseover || assignDropdownVisible) && !showOnlyFiltered"
-       class="fa fa-plus-square btn-attach-item" (click)="assignDropdownShow()">
+      class="fa fa-plus-square btn-attach-item" (click)="assignDropdownShow()">
     </i>
   </span>
 
@@ -51,6 +48,7 @@
   <span>
     <span *ngFor="let filter of filters; let i = index">
       <span class="assigned-filter" [class.disabled]="disabled">
+        <!--suppress HtmlUnknownTag -->
         <div class="filter-values-wrapper">
           <span class="node-type"><span>{{getFilterTypeContent(filter.Type)}}</span></span>
           <span class="value">{{filter.Value}}</span>
@@ -65,8 +63,7 @@
       </span>
     </span>
 
-    <i
-      *ngIf="!disabled && filtersAllowed && hasDataTypeFilters(paintedStructure.DataType) && (mouseover || filterDropdownVisible || newFilterModalVisible) && !showOnlyFiltered"
+    <i *ngIf="!disabled && filtersAllowed && hasDataTypeFilters(paintedStructure.DataType) && (mouseover || filterDropdownVisible || newFilterModalVisible) && !showOnlyFiltered"
       class="filter fa fa-filter btn-attach-item" (click)="filterDropdownShow()">
     </i>
   </span>
@@ -74,18 +71,17 @@
   <div class="dropdown" *ngIf="filterDropdownVisible">
     <div class="dropdown-content">
       <div *ngFor="let filterType of getDataTypeFilters(paintedStructure.DataType)"
-           (click)="createNewDataFilter(filterType)"
-           class="item"
-      >
+        (click)="createNewDataFilter(filterType)" class="item">
         <div class="node-icon {{getFilterTypeIcon(filterType)}}">{{getFilterTypeContent(filterType)}}</div>
         <span>{{getFilterTypeName(filterType)}}</span>
       </div>
     </div>
   </div>
 
-  <div *ngIf="newFilterModalVisible" class="new-filter">
+  <div *ngIf="newFilterModalVisible" class="new-filter" (click)="applyNewFilter()">
     <span class="node-type"><span>{{getFilterTypeContent(newFilterModalType)}}</span></span>
-    <input type="text" (keydown.enter)="applyNewFilter($event)" (click)="applyNewFilter($event)">
+    <!--suppress HtmlFormInputWithoutLabel -->
+    <input type="text" [formControl]="newFilterModalValue" (keydown.enter)="applyNewFilter()">
   </div>
 </div>
 
@@ -98,12 +94,7 @@
 </div>
 
 <div class="children" [class.left-line]="level > 0" *ngIf="data && collapsed && paintedStructure">
-  <is-input-mapping #child
-                    *ngFor="let child of paintedStructure.Children; let i = index"
-                    [data]="data"
-                    [paintedPath]="getChildPath(i)"
-                    [service]="service"
-                    [filtersAllowed]="filtersAllowed"
-                    [showOnlyFiltered]="showOnlyFiltered"
-  ></is-input-mapping>
+  <is-input-mapping #child *ngFor="let child of paintedStructure.Children; let i = index" [data]="data"
+    [paintedPath]="getChildPath(i)" [service]="service" [filtersAllowed]="filtersAllowed"
+    [showOnlyFiltered]="showOnlyFiltered"></is-input-mapping>
 </div>
