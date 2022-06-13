@@ -500,7 +500,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   getFilterTypeIcon(type: string): string {
     switch (type) {
       case 'StringEq':
-        return 'fas fa-equal';
+        return 'fas fa-equals';
       case 'StringNotEq':
         return 'fas fa-not-equal';
     }

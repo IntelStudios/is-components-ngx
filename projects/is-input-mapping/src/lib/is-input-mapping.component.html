@@ -72,7 +72,7 @@
     <div class="dropdown-content">
       <div *ngFor="let filterType of getDataTypeFilters(paintedStructure.DataType)"
         (click)="createNewDataFilter(filterType)" class="item">
-        <div class="node-icon {{getFilterTypeIcon(filterType)}}">{{getFilterTypeContent(filterType)}}</div>
+        <div class="node-icon {{getFilterTypeIcon(filterType)}}"></div>
         <span>{{getFilterTypeName(filterType)}}</span>
       </div>
     </div>
