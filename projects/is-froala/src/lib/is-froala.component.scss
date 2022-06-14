@@ -14,6 +14,7 @@ is-froala {
   display: block;
   border: 1px solid;
   @include is-input();
+  height: initial;
   padding: 0;
 
   border-radius: $is-general-border-radius;
