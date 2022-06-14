@@ -4,8 +4,7 @@
     <div class="modal-content">
       <div class="modal-header" *ngIf="config.title">
         <h4 class="modal-title">{{config.title|translate}}</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
-          <i class="fas fa-times"></i>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()">
         </button>
       </div>
       <div class="modal-body" [class.short-scroll]="config.bodyScroll" cdkScrollable>
