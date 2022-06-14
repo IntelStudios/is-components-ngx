@@ -17,7 +17,6 @@ export interface ISelectOptionsControl {
     onLoadOptions: (filter: string) => void;
     onItemSelected: (item: SelectItem) => void;
     onItemUnselected: (item: SelectItem) => void;
-    onItemsSelected: () => void;
+    onItemsSelected: (visibleItems: SelectItem[]) => void;
     onItemsDeselected: () => void;
   }
-  

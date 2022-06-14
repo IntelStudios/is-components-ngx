@@ -641,9 +641,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       onClosed: () => {
         this.hideOptions();
       },
-      onItemsSelected: () => {
+      onItemsSelected: (visibleItems: SelectItem[]) => {
         if (this.multiple) {
-          this._active = [...OptionsBehavior.getLeafOptions(this.options).filter(o => !o.disabled)];
+          this._active = [...OptionsBehavior.getLeafOptions(visibleItems).filter(o => !o.disabled)];
           this.changeDetector.markForCheck();
           this.emitChange();
 

@@ -9,7 +9,6 @@ import { IsSelectOptionsService } from '../is-select.options.service';
 import { Inject } from '@angular/core';
 import { ISelectOptionsControl } from '../is-select.internal.interfaces';
 
-
 @Component({
   selector: 'is-select-options',
   templateUrl: './is-select-options.component.html',
@@ -41,7 +40,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   /**
    * in multi-mode these options are rendered on top
    */
-  selectedOptions: SelectItem[];
+  selectedOptions: SelectItem[] = [];
 
   alignment: 'left' | 'right' | 'center';
   alignItems: 'left' | 'right';
@@ -158,7 +157,8 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   }
 
   selectAll() {
-    this.control.onItemsSelected();
+    const toSelect = [...this.visibleOptions.filter(x=> !this.selectedOptions.find(y=> y.ID === x.ID)), ...this.selectedOptions];
+    this.control.onItemsSelected(toSelect);
   }
 
   deselectAll() {
@@ -180,7 +180,6 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
 
     this.markCheckedOptions(this.options);
     if (options && this.isLoadingOptions && (this.control.minLoadChars === 0) || (this.searchFilter && this.searchFilter.length >= this.control.minLoadChars)) {
-      this.options = this.options.filter(o => !o.Checked);
       this.behavior.filter(createFilterRegexp(this.searchFilter));
       this.isLoadingOptions = false;
       this.scrollToSelected();
