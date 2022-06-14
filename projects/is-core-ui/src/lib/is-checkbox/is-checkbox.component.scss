@@ -65,6 +65,10 @@
       content: '\f146' !important; // minus-square
     }
 
+    input[type=radio] {
+      padding-left: 1px; // radio circle does not get cut from left
+    }
+
     input[type=radio]::after {
       content: '\f111'; // circle
     }
