@@ -15,6 +15,7 @@
     "publish.input-mapping": "ng build --configuration production is-input-mapping && npm publish ./dist/is-input-mapping",
     "publish.codemirror": "ng build --configuration production is-codemirror && npm publish ./dist/is-codemirror",
     "publish.froala": "ng build --configuration production is-froala && npm publish ./dist/is-froala",
+    "package.froala": "ng build --configuration production is-froala && npm pack ./dist/is-froala",
     "publish.core-ui": "ng build --configuration production is-core-ui && node tools/copy-styles.js && npm publish ./dist/is-core-ui",
     "package.core-ui": "ng build --configuration production is-core-ui && node tools/copy-styles.js && npm pack ./dist/is-core-ui",
     "publish.datepicker": "ng build --configuration production is-datepicker && npm publish ./dist/is-datepicker",
