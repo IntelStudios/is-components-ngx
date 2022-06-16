@@ -57,24 +57,34 @@
       }
     }
 
-    input[type=checkbox]:checked::after {
-      content: '\f14a'; // check-square
-    }
+    input[type=checkbox] {
+      &:checked {
+        color: $is-checkbox-active-fg-color;
 
-    input[type=checkbox]:indeterminate::after {
-      content: '\f146' !important; // minus-square
+        &::after {
+          content: '\f14a'; // check-square
+        }
+      }
+
+      &:indeterminate::after {
+        content: '\f146' !important; // minus-square
+      }
     }
 
     input[type=radio] {
       padding-left: 1px; // radio circle does not get cut from left
-    }
 
-    input[type=radio]::after {
-      content: '\f111'; // circle
-    }
+      &::after {
+        content: '\f111'; // circle
+      }
 
-    input[type=radio]:checked::after {
-      content: '\f192'; // dot-circle
+      &:checked {
+        color: $is-checkbox-active-fg-color;
+
+        &::after {
+          content: '\f192'; // dot-circle
+        }
+      }
     }
   }
 }
