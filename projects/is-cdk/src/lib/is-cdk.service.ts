@@ -1,8 +1,32 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ElementRef, Injectable } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { AbstractControl, FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { startWith, take, takeUntil } from 'rxjs/operators';
 
 const ZINDEX_STEP = 10;
+
+export interface IsCdkBridgeControlOptions {
+  /**
+   * propagate value? (default true)
+   */
+  value?: boolean;
+  /**
+   * propagate status? (default true)
+   */
+  status?: boolean;
+
+  targetValueOptions?: {
+    onlySelf?: boolean;
+    emitEvent?: boolean;
+    emitModelToViewChange?: boolean;
+    emitViewToModelChange?: boolean;
+}
+  /**
+   * destroy subject
+   */
+  ends$: Subject<unknown>;
+}
 
 @Injectable()
 export class IsCdkService {
@@ -10,6 +34,33 @@ export class IsCdkService {
   private static overlayRefs: OverlayRef[] = [];
 
   constructor(private overlay: Overlay) {
+  }
+
+  static bridgeControl(source: AbstractControl, target: FormControl, opts: IsCdkBridgeControlOptions) {
+    if (opts.value !== false) {
+      source.valueChanges
+        .pipe(
+          startWith(source.value),
+          takeUntil(opts.ends$),
+        ).subscribe({
+          next: (value) => target.setValue(value, opts.targetValueOptions),
+        });
+    }
+    if (opts.status) {
+      source.statusChanges
+        .pipe(
+          startWith(source.status),
+          takeUntil(opts.ends$),
+        ).subscribe({
+          next: (status) => {
+            if (status === 'DISABLED' && target.enabled) {
+              target.disable();
+            } else if (target.disabled) {
+              target.enable();
+            }
+          },
+        });
+    }
   }
 
   /**
