@@ -46,7 +46,7 @@ export class IsCdkService {
           next: (value) => target.setValue(value, opts.targetValueOptions),
         });
     }
-    if (opts.status) {
+    if (opts.status !== false) {
       source.statusChanges
         .pipe(
           startWith(source.status),
