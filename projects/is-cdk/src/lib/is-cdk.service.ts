@@ -2,7 +2,7 @@ import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ElementRef, Injectable } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { startWith, take, takeUntil, tap } from 'rxjs/operators';
+import { startWith, take, takeUntil, tap, distinctUntilChanged } from 'rxjs/operators';
 
 const ZINDEX_STEP = 10;
 
@@ -46,6 +46,7 @@ export class IsCdkService {
       source.valueChanges
         .pipe(
           opts.lazy === true ? tap() : startWith(source.value),
+          distinctUntilChanged(),
           takeUntil(opts.ends$),
         ).subscribe({
           next: (value) => target.setValue(value, opts.targetValueOptions),
@@ -55,6 +56,7 @@ export class IsCdkService {
       source.statusChanges
         .pipe(
           opts.lazy === true ? tap() : startWith(source.status),
+          distinctUntilChanged(),
           takeUntil(opts.ends$),
         ).subscribe({
           next: (status) => {
