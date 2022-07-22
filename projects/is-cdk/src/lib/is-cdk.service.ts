@@ -2,7 +2,7 @@ import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ElementRef, Injectable } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { startWith, take, takeUntil } from 'rxjs/operators';
+import { startWith, take, takeUntil, tap } from 'rxjs/operators';
 
 const ZINDEX_STEP = 10;
 
@@ -15,7 +15,12 @@ export interface IsCdkBridgeControlOptions {
    * propagate status? (default true)
    */
   status?: boolean;
-
+  /**
+   * lazy binding (default false).
+   * * When true, value + status propagation starts on source changes.
+   * * When false, value + status propagation starts with current srource state
+   */
+  lazy?: boolean;
   targetValueOptions?: {
     onlySelf?: boolean;
     emitEvent?: boolean;
@@ -40,7 +45,7 @@ export class IsCdkService {
     if (opts.value !== false) {
       source.valueChanges
         .pipe(
-          startWith(source.value),
+          opts.lazy === true ? tap() : startWith(source.value),
           takeUntil(opts.ends$),
         ).subscribe({
           next: (value) => target.setValue(value, opts.targetValueOptions),
@@ -49,7 +54,7 @@ export class IsCdkService {
     if (opts.status !== false) {
       source.statusChanges
         .pipe(
-          startWith(source.status),
+          opts.lazy === true ? tap() : startWith(source.status),
           takeUntil(opts.ends$),
         ).subscribe({
           next: (status) => {
