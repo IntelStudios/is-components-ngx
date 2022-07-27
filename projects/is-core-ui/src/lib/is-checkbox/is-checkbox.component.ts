@@ -109,7 +109,7 @@ export class IsRadioGroupDirective implements ControlValueAccessor, AfterViewIni
 
   /** Updates the `selected` radio button from the internal _value state. */
   private _updateSelectedRadioFromValue() {
-    if (this._radios) {
+    if (this._radios && this.value !== undefined) {
       this._radios.forEach(radio => {
         radio.writeValue(this.value === radio.value);
       });
