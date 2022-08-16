@@ -32,6 +32,9 @@ export class IsSearchComponent {
   @Output()
   change: EventEmitter<string> = new EventEmitter();
 
+  @Output()
+  onClear: EventEmitter<void> = new EventEmitter();
+
   @ViewChild('inputEl', { static: true })
   input: ElementRef<HTMLInputElement>;
 
@@ -66,6 +69,7 @@ export class IsSearchComponent {
   clear(): void {
     this.writeValue('');
     this.emitChange();
+    this.onClear.next();
   }
 
   /**
