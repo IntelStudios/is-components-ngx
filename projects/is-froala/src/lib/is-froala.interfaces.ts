@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { TributeOptions } from 'tributejs';
 
 export interface IsFroalaConfig {
   /**
@@ -30,7 +31,7 @@ export interface IIsFroalaOptions {
   heightMin?: number;
   heightMax?: number;
   /**
-   * atJS configuration
+   * atJS configuration (mutally exclusive to tributeOptions)
    */
   atjs?: IAtJSConfig;
   iframe?: boolean,
@@ -45,6 +46,13 @@ export interface IIsFroalaOptions {
    * Client language
    */
   language?: string;
+  /**
+   * tribute options (mutally exclusive to atjs config)
+   * Enabling tribute has importan consequences
+   *  * IFRAME mode for froala will be disabled
+   *  * codeview (html editor) toolbar action will not be available
+   */
+  tributeOptions?: TributeOptions<any>;
 }
 
 export type IsFroalaCommandType = 'close-codeview'

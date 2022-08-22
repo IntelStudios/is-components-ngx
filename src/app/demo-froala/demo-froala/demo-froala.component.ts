@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IsFroalaService } from 'projects/is-froala/src/lib/is-froala.service';
+import { IIsFroalaOptions, IsFroalaComponent } from 'projects/is-froala/src/public_api';
 import { of } from 'rxjs';
 
 @Component({
@@ -16,7 +17,7 @@ export class DemoFroalaComponent implements OnInit {
 
 <h3>Installation</h3>
 <pre>npm install --save @intelstudios/froala
-npm install --save froala-editor at.js font-awesome</pre>
+npm install --save froala-editor at.js font-awesome tributejs</pre>
 
 <h3>Import Module</h3>
 <pre>import { IsFroalaModule } from '@intelstudios/froala';
@@ -61,19 +62,60 @@ npm install --save froala-editor at.js font-awesome</pre>
   "node_modules/froala-editor/js/languages/sk.js",
   "node_modules/froala-editor/js/languages/zh_cn.js",
   "node_modules/froala-editor/js/languages/zh_tw.js"
-]</pre>
+]
+
+"styles": [
+  "node_modules/tributejs/dist/tribute.css",
+],
+</pre>
   `
 
   readonly froalaTheme = document.body.classList.contains('is-theme-dark') ? 'dark' : null;
 
-  froalaConfig: any = { id: 1, intellisense: of([{ Code: 'help', Label: 'Help me', Description: 'Help me'}]) };
+  froalaConfig: any = { id: 1, intellisense: of([{ Code: 'help', Label: 'Help me', Description: 'Help me' }]) };
   froalaConfigGerman = { id: 2 };
+
+  @ViewChild('froalaTribute')
+  froalaTribute: IsFroalaComponent;
+
+  froalaConfigTribute: IIsFroalaOptions = {
+    id: 1,
+    placeholderText: 'Type @Test to lookup mentions',
+    tributeOptions: {
+      trigger: '@',
+      lookup: 'name',
+      fillAttr: 'name',
+      values: (text: string, cb: (result: any[]) => void) => {
+        console.log(`Tribute values callback: text ${text}`)
+        if (!text || text.length < 2) {
+          cb([]);
+          return;
+        }
+        setTimeout(() => {
+          console.log('Tribute values loaded (async)')
+          cb([{ id: 11, name: 'Test 1' }, { id: 22, name: 'Test 2' }, { id: 33, name: 'Test 3' }])
+        }, 200);
+      },
+
+      menuItemTemplate: function (item) {
+        return `${item.original.id} ${item.original.name}`;
+      },
+      selectTemplate: function (item) {
+        if (typeof item === 'undefined') return null;
+        if (this.range.isContentEditable(this.current.element)) {
+          return `<span data-user-id="${item.original.id}" style="color: #5b9bd1">@${item.original.name}</span>`;
+        }
+        return '@' + item.original.name;
+      }
+    }
+  };
+
 
   control: FormControl = new FormControl();
 
   control1: FormControl = new FormControl();
 
-  constructor(private sanitizer: DomSanitizer, private froalaService: IsFroalaService) { }
+  constructor(private froalaService: IsFroalaService) { }
 
   html = `<style>
 	body {
@@ -99,7 +141,7 @@ npm install --save froala-editor at.js font-awesome</pre>
   }
 
   closeHtmlEditor() {
-    this.froalaService.executeRemoteCommand({ type: 'close-codeview'});
+    this.froalaService.executeRemoteCommand({ type: 'close-codeview' });
     console.log(this.control.value);
   }
 
@@ -117,6 +159,18 @@ npm install --save froala-editor at.js font-awesome</pre>
     } else {
       ctrl.setErrors({ invalid: true });
     }
+  }
+
+  printMentions() {
+    const nodes = this.froalaTribute.editor.el.querySelectorAll('span[data-user-id]');
+    nodes.forEach((node: ChildNode) => {
+      const span: HTMLSpanElement = node as HTMLSpanElement;
+      const val = span.attributes.getNamedItem('data-user-id').value;
+      span.attributes.removeNamedItem('data-user-id');
+      if (val) {
+        console.log(`Mentioned ID: ${val}`);
+      }
+    });
   }
 
   enableCustomButtons() {

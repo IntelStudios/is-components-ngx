@@ -14,14 +14,15 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  Output,
-  SecurityContext,
-  ViewEncapsulation,
+  Output, ViewEncapsulation
 } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable, Subject, Subscription } from 'rxjs';
 
+import { TranslateService } from '@ngx-translate/core';
+import { takeUntil } from 'rxjs/operators';
+import Tribute from 'tributejs';
 import {
   FroalaCommand,
   FroalaTheme,
@@ -29,12 +30,9 @@ import {
   IIsFroalaOptions,
   IntellisenseSuggestion,
   IsFroalaConfig,
-  IsFroalaRemoteCommand,
+  IsFroalaRemoteCommand
 } from './is-froala.interfaces';
-import { TranslateService } from '@ngx-translate/core';
-import { IsFieldErrorFactory } from '@intelstudios/cdk';
 import { IsFroalaService } from './is-froala.service';
-import { takeUntil } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -111,7 +109,9 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
   onValidatorChangeFn: Function = null;
 
   private _options: IIsFroalaOptions = null;
-  // froala editor instance
+  /**
+   * froala editor instance
+   */
   @HostBinding('class.editing')
   editor: any;
 
@@ -122,6 +122,8 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
   private _html: SafeHtml;
 
   private _htmlEventListeners: HTMLEventListener[] = [];
+
+  private tribute: Tribute<unknown>;
 
   @HostBinding('class.disabled')
   disabled: boolean = false;
@@ -207,6 +209,12 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
 
   @Output()
   onImagePreview: EventEmitter<string> = new EventEmitter();
+
+  /**
+   * emits internal froala editor instance once created
+   */
+  @Output()
+  onEditor: EventEmitter<any> = new EventEmitter();
 
   private static getTransitionEndEventName(): string {
     // https://betterprogramming.pub/detecting-the-end-of-css-transition-events-in-javascript-8653ae230dc7
@@ -399,6 +407,10 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
     delete defaults.intellisense;
     delete defaults.atjs;
 
+    if (defaults.tributeOptions) {
+      defaults.iframe = false;
+      defaults.toolbarButtons = defaults.toolbarButtons.filter((b) => b !== 'html');
+    }
     // TODO add config option for this custom button
     $.FroalaEditor.DefineIcon(BTN_INTELLISENSE, { NAME: 'hand-o-up' });
     $.FroalaEditor.RegisterCommand(BTN_INTELLISENSE, {
@@ -420,14 +432,17 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
       if (this.disabled) {
         editor.edit.off();
       }
+      this.setupTribute(editor);
+      if (defaults.iframe) {
+        /*
+          Copy default background and color from .fr-wrapper
+          The process is performed now and after wrapper CSS transition
+         */
+        const elFrWrapper = (this.el.nativeElement as HTMLElement).querySelector('.fr-wrapper') as HTMLElement;
+        const iframe = (editor.$html[0] as HTMLElement).querySelector('body');
+        this.copyThemeStyleToIframe(iframe, elFrWrapper);
+      }
 
-      /*
-        Copy default background and color from .fr-wrapper
-        The process is performed now and after wrapper CSS transition
-       */
-      const elFrWrapper = (this.el.nativeElement as HTMLElement).querySelector('.fr-wrapper') as HTMLElement;
-      const iframe = (editor.$html[0] as HTMLElement).querySelector('body');
-      this.copyThemeStyleToIframe(iframe, elFrWrapper);
     }).bind(this);
 
     // before we use blur event, but it is not fire event when style of content was changed
@@ -521,7 +536,6 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
     if (this._intellisenseSub) {
       this._intellisenseSub.unsubscribe();
     }
-
     // default usage with intellisense data from backend
     if (this.options && this.options.intellisense) {
       const suggestions: Observable<IntellisenseSuggestion[]> = this.options.intellisense;
@@ -538,6 +552,22 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
 
       this.setupAtJs();
     }
+  }
+
+  private setupTribute(editor) {
+    if (this.options?.tributeOptions && !this._atJsConfig) {
+      this.tribute = new Tribute(this.options.tributeOptions);
+      this.tribute.attach(editor.el);
+      console.log(this.tribute, editor);
+      editor.events.on('keydown', ((e: KeyboardEvent) => {
+        if (e.which == $.FroalaEditor.KEYCODE.ENTER && this.tribute.isActive) {
+          e.preventDefault();
+          return false;
+        }
+      }).bind(this), true);
+    }
+
+
   }
 
   /**
@@ -646,6 +676,9 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
   private destroyEditor() {
     if (this.editor) {
       debug('Destroy editor');
+      if (this.tribute) {
+        this.tribute.detach(this.editor.$el[0]);
+      }
       this._$element.off(this._eventListeners.join(' '));
       this.editor.$el.off('keyup');
       this._$element.froalaEditor('destroy');
