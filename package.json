@@ -31,7 +31,7 @@
     "publish.editable-textbox": "ng build --configuration production is-editable-textbox && npm publish ./dist/is-editable-textbox",
     "publish.checkmap": "ng build --configuration production is-checkmap && npm publish ./dist/is-checkmap",
     "publish.cdk": "ng build --configuration production is-cdk && npm publish ./dist/is-cdk",
-    "docs": "./node_modules/.bin/compodoc -p tsconfig.json -d dist/app/docs --silent --theme readthedocs --disableCoverage --disableGraph --disablePrivate",
+    "docs": "compodoc -p tsconfig.json -d dist/app/docs --silent --theme readthedocs --disableCoverage --disableGraph --disablePrivate",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
