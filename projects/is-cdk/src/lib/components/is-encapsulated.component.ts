@@ -23,6 +23,7 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.html.currentValue !== changes.html.previousValue) {
+      console.log('xxx')
       const contentChild = this.el.nativeElement.querySelector('div');
       const doc = document.createElement('div');
       const className = `enc-content-${instanceCounter}`
@@ -31,7 +32,7 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
       let isError = false;
       doc.querySelectorAll('style').forEach((styleEl) => {
         try {
-          const parsedCss = parseCss(styleEl.innerText);
+          const parsedCss = this.parseCss(styleEl.innerText);
           parsedCss.stylesheet.rules.forEach((rule) => {
             rule.selectors = rule.selectors.map((s) => {
               const selector = s.replace('body', '');
@@ -63,5 +64,15 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
       }
       this.el.nativeElement.replaceChild(doc, contentChild);
     }
+  }
+
+  parseCss(style: string) {
+    const css = this.preprocessCss(style);
+    const parsedCss = parseCss(css);
+    return parsedCss;
+  }
+
+  private preprocessCss(style: string): string {
+    return style.replace(/<!--[^>]+>/g, '');
   }
 }
