@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { IsBreadcrumbBoxComponent } from './is-breadcrumb-box.component';
 
@@ -8,9 +9,10 @@ describe('IsBreadcrumbBoxComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ IsBreadcrumbBoxComponent ]
+      declarations: [IsBreadcrumbBoxComponent],
+      imports: [NoopAnimationsModule],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

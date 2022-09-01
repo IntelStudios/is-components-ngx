@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { IsFroalaComponent } from './is-froala.component';
+import { IsFroalaService } from './is-froala.service';
 
 describe('IsFroalaComponent', () => {
   let component: IsFroalaComponent;
@@ -8,9 +10,11 @@ describe('IsFroalaComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ IsFroalaComponent ]
+      declarations: [IsFroalaComponent],
+      providers: [IsFroalaService],
+      imports: [TranslateModule.forRoot()],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -23,7 +23,6 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.html.currentValue !== changes.html.previousValue) {
-      console.log('xxx')
       const contentChild = this.el.nativeElement.querySelector('div');
       const doc = document.createElement('div');
       const className = `enc-content-${instanceCounter}`

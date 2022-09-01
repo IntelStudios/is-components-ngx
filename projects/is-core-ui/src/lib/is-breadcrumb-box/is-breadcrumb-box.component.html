@@ -1,4 +1,4 @@
-<a class="tile {{bgClass}}" [routerLink]="route">
+<a *ngIf="breadcrumb" class="tile {{bgClass}}" [routerLink]="route">
   <div class="tile-body" *ngIf="breadcrumb.icon; else noicon">
     <i [class]="breadcrumb.icon"></i>
   </div>

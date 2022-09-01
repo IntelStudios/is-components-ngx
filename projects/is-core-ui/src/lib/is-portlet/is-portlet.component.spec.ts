@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {TranslateFakeLoader, TranslateLoader, TranslateModule} from '@ngx-translate/core';
 
 import { IsPortletComponent } from './is-portlet.component';
 
@@ -8,9 +10,9 @@ describe('IsPortletComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ IsPortletComponent ]
-    })
-    .compileComponents();
+      declarations: [IsPortletComponent],
+      imports: [NoopAnimationsModule, TranslateModule.forRoot()],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

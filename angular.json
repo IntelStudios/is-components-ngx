@@ -129,9 +129,6 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/styles.css"
-            ],
             "scripts": [],
             "assets": [
               "src/favicon.ico",
@@ -210,7 +207,8 @@
           "options": {
             "main": "projects/is-codemirror/src/test.ts",
             "tsConfig": "projects/is-codemirror/tsconfig.spec.json",
-            "karmaConfig": "projects/is-codemirror/karma.conf.js"
+            "karmaConfig": "projects/is-codemirror/karma.conf.js",
+            "scripts": ["node_modules/codemirror/lib/codemirror.js"]
           }
         }
       }
@@ -238,7 +236,11 @@
           "options": {
             "main": "projects/is-froala/src/test.ts",
             "tsConfig": "projects/is-froala/tsconfig.spec.json",
-            "karmaConfig": "projects/is-froala/karma.conf.js"
+            "karmaConfig": "projects/is-froala/karma.conf.js",
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+            ]
           }
         }
       }
