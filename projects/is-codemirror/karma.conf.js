@@ -23,7 +23,7 @@ module.exports = function (config) {
     },
     reporters: ['progress', 'kjhtml', 'junit'],
     junitReporter: {
-      outputDir: '../../dist/is-select'
+      outputDir: '../../dist/is-codemirror'
     },
     port: 9876,
     colors: true,
