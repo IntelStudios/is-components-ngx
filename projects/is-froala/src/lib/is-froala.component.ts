@@ -558,7 +558,6 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
     if (this.options?.tributeOptions && !this._atJsConfig) {
       this.tribute = new Tribute(this.options.tributeOptions);
       this.tribute.attach(editor.el);
-      console.log(this.tribute, editor);
       editor.events.on('keydown', ((e: KeyboardEvent) => {
         if (e.which == $.FroalaEditor.KEYCODE.ENTER && this.tribute.isActive) {
           e.preventDefault();

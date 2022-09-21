@@ -7,10 +7,10 @@
     "font-awesome": "^4.7.0",
     "@intelstudios/cdk": "^13.0.4",
     "froala-editor": "^2.9.5",
-    "tributejs": "^3.6.0"
+    "tributejs": "^5.1.3"
   },
   "dependencies": {
     "tslib": "^2.0.0"
   },
-  "version": "13.1.0"
+  "version": "13.1.2"
 }
