@@ -64,6 +64,46 @@ describe('IsEncapsulatedComponent', () => {
             -->`
     },
     {
+      name: 'Keyframes',
+      css: `
+      
+	.progress {
+		background: #378d8d;
+		justify-content: flex-start;
+		border-radius: 100px;
+		align-items: center;
+		position: relative;
+		padding: 0 5px;
+		display: flex;
+		height: 40px;
+		width: 90%;
+		color: #fff;
+		margin: auto;
+	}
+	/*front of bar*/
+	
+	.progress-value {
+		animation: load 3s normal forwards;
+		box-shadow: 0 10px 40px -10px #fff;
+		border-radius: 100px;
+		background: white;
+		height: 30px;
+		width: 33%;
+	}
+	
+	@keyframes load {
+		0% {
+			width: 0;
+		}
+		100% {
+			width: 33%;
+			/*percentage value*/
+		}
+	}
+
+      `
+    },
+    {
       name: 'Multi line comment containing single line comment and styles',
       css: `
             <!--
