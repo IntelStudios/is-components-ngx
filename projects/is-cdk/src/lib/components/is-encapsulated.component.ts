@@ -33,7 +33,7 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
         try {
           const parsedCss = this.parseCss(styleEl.innerText);
           parsedCss.stylesheet.rules.forEach((rule) => {
-            rule.selectors = rule.selectors.map((s) => {
+            rule.selectors = rule.selectors?.map((s) => {
               const selector = s.replace('body', '');
               return `is-encapsulated > .${className} ${selector}`;
             });

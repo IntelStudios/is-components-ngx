@@ -158,7 +158,7 @@ describe('IsEncapsulatedComponent', () => {
 
   parseTests.forEach((t) => {
     it(`parseCss: ${t.name}`, () => {
-      const result = component.parseCss('');
+      const result = component.parseCss(t.css);
       expect(result).toBeTruthy(result);
     })
   })
