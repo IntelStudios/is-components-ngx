@@ -11,6 +11,7 @@ import { IsModalService } from './is-modal.service';
 import { ResizableModule } from './movable/resizable/resizable-module';
 import { DraggableModule } from './movable/draggable/draggable-module';
 import { MovableModalComponent } from './movable/modal/modal.component';
+import { IsCdkModule } from 'projects/is-cdk/src/public-api';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { MovableModalComponent } from './movable/modal/modal.component';
     ResizableModule,
     DraggableModule,
     TranslateModule,
-    ScrollingModule
+    ScrollingModule,
+    IsCdkModule,
   ],
   declarations: [
     IsModalComponent,
