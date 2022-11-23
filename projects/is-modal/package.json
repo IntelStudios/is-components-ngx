@@ -9,6 +9,7 @@
     "@angular/core": "^13.3.1",
     "ngx-bootstrap": "^8.0.0",
     "@angular/cdk": "^13.3.2",
+    "@intelstudios/cdk": "^13.0.13",
     "@ngx-translate/core": "^14.0.0"
   }
 }

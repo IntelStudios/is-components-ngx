@@ -1,7 +1,8 @@
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, Type } from '@angular/core';
 import { ModalOptions } from 'ngx-bootstrap/modal';
+import { IsCdkService } from '@intelstudios/cdk';
 import { defer, merge, Observable, Subject } from 'rxjs';
 import { first, map, mapTo } from 'rxjs/operators';
 import { IsModalComponent } from './is-modal.component';
@@ -12,7 +13,7 @@ type ObservableGeneric<T> = T extends Observable<infer X> ? X : never;
 @Injectable()
 export class IsModalService {
 
-  constructor(private over: Overlay) {
+  constructor(private isCdk: IsCdkService) {
 
   }
 
@@ -24,7 +25,7 @@ export class IsModalService {
         ...options,
       };
 
-      const overlayRef = this.over.create({ disposeOnNavigation: true });
+      const overlayRef = this.isCdk.create({ disposeOnNavigation: true });
       const cRef = overlayRef.attach(new ComponentPortal(component));
       const modalComponent = cRef.instance;
       modalComponent.input = input;
@@ -59,7 +60,7 @@ export class IsModalService {
 
   showComponent(component: Type<IsModalInstance>, config: IsModalConfig): IsModalRef {
 
-    const overlayRef: OverlayRef = this.over.create(config.panelCssClass ? { panelClass: config.panelCssClass } : null);
+    const overlayRef: OverlayRef = this.isCdk.create(config.panelCssClass ? { panelClass: config.panelCssClass } : null);
 
     const ref: IsModalRef = {
       close: () => { },
