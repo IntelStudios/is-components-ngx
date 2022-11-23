@@ -41,6 +41,7 @@
   color: $is-control-fg-color;
   padding: 4px 8px;
   height: $is-input-height-regular;
+  line-height: $is-input-height-regular;
   font-size: 14px;
   &.is-input-small {
     @include is-input-small();
@@ -61,6 +62,7 @@
 
 @mixin is-input-small {
   height: $is-input-height-small;
+  line-height: $is-input-height-small;
 }
 
 @mixin is-input-invalid {
