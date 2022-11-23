@@ -1,6 +1,6 @@
 {
   "name": "@intelstudios/modal",
-  "version": "13.1.1",
+  "version": "13.1.2",
   "dependencies": {
     "tslib": "^2.0.0"
   },
