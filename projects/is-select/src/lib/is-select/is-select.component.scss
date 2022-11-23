@@ -53,11 +53,10 @@ $is-select-multi-selection-max-width: var(--is-select-multi-selection-max-width,
 
       display: flex;
       align-items: center;
-      @include is-input;
+      @include is-input(false);
       padding: 0;
       border-width: 1px;
       border-style: solid;
-      height: $is-input-height-regular;
       cursor: pointer;
 
       >.btn-remove {
