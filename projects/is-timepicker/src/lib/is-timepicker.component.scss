@@ -13,7 +13,10 @@
   }
  &.is-input-small {
    > .input-group {
-     @include is-input-small()
+    @include is-input-small(false);
+    > input {
+      @include is-input-small();
+    }
    }
  }
   .input-group {
