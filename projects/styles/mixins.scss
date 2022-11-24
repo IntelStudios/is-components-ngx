@@ -1,4 +1,4 @@
-@import 'variables';
+@import "variables";
 
 @mixin is-input-active {
   border-color: $is-control-boder-focus-color;
@@ -12,11 +12,12 @@
   &:hover {
     border-color: $is-control-boder-color;
   }
-  &:active, &:focus {
+  &:active,
+  &:focus {
     background-color: $is-control-disabled-bg-color;
     color: $is-control-disabled-fg-color;
     box-shadow: none;
-    border-color:$is-control-boder-color;
+    border-color: $is-control-boder-color;
   }
 }
 
@@ -29,40 +30,47 @@
   &:hover {
     border-color: $is-control-readonly-border-color;
   }
-  &:active, &:focus {
+  &:active,
+  &:focus {
     border-color: $is-control-readonly-border-color;
     box-shadow: none;
   }
 }
 
-@mixin is-input {
-  border-color:$is-control-boder-color;
+@mixin is-input($line-height: true) {
+  border-color: $is-control-boder-color;
   background-color: $is-control-bg-color;
   color: $is-control-fg-color;
   padding: 4px 8px;
   height: $is-input-height-regular;
-  line-height: $is-input-height-regular;
+  @if $line-height {
+    line-height: $is-input-height-regular;
+  }
   font-size: 14px;
   &.is-input-small {
-    @include is-input-small();
+    @include is-input-small(false);
   }
-    &::placeholder {
-      color: $is-control-placeholder-color;
-    }
-    &:hover {
-      border-color: $is-control-boder-hover-color;
-    }
+  &::placeholder {
+    color: $is-control-placeholder-color;
+  }
+  &:hover {
+    border-color: $is-control-boder-hover-color;
+  }
 
-    &:active, &:focus, &:focus-within {
-      background-color: $is-control-bg-color;
-      color: $is-control-fg-color;
-      @include is-input-active;
-    }
+  &:active,
+  &:focus,
+  &:focus-within {
+    background-color: $is-control-bg-color;
+    color: $is-control-fg-color;
+    @include is-input-active;
+  }
 }
 
-@mixin is-input-small {
+@mixin is-input-small($line-height: true) {
   height: $is-input-height-small;
-  line-height: $is-input-height-small;
+  @if $line-height {
+    line-height: $is-input-height-small;
+  }
 }
 
 @mixin is-input-invalid {
@@ -73,7 +81,7 @@
 @mixin short-scroll($color: rgb(187, 187, 187)) {
   &::-webkit-scrollbar {
     height: $is-general-padding-small;
-    width:  $is-general-padding-small; //background: #fff;
+    width: $is-general-padding-small; //background: #fff;
   }
   &::-webkit-scrollbar-thumb {
     background: $color;
@@ -103,6 +111,5 @@
     &.is-btn-left {
       margin-right: $is-general-padding;
     }
-
   }
 }
