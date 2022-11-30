@@ -323,11 +323,13 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
   onReadonlyContentClick(e: MouseEvent): void {
     const el = e.target as HTMLElement;
     if (el.localName === 'a') {
+      e.stopPropagation();
       const target = el as HTMLAnchorElement;
       window.open(target.href, '_blank');
       return;
     }
     if (el.localName === 'img') {
+      e.stopPropagation();
       const img = el as HTMLImageElement;
       this.zone.run(() => this.onImagePreview.next(img.src));
       return;

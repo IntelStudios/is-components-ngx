@@ -32,7 +32,9 @@ is-froala {
   &.disabled {
     .view-border {
       background-color: $is-control-disabled-bg-color;
-      cursor: default;
+      is-encapsulated {
+        cursor: default;
+      }
     }
 
     .icon-load {
@@ -138,14 +140,15 @@ is-froala {
     background-color: $is-control-bg-color;
     border-radius: $is-general-border-radius;
     box-shadow: none;
-    padding-bottom: 6px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 6px;
+    padding: 8px;
     min-height: $is-froala-min-height;
     max-height: $is-froala-max-height;
     overflow-y: auto;
-    cursor: pointer;
+    is-encapsulated {
+      display: flex;
+      flex-flow: column;
+      cursor: pointer;
+    }
   }
 
   .icon-load-container {
