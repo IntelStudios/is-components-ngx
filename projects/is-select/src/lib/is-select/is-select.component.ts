@@ -267,7 +267,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   additionalValues: number = 0;
 
-  @ContentChild(IsSelectOptionDirective, { read: TemplateRef })
+  @ContentChild(IsSelectOptionDirective)
   templateOption: IsSelectOptionDirective;
 
   @ContentChild(IsSelectOptionSelectedDirective, { read: TemplateRef })
@@ -778,7 +778,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   private multipleWriteValue(values: any[]): void {
-    if (values === null || values === undefined || values === []) {
+    if (values === null || values === undefined || values.length === 0) {
       this._active = null;
       this._value = null;
     } else {

@@ -58,7 +58,7 @@ export class IsPortletComponent implements OnInit {
   @Input()
   enableCollapse: boolean = false;
 
-  @ContentChild(IsPortletTitleDirective, { read: TemplateRef, static: true })
+  @ContentChild(IsPortletTitleDirective, { static: true })
   templateTitle: IsPortletTitleDirective;
 
   /**

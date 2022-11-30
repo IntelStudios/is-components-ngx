@@ -2,7 +2,7 @@
   <div class="ui-select-search" [class.hidden-input]="!isSearch">
     <i class="fa fa-search"></i>
     <input type="text" autocomplete="false" tabindex="-1" [style.text-align]="alignment"
-      (input)="onSearchChange($event.target.value)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" (paste)="onPaste($event)"
+      (input)="onSearchChange($event)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" (paste)="onPaste($event)"
       class="form-control" [placeholder]="searchPlaceholder">
   </div>
   <i *ngIf="isLoadingOptions" class="fas fa-circle-notch fa-spin options-loading" [class.is-search]="isSearch"></i>
@@ -31,7 +31,7 @@
 <!-- option: single-mode -->
 <ng-template #optionSingle let-item="item">
   <a class="dropdown-item" [class]="item.cssClass">
-    <ng-container [ngTemplateOutlet]="optionTemplate || defaultOptionTemplate"
+    <ng-container [ngTemplateOutlet]="optionTemplate?.template || defaultOptionTemplate"
       [ngTemplateOutletContext]="{$implicit: item, item: item}">
     </ng-container>
   </a>
@@ -41,7 +41,7 @@
 <ng-template #optionMulti let-item="item">
   <a class="dropdown-item" [class]="item.cssClass">
     <is-checkbox [checked]="item.Checked">&nbsp;</is-checkbox>
-    <ng-container [ngTemplateOutlet]="optionTemplate || defaultOptionTemplate"
+    <ng-container [ngTemplateOutlet]="optionTemplate?.template || defaultOptionTemplate"
       [ngTemplateOutletContext]="{$implicit: item, item: item}">
     </ng-container>
   </a>
