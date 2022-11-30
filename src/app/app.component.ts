@@ -50,7 +50,8 @@ export class AppComponent implements OnInit {
     })
   }
 
-  onThemeChange(theme: string) {
-    this.router.navigate([], { queryParams: { theme: theme }, queryParamsHandling: 'merge', relativeTo: this.route });
+  onThemeChange($event: Event) {
+    const theme = ($event.target as HTMLSelectElement).value;
+    this.router.navigate([], { queryParams: { theme }, queryParamsHandling: 'merge', relativeTo: this.route });
   }
 }

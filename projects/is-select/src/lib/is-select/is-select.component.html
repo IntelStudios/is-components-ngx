@@ -7,7 +7,7 @@
       <i *ngIf="icon" [class]="icon"></i>
       <span *ngIf="(!multiActive || multiActive.length === 0) && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
       <div *ngFor="let it of multiActive" class="ui-select-match-text {{it.cssClass}}">
-        <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateSelection"
+        <ng-container [ngTemplateOutlet]="templateOptionSelected?.template || defaultTemplateSelection"
           [ngTemplateOutletContext]="{$implicit: it, index: 0, item: it}">
         </ng-container>
         <i (click)="unselectClick($event, it)" class="fa fa-times btn-remove"></i>
@@ -26,7 +26,7 @@
         <i *ngIf="icon" [class]="icon"></i>
         <span *ngIf="!singleActive && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
         <span *ngIf="singleActive" class="ui-select-match-text {{singleActive.cssClass}}">
-          <ng-container [ngTemplateOutlet]="templateOptionSelected || defaultTemplateSelection"
+          <ng-container [ngTemplateOutlet]="templateOptionSelected?.template || defaultTemplateSelection"
             [ngTemplateOutletContext]="{$implicit: singleActive, index: 0, item: singleActive}">
           </ng-container>
         </span>

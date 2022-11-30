@@ -57,7 +57,7 @@ export class DemoSelectComponent implements OnInit {
   colors = undefined;
   colors$ = undefined;
 
-  itemsBadges = [
+  itemsBadges: IsSelectBadgeItem[] = [
     { ID: 0, Value: '[default_Default]' },
     { ID: 1, Value: '[danger_Danger]' },
     { ID: 2, Value: '[warning_Warning]' },

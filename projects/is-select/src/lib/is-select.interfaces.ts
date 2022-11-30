@@ -10,7 +10,7 @@ export interface IsSelectBadgeItem {
   icon?: string;
   ID: string | number;
   Value: string;
-  cssClass: string;
+  cssClass?: string;
 }
 
 export interface IsSelectModelConfig {

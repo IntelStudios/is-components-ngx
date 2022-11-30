@@ -157,11 +157,11 @@ export class IsTabDirective {
     </div>
 
     <div *ngIf="tabsetInvalidLeft" class="tabset-invalid left">
-      <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate || defaultInvalidTemplate">
+      <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate?.templateRef || defaultInvalidTemplate">
       </ng-container>
     </div>
     <div *ngIf="tabsetInvalidRight" class="tabset-invalid right">
-      <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate || defaultInvalidTemplate">
+      <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate?.templateRef || defaultInvalidTemplate">
       </ng-container>
     </div>
     <ng-template #defaultInvalidTemplate>
@@ -231,7 +231,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
 
   @ContentChildren(IsTabDirective) tabs: QueryList<IsTabDirective>;
 
-  @ContentChild(IsTabsetInvalidDirective, { read: TemplateRef })
+  @ContentChild(IsTabsetInvalidDirective)
   tabsetInvalidTemplate: IsTabsetInvalidDirective
 
   tabsetInvalidLeft: boolean = false;

@@ -352,7 +352,8 @@ export class IsGridComponent implements OnInit, OnDestroy {
   //     });
   // }
 
-  allChecked(checked: boolean) {
+  allChecked($event: Event) {
+    const checked = ($event.target as HTMLInputElement).checked;
     this.rows.forEach((row: any) => {
       row.$checked = checked;
     });

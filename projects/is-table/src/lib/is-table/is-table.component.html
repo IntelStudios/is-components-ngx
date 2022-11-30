@@ -36,13 +36,13 @@
       <tr *ngFor="let row of data;" [class]="!row.IsActive ? 'disabled-cls' : row.$clazz ? row.$clazz : ''">
         <td [class.cursor-pointer]="canSelectRow" (click)="onRowSelected(row)">
           <div *ngFor="let col of columns;" style="display: inline-block; vertical-align: top;" [ngStyle]="{'width': col.width, 'text-align': col.align}">
-            <ng-container [ngTemplateOutlet]="templateColumn || defaultTemplateColumn" [ngTemplateOutletContext]="{$implicit: row.Data[col.id], index: 0, item: row.Data[col.id], col: col, row: row}">
+            <ng-container [ngTemplateOutlet]="templateColumn?.template || defaultTemplateColumn" [ngTemplateOutletContext]="{$implicit: row.Data[col.id], index: 0, item: row.Data[col.id], col: col, row: row}">
             </ng-container>
           </div>
         </td>
         <td *ngIf="showActionButtons" class="actions-cell" style="width: 40px;">
           <div class="btn-group">
-            <ng-container [ngTemplateOutlet]="templateActionsColumn || defaultTemplateActionsColumn" [ngTemplateOutletContext]="{$implicit: row, index: 0, item: row}">
+            <ng-container [ngTemplateOutlet]="templateActionsColumn?.template || defaultTemplateActionsColumn" [ngTemplateOutletContext]="{$implicit: row, index: 0, item: row}">
             </ng-container>
 
             <button *ngIf="row.CanDisable || canDisableRow" class="btn btn-xs btn-default" [title]="this.translate.instant(row.IsActive ? tableConfig.translations.deactivate : tableConfig.translations.activate)" type="button" (click)="onRowTrashClicked(row)">

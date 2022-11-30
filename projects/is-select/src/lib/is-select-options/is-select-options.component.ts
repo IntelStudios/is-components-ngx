@@ -203,8 +203,8 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.optionsService.setActiveOption(option);
   }
 
-  onSearchChange($event: string) {
-    this.searchFilter = $event;
+  onSearchChange($event: Event) {
+    this.searchFilter = ($event.target as HTMLInputElement).value;
     if (this.control.minLoadChars > 0) {
       if (this.searchFilter.length >= this.control.minLoadChars && !this.isLoadingOptions && this.control.options.length === 0) {
         this.isLoadingOptions = true;

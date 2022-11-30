@@ -15,6 +15,7 @@ import { FormControl } from '@angular/forms';
 import { IsFieldErrorFactory } from '@intelstudios/cdk';
 import { TranslateService } from '@ngx-translate/core';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
+import { AvailbleBSPositions } from 'ngx-bootstrap/positioning';
 import { Subscription, merge, of } from 'rxjs';
 
 import { configToken, IsCoreUIConfig } from '../is-core-ui.interfaces';
@@ -63,7 +64,7 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
    * tooltip placement (see ngx-bootstrap tooltip/popover placement)
    */
   @Input()
-  tooltipPlacement: string = 'top';
+  tooltipPlacement: AvailbleBSPositions = 'top';
 
   /**
    * Error text to be displayed. This property is exclusive with [control]
