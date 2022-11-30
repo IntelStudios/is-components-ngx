@@ -41,7 +41,21 @@ export class DemoCoreUIComponent implements OnInit {
   <style>body 
   
   { color: red;}
-  
+  div {
+    width: 100px;
+    height: 100px;
+    background: red;
+    position: relative;
+    animation: mymove 5s infinite;
+    }
+    
+    @keyframes mymove {
+    0% {left: 0px;}
+    25% {left: 200px;}
+    75% {left: 50px}
+    100% {left: 100px;}
+    }
+
   <!--
     /* Font Definitions */
     
@@ -90,6 +104,15 @@ export class DemoCoreUIComponent implements OnInit {
   </style>
   <h3>Encapsulated HTML 1</h3>
 <pre>npm install --save @intelstudios/core-ui</pre>
+<div></div>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+async function fn() {
+  await Promise.resolve();
+  console.log('is-encapsulated: async function executed');
+}
+fn();
+</script>
   `;
 
   encapsulatedHtml2 = `

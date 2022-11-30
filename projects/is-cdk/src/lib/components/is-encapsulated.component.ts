@@ -27,7 +27,7 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
       const doc = document.createElement('div');
       const className = `enc-content-${instanceCounter}`
       doc.className = className;
-      doc.innerHTML = this.html;
+      this.setInnerHTML(doc, this.html);
       let isError = false;
       doc.querySelectorAll('style').forEach((styleEl) => {
         try {
@@ -53,7 +53,7 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
         errorMark.style.backgroundColor = 'red';
         errorMark.style.color = 'white';
         errorMark.innerText = 'CSS Error';
-        errorMark.style.position  = 'absolute';
+        errorMark.style.position = 'absolute';
         errorMark.style.top = '0px';
         errorMark.style.padding = '2px 4px';
         errorMark.style.fontSize = '75%';
@@ -63,6 +63,24 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
       }
       this.el.nativeElement.replaceChild(doc, contentChild);
     }
+  }
+
+  private setInnerHTML(target: HTMLDivElement, html: string) {
+    target.innerHTML = html;
+
+    Array.from(target.querySelectorAll("script"))
+      .forEach(oldScriptEl => {
+        const newScriptEl = document.createElement("script");
+
+        Array.from(oldScriptEl.attributes).forEach(attr => {
+          newScriptEl.setAttribute(attr.name, attr.value)
+        });
+
+        const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+        newScriptEl.appendChild(scriptText);
+
+        oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
+      });
   }
 
   parseCss(style: string) {
