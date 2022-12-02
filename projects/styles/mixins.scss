@@ -70,6 +70,8 @@
   height: $is-input-height-small;
   @if $line-height {
     line-height: $is-input-height-small;
+  } @else {
+    
   }
 }
 
