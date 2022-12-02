@@ -186,9 +186,13 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
    * Sets stretched display behavior. If Enabled, tab titless will stretch to max available space. If disabled
    * tab titles will go from right to left
    */
-  @Input() stretched: boolean = false;
+  @Input() stretched = false;
 
-  @Input() enableRouting: boolean;
+  /**
+   * Integrate with angular router. Tab IDs are represented
+   * as #fragments in route
+   */
+  @Input() useRouter = false;
 
   /**
    * enable to change from (default) tab style to pills style
@@ -245,6 +249,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   private _scrollSub: Subscription;
   private _updateValidity$: Subject<any> = new Subject();
   private _updateValiditySub: Subscription;
+  private _fragment: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private changeDetector: ChangeDetectorRef) {
 
@@ -253,6 +258,19 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   ngOnInit() {
     if (this.scrollableMode && this.scrollableMode != 'none') {
       this.el.nativeElement.classList.add(this.scrollableMode);
+    }
+
+    if (this.useRouter) {
+      this.route.fragment
+        .subscribe((fragment) => {
+          this._fragment = fragment;
+          if (this.tabs) {
+            const tab = this.tabs.toArray().find((t) => t.id === fragment);
+            if (tab) {
+              this.select(tab.id);
+            }
+          }
+        });
     }
 
     if (this.nowrap) {
@@ -322,6 +340,12 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
       }
     });
     this.updateValidityIndication();
+    if (this.useRouter && this._fragment) {
+      const tab = this.tabs.find((t) => t.id === this._fragment);
+      if (tab) {
+        this.select(tab.id);
+      }
+    }
   }
 
   ngAfterContentChecked() {
@@ -362,13 +386,11 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
         }
         this.activeId = selectedTab.id;
         selectedTab.loaded = true;
-        if (this.enableRouting) {
+        if (this.useRouter) {
           this.isSelecting = true;
-          setTimeout(() => {
-            this.router.navigate([{ tab: selectedTab.id }], { relativeTo: this.route.parent })
-              .then(() => this.isSelecting = false)
-              .catch(() => this.isSelecting = false);
-          });
+          this.router.navigate([], { fragment: selectedTab.id })
+            .then(() => this.isSelecting = false)
+            .catch(() => this.isSelecting = false);
         }
       }
     }
