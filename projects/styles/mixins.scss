@@ -71,7 +71,7 @@
   @if $line-height {
     line-height: $is-input-height-small;
   } @else {
-    
+    line-height: initial;
   }
 }
 
