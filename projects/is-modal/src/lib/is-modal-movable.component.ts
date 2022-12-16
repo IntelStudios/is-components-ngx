@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import { IsModalButtonConfig, IsModalMovableControl, IsModalMovableInstance, IsModalRef } from './is-modal.interfaces';
+import { IsModalButtonConfig, IsModalMovableControl, IsModalMovableInstance } from './is-modal.interfaces';
 import { MovableModalComponent } from './movable/modal/modal.component';
 
 @Component({
@@ -17,18 +17,11 @@ export class IsModalMovableComponent implements OnInit, AfterViewInit, IsModalMo
   @ViewChild('modal', { static: true })
   modal: MovableModalComponent;
 
-  modalRef: IsModalRef;
-
   closed: boolean = false;
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
-    this.modalRef = {
-      close: () => {
-        this.control.hide();
-      }
-    }
 
     if (this.control.config) {
       if (this.control.config.position) { // disable initial centering
@@ -54,15 +47,15 @@ export class IsModalMovableComponent implements OnInit, AfterViewInit, IsModalMo
   }
 
   buttonClick(btn: IsModalButtonConfig) {
-    btn.onClick && btn.onClick(this.modalRef);
+    btn.onClick && btn.onClick();
     if (btn.autoClose !== false) {
-      this.modalRef.close();
+      this.control.hide();
     }
   }
 
   closeModal($event) {
     if ($event) {
-      this.modalRef.close();
+      this.control.hide();
     }
   }
 }

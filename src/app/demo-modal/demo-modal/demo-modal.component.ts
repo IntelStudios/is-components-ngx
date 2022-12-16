@@ -159,9 +159,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         {
           title: 'Just a button 2',
           autoClose: false,
-          onClick: (modal: IsModalRef) => {
+          onClick: () => {
             console.log('Just a button click - close with modal ref');
-            modal.close();
+            this.modalMovableRef.close();
           }
         }
       ],

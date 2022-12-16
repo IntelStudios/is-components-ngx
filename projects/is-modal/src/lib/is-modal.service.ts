@@ -4,7 +4,7 @@ import { ComponentRef, Injectable, Type } from '@angular/core';
 import { ModalOptions } from 'ngx-bootstrap/modal';
 import { IsCdkService } from '@intelstudios/cdk';
 import { defer, merge, Observable, Subject } from 'rxjs';
-import { first, map, mapTo } from 'rxjs/operators';
+import { first, map, mapTo, take, tap } from 'rxjs/operators';
 import { IsModalComponent } from './is-modal.component';
 import { IsDialogComponent, IsModalConfig, IsModalInstance, IsModalMovableConfig, IsModalRef } from './is-modal.interfaces';
 
@@ -62,17 +62,20 @@ export class IsModalService {
 
     const overlayRef: OverlayRef = this.isCdk.create(config.panelCssClass ? { panelClass: config.panelCssClass } : null);
 
-    const ref: IsModalRef = {
-      close: () => { },
-    };
-
     const hide = () => {
-      if (overlayRef) {
-        overlayRef.detach();
-        overlayRef.dispose();
-      }
+      overlayRef.detach();
+      overlayRef.dispose();
     }
-    ref.close = hide;
+
+    const ref: IsModalRef = {
+      closed: false,
+      close: hide,
+      onClosed$: overlayRef.detachments()
+        .pipe(
+          take(1),
+          tap(() => ref.closed = true),
+        )
+    };
 
     const componentRef: ComponentRef<any> = overlayRef.attach(new ComponentPortal(component));
     const instanceRef = componentRef.instance as IsModalInstance;
@@ -81,7 +84,7 @@ export class IsModalService {
     instanceRef.control = {
       config: config,
       initialState: Object.assign({}, config.options.initialState),
-      hide: hide
+      hide,
     };
 
     componentRef.hostView.markForCheck();

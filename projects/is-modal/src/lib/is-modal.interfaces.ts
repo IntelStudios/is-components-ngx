@@ -11,6 +11,8 @@ export interface IsDialogComponent<I, O> {
 
 export interface IsModalRef {
   close: () => void;
+  onClosed$: Observable<void>;
+  closed: boolean;
 }
 
 export interface IsModalButtonConfig {
@@ -33,7 +35,7 @@ export interface IsModalButtonConfig {
   /**
    * click handler
    */
-  onClick?: (ctrl: IsModalRef) => void
+  onClick?: () => void
 }
 
 export interface IsModalConfig {
@@ -103,12 +105,9 @@ export interface IsModalMovableControl {
   hide: () => void;
 }
 
-export interface IsModalMovableRef {
-  close: () => void;
+export interface IsModalMovableRef extends IsModalRef {
   /**
    * center movable modal on the screen
    */
   center: () => void;
-  onClosed$: Observable<void>;
-  closed: boolean;
 }
