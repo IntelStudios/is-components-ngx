@@ -311,6 +311,7 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
       placeholderText: '',        // disable placeholder
       toolbarSticky: false,       // when scrolling toolbar does not appear on the top of the screen
       toolbarButtons: DEFAULT_TOOLBAR,    // list of toolbar buttons
+      useClasses: false,
       codeMirrorOptions: {
         indentWithTabs: true,
         lineNumbers: true,
