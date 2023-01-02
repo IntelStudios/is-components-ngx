@@ -2,12 +2,14 @@ import { IsSelectOptionsComponent } from './is-select-options/is-select-options.
 import { SelectItem } from './select-item';
 
 export interface IOptionsBehavior {
+  init(): void;
   reset(): any;
   first(): any;
   last(): any;
-  prev(): any;
-  next(): any;
+  prev(count?: number): any;
+  next(count?: number): any;
   filter(query: RegExp): any;
+  ensureHighlightVisible();
 }
 
 export class OptionsBehavior {
@@ -26,6 +28,25 @@ export class OptionsBehavior {
       .map((item: SelectItem) => {
         startPos = item.fillChildrenHash(this.optionsMap, startPos);
       });
+  }
+
+  init(): void {
+    this.reset();
+    if (this.select.value) {
+      if (this.select.multiple) {
+        const values = this.select.value as SelectItem[];
+        if (values?.length > 0) {
+          this.select.setActiveOption(values[0]);
+        }
+      } else {
+        this.select.setActiveOption(this.select.value as SelectItem);
+      }
+    }
+  }
+
+  reset() {
+    this.select.visibleOptions = this.select.options;
+    this.ensureHighlightVisible();
   }
 
   static filterPredicate(options: SelectItem[], predicate: (option: SelectItem) => boolean): SelectItem[] {
@@ -67,37 +88,23 @@ export class OptionsBehavior {
   }
 
   ensureHighlightVisible(optionsMap: Map<string, number> = void (0)): void {
-    let container = this.select.element.nativeElement.querySelector('.ui-select-choices');
+    const container = this.select.element.nativeElement.querySelector('.ui-select-choices');
     if (!container) {
       return;
     }
-    let choices = container.querySelectorAll('.ui-select-choices-row');
+    const choices = container.querySelectorAll('.ui-select-choices-row');
     if (choices.length < 1) {
       return;
     }
-    let activeIndex = this.getActiveIndex(optionsMap);
+    const activeIndex = this.getActiveIndex(optionsMap);
     if (activeIndex < 0) {
       return;
     }
-    let highlighted: any = choices[activeIndex];
+    const highlighted = choices[activeIndex] as HTMLDivElement;
     if (!highlighted) {
       return;
     }
-
-    let posY: number = highlighted.offsetTop + highlighted.clientHeight - container.scrollTop;
-    let height: number = container.offsetHeight;
-
-    let searchInputHeight = 0;
-
-    const searchInput = this.select.element.nativeElement.querySelector('.ui-select-search');
-    if (searchInput) {
-      searchInputHeight = searchInput.clientHeight;
-    }
-    if (posY > height) {
-      container.scrollTop += posY - height - searchInputHeight;
-    } else if (posY < highlighted.clientHeight) {
-      container.scrollTop -= highlighted.clientHeight - posY + searchInputHeight;
-    }
+    highlighted.scrollIntoView();
   }
 
   private getActiveIndex(optionsMap: Map<string, number> = void 0): number {
@@ -132,15 +139,17 @@ export class GenericOptionsBehavior extends OptionsBehavior implements IOptionsB
     super.ensureHighlightVisible();
   }
 
-  prev(): void {
-    const index = this.select.visibleOptions.indexOf(this.select.activeOption);
-    this.select.setActiveOption(this.select.visibleOptions[index - 1 < 0 ? this.select.visibleOptions.length - 1 : index - 1]);
+  prev(count = 1): void {
+    const notFoundIndex = count === 1 ? this.select.visibleOptions.length - 1 : 0;
+    const index = this.select.visibleOptions.findIndex((o) => o.ID === this.select.activeOption?.ID);
+    this.select.setActiveOption(this.select.visibleOptions[index - count < 0 ? notFoundIndex : index - count]);
     super.ensureHighlightVisible();
   }
 
-  next(): void {
-    const index = this.select.visibleOptions.indexOf(this.select.activeOption);
-    this.select.setActiveOption(this.select.visibleOptions[index + 1 > this.select.visibleOptions.length - 1 ? 0 : index + 1]);
+  next(count = 1): void {
+    const notFoundIndex = count === 1 ? 0 : this.select.visibleOptions.length - 1;
+    const index = this.select.visibleOptions.findIndex((o) => o.ID === this.select.activeOption?.ID);
+    this.select.setActiveOption(this.select.visibleOptions[index + count > this.select.visibleOptions.length - 1 ? notFoundIndex : index + count]);
     super.ensureHighlightVisible();
   }
 
@@ -151,11 +160,6 @@ export class GenericOptionsBehavior extends OptionsBehavior implements IOptionsB
       this.select.setActiveOption(this.select.visibleOptions[0]);
       super.ensureHighlightVisible();
     }
-  }
-
-  reset() {
-    this.select.visibleOptions = this.select.options;
-    super.ensureHighlightVisible();
   }
 }
 

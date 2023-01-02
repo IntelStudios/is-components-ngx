@@ -1,6 +1,6 @@
 <div class="ui-select-container" [class.open]="optionsOpened" [class.is-select-dropup]="optionsDropup" [class.disabled]="disabled" [class.readonly]="readonly" [class.hidden]="hidden">
 
-  <div *ngIf="multiple; else single" class="ui-select-match multiple" [class.fixed-height]="!resize" tabindex="0" (keyup)="mainClick($event)" (click)="matchClick($event)">
+  <div *ngIf="multiple; else single" class="ui-select-match multiple" [class.fixed-height]="!resize" tabindex="0" (keydown)="mainClick($event)" (click)="matchClick($event)">
     <span tabindex="-1" class="ui-select-toggle"
       [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}"
       >

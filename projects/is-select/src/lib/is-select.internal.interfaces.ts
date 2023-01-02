@@ -12,6 +12,7 @@ export interface ISelectOptionsControl {
     minLoadChars: number;
     isGroupOptions: boolean;
     isSearch: boolean;
+    searchValue: string;
     multipleConfig: IsSelectMultipleConfig;
     onClosed: () => void;
     onLoadOptions: (filter: string) => void;

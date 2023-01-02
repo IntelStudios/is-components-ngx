@@ -297,20 +297,20 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     private scrollDispatcher: ScrollDispatcher,
     @Optional() @Inject(configToken) private selectConfig: IsSelectConfig,
     private changeDetector: ChangeDetectorRef) {
-      if (!this.selectConfig) {
-        this.selectConfig = createDefaultConfig();
-      }
-      // trigger setter by default so we're initially in single select mode
-      this.multipleConfig = undefined;
-      if (this.selectConfig.optionsOverflowWidth !== undefined) {
-        this.optionsOverflowWidth = this.selectConfig.optionsOverflowWidth;
-      }
-      if (this.selectConfig.allowClear !== undefined) {
-        this.allowClear = this.selectConfig.allowClear;
-      }
-      if (this.selectConfig.closeOptionsOnScroll !== undefined) {
-        this.closeOptionsOnScroll = this.selectConfig.closeOptionsOnScroll;
-      }
+    if (!this.selectConfig) {
+      this.selectConfig = createDefaultConfig();
+    }
+    // trigger setter by default so we're initially in single select mode
+    this.multipleConfig = undefined;
+    if (this.selectConfig.optionsOverflowWidth !== undefined) {
+      this.optionsOverflowWidth = this.selectConfig.optionsOverflowWidth;
+    }
+    if (this.selectConfig.allowClear !== undefined) {
+      this.allowClear = this.selectConfig.allowClear;
+    }
+    if (this.selectConfig.closeOptionsOnScroll !== undefined) {
+      this.closeOptionsOnScroll = this.selectConfig.closeOptionsOnScroll;
+    }
   }
 
   ngOnInit() {
@@ -384,9 +384,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   matchClick(e: MouseEvent): void {
-    const isDisabledOrReadonly =
-      this._disabled === true ||
-      this.readonly === true;
+    const isDisabledOrReadonly = this._disabled === true || this.readonly === true;
     if (isDisabledOrReadonly) {
       return;
     }
@@ -399,36 +397,30 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   mainClick(event: any) {
-    const isDisabledOrReadonly =
-      this._disabled === true ||
-      this.readonly === true;
+    const isDisabledOrReadonly = this._disabled === true || this.readonly === true;
     if (this.optionsOpened || isDisabledOrReadonly) {
       return;
     }
     if (event.keyCode === 46) {
       event.preventDefault();
-      //this.inputEvent(event);
       return;
     }
     if (event.keyCode === 8) {
       event.preventDefault();
-      //this.inputEvent(event, true);
       return;
     }
-    if (event.keyCode === 9 || event.keyCode === 13 ||
-      event.keyCode === 27 || (event.keyCode >= 37 && event.keyCode <= 40)) {
+    if (event.keyCode === 9 || event.keyCode === 27 || (event.keyCode >= 37 && event.keyCode <= 40)) {
       event.preventDefault();
       return;
     }
 
     const value = String
       .fromCharCode(96 <= event.keyCode && event.keyCode <= 105 ? event.keyCode - 48 : event.keyCode)
-      .toLowerCase();
+      .toLowerCase().replace('\r', '');
 
-    this.showOptions();
-    const target = event.target || event.srcElement;
-    target.value = value;
-    //this.inputEvent(event);
+    event.preventDefault();
+    event.stopPropagation();
+    this.showOptions(value);
   }
 
 
@@ -530,11 +522,15 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   hideOptions() {
     if (this.optionsInstanceRef) {
+      const el = this.element.nativeElement.querySelector('.ui-select-match');
+      if (el) {
+        el.focus();
+      }
       this.optionsOverlayRef.detach();
     }
   }
 
-  showOptions() {
+  showOptions(searchValue?: string) {
 
     const rect: DOMRect = this.element.nativeElement.getBoundingClientRect();
     const optionsHeight = this.isSearch ? 264 : 200;
@@ -553,7 +549,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       positionStrategy: positionStrategy
     };
 
-    const oprionsOverflowClass = this.optionsOverflowWidth ? ' is-select-overflow-width': '';
+    const oprionsOverflowClass = this.optionsOverflowWidth ? ' is-select-overflow-width' : '';
     if (!this.optionsOverflowWidth) {
       overlayConfig.width = overlayConfig.minWidth;
       overlayConfig.minWidth = undefined;
@@ -569,7 +565,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
         this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev: CdkScrollable) => {
           if (ev) {
-            if (ancScrolls.filter(x=>x.getElementRef() === ev.getElementRef()).length > 0) {
+            if (ancScrolls.filter(x => x.getElementRef() === ev.getElementRef()).length > 0) {
               this.hideOptions();
             }
           }
@@ -625,7 +621,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
     this.optionsInstanceRef = this.optionsOverlayRef.attach(new ComponentPortal(IsSelectOptionsComponent));
     // copy/inherit classes from is-select and add them to is-select-options element, but ignore ng-*
-    const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').trim() + dropUpClass + oprionsOverflowClass;
+    const classes = this.element.nativeElement.className.replace(/ng-[\w-]+/g, ' ').replace(/[ ]+/g, ' ').trim() + dropUpClass + oprionsOverflowClass;
     this.renderer.setAttribute(this.optionsInstanceRef.location.nativeElement, 'class', classes);
     this.optionsInstanceRef.instance.control = {
       active: this.active,
@@ -638,6 +634,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       minLoadChars: this._minLoadChars,
       alignment: this.alignment,
       isSearch: this.isSearch,
+      searchValue,
       onClosed: () => {
         this.hideOptions();
       },

@@ -52,6 +52,12 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
 
   private behavior: IOptionsBehavior;
   private searchFilter: string = '';
+
+  /**
+   * helper for inputEevent method so we know that downKey event was fired before upKey
+   * to ensure when options are open via Enter key, Enter up event is not handled here
+   */
+  private wasDownKey = false;
   isLoadingOptions: boolean = false;
 
   get singleValue(): SelectItem {
@@ -63,7 +69,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    private changeDetector: ChangeDetectorRef,
+    private cd: ChangeDetectorRef,
     public element: ElementRef,
     private optionsService: IsSelectOptionsService,
     @Optional() @Inject(configToken) private selectConfig: IsSelectConfig
@@ -71,7 +77,6 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-
     this.options = this.control.options;
     this.isGroupOptions = this.control.isGroupOptions;
     this.value = this.control.active;
@@ -81,7 +86,6 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.optionTemplate = this.control.optionTemplate;
     this.isSearch = this.control.isSearch;
     this.multipleConfig = this.control.multipleConfig;
-
     this.optionsService.setSingleValue(this.singleValue);
     if (this.multipleConfig) {
       // apply defaults
@@ -117,35 +121,32 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
       this.selectedOptions = (this.value as SelectItem[]).map(v => { v.Checked = true; return v; });
       this.options = OptionsBehavior.filterPredicate(this.options, (opt) => !opt.Checked);
     }
-
-    this.behavior.reset();
-
-    if (this.visibleOptions.length > 0 && (!this.control.active || !this.activeOption)) {
-      this.behavior.first();
-    }
+    this.behavior.init();
   }
 
   ngAfterViewInit() {
     this.focusToInput();
-    this.scrollToSelected();
-
+    this.behavior.ensureHighlightVisible();
     if (this.control.minLoadChars === 0) {
       setTimeout(() => {
         // immediatelly request options from client
         this.isLoadingOptions = true;
         this.control.onLoadOptions('');
-        this.changeDetector.markForCheck();
+        this.cd.markForCheck();
       });
     }
 
   }
 
-  focusToInput(value: string = ''): void {
+  focusToInput(): void {
     setTimeout(() => {
       const el = this.element.nativeElement.querySelector('div.ui-select-search > input');
       if (el) {
         el.focus();
-        el.value = value;
+        if (this.control.searchValue) {
+          el.value = this.control.searchValue;
+          this.filterItems(el.value);
+        }
       }
     });
   }
@@ -153,11 +154,11 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   setValue(option: SelectItem | SelectItem[]) {
     this.value = option;
     this.markCheckedOptions(this.options);
-    this.changeDetector.markForCheck();
+    this.cd.markForCheck();
   }
 
   selectAll() {
-    const toSelect = [...this.visibleOptions.filter(x=> !this.selectedOptions.find(y=> y.ID === x.ID)), ...this.selectedOptions];
+    const toSelect = [...this.visibleOptions.filter(x => !this.selectedOptions.find(y => y.ID === x.ID)), ...this.selectedOptions];
     this.control.onItemsSelected(toSelect);
   }
 
@@ -168,7 +169,6 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   setOptions(options: SelectItem[]) {
     this.visibleOptions = options;
     this.options = options;
-
     // re-check options - may change because of lazy load
     const isGroupOpts = this.options && this.options.findIndex(o => o.hasChildren()) > -1;
 
@@ -177,15 +177,16 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     } else {
       this.behavior = new GenericOptionsBehavior(this);
     }
-
     this.markCheckedOptions(this.options);
+    if (this.multiple && this.value) {
+      this.options = OptionsBehavior.filterPredicate(this.options, (opt) => !opt.Checked);
+    }
     if (options && this.isLoadingOptions && (this.control.minLoadChars === 0) || (this.searchFilter && this.searchFilter.length >= this.control.minLoadChars)) {
       this.behavior.filter(createFilterRegexp(this.searchFilter));
       this.isLoadingOptions = false;
-      this.scrollToSelected();
     }
-
-    this.changeDetector.markForCheck();
+    this.behavior.init();
+    this.cd.markForCheck();
   }
 
   selectMatch(value: SelectItem, e: Event = void 0) {
@@ -204,7 +205,11 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   }
 
   onSearchChange($event: Event) {
-    this.searchFilter = ($event.target as HTMLInputElement).value;
+    this.filterItems(($event.target as HTMLInputElement).value);
+  }
+
+  private filterItems(filterValue: string) {
+    this.searchFilter = filterValue;
     if (this.control.minLoadChars > 0) {
       if (this.searchFilter.length >= this.control.minLoadChars && !this.isLoadingOptions && this.control.options.length === 0) {
         this.isLoadingOptions = true;
@@ -225,12 +230,20 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   }
 
   inputEvent(e: KeyboardEvent, isUpMode: boolean = false): void {
-    // tab
-    if (e.keyCode === 9) {
+    //console.log('inputEvent', e, isUpMode);
+    if (isUpMode && !this.wasDownKey) {
       return;
     }
-    if (isUpMode && (e.keyCode === 37 || e.keyCode === 39 || e.keyCode === 38 ||
-      e.keyCode === 40 || e.keyCode === 13)) {
+    if (!this.wasDownKey && !isUpMode) {
+      this.wasDownKey = true;
+    }
+    // tab
+    if (e.key === 'Tab') {
+      this.control.onClosed();
+      return;
+    }
+    if (isUpMode && (e.key === 'PageUp' || e.key === 'PageDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'ArrowUp' ||
+      e.key === 'ArrowDown')) {
       e.preventDefault();
       return;
     }
@@ -246,7 +259,7 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
       }
     }
     // esc
-    if (!isUpMode && e.keyCode === 27) {
+    if (!isUpMode && e.key === 'Escape') {
       this.control.onClosed();
       e.preventDefault();
       return;
@@ -259,40 +272,49 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     //   e.preventDefault();
     // }
     // left
-    if (!isUpMode && e.keyCode === 37 && this.visibleOptions.length > 0) {
+    if (!isUpMode && e.key === 'ArrowLeft' && this.visibleOptions.length > 0) {
       this.behavior.first();
       e.preventDefault();
       return;
     }
     // right
-    if (!isUpMode && e.keyCode === 39 && this.visibleOptions.length > 0) {
+    if (!isUpMode && e.key === 'ArrowRight' && this.visibleOptions.length > 0) {
       this.behavior.last();
       e.preventDefault();
       return;
     }
     // up
-    if (!isUpMode && e.keyCode === 38) {
+    if (!isUpMode && e.key === 'ArrowUp') {
       this.behavior.prev();
       e.preventDefault();
       return;
     }
+    // pageI[]
+    if (!isUpMode && e.key === 'PageUp') {
+      this.behavior.prev(10);
+      e.preventDefault();
+      return;
+    }
     // down
-    if (!isUpMode && e.keyCode === 40) {
+    if (!isUpMode && e.key === 'ArrowDown') {
       this.behavior.next();
       e.preventDefault();
       return;
     }
+    // pageDown
+    if (!isUpMode && e.key === 'PageDown') {
+      this.behavior.next(10);
+      e.preventDefault();
+      return;
+    }
     // enter
-    if (!isUpMode && e.keyCode === 13) {
+    if (isUpMode && e.key === 'Enter') {
       e.preventDefault();
       if (this.control.options.some(x => x.Checked && x.ID === this.activeOption.ID)) {
         return;
       }
       this.control.onItemSelected(this.activeOption);
-      if (this.multiple && e.ctrlKey) {
-        const input = (e.target as HTMLInputElement);
-        input.value = '';
-        input.dispatchEvent(new Event('input'));
+      if (this.multiple) {
         return;
       }
       this.control.onClosed();
@@ -301,7 +323,6 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   }
 
   onPaste($event: ClipboardEvent): boolean {
-    console.log($event, this.selectConfig);
     if (!this.multiple || !this.selectConfig?.attemptToProcessPasteMultipleSearch) {
       return true;
     }
@@ -323,11 +344,12 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
   }
 
   scrollToSelected() {
-    const selectedElement = this.element.nativeElement.querySelector('div.ui-select-choices-row.selected');
-    if (selectedElement === null) {
+    const el = this.element.nativeElement.querySelector('div.ui-select-choices-row.selected');
+    console.log('scroll to selected', el)
+    if (el === null) {
       return;
     }
-    this.element.nativeElement.querySelector('ul.ui-select-choices').scrollTop = selectedElement.offsetTop - 40;
+    el.scrollIntoView();
   }
 
   private markCheckedOptions(options: SelectItem[], checkSelected = true) {

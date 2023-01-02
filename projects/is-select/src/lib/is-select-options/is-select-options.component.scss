@@ -8,6 +8,17 @@
   padding-left: 1px;
   padding-right: 1px;
 
+  &.is-input-small {
+    .ui-select-choices-container {
+      >.ui-select-search {
+        @include is-input-small();
+      }
+      is-checkbox {
+        height: $is-input-height-small;
+      }
+    }
+  }
+
   &.is-select-options-dropup {
     >.ui-select-choices-container {
       bottom: 4px;
@@ -84,7 +95,10 @@
         }
         .divider {
           padding: 4px $is-general-padding-small;
-          border-bottom: 1px solid $is-select-search-bg-color;
+          border-bottom: 1px solid $is-select-item-group-divider-color;
+          &:hover {
+            background-color: transparent !important;
+          }
         }
       }
     }
