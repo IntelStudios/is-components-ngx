@@ -401,6 +401,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     if (this.optionsOpened || isDisabledOrReadonly) {
       return;
     }
+    if (event.key === 'Tab') {
+      return;
+    }
     if (event.keyCode === 46) {
       event.preventDefault();
       return;
@@ -409,7 +412,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
       event.preventDefault();
       return;
     }
-    if (event.keyCode === 9 || event.keyCode === 27 || (event.keyCode >= 37 && event.keyCode <= 40)) {
+    if (event.keyCode === 27 || (event.keyCode >= 37 && event.keyCode <= 40)) {
       event.preventDefault();
       return;
     }
