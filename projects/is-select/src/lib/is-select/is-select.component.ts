@@ -270,7 +270,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
   @ContentChild(IsSelectOptionDirective)
   templateOption: IsSelectOptionDirective;
 
-  @ContentChild(IsSelectOptionSelectedDirective, { read: TemplateRef })
+  @ContentChild(IsSelectOptionSelectedDirective)
   templateOptionSelected: IsSelectOptionSelectedDirective;
 
   private _multipleConfig: IsSelectMultipleConfig;
