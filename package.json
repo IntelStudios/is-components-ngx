@@ -28,6 +28,7 @@
     "publish.timepicker": "ng build --configuration production is-timepicker && npm publish ./dist/is-timepicker",
     "package.timepicker": "ng build --configuration production is-timepicker && npm pack ./dist/is-timepicker",
     "publish.cron": "ng build --configuration production is-cron-editor && npm publish ./dist/is-cron-editor",
+    "package.cron": "ng build --configuration production is-cron-editor && npm pack ./dist/is-cron-editor",
     "publish.editable-textbox": "ng build --configuration production is-editable-textbox && npm publish ./dist/is-editable-textbox",
     "publish.checkmap": "ng build --configuration production is-checkmap && npm publish ./dist/is-checkmap",
     "publish.cdk": "ng build --configuration production is-cdk && npm publish ./dist/is-cdk",
