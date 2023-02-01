@@ -15,6 +15,32 @@ import { cronExpressionValidator, mapNumbers } from './is-cron-editor.validator'
 import { IsSelectMultipleConfig } from '@intelstudios/select';
 import { CronState } from './is-cron-editor.models';
 
+function defaultSelectTypeValues() {
+  return [
+    { ID: '1', Value: 'Every' },
+    { ID: '2', Value: 'Every X' },
+    { ID: '4', Value: 'Every between' },
+    { ID: '3', Value: 'Specific' },
+  ];
+}
+
+function daySelectTypeValues() {
+  return [
+    { ID: '1', Value: 'Every' },
+    { ID: '2', Value: 'Every weekday' },
+    { ID: '15', Value: 'Every X days starting on day of week' },
+    { ID: '16', Value: 'Every X days starting on Yth' },
+    { ID: '14', Value: 'Specific day of week' },
+    { ID: '12', Value: 'Specific day of month' },
+    { ID: '13', Value: 'Any last day of the month' },
+    { ID: '7', Value: 'Last weekday of the month' },
+    { ID: '8', Value: 'Last day of week of the month' },
+    { ID: '9', Value: 'X days before end of the moth' },
+    { ID: '10', Value: 'Nearest weekday to the Xth of the month' },
+    { ID: '11', Value: 'On the Xth day of the month' },
+  ]
+}
+
 // noinspection DuplicatedCode
 @Component({
   // tslint:disable-next-line:component-selector
@@ -141,27 +167,9 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
   cronExpressionControl = new FormControl();
 
-  _defaultSelectTypeValues = [
-    { ID: '1', Value: 'Every' },
-    { ID: '2', Value: 'Every X' },
-    { ID: '4', Value: 'Every between' },
-    { ID: '3', Value: 'Specific' },
-  ];
+  _defaultSelectTypeValues = defaultSelectTypeValues();
 
-  _daySelectTypeValues = [
-    { ID: '1', Value: 'Every' },
-    { ID: '2', Value: 'Every weekday' },
-    { ID: '15', Value: 'Every X days starting on day of week' },
-    { ID: '16', Value: 'Every X days starting on Yth' },
-    { ID: '14', Value: 'Specific day of week' },
-    { ID: '12', Value: 'Specific day of month' },
-    { ID: '13', Value: 'Any last day of the month' },
-    { ID: '7', Value: 'Last weekday of the month' },
-    { ID: '8', Value: 'Last day of week of the month' },
-    { ID: '9', Value: 'X days before end of the moth' },
-    { ID: '10', Value: 'Nearest weekday to the Xth of the month' },
-    { ID: '11', Value: 'On the Xth day of the month' },
-  ];
+  _daySelectTypeValues = daySelectTypeValues();
 
   daySelectTypeValues: { ID: string, Value: string }[];
 
@@ -961,16 +969,17 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
   private setRandomAbleValues() {
     this.randomAbleSelectTypeValues = this._allowRandom ?
-      [...this._defaultSelectTypeValues, {ID: '5', Value: 'Random'}, {ID: '6', Value: 'Random between'}]
-      : this._defaultSelectTypeValues;
+      [...defaultSelectTypeValues(), {ID: '5', Value: 'Random'}, {ID: '6', Value: 'Random between'}]
+      : defaultSelectTypeValues();
     this._defaultSelectTypeValues = this._allowRandom ?
-      [...this._defaultSelectTypeValues, {ID: '6', Value: 'Random between'}]
-      : this._defaultSelectTypeValues;
+      [...defaultSelectTypeValues(), {ID: '6', Value: 'Random between'}]
+      : defaultSelectTypeValues();
     this.daySelectTypeValues = this._allowRandom ?
-      [...this._daySelectTypeValues, {ID: '6', Value: 'Random day of month between'}, {ID: '17', Value: 'Random day of week between'}]
-      : this._daySelectTypeValues;
+      [...daySelectTypeValues(), {ID: '6', Value: 'Random day of month between'}, {ID: '17', Value: 'Random day of week between'}]
+      : daySelectTypeValues();
 
     this.cronValidator = cronExpressionValidator(this._allowRandom, this.fixedState);
+    console.log(this);
   }
 
   registerOnChange(fn: (_: any) => {}): void {

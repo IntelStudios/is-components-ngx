@@ -1,31 +1,38 @@
 $is-color-danger: var(--is-color-danger, #e43a45);
 
 :host {
-    &.ng-invalid {
-        .cron-expression {
-            border: 1px solid $is-color-danger;
-        }
-    }
-
-    .sub-content {
-      padding: 10px 0px;
-    }
-
+  --is-cron-tab-content-padding: var(--is-general-padding, 16px);
+  is-tabset {
+    --is-general-padding: 0;
+  }
+  .cron-tab-content {
+    padding: var(--is-cron-tab-content-padding);
+  }
+  &.ng-invalid {
     .cron-expression {
-        margin-bottom: 5px;
+      border: 1px solid $is-color-danger;
     }
+  }
 
-    .two-digit-number {
-        width: 8ex;
-        display: inline;
-    }
+  .sub-content {
+    padding: 8px 0px;
+  }
 
-    .four-digit-number {
-        width: 10ex;
-        display: inline;
-    }
+  .cron-expression {
+    margin-bottom: 5px;
+  }
 
-    .tabbable-custom {
-        overflow: visible;
-    }
+  .two-digit-number {
+    width: 8ex;
+    display: inline;
+  }
+
+  .four-digit-number {
+    width: 10ex;
+    display: inline;
+  }
+
+  .tabbable-custom {
+    overflow: visible;
+  }
 }

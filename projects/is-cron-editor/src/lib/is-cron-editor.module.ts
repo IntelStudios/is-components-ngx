@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
     IsCoreUIModule,
     ReactiveFormsModule,
     CommonModule,
-    IsSelectModule
+    IsSelectModule,
   ],
   exports: [IsCronEditorComponent]
 })
