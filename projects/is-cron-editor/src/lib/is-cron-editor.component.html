@@ -70,7 +70,7 @@
         </div>
         <div class="sub-content" *ngIf="formControl.minutes.type.value === '3'">
           <!--suppress AngularInvalidExpressionResultType -->
-          <is-select [multipleConfig]="isSelectMultiple" placeholder="Select minutes at which will this expression run"
+          <is-select [multipleConfig]="isSelectMultiple" [unsetNoMatch]="true" placeholder="Select minutes at which will this expression run"
             [formControl]="formControl.minutes.specific" [items]="values.minutes"></is-select>
         </div>
         <div class="sub-content" *ngIf="formControl.minutes.type.value === '4'">
@@ -120,7 +120,7 @@
         </div>
         <div class="sub-content" *ngIf="formControl.hours.type.value === '3'">
           <!--suppress AngularInvalidExpressionResultType -->
-          <is-select [multipleConfig]="isSelectMultiple" placeholder="Select hours at which will this expression run"
+          <is-select [multipleConfig]="isSelectMultiple" [unsetNoMatch]="true" placeholder="Select hours at which will this expression run"
             [formControl]="formControl.hours.specific" [items]="values.hours"></is-select>
         </div>
         <div class="sub-content" *ngIf="formControl.hours.type.value === '4'">
@@ -163,7 +163,7 @@
               [formControl]="formControl.days.everyXDay.everyX" min="0" max="7">
             day(s) starting on
           </label>
-          <is-select [items]="values.daysOfWeek" [formControl]="formControl.days.everyXDay.staringAt"></is-select>
+          <is-select [items]="values.daysOfWeek" [unsetNoMatch]="true" [formControl]="formControl.days.everyXDay.staringAt"></is-select>
         </div>
         <div class="sub-content" *ngIf="formControl.days.type.value === '4'">
           <label>
@@ -177,18 +177,18 @@
         </div>
         <div class="sub-content" *ngIf="formControl.days.type.value === '14'">
           <!--suppress AngularInvalidExpressionResultType -->
-          <is-select [multipleConfig]="isSelectMultiple" placeholder="Select days at which will this expression run"
+          <is-select [multipleConfig]="isSelectMultiple" [unsetNoMatch]="true" placeholder="Select days at which will this expression run"
             [formControl]="formControl.days.specificDayOfWeek" [items]="values.daysOfWeek"
             [useModels]="true"></is-select>
         </div>
         <div class="sub-content" *ngIf="formControl.days.type.value === '12'">
           <!--suppress AngularInvalidExpressionResultType -->
-          <is-select [multipleConfig]="isSelectMultiple" placeholder="Select days at which will this expression run"
+          <is-select [multipleConfig]="isSelectMultiple" [unsetNoMatch]="true" placeholder="Select days at which will this expression run"
             [formControl]="formControl.days.specificDayOfMonth" [items]="values.daysOfMonth"></is-select>
         </div>
         <div class="sub-content" *ngIf="formControl.days.type.value === '8'">
           On the last
-          <is-select [items]="values.daysOfWeek" [formControl]="formControl.days.lastDayOfWeekOfTheMonth"></is-select>
+          <is-select [items]="values.daysOfWeek" [unsetNoMatch]="true" [formControl]="formControl.days.lastDayOfWeekOfTheMonth"></is-select>
           of the month
         </div>
         <div class="sub-content" *ngIf="formControl.days.type.value === '9'">
@@ -210,7 +210,7 @@
             <input class="form-control is-input two-digit-number" type="number"
               [formControl]="formControl.days.XthDay.x" min="0" max="5"> th
           </label>
-          <is-select [items]="values.daysOfWeek" [formControl]="formControl.days.XthDay.day"></is-select>
+          <is-select [items]="values.daysOfWeek" [unsetNoMatch]="true" [formControl]="formControl.days.XthDay.day"></is-select>
         </div>
         <div class="sub-content" *ngIf="formControl.days.type.value === '6'">
           <label>
@@ -298,11 +298,11 @@
           <label>
             Run every month between
           </label>
-          <is-select [items]="values.months" [formControl]="formControl.months.between.start"></is-select>
+          <is-select [items]="values.months" [unsetNoMatch]="true" [formControl]="formControl.months.between.start"></is-select>
           <label>
             and
           </label>
-          <is-select [items]="values.months" [formControl]="formControl.months.between.end"></is-select>
+          <is-select [items]="values.months" [unsetNoMatch]="true" [formControl]="formControl.months.between.end"></is-select>
         </div>
         <div class="sub-content" *ngIf="formControl.months.type.value === '6'">
           <label>
@@ -339,7 +339,7 @@
         </div>
         <div class="sub-content" *ngIf="formControl.years.type.value === '3'">
           <!--suppress AngularInvalidExpressionResultType -->
-          <is-select [multipleConfig]="isSelectMultiple" placeholder="Select years at which will this expression run"
+          <is-select [multipleConfig]="isSelectMultiple" [unsetNoMatch]="true" placeholder="Select years at which will this expression run"
             [formControl]="formControl.years.specific" [items]="values.years"></is-select>
         </div>
         <div class="sub-content" *ngIf="formControl.years.type.value === '4'">

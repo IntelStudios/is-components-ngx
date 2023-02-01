@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -47,16 +47,17 @@ function daySelectTypeValues() {
   selector: 'is-cron-editor',
   templateUrl: './is-cron-editor.component.html',
   styleUrls: ['./is-cron-editor.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: IsCronEditorComponent,
     multi: true
   },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: IsCronEditorComponent,
-      multi: true
-    }]
+  {
+    provide: NG_VALIDATORS,
+    useExisting: IsCronEditorComponent,
+    multi: true
+  }]
 })
 export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Validator {
   get allowRandom(): boolean {
@@ -75,7 +76,9 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   private _allowRandom = false;
 
 
-  constructor() {
+  constructor(
+    private cd: ChangeDetectorRef,
+  ) {
   }
 
   formControl = {
@@ -242,7 +245,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     return this._fixedState;
   }
 
-  isSelectMultiple: IsSelectMultipleConfig = {showButtons: true};
+  isSelectMultiple: IsSelectMultipleConfig = { showButtons: true };
 
   onTouched: Function;
   private _changeSubscription: Subscription = null;
@@ -348,6 +351,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     this.formControl.years.between.end.setValue(currentYear + 1);
 
     this._ignore_reading = false;
+    this.cd.markForCheck();
   }
 
   /**
@@ -599,7 +603,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     if (!this.cronExpressionControl.value || this.cronExpressionControl.value === this._value) {
       return;
     }
-
+    console.log('parse state')
     this._ignore_reading = true;
 
     try {
@@ -613,7 +617,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       this.cronState.years = cronParts.length === 6 ? null : cronParts[6].trim();
 
       // parse seconds
-      let {seconds} = this.cronState;
+      let { seconds } = this.cronState;
       if (seconds === '*') {
         this.formControl.seconds.type.setValue('1');
       } else if (seconds === 'R') {
@@ -654,7 +658,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       }
 
       // parse minutes
-      let {minutes} = this.cronState;
+      let { minutes } = this.cronState;
       if (minutes === '*') {
         this.formControl.minutes.type.setValue('1');
       } else if (minutes === 'R') {
@@ -690,12 +694,13 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
           }
         } else {
           this.formControl.minutes.type.setValue('3');
+          console.log(mapNumbers(minutes.split(',')).map((v) => `${v + 1}`))
           this.formControl.minutes.specific.setValue(mapNumbers(minutes.split(',')).map((v) => `${v + 1}`));
         }
       }
 
       // parse hours
-      let {hours} = this.cronState;
+      let { hours } = this.cronState;
       if (hours === '*') {
         this.formControl.hours.type.setValue('1');
       } else {
@@ -734,7 +739,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       }
 
       // parse days
-      let {dayOfMonth, dayOfWeek} = this.cronState;
+      let { dayOfMonth, dayOfWeek } = this.cronState;
       if (dayOfWeek === '*' && dayOfMonth === '?') {
         this.formControl.days.type.setValue('1');
       } else if (dayOfWeek === 'MON-FRI' && dayOfMonth === '?') {
@@ -860,7 +865,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       }
 
       // parse month
-      let {months} = this.cronState;
+      let { months } = this.cronState;
       if (months === '*') {
         this.formControl.months.type.setValue('1');
       } else if (months.indexOf('/') > -1 || months.indexOf('-') > -1) {
@@ -918,7 +923,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       }
 
       // parse years
-      let {years} = this.cronState;
+      let { years } = this.cronState;
       if (!years || years === '*') {
         this.formControl.years.type.setValue('1');
       } else if (years === 'R') {
@@ -960,6 +965,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     } catch (e) {
       console.error(e);
     } finally {
+      this.cd.markForCheck();
       if (this.validatorOnChangeFn) {
         this.validatorOnChangeFn();
       }
@@ -969,17 +975,16 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
   private setRandomAbleValues() {
     this.randomAbleSelectTypeValues = this._allowRandom ?
-      [...defaultSelectTypeValues(), {ID: '5', Value: 'Random'}, {ID: '6', Value: 'Random between'}]
+      [...defaultSelectTypeValues(), { ID: '5', Value: 'Random' }, { ID: '6', Value: 'Random between' }]
       : defaultSelectTypeValues();
     this._defaultSelectTypeValues = this._allowRandom ?
-      [...defaultSelectTypeValues(), {ID: '6', Value: 'Random between'}]
+      [...defaultSelectTypeValues(), { ID: '6', Value: 'Random between' }]
       : defaultSelectTypeValues();
     this.daySelectTypeValues = this._allowRandom ?
-      [...daySelectTypeValues(), {ID: '6', Value: 'Random day of month between'}, {ID: '17', Value: 'Random day of week between'}]
+      [...daySelectTypeValues(), { ID: '6', Value: 'Random day of month between' }, { ID: '17', Value: 'Random day of week between' }]
       : daySelectTypeValues();
 
     this.cronValidator = cronExpressionValidator(this._allowRandom, this.fixedState);
-    console.log(this);
   }
 
   registerOnChange(fn: (_: any) => {}): void {
