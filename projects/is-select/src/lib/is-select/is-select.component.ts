@@ -188,6 +188,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     }
   }
 
+  @Input()
+  convertValueIDToInt = false;
+
   /**
    * Sets minimum search characters to trigger (loadOptions) event.
    * Set to 0, to emit event instantly when combo opens up (in such case filter will be set to empty string)
@@ -310,6 +313,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     }
     if (this.selectConfig.closeOptionsOnScroll !== undefined) {
       this.closeOptionsOnScroll = this.selectConfig.closeOptionsOnScroll;
+    }
+    if (this.selectConfig.convertValueIDToInt !== undefined) {
+      this.convertValueIDToInt = this.selectConfig.convertValueIDToInt;
     }
   }
 
@@ -485,7 +491,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
     } else {
       if (active) {
-        this.changed.emit(active.getID(this.selectConfig.convertValueIDToInt));
+        this.changed.emit(active.getID(this.convertValueIDToInt));
       } else {
         this.changed.emit(null);
       }
@@ -514,7 +520,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         // emit ID property from item's source in case it's number
         // otherwise Item's ID is always string
         const values = active.map((item: SelectItem) => {
-          return item.getID(this.selectConfig.convertValueIDToInt);
+          return item.getID(this.convertValueIDToInt);
         });
         this.changed.emit(values);
       } else {
