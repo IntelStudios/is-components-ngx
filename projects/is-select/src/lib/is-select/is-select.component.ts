@@ -861,6 +861,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
         // calculate how many additioal options became hidden
         setTimeout(() => {
+          // how many options are below the first one (== are surely hidden)
           const opts = el.querySelectorAll('.ui-select-match-text');
           const firstTop = opts[0].getBoundingClientRect().top;
           let i = 1;
@@ -871,6 +872,14 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
             }
           }
           this.additionalValues = this.multiActive.length - i;
+
+          // check if the first option is also hidden
+          const selectMatchEl: HTMLElement = this.element.nativeElement.querySelector('.ui-select-match');
+          const selectMatchRect = selectMatchEl.getBoundingClientRect();
+          if (firstTop >= selectMatchRect.top + (selectMatchRect.height / 2)) {
+            // the first option is below options area, mark is as also hidden
+            this.additionalValues ++;
+          }
           this.changeDetector.markForCheck();
         });
       }

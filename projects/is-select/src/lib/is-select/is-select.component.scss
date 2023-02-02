@@ -99,7 +99,8 @@ $is-select-multi-selection-max-width: var(--is-select-multi-selection-max-width,
           color: $is-control-fg-color;
         }
         >i {
-          padding-right: 4px;
+          // required so that if the first multi-selected item does not move the icon vertically when overflowing
+          padding: 4px 4px 4px 0;
         }
       }
 
