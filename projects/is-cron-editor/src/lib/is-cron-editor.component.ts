@@ -481,7 +481,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
       case '12':
         this.cronState.dayOfWeek = '?';
         if (this.formControl.days.specificDayOfMonth.value && this.formControl.days.specificDayOfMonth.value.length) {
-          this.cronState.dayOfMonth = this.formControl.days.specificDayOfMonth.value.sort().map(v => `${v - 1}`).join(',');
+          this.cronState.dayOfMonth = this.formControl.days.specificDayOfMonth.value.sort().map(v => `${v}`).join(',');
         } else {
           this.cronState.dayOfMonth = '1';
         }
@@ -603,7 +603,6 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     if (!this.cronExpressionControl.value || this.cronExpressionControl.value === this._value) {
       return;
     }
-    console.log('parse state')
     this._ignore_reading = true;
 
     try {
@@ -694,7 +693,6 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
           }
         } else {
           this.formControl.minutes.type.setValue('3');
-          console.log(mapNumbers(minutes.split(',')).map((v) => `${v + 1}`))
           this.formControl.minutes.specific.setValue(mapNumbers(minutes.split(',')).map((v) => `${v + 1}`));
         }
       }
@@ -740,7 +738,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
       // parse days
       let { dayOfMonth, dayOfWeek } = this.cronState;
-      if (dayOfWeek === '*' && dayOfMonth === '?') {
+      if ((dayOfWeek === '*' && dayOfMonth === '?') || (dayOfMonth === '*' && dayOfWeek === '?')) {
         this.formControl.days.type.setValue('1');
       } else if (dayOfWeek === 'MON-FRI' && dayOfMonth === '?') {
         this.formControl.days.type.setValue('2');
@@ -858,7 +856,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
           this.formControl.days.type.setValue('14');
           this.formControl.days.specificDayOfWeek.setValue(values);
         } else {
-          this.formControl.days.specificDayOfMonth.setValue(mapNumbers(dayOfMonth.split(',')).map((v) => `${v + 1}`));
+          this.formControl.days.specificDayOfMonth.setValue(mapNumbers(dayOfMonth.split(',')).map((v) => `${v}`));
 
           this.formControl.days.type.setValue('12');
         }
