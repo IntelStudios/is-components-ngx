@@ -183,6 +183,10 @@ export function cronExpressionValidator(allowRandomExpressions = false, fixedSta
             continue;
           }
           if (mapIDtoShort.indexOf(day) === -1 && isNaN(Number(day))) {
+            if (day === '*') {
+              // noinspection ExceptionCaughtLocallyJS
+              throw Error('cannot combine both day of month and day of week in this way');
+            }
             // noinspection ExceptionCaughtLocallyJS
             throw Error('this day does not exist');
           }
