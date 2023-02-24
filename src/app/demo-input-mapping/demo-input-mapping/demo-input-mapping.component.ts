@@ -517,9 +517,10 @@ export class DemoInputMappingComponent implements OnInit {
       this.validationError = this.formControl.errors === null ? '' : JSON.stringify(this.formControl.errors);
       this.currentValue = JSON.stringify(val);
     });
-    // this.formControl.statusChanges.subscribe(() => {
-    //   this.validationError = this.formControl.errors === null ? '' : JSON.stringify(this.formControl.errors);
-    // });
+    this.formControl.statusChanges.subscribe((status) => {
+      console.log('status', status);
+      this.validationError = this.formControl.errors === null ? '' : JSON.stringify(this.formControl.errors);
+    });
     this.val = this.formControl.value;
   }
 

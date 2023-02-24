@@ -140,7 +140,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   private _data: IsInputMappingInput = null;
   private _mouseover = false;
   private _mouseoverSubject = new Subject<boolean>();
-  private _propagatedValue: IsInputMappingValue = {InputSchemaMapping: new Map(), InputSchemaFilter: {}};
   private _validator: Function;
   private _validatorOnChange: Function;
 
@@ -169,7 +168,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   private _subscriptions: Subscription[] = [];
-  private _on_changes: Function = () => { };
+  private _onValueChange?: Function;
 
   constructor(private elRef: ElementRef, private serviceRoot: IsInputMappingService, private cd: ChangeDetectorRef) {
   }
@@ -263,7 +262,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       if (this.level === 0) {
         this.inputSchemaMap.delete(data.Item.Name);
         if (!data.hasOwnProperty('EmmitChange') || data.EmmitChange) {
-          console.log('[DEV]', 'init callback');
           this.propagateNewValue();
         }
       }
@@ -286,7 +284,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
           }
         }
         if (filter.EmmitChange) {
-          console.log('[DEV]', 'filter callback');
           this.propagateNewValue();
         }
         return;
@@ -534,53 +531,14 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     const value: IsInputMappingValue = {InputSchemaFilter: this.inputFilters, InputSchemaMapping: this.inputSchemaMap};
 
     if (this.level === 0) {
-      if (this.compareValues(value, this._propagatedValue)) {
-        return;
+      if (this._onValueChange) {
+        setTimeout(() => this._onValueChange(value));
+      } else if (this._validatorOnChange) {
+        this._validatorOnChange();
       }
-      this._propagatedValue = value;
-      console.log('propagating', value);
-      this._validatorOnChange();
-      setTimeout(() => this._on_changes(value));
-    } else {
-      this._on_changes(value);
+    } else if (this._onValueChange) {
+      this._onValueChange(value);
     }
-  }
-
-  /**
-   * Deep checks if two values are equal
-   * @param a first value to check
-   * @param b second value to check
-   * @private
-   */
-  private compareValues(a: IsInputMappingValue, b: IsInputMappingValue): boolean {
-    const objectToArray = (obj: Object): unknown[] => {
-      const keys = Object.keys(obj).sort();
-
-      return mapToArray(new Map(keys.map((key) => [key, obj[key]])));
-    };
-
-    const mapToArray = (map: Map<unknown, unknown>): unknown[] => {
-      return [...map.keys()].map((key) => {
-        let value = map.get(key);
-
-        if (value instanceof Map) {
-          value = mapToArray(value);
-        } else if (value instanceof Object) {
-          value = objectToArray(value);
-        }
-
-        return [key, value];
-      }).sort();
-    };
-
-    const stringA = JSON.stringify(objectToArray(a));
-    const stringB = JSON.stringify(objectToArray(b));
-
-    console.log(stringA);
-    console.log(stringB);
-    console.log(stringA === stringB);
-
-    return stringA === stringB;
   }
 
   /**
@@ -731,7 +689,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
    * Control value accessor
    */
   registerOnChange(fn: Function): void {
-    this._on_changes = fn;
+    this._onValueChange = fn;
   }
 
   /*
@@ -769,7 +727,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     if (this.level === 0) {
       this.inputSchemaMap.set(status.Item.Name, status.Path);
       if (!status.hasOwnProperty('EmmitChange') || status.EmmitChange) {
-        console.log('[DEV]', 'assign callback');
         this.propagateNewValue();
       }
     }
