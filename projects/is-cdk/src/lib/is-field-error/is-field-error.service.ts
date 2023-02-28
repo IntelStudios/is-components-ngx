@@ -214,16 +214,17 @@ export class IsFieldErrorFactory {
 
   static getErrors(control: FormControl, prefix: string, translate: TranslateService, onlyHighest: boolean = true): string[] {
     let ret: string[] = [];
-
     if (control.errors !== null) {
       let remapped = {};
       // replace base angular validator errors to is-field-errors
       Object.keys(control.errors).forEach((key) => {
         if (control.errors[key] instanceof IsFieldError) {
-          remapped = {...{key: control.errors[key] }};
+          remapped = { ...{ key: control.errors[key] } };
+        } else if (this.isSchemaFormError(control.errors[key])) {
+          remapped = { ...this.replaceSchemaFormValidationError(key, control.errors[key]) };
         }
         else {
-          remapped = {...this.replaceAngularValidatorError(key, control.errors[key]) };
+          remapped = { ...this.replaceAngularValidatorError(key, control.errors[key]) };
         }
       });
 
@@ -261,6 +262,26 @@ export class IsFieldErrorFactory {
     }
 
     return ret;
+  }
+
+  private static isSchemaFormError(error: any) {
+    return !!error.code;
+  }
+
+  private static replaceSchemaFormValidationError(key: string, error: any) {
+    // TODO other errors can be mapped https://github.com/zaggino/z-schema/blob/v4.2.2/src/Errors.js
+    switch (error.code) {
+      case 'OBJECT_MISSING_REQUIRED_PROPERTY':
+        return IsFieldErrorFactory.requiredError();
+      case 'MIN_LENGTH':
+        return IsFieldErrorFactory.minLengthError(error.params[1], error.params[0]);
+      case 'MAX_LENGTH':
+        return IsFieldErrorFactory.maxLengthError(error.params[1], error.params[0]);
+      case 'PATTERN':
+        return IsFieldErrorFactory.patternError(error.params[1], error.params[0]);
+      default:
+        return IsFieldErrorFactory.unspecifiedError({ key: key, error: error });
+    }
   }
 
   private static replaceAngularValidatorError(key: string, error: any) {
