@@ -81,6 +81,10 @@ export interface IsSelectConfig {
    * Close options when scrolling
    */
   closeOptionsOnScroll?: boolean;
+  /**
+   * placeholder for empty search input, can be ngx-translate key
+   */
+  searchPlaceholder?: string;
 }
 
 export const configToken = new InjectionToken<IsSelectConfig>('IsSelectConfig');

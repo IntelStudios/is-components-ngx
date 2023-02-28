@@ -13,14 +13,20 @@ import { IsCoreUIModule } from '@intelstudios/core-ui';
 import { IsSelectOptionComponent } from './is-select-option/is-select-option.component';
 import { IsSelectConfig, configToken, createDefaultConfig } from './is-select.interfaces';
 import { IsCdkModule } from '@intelstudios/cdk';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
-    imports: [
-        CommonModule, OverlayModule, IsCoreUIModule, ScrollingModule, IsCdkModule,
-    ],
-    declarations: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent, IsSelectOptionsComponent, IsSelectOptionComponent],
-    exports: [ScrollingModule, IsSelectComponent, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent]
+  imports: [
+    CommonModule,
+    OverlayModule,
+    IsCoreUIModule,
+    ScrollingModule,
+    IsCdkModule,
+    TranslateModule,
+  ],
+  declarations: [IsSelectComponent, HighlightPipe, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent, IsSelectOptionsComponent, IsSelectOptionComponent],
+  exports: [ScrollingModule, IsSelectComponent, IsSelectOptionDirective, IsSelectOptionSelectedDirective, IsSelectColorComponent, IsSelectBadgeComponent]
 })
 export class IsSelectModule {
   static forRoot(config?: IsSelectConfig): ModuleWithProviders<IsSelectModule> {

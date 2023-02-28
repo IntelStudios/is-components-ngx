@@ -3,7 +3,7 @@
     <i class="fa fa-search"></i>
     <input type="text" autocomplete="false" [style.text-align]="alignment"
       (input)="onSearchChange($event)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" (paste)="onPaste($event)"
-      class="form-control" [placeholder]="searchPlaceholder">
+      class="form-control" [placeholder]="searchPlaceholder | translate">
   </div>
   <i *ngIf="isLoadingOptions" class="fas fa-circle-notch fa-spin options-loading" [class.is-search]="isSearch"></i>
 

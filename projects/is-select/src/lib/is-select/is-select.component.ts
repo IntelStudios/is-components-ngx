@@ -317,6 +317,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     if (this.selectConfig.convertValueIDToInt !== undefined) {
       this.convertValueIDToInt = this.selectConfig.convertValueIDToInt;
     }
+    if (this.selectConfig.searchPlaceholder) {
+      this.searchPlaceholder = this.selectConfig.searchPlaceholder;
+    }
   }
 
   ngOnInit() {
