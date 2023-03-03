@@ -35,10 +35,10 @@ function daySelectTypeValues() {
     { ID: '13', Value: 'Any last day of the month' },
     { ID: '7', Value: 'Last weekday of the month' },
     { ID: '8', Value: 'Last day of week of the month' },
-    { ID: '9', Value: 'X days before end of the moth' },
+    { ID: '9', Value: 'X days before end of the month' },
     { ID: '10', Value: 'Nearest weekday to the Xth of the month' },
     { ID: '11', Value: 'On the Xth day of the month' },
-  ]
+  ];
 }
 
 // noinspection DuplicatedCode
@@ -787,18 +787,25 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
           }
         }
         if (dayOfMonth.indexOf('-') > -1) {
-          let randomApplied = false;
+          if (dayOfMonth.startsWith('L-')) {
+            const dayOffset = mapNumbers([dayOfMonth.substring(2)]);
 
-          if (dayOfMonth.startsWith('R(')) {
-            randomApplied = this.allowRandom;
-            dayOfMonth = dayOfMonth.substring(2, dayOfMonth.length - 1);
+            this.formControl.days.XBeforeEnd.setValue(dayOffset);
+            this.formControl.days.type.setValue('9');
+          } else {
+            let randomApplied = false;
+
+            if (dayOfMonth.startsWith('R(')) {
+              randomApplied = this.allowRandom;
+              dayOfMonth = dayOfMonth.substring(2, dayOfMonth.length - 1);
+            }
+
+            const split = mapNumbers(dayOfMonth.split('-'));
+            this.formControl.days.between.start.setValue(split[0]);
+            this.formControl.days.between.end.setValue(split[1]);
+
+            this.formControl.days.type.setValue(randomApplied ? '6' : '15');
           }
-
-          const split = mapNumbers(dayOfMonth.split('-'));
-          this.formControl.days.between.start.setValue(split[0]);
-          this.formControl.days.between.end.setValue(split[1]);
-
-          this.formControl.days.type.setValue(randomApplied ? '6' : '15');
         }
       } else if (dayOfMonth === 'L') {
         this.formControl.days.type.setValue('6');
@@ -809,11 +816,6 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
 
         this.formControl.days.lastDayOfWeekOfTheMonth.setValue(dayNumber);
         this.formControl.days.type.setValue('8');
-      } else if (dayOfMonth.startsWith('L-')) {
-        const dayOffset = mapNumbers([dayOfMonth.substring(2)]);
-
-        this.formControl.days.XBeforeEnd.setValue(dayOffset);
-        this.formControl.days.type.setValue('9');
       } else if (dayOfMonth.endsWith('W')) {
         const day = mapNumbers([dayOfMonth.substring(0, dayOfMonth.length - 1)]);
 

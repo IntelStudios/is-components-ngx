@@ -144,7 +144,11 @@ export function cronExpressionValidator(allowRandomExpressions = false, fixedSta
           dayOfMonth = dayOfMonth.substring(2, dayOfMonth.length - 1);
         }
         if (dayOfMonth.indexOf('-') > -1) {
-          mapNumbers(dayOfMonth.split('-'));
+          if (dayOfMonth.startsWith('L-')) {
+            mapNumbers([cronState.dayOfMonth.substr(2)]);
+          } else {
+            mapNumbers(dayOfMonth.split('-'));
+          }
         } else {
           mapNumbers(dayOfMonth.split(','));
         }
@@ -168,8 +172,6 @@ export function cronExpressionValidator(allowRandomExpressions = false, fixedSta
       } else if (cronState.dayOfMonth === 'LW') {
       } else if (cronState.dayOfWeek.endsWith('L')) {
         mapNumbers([cronState.dayOfWeek.charAt(0)]);
-      } else if (cronState.dayOfMonth.startsWith('L-')) {
-        mapNumbers([cronState.dayOfMonth.substr(2)]);
       } else if (cronState.dayOfMonth.endsWith('W')) {
         mapNumbers([cronState.dayOfMonth.substr(0, cronState.dayOfMonth.length - 1)]);
       } else if (cronState.dayOfWeek.indexOf('#') > -1) {
