@@ -41,7 +41,7 @@ export class IsInputMappingService {
    * Removes all filters and notifies components without emitting ValueChangeAccessor change event
    * Also clears the cache
    */
-  releaseAllFilters(emmitChange: boolean = true): void {
+  releaseAllFilters(emmitChange = true): void {
     if (Object.keys(this.filterCache).length === 0) {
       // no need to release anything
       return;
@@ -99,7 +99,7 @@ export class IsInputMappingService {
   /**
    * Releases all cached assigned elements and notifies components
    */
-  releaseAllItems(emmitChange: boolean = true): void {
+  releaseAllItems(emmitChange = true): void {
     Object.keys(this.assignedCache).forEach(path => {
       this.assignedCache[path].forEach((data: AssignStatus) => {
         this.releaseItem({...data, EmmitChange: emmitChange});
