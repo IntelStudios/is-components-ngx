@@ -3,19 +3,16 @@ $is-color-success-fg: var(--is-color-success, green);
 $is-color-node-hover: var(--is-select-tree-item-hover, lighten(#67809F, 10%));
 $is-color-node-active: var(--is-select-tree-item-active, #fff);
 $is-color-node-focus: var(--is-select-tree-item-focus, #fff);
-
-:host {
-
-  display: block;
-  height: 200px;
-
+$level-padding: var(--is-select-tree-level-padding, 20px);
+$is-color-undetermined: var(--is-select-tree-item-undetermined, #999);
+is-select-tree {
   tree-viewport {
     //@include short-scroll;
   }
   .angular-tree-component {
-    display: block !important;
+    display: block;
     .undetermined {
-      color: #999;
+      color: $is-color-undetermined;
     }
     .badge-html {
       > .btn-outline {
@@ -24,7 +21,9 @@ $is-color-node-focus: var(--is-select-tree-item-focus, #fff);
         font-size: 10px;
       }
     }
-
+    .tree-children {
+      padding-left: $level-padding;
+    }
     .node-content-wrapper-active, .node-content-wrapper.node-content-wrapper-active:hover, .node-content-wrapper-active.node-content-wrapper-focused {
       background: $is-color-node-active;
     }
@@ -46,26 +45,6 @@ $is-color-node-focus: var(--is-select-tree-item-focus, #fff);
     }
     .fa-circle-o-notch {
       color: $is-color-success-fg;
-    }
-    .selection-fields {
-      position: absolute;
-      right: -2px;
-      top: 0px;
-      height: 100%;
-      padding-top: 2px;
-      padding-left: 4px;
-      background-color: #fff;
-      .fa {
-        float: right;
-        margin-right: 5px;
-        text-align: left;
-        cursor: pointer;
-        &.fa-check-square-o,
-        &.fa-square-o,
-        &.fa-pencil-square-o {
-          padding-top: 1px;
-        }
-      }
     }
   }
 }

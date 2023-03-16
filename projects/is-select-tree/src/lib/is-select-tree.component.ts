@@ -5,9 +5,10 @@ import {
   EventEmitter,
   Input,
   OnDestroy, Output,
-  ViewChild
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
-import { TreeComponent, TreeNode } from '@circlon/angular-tree-component';
+import { ITreeOptions, TreeComponent, TreeNode } from '@circlon/angular-tree-component';
 import { Subscription } from 'rxjs';
 import { IsSelectTree, IsSelectTreeChangeEvent, IsSelectTreeNode } from './is-select-tree.models';
 
@@ -16,12 +17,13 @@ import { IsSelectTree, IsSelectTreeChangeEvent, IsSelectTreeNode } from './is-se
   selector: 'is-select-tree',
   templateUrl: './is-select-tree.component.html',
   styleUrls: ['./is-select-tree.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class IsSelectTreeComponent implements OnDestroy {
 
   @Input()
-  instantSave: boolean = true;
+  instantSave = true;
 
   @Input()
   set selection(tree: IsSelectTree) {
@@ -52,9 +54,10 @@ export class IsSelectTreeComponent implements OnDestroy {
   @Output()
   change: EventEmitter<IsSelectTreeChangeEvent> = new EventEmitter<IsSelectTreeChangeEvent>();
 
-  options: any = {
+  @Input()
+  options: ITreeOptions = {
     useVirtualScroll: false,
-    nodeHeight: 13
+    nodeHeight: 21
   };
 
   @ViewChild('tree')

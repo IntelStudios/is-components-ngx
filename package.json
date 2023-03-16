@@ -10,6 +10,7 @@
     "publish.select": "ng build --configuration production is-select && npm publish ./dist/is-select",
     "package.select": "ng build --configuration production is-select && npm pack ./dist/is-select",
     "test.select": "ng test is-select --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "package.select-tree": "ng build --configuration production is-select-tree && npm pack ./dist/is-select-tree",
     "publish.select-tree": "ng build --configuration production is-select-tree && npm publish ./dist/is-select-tree",
     "publish.dx-select-tree": "ng build --configuration production is-dx-select-tree && npm publish ./dist/is-dx-select-tree",
     "publish.input-mapping": "ng build --configuration production is-input-mapping && npm publish ./dist/is-input-mapping",

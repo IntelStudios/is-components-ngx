@@ -44,6 +44,12 @@ export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
     }
   }
 
+  select() {
+    if (this.selection.selectionFields.length === 1) {
+      this.toggleSelect(null, this.node, this.selection.selectionFields[0]);
+    }
+  }
+
   toggleExpandNode() {
     this.node.toggleExpanded();
     this.node.toggleActivated();
@@ -69,7 +75,7 @@ export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
   }
 
   toggleSelect(event: any, treeNode: TreeNode, field: IsSelectField) {
-    event.stopPropagation();
+    event?.stopPropagation();
     const node: IsSelectTreeNode = treeNode.data;
     let value: boolean = !node.getValue(field);
     if (node.isVirtual()) {
