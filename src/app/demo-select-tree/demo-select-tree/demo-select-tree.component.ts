@@ -21,22 +21,33 @@ export class DemoSelectTreeComponent implements OnInit {
 `
 
   tree1: IsSelectTree = IsSelectTree.deserializeTree(
-    {
-      Name: 'Virtual Root',
-      Children: [
-        { ID: 1, Name: 'Node 1', Values: { IsSelected: true } },
-        { ID: 2, Name: 'Node 2', Values: { IsSelected: false } }
-      ],
-    },
+    [
+      {
+        Name: 'Root1',
+        ID: 20,
+        Children: [
+          { ID: 21, Name: 'Node 1', Values: { IsSelected: true } },
+          { ID: 22, Name: 'Node 2', Values: { IsSelected: false }, Icon: 'fa fa-user' }
+        ],
+      },
+      {
+        Name: 'Root2',
+        ID: 30,
+        Children: [
+          { ID: 31, Name: 'Node 1', Values: { IsSelected: true } },
+          { ID: 32, Name: 'Node 2', Values: { IsSelected: false }, Icon: 'fa fa-user' }
+        ],
+      }
+    ],
     null,
     IsSelectField.selected()
   );
 
   tree2: IsSelectTree = IsSelectTree.deserializeTree(
-    {
+    [{
       Name: 'Virtual Root',
       Children: [
-        { ID: 1, Name: 'Node 1', Icon:'fa fa-beer', Values: { IsVisible: true, IsEditable: true } },
+        { ID: 1, Name: 'Node 1', Icon: 'fa fa-beer', Values: { IsVisible: true, IsEditable: true } },
         { ID: 2, Name: 'Node 2' },
         {
           Name: 'Node 3 (virtual)',
@@ -47,7 +58,7 @@ export class DemoSelectTreeComponent implements OnInit {
           ]
         }
       ],
-    },
+    }],
     'fa fa-user',
     ...IsSelectField.visibleEditable()
   );

@@ -1,9 +1,23 @@
+$padding: var(--is-select-tree-item-padding, 0 4px);
+$gap: var(--is-select-tree-item-gap, 4px);
 :host {
+  display: flex;
+  flex-flow: row;
+  gap: $gap;
+  align-items: center;
+  padding: $padding;
   > div {
-    > span {
-      > i, span {
-        padding-right: 3px;
-      }
+    &.node-title {
+      display: flex;
+      gap: $gap;
+      flex: 1;
+      align-items: center;
+    }
+    &.selection-fields {
+      display: flex;
+      gap: $gap;
+      cursor: pointer;
+      align-items: center;
     }
   }
 }

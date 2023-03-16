@@ -14,7 +14,7 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-select-tree [selection]="tree1" (change)="onTreeChangeInstantSave($event)"></is-select-tree>
+    <is-select-tree [selection]="tree1" [instantSave]="false" (change)="onTreeChangeInstantSave($event)"></is-select-tree>
   </div>
   <div class="col-sm-6">
     <is-select-tree [selection]="tree2" (change)="onTreeChangeInstantSave($event)"></is-select-tree>

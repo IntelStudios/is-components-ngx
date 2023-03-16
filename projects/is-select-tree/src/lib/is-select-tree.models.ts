@@ -271,8 +271,9 @@ export class IsSelectTree extends IsSelectTreeNode {
 
   private computeNodeClass(node: IsSelectTreeNode, f: IsSelectField) {
     if (node.isVirtual()) {
-      node.$classes[f.fieldName] = this.getNodeClassHelper(node, f);
+      
     }
+    node.$classes[f.fieldName] = this.getNodeClassHelper(node, f);
   }
 
   private getNodeClassHelper(node: IsSelectTreeNode, f: IsSelectField): string {
@@ -294,17 +295,16 @@ export class IsSelectTree extends IsSelectTreeNode {
       // we found only same classes - no change => inherit class
       return Object.keys(helper)[0];
     } else if (diff > 1) {
-      return `fa fa-fw ${f.iconOn} ${node.isVirtual() ? 'undetermined' : ''}`;
+      return `fa fa-fw ${f.iconIndeterminate}`;
     } else {
       return node.$classes[f.fieldName];
     }
   }
 
-  static deserializeTree(root: IISTreeNode, defaultIcon: string = null, ...fields: IsSelectField[]): IsSelectTree {
+  static deserializeTree(root: IISTreeNode[], defaultIcon: string = null, ...fields: IsSelectField[]): IsSelectTree {
     const t: IsSelectTree = new IsSelectTree();
     t.selectionFields = fields;
-    const rootNode: IsSelectTreeNode = IsSelectTreeNode.deserialize(root, defaultIcon, ...fields);
-    t.children.push(rootNode);
+    t.children = root.map((r) => IsSelectTreeNode.deserialize(r, defaultIcon, ...fields))
     t.initialize();
     return t;
   }
@@ -316,6 +316,7 @@ export class IsSelectField {
   fieldName: string;
   iconOn: string;
   iconOff: string;
+  iconIndeterminate: string;
   dependentFieldName: string;
 
   static selected(): IsSelectField {
@@ -323,6 +324,7 @@ export class IsSelectField {
     sf.name = 'shared.select-tree.selected';
     sf.iconOn = 'fa-regular fa-square-check';
     sf.iconOff = 'fa-regular fa-square';
+    sf.iconIndeterminate = 'far fa-square-minus';
     sf.fieldName = 'IsSelected';
     return sf;
   }
@@ -332,6 +334,7 @@ export class IsSelectField {
     sf.name = 'shared.select-tree.selected';
     sf.iconOn = 'fa-regular fa-square-check';
     sf.iconOff = 'fa-regular fa-square';
+    sf.iconIndeterminate = 'far fa-square-minus';
     sf.fieldName = 'IsApplicable';
     return sf;
   }
@@ -341,6 +344,7 @@ export class IsSelectField {
     sf.name = 'shared.select-tree.allowed';
     sf.iconOn = 'fa-regular fa-square-check';
     sf.iconOff = 'fa-regular fa-square';
+    sf.iconIndeterminate = 'far fa-square-minus';
     sf.fieldName = 'IsAllowed';
     return sf;
   }
@@ -350,6 +354,7 @@ export class IsSelectField {
     sf.name = 'shared.select-tree.editable';
     sf.iconOn = 'fa-regular fa-pen-to-square';
     sf.iconOff = 'fa-regular fa-square';
+    sf.iconIndeterminate = `${sf.iconOn} undetermined`;
     sf.fieldName = 'IsEditable';
     return sf;
   }
@@ -359,6 +364,7 @@ export class IsSelectField {
     sf.name = 'shared.select-tree.visible';
     sf.iconOn = 'fa-eye';
     sf.iconOff = 'fa-eye-slash';
+    sf.iconIndeterminate = `${sf.iconOn} undetermined`;
     sf.fieldName = 'IsVisible';
     return sf;
   }
