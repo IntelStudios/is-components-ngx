@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { IsSelectTree, IsSelectField, IsSelectTreeNode, IsSelectTreeChangeEvent } from 'projects/is-select-tree/src/public_api';
+import { IsSelectTree, IsSelectField, IsSelectTreeNode, IsSelectTreeChangeEvent, IsSelectTreeComponent } from 'projects/is-select-tree/src/public_api';
 
 @Component({
   selector: 'app-demo-select-tree',
@@ -68,6 +68,10 @@ export class DemoSelectTreeComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  clear(treeComponent: IsSelectTreeComponent) {
+    treeComponent.update({ 20: { IsSelected: false } })
   }
 
   onTreeChangeInstantSave(event: IsSelectTreeChangeEvent) {

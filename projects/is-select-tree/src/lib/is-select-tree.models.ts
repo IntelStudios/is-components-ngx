@@ -146,9 +146,11 @@ export class IsSelectTreeNode {
   }
 }
 
+export type IsSelectTreeChanges = { [id: number]: { [fieldName: string]: boolean } };
+
 export class IsSelectTreeChangeEvent {
 
-  changes: { [id: number]: { [fieldName: string]: boolean } } = {};
+  changes: IsSelectTreeChanges = {};
   constructor(public saveFinished: () => void) {
   }
 
@@ -198,6 +200,21 @@ export class IsSelectTree extends IsSelectTreeNode {
     this.eachNode((n: IsSelectTreeNode, level: number) => {
       n.onUpdateView.emit(null);
     });
+  }
+
+  update(changes: IsSelectTreeChanges): void {
+    this.eachNode((n) => {
+      const change = changes[n.id];
+      if (change) {
+        this.selectionFields.forEach((f) => {
+          if (change[f.fieldName] !== undefined) {
+            n.setValue(f, change[f.fieldName]);
+            this.updateParentClasses(n, f);
+          }
+        });
+      }
+    });
+    this.updateView();
   }
 
   setNodeValue(nodeId: number, field: IsSelectField, value: boolean) {

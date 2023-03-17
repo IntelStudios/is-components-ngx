@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ITreeOptions, TreeComponent, TreeNode } from '@circlon/angular-tree-component';
 import { Subscription } from 'rxjs';
-import { IsSelectTree, IsSelectTreeChangeEvent, IsSelectTreeNode } from './is-select-tree.models';
+import { IsSelectTree, IsSelectTreeChangeEvent, IsSelectTreeChanges, IsSelectTreeNode } from './is-select-tree.models';
 
 
 @Component({
@@ -83,6 +83,10 @@ export class IsSelectTreeComponent implements OnDestroy {
     } else {
       this.expandTree(depth);
     }
+  }
+
+  update(change: IsSelectTreeChanges): void {
+    this.selection.update(change);
   }
 
   expandTree(depth?: number) {
