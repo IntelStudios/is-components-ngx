@@ -94,7 +94,7 @@ export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
       this.selection.updateView();
     });
 
-    this.setValue(treeNode, field, value, node.isPropagateValue, change);
+    this.setValue(treeNode, field, value, node.propagateValue, change);
     if (value === true) {
       // set dependent field to true as well
       if (field.dependentFieldName) {
@@ -102,7 +102,7 @@ export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
         if (!dep) {
           console.warn('unable to find dependent field for', field);
         } else {
-          this.setValue(treeNode, dep, value, node.isPropagateValue, change);
+          this.setValue(treeNode, dep, value, node.propagateValue, change);
         }
       }
     }
@@ -110,7 +110,7 @@ export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
       // find field which we depend on and set it's value to false
       const dep: IsSelectField = this.selection.selectionFields.find((f: IsSelectField) => f.dependentFieldName === field.fieldName);
       if (dep) {
-        this.setValue(treeNode, dep, value, node.isPropagateValue, change);
+        this.setValue(treeNode, dep, value, node.propagateValue, change);
       }
     }
 

@@ -3,7 +3,7 @@ import { IISTreeNode } from './is-select-tree.interfaces';
 
 export class IsSelectTreeNode {
 
-  id: number;
+  id: number | string;
   EntityID: number;
   name: string;
   children: IsSelectTreeNode[] = [];
@@ -12,17 +12,17 @@ export class IsSelectTreeNode {
   $classes: { [fieldName: string]: string; } = {};
   $isSaving: boolean = false;
   $matchesFilter: boolean = true;
-  isPropagateValue: boolean;
+  propagateValue: boolean;
   isExpanded: boolean = true;
   badgeHtml: string = '';
   onUpdateView: EventEmitter<any> = new EventEmitter<any>();
 
   private Values: { [fieldName: string]: boolean; } = {};
 
-  constructor(id: number, name: string) {
+  constructor(id: number | string, name: string) {
     this.id = id || this.uuid();
     this.name = name;
-    this.isPropagateValue = this.isVirtual();
+    this.propagateValue = this.isVirtual();
   }
 
   static createRoot(): IsSelectTreeNode {
@@ -31,7 +31,9 @@ export class IsSelectTreeNode {
 
   static deserialize(root: IISTreeNode, defaultIcon: string = null, ...fields: IsSelectField[]): IsSelectTreeNode {
     const node: IsSelectTreeNode = new IsSelectTreeNode(root.ID, root.Name)
+      .withPropagateValue(root.PropagateValue === true)
       .withIcon(root.Icon ? root.Icon : defaultIcon);
+
     if (!node.isVirtual()) {
       const values = root.Values || {};
       fields.forEach((f: IsSelectField) => {
@@ -47,7 +49,7 @@ export class IsSelectTreeNode {
   }
 
   isVirtual(): boolean {
-    return this.id < 0;
+    return !String(this.id) || Number(this.id) < 0;
   }
 
   setValue(f: IsSelectField, value: boolean) {
@@ -109,7 +111,7 @@ export class IsSelectTreeNode {
 
 
   withPropagateValue(enablePropagation: boolean): IsSelectTreeNode {
-    this.isPropagateValue = enablePropagation;
+    this.propagateValue = enablePropagation;
     return this;
   }
 
@@ -146,7 +148,7 @@ export class IsSelectTreeNode {
   }
 }
 
-export type IsSelectTreeChanges = { [id: number]: { [fieldName: string]: boolean } };
+export type IsSelectTreeChanges = { [id: number | string]: { [fieldName: string]: boolean } };
 
 export class IsSelectTreeChangeEvent {
 
