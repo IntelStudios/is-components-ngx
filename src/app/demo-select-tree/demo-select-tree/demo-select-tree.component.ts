@@ -25,9 +25,11 @@ export class DemoSelectTreeComponent implements OnInit {
       {
         Name: 'Root1',
         ID: '20',
+        DisableChildren: true,
+        Values: { IsSelected: true },
         Children: [
-          { ID: '21 xxx', Name: 'Node 1', Values: { IsSelected: true } },
-          { ID: '22', Name: 'Node 2', Values: { IsSelected: true }, Icon: 'fa fa-user' }
+          { ID: '21 xxx', Name: 'Node 1' },
+          { ID: '22', Name: 'Node 2', Icon: 'fa fa-user' }
         ],
       },
       {

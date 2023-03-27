@@ -18,6 +18,9 @@ $gap: var(--is-select-tree-item-gap, 4px);
       gap: $gap;
       cursor: pointer;
       align-items: center;
+      > i.disabled {
+        pointer-events: none;
+      }
     }
   }
 }

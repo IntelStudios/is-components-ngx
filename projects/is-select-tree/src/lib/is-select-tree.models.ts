@@ -13,11 +13,13 @@ export class IsSelectTreeNode {
   $isSaving: boolean = false;
   $matchesFilter: boolean = true;
   propagateValue: boolean;
+  disableChildren: boolean;
   isExpanded: boolean = true;
   badgeHtml: string = '';
   onUpdateView: EventEmitter<any> = new EventEmitter<any>();
 
   private Values: { [fieldName: string]: boolean; } = {};
+  private Disabled: { [fieldName: string]: boolean; } = {};
 
   constructor(id: number | string, name: string) {
     this.id = id || this.uuid();
@@ -32,7 +34,12 @@ export class IsSelectTreeNode {
   static deserialize(root: IISTreeNode, defaultIcon: string = null, ...fields: IsSelectField[]): IsSelectTreeNode {
     const node: IsSelectTreeNode = new IsSelectTreeNode(root.ID, root.Name)
       .withPropagateValue(root.PropagateValue === true)
+      .withDisableChildren(root.DisableChildren === true)
       .withIcon(root.Icon ? root.Icon : defaultIcon);
+
+    if (root.Children && root.Children.length > 0) {
+      node.children = root.Children.map(c => IsSelectTreeNode.deserialize(c, defaultIcon, ...fields));
+    }
 
     if (!node.isVirtual()) {
       const values = root.Values || {};
@@ -42,9 +49,6 @@ export class IsSelectTreeNode {
       });
     }
 
-    if (root.Children && root.Children.length > 0) {
-      node.children = root.Children.map(c => IsSelectTreeNode.deserialize(c, defaultIcon, ...fields));
-    }
     return node;
   }
 
@@ -55,6 +59,25 @@ export class IsSelectTreeNode {
   setValue(f: IsSelectField, value: boolean) {
     this.Values[f.fieldName] = value;
     this.$classes[f.fieldName] = value === true ? 'fa fa-fw ' + f.iconOn : 'fa fa-fw ' + f.iconOff;
+    if (this.disableChildren) {
+      this.children.forEach((c) => {
+        c.setDisabled(f, value);
+      });
+    }
+  }
+
+  getDisabled(f: IsSelectField) {
+    return this.Disabled[f.fieldName] ?? false;
+  }
+
+  setDisabled(f: IsSelectField, value: boolean) {
+    this.Disabled[f.fieldName] = value;
+    const cls = this.$classes[f.fieldName];
+    if (value) {
+      this.$classes[f.fieldName] = `${cls} disabled`;
+    } else {
+      this.$classes[f.fieldName] = cls.replace(' disabled', '');
+    }
   }
 
   getValue(f: IsSelectField): boolean {
@@ -112,6 +135,11 @@ export class IsSelectTreeNode {
 
   withPropagateValue(enablePropagation: boolean): IsSelectTreeNode {
     this.propagateValue = enablePropagation;
+    return this;
+  }
+
+  withDisableChildren(disable: boolean): IsSelectTreeNode {
+    this.disableChildren = disable;
     return this;
   }
 
@@ -256,7 +284,6 @@ export class IsSelectTree extends IsSelectTreeNode {
     // set parent references
     let lastLevelParents: IsSelectTreeNode[] = [];
     this.children.forEach((root: IsSelectTreeNode) => {
-
       this.forEachParentNode(root, (parentNode: IsSelectTreeNode, child: IsSelectTreeNode) => {
         child.parent = parentNode;
         let isLastLevelParent: boolean = child.children.length > 0;

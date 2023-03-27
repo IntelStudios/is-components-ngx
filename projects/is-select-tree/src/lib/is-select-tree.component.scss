@@ -5,6 +5,7 @@ $is-color-node-active: var(--is-select-tree-item-active, #fff);
 $is-color-node-focus: var(--is-select-tree-item-focus, #fff);
 $level-padding: var(--is-select-tree-level-padding, 20px);
 $is-color-undetermined: var(--is-select-tree-item-undetermined, #999);
+$is-color-disabled: var(--is-select-tree-item-disabled, #999);
 is-select-tree {
   tree-viewport {
     //@include short-scroll;
@@ -13,6 +14,9 @@ is-select-tree {
     display: block;
     .undetermined {
       color: $is-color-undetermined;
+    }
+    .disabled {
+      color: $is-color-disabled;
     }
     .badge-html {
       > .btn-outline {

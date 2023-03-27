@@ -27,14 +27,14 @@ export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
 
   private _sub: Subscription;
 
-  constructor(private sanitizer: DomSanitizer, private changeDetector: ChangeDetectorRef) {
+  constructor(private sanitizer: DomSanitizer, private cd: ChangeDetectorRef) {
 
   }
 
   ngOnInit() {
     const node: IsSelectTreeNode = this.node.data;
     this._sub = node.onUpdateView.subscribe(() => {
-      this.changeDetector.detectChanges();
+      this.cd.detectChanges();
     });
   }
 
@@ -45,7 +45,8 @@ export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
   }
 
   select() {
-    if (this.selection.selectionFields.length === 1) {
+    const node: IsSelectTreeNode = this.node.data;
+    if (this.selection.selectionFields.length === 1 && !node.getDisabled(this.selection.selectionFields[0])) {
       this.toggleSelect(null, this.node, this.selection.selectionFields[0]);
     }
   }
@@ -53,7 +54,7 @@ export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
   toggleExpandNode() {
     this.node.toggleExpanded();
     this.node.toggleActivated();
-    this.changeDetector.detectChanges();
+    this.cd.detectChanges();
   }
 
   sanitize(html: string) {
@@ -120,6 +121,13 @@ export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
 
   private setValue(treeNode: TreeNode, field: IsSelectField, value: any, deep: boolean, change: IsSelectTreeChangeEvent) {
     const node: IsSelectTreeNode = treeNode.data;
+    if (node.disableChildren && value) {
+      treeNode.children.forEach((n: TreeNode) => {
+        if (!n.isHidden) {
+          this.setValue(n, field, false, true, change);
+        }
+      });
+    }
     node.setValue(field, value);
     if (!node.isVirtual()) {
       const c = change.changes[node.id] || {};
@@ -136,6 +144,7 @@ export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
         }
       });
     }
+
   }
 
 }
