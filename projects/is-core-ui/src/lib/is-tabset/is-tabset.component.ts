@@ -66,6 +66,12 @@ export class IsTabTitleDirective {
   constructor(public templateRef: TemplateRef<any>) { }
 }
 
+
+@Directive({ selector: 'ng-template[TabsetAfterNavItems]' })
+export class IsTabsetAfterNavItemsDirective {
+  constructor(public templateRef: TemplateRef<any>) { }
+}
+
 /**
  * This directive must be used to wrap content to be displayed in a tab.
  */
@@ -151,6 +157,7 @@ export class IsTabDirective {
             {{tab.title}}<ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
           </a>
         </li>
+        <ng-container [ngTemplateOutlet]="tabsetAfterNavItemsTemplate?.templateRef"></ng-container>
       </ul>
       <div class="scroll-btn left"><i class="fas fa-chevron-left" (click)="scrollRight()" (mousedown)="startScrollRight()" (mouseup)="stopScroll()"></i></div>
       <div class="scroll-btn right"><i class="fas fa-chevron-right" (click)="scrollLeft()" (mousedown)="startScrollLeft()" (mouseup)="stopScroll()"></i></div>
@@ -231,8 +238,11 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
 
   @ContentChildren(IsTabDirective) tabs: QueryList<IsTabDirective>;
 
-  @ContentChild(IsTabsetInvalidDirective)
-  tabsetInvalidTemplate: IsTabsetInvalidDirective
+  @ContentChild(IsTabsetInvalidDirective, { static: true })
+  tabsetInvalidTemplate: IsTabsetInvalidDirective;
+
+  @ContentChild(IsTabsetAfterNavItemsDirective, { static: true })
+  tabsetAfterNavItemsTemplate: IsTabsetAfterNavItemsDirective;
 
   tabsetInvalidLeft: boolean = false;
   tabsetInvalidRight: boolean = false;

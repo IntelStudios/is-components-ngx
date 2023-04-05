@@ -21,6 +21,7 @@ import {
   IsTabDirective,
   IsTabsetComponent,
   IsTabTitleDirective,
+  IsTabsetAfterNavItemsDirective,
 } from './is-tabset/is-tabset.component';
 import { IsTileComponent } from './is-tile/is-tile.component';
 import { IsCdkModule } from '@intelstudios/cdk';
@@ -31,10 +32,46 @@ import { IsInputSecretComponent } from './is-input-secret/is-input-secret.compon
   imports: [
     CommonModule, RouterModule, TranslateModule, PopoverModule, ScrollingModule, TooltipModule, IsCdkModule
   ],
-  declarations: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsHintComponent, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective,  IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsSwitchComponent, IsTileComponent, IsInputSecretComponent],
-  exports: [IsBreadcrumbBoxComponent, IsPortletComponent, IsPortletTitleDirective, IsTabsetComponent, IsPasswordComponent,
-    IsTabDirective, IsTabTitleDirective, IsTabsetInvalidDirective, IsTabContentDirective, IsHintComponent, IsFieldErrorComponent, IsSearchComponent, IsCheckboxComponent, IsRadioGroupDirective, IsSwitchComponent, IsTileComponent, IsInputSecretComponent]
+  declarations: [
+    IsBreadcrumbBoxComponent,
+    IsPortletComponent,
+    IsPortletTitleDirective,
+    IsHintComponent,
+    IsTabsetComponent,
+    IsPasswordComponent,
+    IsTabsetAfterNavItemsDirective,
+    IsTabDirective,
+    IsTabTitleDirective,
+    IsTabsetInvalidDirective,
+    IsTabContentDirective,
+    IsFieldErrorComponent,
+    IsSearchComponent,
+    IsCheckboxComponent,
+    IsRadioGroupDirective,
+    IsSwitchComponent,
+    IsTileComponent,
+    IsInputSecretComponent,
+  ],
+  exports: [
+    IsBreadcrumbBoxComponent,
+    IsPortletComponent,
+    IsPortletTitleDirective,
+    IsTabsetComponent,
+    IsPasswordComponent,
+    IsTabDirective,
+    IsTabTitleDirective,
+    IsTabsetInvalidDirective,
+    IsTabContentDirective,
+    IsTabsetAfterNavItemsDirective,
+    IsHintComponent,
+    IsFieldErrorComponent,
+    IsSearchComponent,
+    IsCheckboxComponent,
+    IsRadioGroupDirective,
+    IsSwitchComponent,
+    IsTileComponent,
+    IsInputSecretComponent,
+  ]
 })
 export class IsCoreUIModule {
   static forRoot(config?: IsCoreUIConfig): ModuleWithProviders<IsCoreUIModule> {

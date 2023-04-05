@@ -222,6 +222,9 @@
   </div>
   <div class="col-sm-6">
     <is-tabset [useRouter]="true">
+      <ng-template TabsetAfterNavItems>
+        <div>After nav items</div>
+      </ng-template>
       <ng-template TabsetInvalid><i class="fa fa-beer"></i></ng-template>
       <is-tab title="Tab 1" [valid]="tabValid" paneClass="custom-class">
         <ng-template TabContent>
