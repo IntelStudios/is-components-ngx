@@ -273,6 +273,8 @@ export class IsFieldErrorFactory {
     switch (error.code) {
       case 'OBJECT_MISSING_REQUIRED_PROPERTY':
         return IsFieldErrorFactory.requiredError();
+      case 'ONE_OF_MISSING':
+        return IsFieldErrorFactory.requiredError();
       case 'MIN_LENGTH':
         return IsFieldErrorFactory.minLengthError(error.params[1], error.params[0]);
       case 'MAX_LENGTH':
