@@ -27,6 +27,7 @@ import { IsTileComponent } from './is-tile/is-tile.component';
 import { IsCdkModule } from '@intelstudios/cdk';
 import { IsHintComponent } from './is-hint/is-hint.component';
 import { IsInputSecretComponent } from './is-input-secret/is-input-secret.component';
+import { IsInputMaskDirective } from './input-mask.directive';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { IsInputSecretComponent } from './is-input-secret/is-input-secret.compon
     IsSwitchComponent,
     IsTileComponent,
     IsInputSecretComponent,
+    IsInputMaskDirective,
   ],
   exports: [
     IsBreadcrumbBoxComponent,
@@ -71,6 +73,7 @@ import { IsInputSecretComponent } from './is-input-secret/is-input-secret.compon
     IsSwitchComponent,
     IsTileComponent,
     IsInputSecretComponent,
+    IsInputMaskDirective,
   ]
 })
 export class IsCoreUIModule {

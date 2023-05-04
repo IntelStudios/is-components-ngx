@@ -11,7 +11,8 @@
     "moment": "^2.22.2",
     "ngx-bootstrap": "^8.0.0",
     "@intelstudios/cdk": "^13.0.1",
-    "text-security": "^3.2.1"
+    "text-security": "^3.2.1",
+    "@intelstudios/text-utils": "^1.1.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"

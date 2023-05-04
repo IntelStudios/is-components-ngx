@@ -17,3 +17,4 @@ export * from './lib/is-password/is-password.component'
 export * from './lib/is-switch/is-switch.component';
 export * from './lib/is-switch/is-switch.interfaces';
 export * from './lib/is-input-secret/is-input-secret.component';
+export * from './lib/input-mask.directive';
