@@ -198,6 +198,13 @@ export class IsFieldErrorFactory {
     return { prefillOrTemplateRequired: error };
   }
 
+  static inputMappingInvalid(missing: string[]) {
+    const error = new IsFieldError('inputMapping', false).withPriority(50);
+    error.message = 'Input mapping is invalid';
+    error.params = { missing: `[${missing.join(', ')}]` };
+    return { inputMapping: error };
+  }
+
   static unspecifiedError(err: any) {
     const error = new IsFieldError('unspecified', false).withPriority(50);
     error.message = `Unspecified error (${JSON.stringify(err)})`;
