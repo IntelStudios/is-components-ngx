@@ -57,14 +57,37 @@ export class IsFilterEditorComponent implements  AfterViewInit {
     this.onApply.emit(null);
   }
 
+  datepickerApply($event) {
+    if ($event) {
+      this.apply();
+    }
+  }
+
   apply() {
     setTimeout(() => {
-      this.onApply.emit({
+      const value: IsInputSchemaFilter = {
         Type: this.filterDef.Type,
         Value: this.ctrl.value,
         Value2: this.ctrl2.value,
-      });
+      };
+      if (this.filterDef.InputType === 'date') {
+        // remove time from date
+        value.Value = this.removeTime(value.Value);
+      } else if (this.filterDef.InputType === 'date-range') {
+        value.Value = this.removeTime(value.Value);
+        value.Value2 = this.removeTime(value.Value2);
+      }
+      this.onApply.emit(value);
     });
+  }
+
+  private removeTime(value: string) {
+    if (!value) {
+      return null;
+    }
+    const date = new Date(value);
+    date.setHours(0, 0, 0, 0);
+    return date.toISOString();
   }
 
 }
