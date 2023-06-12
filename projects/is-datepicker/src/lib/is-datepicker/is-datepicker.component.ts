@@ -174,6 +174,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   ngOnDestroy() {
+    this.closePopup();
     if (this._changeSubscription) {
       this._changeSubscription.unsubscribe();
     }
