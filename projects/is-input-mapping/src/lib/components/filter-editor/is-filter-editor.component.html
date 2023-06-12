@@ -1,0 +1,31 @@
+<span class="node-type"><i [class]="filterDef.Icon"></i></span>
+<!--suppress HtmlFormInputWithoutLabel -->
+<ng-container [ngSwitch]="filterDef.InputType">
+  <ng-container *ngSwitchCase="'text'" [ngTemplateOutlet]="textInputTpl"></ng-container>
+  <ng-container *ngSwitchCase="'date'" [ngTemplateOutlet]="dateTimeTpl"></ng-container>
+  <ng-container *ngSwitchCase="'date-range'" [ngTemplateOutlet]="dateTime2Tpl"></ng-container>
+  <ng-container *ngSwitchCase="'number'" [ngTemplateOutlet]="numberInputTpl"></ng-container>
+  <ng-container *ngSwitchCase="'number-range'" [ngTemplateOutlet]="numberInput2Tpl"></ng-container>
+</ng-container>
+
+<ng-template #textInputTpl>
+  <input type="text" #focus [formControl]="ctrl" class="form-control is-input is-input-small" (keydown.enter)="apply()" (keydown.esc)="cancel()">
+</ng-template>
+
+<ng-template #numberInputTpl>
+  <input type="number" #focus [formControl]="ctrl" class="form-control is-input is-input-small" (keydown.enter)="apply()">
+</ng-template>
+
+<ng-template #numberInput2Tpl>
+  <input type="number" #focus [formControl]="ctrl" class="form-control is-input is-input-small">
+  <input type="number" [formControl]="ctrl2" class="form-control is-input is-input-small" (keydown.enter)="apply()">
+</ng-template>
+
+<ng-template #dateTimeTpl>
+  <is-datepicker [formControl]="ctrl" #focus class="is-input-small" (changed)="apply()"></is-datepicker>
+</ng-template>
+
+<ng-template #dateTime2Tpl>
+  <is-datepicker [formControl]="ctrl" #focus class="is-input-small"></is-datepicker>
+  <is-datepicker [formControl]="ctrl2" #focus class="is-input-small" (changed)="apply()"></is-datepicker>
+</ng-template>

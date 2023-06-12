@@ -1,0 +1,46 @@
+@import '../variables';
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 8px;
+  .assigned-filter {
+    color: #fff;
+    background: #ea8d22;
+    border-radius: 2px !important;
+    padding-left: 4px;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    height: 20px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    > i {
+      font-size: 80%;
+      padding: 0 4px;
+    }
+    .delete {
+      width: 20px;
+      height: 20px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-left: 1px solid #ec9736;
+    }
+    .value {
+      padding-right: 4px;
+      white-space: nowrap;
+    }
+  }
+
+  .assigned-filter-or {
+    background: #f9dfc2;
+    color: #e87e04;
+    padding: 0 4px;
+    line-height: 20px;
+    font-size: 10px;
+  }
+}

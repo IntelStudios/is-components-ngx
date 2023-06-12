@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { IsInputMappingInput, IsInputMappingValue } from 'projects/is-input-mapping/src/public_api';
+import { FilterValueFormatter, IsInputMappingInput, IsInputMappingValue } from 'projects/is-input-mapping/src/public_api';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -498,6 +498,12 @@ export class DemoInputMappingComponent implements OnInit {
   validationError = null;
   val: IsInputMappingValue;
   currentDataset = this.MOCK_DATA;
+
+  formatter: FilterValueFormatter = {
+    formatDate: (value) => {
+      return `Datum: ${new Date(value).toLocaleDateString()}`;
+    }
+  }
 
   constructor(private cd: ChangeDetectorRef) { }
 

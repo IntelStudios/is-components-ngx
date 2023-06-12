@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AssignStatus, DataStructure, IsInputSchemaFilter, IsInputSchemaFilterStatus } from './is-input-mapping.interface';
+import { AssignStatus, DataStructure, IsInputSchemaFilter, IsInputSchemaFilterStatus } from '../is-input-mapping.interface';
 
 @Injectable()
 export class IsInputMappingService {
@@ -14,8 +14,8 @@ export class IsInputMappingService {
     key: path of item that has assigns
     value: list of assigned AssignStatus/filter status
    */
-  private assignedCache: { [id: string]: AssignStatus[]} = {};
-  private filterCache: { [id: string]: IsInputSchemaFilter[]} = {};
+  private assignedCache: { [id: string]: AssignStatus[] } = {};
+  private filterCache: { [id: string]: IsInputSchemaFilter[] } = {};
   private isDisabled = false;
 
   itemAssigned$ = this.assignSource.asObservable();
@@ -47,7 +47,7 @@ export class IsInputMappingService {
       return;
     }
     this.filterCache = {};
-    this.filterSource.next({Path: null, Filters: [], EmmitChange: emmitChange});
+    this.filterSource.next({ Path: null, Filters: [], EmmitChange: emmitChange });
   }
 
   /**
@@ -59,7 +59,7 @@ export class IsInputMappingService {
     if (!(path in this.filterCache)) {
       return;
     }
-    this.applyFilters({Path: path, Filters: this.filterCache[path], EmmitChange: false});
+    this.applyFilters({ Path: path, Filters: this.filterCache[path], EmmitChange: false });
   }
 
   /**
@@ -102,7 +102,7 @@ export class IsInputMappingService {
   releaseAllItems(emmitChange = true): void {
     Object.keys(this.assignedCache).forEach(path => {
       this.assignedCache[path].forEach((data: AssignStatus) => {
-        this.releaseItem({...data, EmmitChange: emmitChange});
+        this.releaseItem({ ...data, EmmitChange: emmitChange });
       });
     });
   }
@@ -196,9 +196,9 @@ export class IsInputMappingService {
     // remove invalid filters and reassign valid filters
     Object.keys(filters).forEach(path => {
       if (validPaths.indexOf(path) === -1) {
-        this.applyFilters({Path: path, EmmitChange: false, Filters: []});
+        this.applyFilters({ Path: path, EmmitChange: false, Filters: [] });
       } else {
-        this.applyFilters({Path: path, EmmitChange: false, Filters: filters[path]});
+        this.applyFilters({ Path: path, EmmitChange: false, Filters: filters[path] });
       }
     });
   }

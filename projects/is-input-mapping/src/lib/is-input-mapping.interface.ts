@@ -1,3 +1,6 @@
+import { FilterType } from './models';
+
+
 export interface IsInputMappingInput {
   InputSchema: InputSchema[];
   DataStructure: DataStructure;
@@ -10,8 +13,9 @@ export interface IsInputMappingValue {
 }
 
 export interface IsInputSchemaFilter {
-  Type: string;
+  Type: FilterType;
   Value: string;
+  Value2?: string;
 }
 
 export interface IsInputSchemaFilterStatus {
@@ -42,4 +46,8 @@ export interface AssignStatus {
   PaintedPath: number[];
   Path: string;
   EmmitChange?: boolean;
+}
+
+export interface FilterValueFormatter {
+  formatDate(value: string): string;
 }

@@ -1,0 +1,14 @@
+<ng-container *ngFor="let filter of filters; let i = index">
+  <div class="assigned-filter" [class.disabled]="disabled" [title]="filterDefs[filter.Type].Name">
+    <!--suppress HtmlUnknownTag -->
+    <i [class]="filterDefs[filter.Type].Icon"></i>
+    <div class="value">{{filter | isInputMappingFilterValue : filterDefs[filter.Type] : filterValueFormatter }}</div>
+    <div *ngIf="!showOnlyFiltered && !disabled" class="delete" (click)="release(filter)">
+      <i class="fa fa-times"></i>
+    </div>
+  </div>
+
+  <span *ngIf="i + 1 < filters.length" class="assigned-filter-or">
+    OR
+  </span>
+</ng-container>

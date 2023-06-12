@@ -1,12 +1,14 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { IsInputMappingComponent } from './is-input-mapping.component';
+import { IsInputMappingComponent } from './components/input-mapping/is-input-mapping.component';
+import { IsFieldErrorFactory } from '@intelstudios/cdk';
 
 export function isInputRequiredFilledValidator(input: IsInputMappingComponent): ValidatorFn {
   return (_: AbstractControl): ValidationErrors | null => {
-    for (const item of input.getAllItems()) {
-      if (!item.assigned && !item.item.AllowNull) {
-        return {'is-input-mapping-unfilled': `${item.item.Name} is required, yet unfilled`};
-      }
+    const missing = input.getAllItems()
+      .filter(item => !item.assigned && !item.item.AllowNull)
+      .map(item => item.item.Name);
+    if (missing.length > 0) {
+      return IsFieldErrorFactory.inputMappingInvalid(missing);
     }
     return null;
   };

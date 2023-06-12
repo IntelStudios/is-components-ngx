@@ -11,7 +11,6 @@ import {
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
@@ -23,20 +22,24 @@ import { debounceTime } from 'rxjs/operators';
 import {
   AssignStatus,
   DataStructure,
+  FilterValueFormatter,
   InputSchema,
   IsInputMappingInput,
   IsInputMappingValue,
   IsInputSchemaFilter, IsInputSchemaFilterStatus
-} from './is-input-mapping.interface';
-import { IsInputMappingService } from './is-input-mapping.service';
-import { isInputRequiredFilledValidator } from './is-input-mapping.validator';
+} from '../../is-input-mapping.interface';
+import { isInputRequiredFilledValidator } from '../../is-input-mapping.validator';
+import { FILTER_TYPES, IFilterDef } from '../../models';
+import { IsInputMappingService } from '../../services/is-input-mapping.service';
+import { IsInputMappingFilterValue } from '../../pipes/filter-value-format.pipe';
 
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'is-input-mapping',
   templateUrl: './is-input-mapping.component.html',
   styleUrls: ['./is-input-mapping.component.scss'],
-  providers: [IsInputMappingService,
+  providers: [
+    IsInputMappingService,
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: IsInputMappingComponent,
@@ -107,6 +110,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   @Input()
+  filterValueFormatter: FilterValueFormatter;
+
+  @Input()
   paintedPath: number[] = null; // taken from root element
 
   @Input()
@@ -126,8 +132,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   assignDropdownVisible = false;
   filterDropdownVisible = false;
   newFilterModalVisible = false;
-  newFilterModalType: string;
-  newFilterModalValue: FormControl = new FormControl();
+  newFilterModalType: IFilterDef;
 
   // the value of this element, only used in the root instance
   inputSchemaMap: Map<string, string> = new Map<string, string>();
@@ -135,6 +140,8 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   level: number = null;
   collapsible = false;
+
+  filterTypes = FILTER_TYPES;
 
   private _inputsAssignable: InputSchema[] = [];
   private _data: IsInputMappingInput = null;
@@ -412,13 +419,14 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   /**
    * Ges all assignable items and checks if they are assigned
    */
-  getAllItems(): {item: InputSchema; assigned: boolean}[] {
+  getAllItems(): { item: InputSchema; assigned: boolean }[] {
     if (!this.data) {
       return [];
     }
     const assignedNames = this.service.getAssignedItemNames();
-    return this.data.InputSchema.map(item => ({item, assigned: assignedNames.indexOf(item.Name) > -1}));
+    return this.data.InputSchema.map(item => ({ item, assigned: assignedNames.indexOf(item.Name) > -1 }));
   }
+
 
   /**
    * Get children paint path
@@ -475,60 +483,15 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     }
   }
 
-  /**
-   * Gets all filter type names based of node type
-   * @param type node type
-   */
-  getDataTypeFilters(type: number): string[] {
-    switch (type) {
-      case 2:
-        // string
-        return ['StringEq', 'StringNotEq'];
-    }
-
-    return [];
-  }
-
-  /**
-   * Tests if this node can apply any filters
-   * @param type node type to test
-   */
-  hasDataTypeFilters(type: number): boolean {
-    return this.getDataTypeFilters(type).length > 0;
-  }
-
-  getFilterTypeIcon(type: string): string {
-    switch (type) {
-      case 'StringEq':
-        return 'fas fa-equals';
-      case 'StringNotEq':
-        return 'fas fa-not-equal';
-    }
-  }
-
-  getFilterTypeContent(type: string): string {
-    switch (type) {
-      case 'StringEq':
-        return '=';
-      case 'StringNotEq':
-        return '≠';
-    }
-  }
-
-  getFilterTypeName(type: string): string {
-    switch (type) {
-      case 'StringEq':
-        return 'equals';
-      case 'StringNotEq':
-        return 'not equals';
-    }
+  filterDefTrackBy(index: number, filterDef: IFilterDef): string {
+    return filterDef.Type;
   }
 
   /**
    * Propagates new value to FormValueAccessor after validator checking
    */
   private propagateNewValue(): void {
-    const value: IsInputMappingValue = {InputSchemaFilter: this.inputFilters, InputSchemaMapping: this.inputSchemaMap};
+    const value: IsInputMappingValue = { InputSchemaFilter: this.inputFilters, InputSchemaMapping: this.inputSchemaMap };
 
     if (this.level === 0) {
       if (this._onValueChange) {
@@ -543,11 +506,13 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   /**
    * Adds new filter to this node with given type
-   * @param filterType type of the filter
+   * @param filterDef type of the filter
    */
-  createNewDataFilter(filterType: string) {
-    this.newFilterModalType = filterType;
-    this.newFilterModalValue.setValue(null);
+  createNewDataFilter(filterDef: IFilterDef) {
+    if (filterDef.InputType === 'none') {
+      return this.applyNewFilter({ Type: filterDef.Type, Value: null });
+    }
+    this.newFilterModalType = filterDef;
     this.filterModalShow();
     this.filterDropdownHide();
   }
@@ -555,15 +520,14 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   /**
    * Applies new filter to this node
    */
-  applyNewFilter(): void {
-    if (!this.newFilterModalValue.value) {
+  applyNewFilter(f: IsInputSchemaFilter): void {
+    this.filterDropdownHide();
+    this.filterModalHide();
+    if (!f) {
       return;
     }
     const newFilters = this.filters.slice();
-    newFilters.push({
-      Type: this.newFilterModalType,
-      Value: this.newFilterModalValue.value
-    });
+    newFilters.push(f);
     const newStatus: IsInputSchemaFilterStatus = {
       Path: this.paintedStructure.Path,
       Filters: newFilters,
@@ -571,8 +535,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     };
 
     this.service.applyFilters(newStatus);
-    this.filterDropdownHide();
-    this.filterModalHide();
   }
 
   /**
@@ -635,7 +597,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
     if (value.InputSchemaFilter) {
       Object.keys(value.InputSchemaFilter).forEach((path: string) => {
-        this.service.applyFilters({Path: path, Filters: value.InputSchemaFilter[path], EmmitChange: false});
+        this.service.applyFilters({ Path: path, Filters: value.InputSchemaFilter[path], EmmitChange: false });
       });
     }
 
@@ -744,7 +706,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
   setDisabled(value: boolean, clearFilters = false): void {
     this.disabled = value;
     if (value && clearFilters && this.filters.length) {
-      this.service.applyFilters({Path: this.paintedStructure.Path, Filters: [], EmmitChange: true});
+      this.service.applyFilters({ Path: this.paintedStructure.Path, Filters: [], EmmitChange: true });
     }
   }
 

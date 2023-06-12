@@ -1,0 +1,14 @@
+@import "../variables";
+:host {
+  height: 20px;
+  display: inline-flex;
+  gap: 4px;
+  padding-left: 4px;
+  align-items: center;
+  input {
+    width: $filter-edit-control-width;
+  }
+  is-datepicker {
+    width: 120px;
+  }
+}

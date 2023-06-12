@@ -19,13 +19,13 @@
       class="map-all" src="assets/svg/ico-map_all.svg" (click)="autoassign(); $event.stopPropagation()" alt="map all">
   </span>
 
-  <span>
+  <span class="assigned-values">
     <span class="assigned-item" *ngFor="let item of inputsAssigned">
       <!--suppress HtmlUnknownTag -->
       <div>
         <span class="name">{{item.Name}}</span>
-        <span class="delete">
-          <i class="fa fa-times" [ngClass]="{'btn-release-item': !disabled}" (click)="release(item)"></i>
+        <span *ngIf="!disabled" class="delete" (click)="release(item)">
+          <i class="fa fa-times"></i>
         </span>
       </div>
     </span>
@@ -40,53 +40,31 @@
       <div *ngFor="let item of inputsAssignableFiltered" (click)="assign(item)" class="item">
         <div class="node-icon {{getDataTypeIcon(item.DataType)}}"></div>
         <span>{{item.Name}}</span>
-        <!--        <i [class]="'fa fa-plus-square'"></i>-->
       </div>
     </div>
   </div>
 
-  <span>
-    <span *ngFor="let filter of filters; let i = index">
-      <span class="assigned-filter" [class.disabled]="disabled">
-        <!--suppress HtmlUnknownTag -->
-        <div class="filter-values-wrapper">
-          <span class="node-type"><span>{{getFilterTypeContent(filter.Type)}}</span></span>
-          <span class="value">{{filter.Value}}</span>
-          <span *ngIf="!showOnlyFiltered" class="delete">
-            <i class="fa fa-times" [ngClass]="{'btn-release-item': !disabled}" (click)="releaseFilter(filter)"></i>
-          </span>
-        </div>
-      </span>
-
-      <span *ngIf="i + 1 < filters.length" class="assigned-filter-or">
-        OR
-      </span>
-    </span>
-
-    <i *ngIf="!disabled && filtersAllowed && hasDataTypeFilters(paintedStructure.DataType) && (mouseover || filterDropdownVisible || newFilterModalVisible) && !showOnlyFiltered"
+  <span class="assigned-filters">
+    <is-assigned-filter [filters]="filters" [showOnlyFiltered]="showOnlyFiltered" [filterValueFormatter]="filterValueFormatter" [disabled]="disabled" (onRelease)="releaseFilter($event)"></is-assigned-filter>
+    <i *ngIf="!disabled && filtersAllowed && filterTypes[paintedStructure.DataType].length && (mouseover || filterDropdownVisible || newFilterModalVisible) && !showOnlyFiltered"
       class="filter fa fa-filter btn-attach-item" (click)="filterDropdownShow()">
     </i>
   </span>
 
   <div class="dropdown" *ngIf="filterDropdownVisible">
     <div class="dropdown-content">
-      <div *ngFor="let filterType of getDataTypeFilters(paintedStructure.DataType)"
+      <div *ngFor="let filterType of filterTypes[paintedStructure.DataType]; trackBy: filterDefTrackBy"
         (click)="createNewDataFilter(filterType)" class="item">
-        <div class="node-icon {{getFilterTypeIcon(filterType)}}"></div>
-        <span>{{getFilterTypeName(filterType)}}</span>
+        <div class="node-icon {{filterType.Icon}}"></div>
+        <span>{{filterType.Name}}</span>
       </div>
     </div>
   </div>
-
-  <div *ngIf="newFilterModalVisible" class="new-filter" (click)="applyNewFilter()">
-    <span class="node-type"><span>{{getFilterTypeContent(newFilterModalType)}}</span></span>
-    <!--suppress HtmlFormInputWithoutLabel -->
-    <input type="text" [formControl]="newFilterModalValue" (keydown.enter)="applyNewFilter()">
-  </div>
+  <is-filter-editor *ngIf="newFilterModalVisible" [filterDef]="newFilterModalType" (onApply)="applyNewFilter($event)"></is-filter-editor>
 </div>
 
 <div *ngIf="level === 0 && !showOnlyFiltered" class="assigned-items">
-  <span *ngFor="let item of getAllItems()" class="assigned-item" [class.assigned]="item.assigned">
+  <span *ngFor="let item of getAllItems();" class="assigned-item" [class.assigned]="item.assigned">
     <span class="node-icon {{getDataTypeIcon(item.item.DataType)}}"></span>
     <span [ngStyle]="{'padding-right': !item.item.AllowNull ? '0px' : '8px'}">{{item.item.Name}}</span>
     <span *ngIf="!item.item.AllowNull" class="node-icon warning"><i class="fa fa-warning"></i></span>
@@ -95,6 +73,6 @@
 
 <div class="children" [class.left-line]="level > 0" *ngIf="data && collapsed && paintedStructure">
   <is-input-mapping #child *ngFor="let child of paintedStructure.Children; let i = index" [data]="data"
-    [paintedPath]="getChildPath(i)" [service]="service" [filtersAllowed]="filtersAllowed"
+    [paintedPath]="getChildPath(i)" [service]="service" [filterValueFormatter]="filterValueFormatter"  [filtersAllowed]="filtersAllowed"
     [showOnlyFiltered]="showOnlyFiltered"></is-input-mapping>
 </div>
