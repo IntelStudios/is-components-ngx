@@ -6,7 +6,7 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-input-mapping [data]="currentDataset" [filterValueFormatter]="formatter" [formControl]="formControl" [filtersAllowed]="filtersAllowed" [showOnlyFiltered]="showOnlyFiltered"></is-input-mapping>
+    <is-input-mapping [data]="currentDataset" [limitedFilterSet]="true" [filterValueFormatter]="formatter" [formControl]="formControl" [filtersAllowed]="filtersAllowed" [showOnlyFiltered]="showOnlyFiltered"></is-input-mapping>
   </div>
   <div class="col-sm-6">
     <span>Value: {{formControl.valueChanges | async | json}}</span>

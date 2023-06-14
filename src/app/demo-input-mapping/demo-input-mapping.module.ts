@@ -4,13 +4,16 @@ import { DemoInputMappingComponent } from './demo-input-mapping/demo-input-mappi
 import { RouterModule, Routes } from '@angular/router';
 import { IsInputMappingModule } from 'projects/is-input-mapping/src/public_api';
 import { ReactiveFormsModule } from '@angular/forms';
+import { IsDatepickerModule } from '@intelstudios/datepicker';
 
 @NgModule({
   declarations: [DemoInputMappingComponent],
   imports: [
     CommonModule,
     IsInputMappingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IsDatepickerModule.forRoot({ mask: '00-00-0000' })
+
   ]
 })
 export class DemoInputMappingModule { }

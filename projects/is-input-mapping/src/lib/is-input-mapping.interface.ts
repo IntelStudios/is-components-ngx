@@ -25,10 +25,11 @@ export interface IsInputSchemaFilterStatus {
 }
 
 export interface InputSchema {
+  Code: string;
   Name: string;
   DataType: number;
   AllowNull: boolean;
-  IsComplex: boolean;
+  IsTable: boolean;
 }
 
 export interface DataStructure {

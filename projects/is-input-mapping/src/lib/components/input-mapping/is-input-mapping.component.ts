@@ -29,9 +29,8 @@ import {
   IsInputSchemaFilter, IsInputSchemaFilterStatus
 } from '../../is-input-mapping.interface';
 import { isInputRequiredFilledValidator } from '../../is-input-mapping.validator';
-import { FILTER_TYPES, IFilterDef } from '../../models';
+import { FILTER_TYPES, FILTER_TYPES_LIMITED, IFilterDef } from '../../models';
 import { IsInputMappingService } from '../../services/is-input-mapping.service';
-import { IsInputMappingFilterValue } from '../../pipes/filter-value-format.pipe';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -120,6 +119,20 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
   @Input()
   showOnlyFiltered = false;
+
+  /**
+   * If true, only the filter types defined in FILTER_TYPES_LIMITED are available
+   */
+  @Input()
+  set limitedFilterSet(value: boolean) {
+    this._limitedFilterSet = value;
+    this.filterTypes = value === true ? FILTER_TYPES_LIMITED : FILTER_TYPES;
+  }
+
+  get limitedFilterSet(): boolean {
+    return this._limitedFilterSet;
+  }
+  private _limitedFilterSet = false;
 
   inputsAssignableFiltered: InputSchema[] = [];
   inputsAssigned: InputSchema[] = [];
@@ -267,7 +280,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
       // root element saves the selection state into value
       if (this.level === 0) {
-        this.inputSchemaMap.delete(data.Item.Name);
+        this.inputSchemaMap.delete(data.Item.Code);
         if (!data.hasOwnProperty('EmmitChange') || data.EmmitChange) {
           this.propagateNewValue();
         }
@@ -380,7 +393,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     if (this.disabled) {
       return;
     }
-
     this.newFilterModalVisible = true;
   }
 
@@ -574,9 +586,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       return null;
     };
 
-    const findItemByName = (name): InputSchema => {
+    const findItemByCode = (code): InputSchema => {
       for (const schema of this._data.InputSchema) {
-        if (schema.Name === name) {
+        if (schema.Code === code) {
           return schema;
         }
       }
@@ -586,7 +598,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
     mappedValue.forEach((path, itemName) => {
       const nodePaintedPath = findNodePaintedPathByPath(path, this._data.DataStructure, []);
-      const item = findItemByName(itemName);
+      const item = findItemByCode(itemName);
 
       if (!nodePaintedPath || !item) {
         return;
@@ -643,7 +655,6 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     if (!this.data) {
       return;
     }
-
     this.applyValue();
   }
 
@@ -687,7 +698,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
     // root element saves the selection state into value
     if (this.level === 0) {
-      this.inputSchemaMap.set(status.Item.Name, status.Path);
+      this.inputSchemaMap.set(status.Item.Code, status.Path);
       if (!status.hasOwnProperty('EmmitChange') || status.EmmitChange) {
         this.propagateNewValue();
       }

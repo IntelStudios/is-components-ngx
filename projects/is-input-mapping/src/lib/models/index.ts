@@ -16,6 +16,29 @@ export const FILTER_DEFS: { [key in FilterType]?: IFilterDef } = {
 };
 
 
+/**
+ * limited set of supported filter types
+ */
+export const FILTER_TYPES_LIMITED: { [key: string]: IFilterDef[] } = {
+  // Integer
+  1:[],
+  // String
+  2: [STRING_DEFS.StringEq, STRING_DEFS.StringNotEq],
+  // boolean
+  3: [],
+  // Base64
+  4: [],
+  // DateTime
+  5: [],
+  // Double
+  6: [],
+  // table
+  7: [],
+  // JSON
+  8: [],
+};
+
+
 export const FILTER_TYPES: { [key: string]: IFilterDef[] } = {
   // Integer
   1: Object.values(INT_DEFS),

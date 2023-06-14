@@ -73,6 +73,6 @@
 
 <div class="children" [class.left-line]="level > 0" *ngIf="data && collapsed && paintedStructure">
   <is-input-mapping #child *ngFor="let child of paintedStructure.Children; let i = index" [data]="data"
-    [paintedPath]="getChildPath(i)" [service]="service" [filterValueFormatter]="filterValueFormatter"  [filtersAllowed]="filtersAllowed"
+    [paintedPath]="getChildPath(i)" [service]="service" [limitedFilterSet]="limitedFilterSet" [filterValueFormatter]="filterValueFormatter"  [filtersAllowed]="filtersAllowed"
     [showOnlyFiltered]="showOnlyFiltered"></is-input-mapping>
 </div>
