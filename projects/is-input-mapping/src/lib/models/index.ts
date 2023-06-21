@@ -1,7 +1,9 @@
+import { BASE64_DEFS } from './filter-type.base64';
 import { BOOL_DEFS } from './filter-type.bool';
 import { DATE_DEFS } from './filter-type.date';
 import { DOUBLE_DEFS } from './filter-type.double';
 import { INT_DEFS } from './filter-type.int';
+import { JSON_DEFS } from './filter-type.json';
 import { STRING_DEFS } from './filter-type.string';
 import { FilterType, IFilterDef } from './filter.type';
 
@@ -13,6 +15,8 @@ export const FILTER_DEFS: { [key in FilterType]?: IFilterDef } = {
   ...INT_DEFS,
   ...DOUBLE_DEFS,
   ...BOOL_DEFS,
+  ...JSON_DEFS,
+  ...BASE64_DEFS,
 };
 
 
@@ -47,7 +51,7 @@ export const FILTER_TYPES: { [key: string]: IFilterDef[] } = {
   // boolean
   3: Object.values(BOOL_DEFS),
   // Base64
-  4: [],
+  4: Object.values(BASE64_DEFS),
   // DateTime
   5: Object.values(DATE_DEFS),
   // Double
@@ -55,5 +59,5 @@ export const FILTER_TYPES: { [key: string]: IFilterDef[] } = {
   // table
   7: [],
   // JSON
-  8: [],
+  8: Object.values(JSON_DEFS),
 };
