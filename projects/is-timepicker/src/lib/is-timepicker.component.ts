@@ -58,6 +58,9 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   @Input()
   alignment: 'left' | 'center' | 'right' = 'left';
 
+  @Input()
+  allowPopup = true;
+
   @ViewChild('input', { static: true })
   input: ElementRef;
 

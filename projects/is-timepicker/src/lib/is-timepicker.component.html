@@ -18,7 +18,7 @@
        class="fas fa-times btn-remove"
        [class.shown]="!disabled && timeValue"
        (click)="removeClick($event)"></i>
-    <span class="timepicker-icon" (click)="onPickerShown()">
+    <span *ngIf="allowPopup" class="timepicker-icon" (click)="onPickerShown()">
       <i class="fas fa-fw fa-clock"></i>
     </span>
   </div>
