@@ -369,7 +369,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     if (this.disabled) {
       return;
     }
-
+    this.newFilterModalVisible = false;
     this.filterDropdownVisible = true;
   }
 

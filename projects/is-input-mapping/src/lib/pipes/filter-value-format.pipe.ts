@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { FilterValueFormatter, IsInputSchemaFilter } from '../is-input-mapping.interface';
 import { IFilterDef } from '../models';
-
+import moment from 'moment';
 
 @Pipe({
   name: 'isInputMappingFilterValue'
@@ -27,6 +27,6 @@ export class IsInputMappingFilterValue implements PipeTransform {
   }
 
   private formatDate(date: string, formatter?: FilterValueFormatter) {
-    return formatter?.formatDate(date) ?? new Date(date).toLocaleDateString();
+    return formatter?.formatDate(date) ?? moment(date).format('DD. MM. YYYY HH:mm:ss');
   }
 }

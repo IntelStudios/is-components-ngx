@@ -7,7 +7,8 @@
   "peerDependencies": {
     "@angular/common": "^13.3.1",
     "@angular/core": "^13.3.1",
-    "@intelstudios/datepicker": "^13.0.3",
-    "@intelstudios/cdk": "^13.0.17"
+    "@intelstudios/datepicker": "^13.1.0",
+    "@intelstudios/cdk": "^13.0.17",
+    "moment": "^2.24.0"
   }
 }

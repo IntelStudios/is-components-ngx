@@ -22,10 +22,10 @@
 </ng-template>
 
 <ng-template #dateTimeTpl>
-  <is-datepicker [formControl]="ctrl" #focus [config]="{withTimepicker: true}" class="is-input-small" (changed)="datepickerApply($event)"></is-datepicker>
+  <is-datepicker [formControl]="ctrl" #focus [withTimepicker]="true" class="is-input-small" (changed)="datepickerApply($event)"></is-datepicker>
 </ng-template>
 
 <ng-template #dateTime2Tpl>
-  <is-datepicker [formControl]="ctrl" #focus [config]="{withTimepicker: true}" class="is-input-small"></is-datepicker>
-  <is-datepicker [formControl]="ctrl2" #focus [config]="{withTimepicker: true}" class="is-input-small" (changed)="datepickerApply($event)"></is-datepicker>
+  <is-datepicker [formControl]="ctrl" #focus [withTimepicker]="true" class="is-input-small"></is-datepicker>
+  <is-datepicker [formControl]="ctrl2" #focus [withTimepicker]="true" class="is-input-small" (changed)="datepickerApply($event)"></is-datepicker>
 </ng-template>
