@@ -1,6 +1,6 @@
 {
   "name": "@intelstudios/input-mapping",
-  "version": "13.2.1",
+  "version": "13.2.2",
   "dependencies": {
     "tslib": "^2.0.0"
   },
