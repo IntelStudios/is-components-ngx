@@ -1,4 +1,4 @@
-import { iconBetween, iconEmpty, iconEq, iconNeq, iconNotBetween, iconNotEmpty } from './filter-type.internal';
+import { iconBetween, iconEmpty, iconEq, iconGeq, iconGt, iconLeq, iconLt, iconNeq, iconNotBetween, iconNotEmpty } from './filter-type.internal';
 import { FilterType, IFilterDef } from './filter.type';
 
 export const DATE_DEFS: { [key in FilterType]?: IFilterDef } = {
@@ -12,6 +12,30 @@ export const DATE_DEFS: { [key in FilterType]?: IFilterDef } = {
     Type: 'DateTimeNotEq',
     Name: 'not equals',
     Icon: iconNeq,
+    InputType: 'date',
+  },
+  DateTimeGt: {
+    Type: 'DateTimeGt',
+    Name: 'greater than',
+    Icon: iconGt,
+    InputType: 'date',
+  },
+  DateTimeLt: {
+    Type: 'DateTimeLt',
+    Name: 'less than',
+    Icon: iconLt,
+    InputType: 'date',
+  },
+  DateTimeGeq: {
+    Type: 'DateTimeGeq',
+    Name: 'greater or equal',
+    Icon: iconGeq,
+    InputType: 'date',
+  },
+  DateTimeLeq: {
+    Type: 'DateTimeLeq',
+    Name: 'less or equal',
+    Icon: iconLeq,
     InputType: 'date',
   },
   DateTimeBetween: {

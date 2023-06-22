@@ -1,4 +1,4 @@
-import { iconBetween, iconEmpty, iconEq, iconGt, iconIn, iconLt, iconNeq, iconNotBetween, iconNotEmpty, iconNotIn } from './filter-type.internal';
+import { iconBetween, iconEmpty, iconEq, iconGeq, iconGt, iconIn, iconLeq, iconLt, iconNeq, iconNotBetween, iconNotEmpty, iconNotIn } from './filter-type.internal';
 import { FilterType, IFilterDef } from './filter.type';
 
 export const DOUBLE_DEFS: { [key in FilterType]?: IFilterDef } = {
@@ -42,6 +42,18 @@ export const DOUBLE_DEFS: { [key in FilterType]?: IFilterDef } = {
     Type: 'DoubleGt',
     Name: 'greater than',
     Icon: iconGt,
+    InputType: 'number',
+  },
+  DoubleGeq: {
+    Type: 'DoubleGeq',
+    Name: 'greater or equal',
+    Icon: iconGeq,
+    InputType: 'number',
+  },
+  DoubleLeq: {
+    Type: 'DoubleLeq',
+    Name: 'less or equal',
+    Icon: iconLeq,
     InputType: 'number',
   },
   DoubleLt: {

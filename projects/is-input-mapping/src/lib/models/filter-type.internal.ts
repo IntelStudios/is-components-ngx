@@ -10,4 +10,6 @@ export const iconContains = 'fa-light fa-arrows-left-right';
 export const iconNotContains = 'fa-light fa-arrows-cross';
 export const iconLt = 'fa-light fa-less-than';
 export const iconGt = 'fa-light fa-greater-than';
+export const iconLeq = 'fa-light fa-less-than-equal';
+export const iconGeq = 'fa-light fa-greater-than-equal';
 
