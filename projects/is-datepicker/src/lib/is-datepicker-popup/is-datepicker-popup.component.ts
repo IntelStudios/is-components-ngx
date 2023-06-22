@@ -40,13 +40,17 @@ export class IsDatepickerPopupComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
+    console.log('bsVl,', this.value);
+    this.value = new Date();
   }
 
   onValueChange($event: Date) {
+    console.log('onValueChange', $event);
     if ($event !== this.value) {
       this.control.onChange($event);
     }
 
   }
 }
+
+

@@ -53,7 +53,6 @@ export class IsFilterEditorComponent implements  AfterViewInit {
 
   @HostListener('keydown.escape')
   cancel() {
-    console.log('cancel')
     this.onApply.emit(null);
   }
 
@@ -72,21 +71,20 @@ export class IsFilterEditorComponent implements  AfterViewInit {
       };
       if (this.filterDef.InputType === 'date') {
         // remove time from date
-        value.Value = this.removeTime(value.Value);
+        value.Value = this.getDate(value.Value);
       } else if (this.filterDef.InputType === 'date-range') {
-        value.Value = this.removeTime(value.Value);
-        value.Value2 = this.removeTime(value.Value2);
+        value.Value = this.getDate(value.Value);
+        value.Value2 = this.getDate(value.Value2);
       }
       this.onApply.emit(value);
     });
   }
 
-  private removeTime(value: string) {
+  private getDate(value: string) {
     if (!value) {
       return null;
     }
     const date = new Date(value);
-    date.setHours(0, 0, 0, 0);
     return date.toISOString();
   }
 

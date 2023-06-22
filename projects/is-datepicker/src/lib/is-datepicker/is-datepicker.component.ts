@@ -397,6 +397,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     this.pickerInstanceRef.instance.config = this.config;
     this.pickerInstanceRef.instance.control = {
       onChange: (value: Date) => {
+        console.log('onChange', value);
         this.dateValue = value;
         this.dateControl.setErrors(null);
         this.closePopup();
