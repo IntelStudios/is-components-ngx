@@ -10,14 +10,29 @@ import { IsDatepickerInlineComponent } from './is-datepicker-inline/is-datepicke
 import { IsDatepickerPopupComponent } from './is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from './is-datepicker.interfaces';
 import { IsDatepickerComponent } from './is-datepicker/is-datepicker.component';
+import { IsTimepickerModule } from '@intelstudios/timepicker';
 
 @NgModule({
-    imports: [
-        CommonModule, BsDatepickerModule, ReactiveFormsModule, OverlayModule, ScrollingModule, NgxMaskModule.forRoot(), IsCdkModule,
-    ],
-    providers: [DatePipe],
-    declarations: [IsDatepickerComponent, IsDatepickerPopupComponent, IsDatepickerInlineComponent],
-    exports: [IsDatepickerComponent, IsDatepickerInlineComponent]
+  imports: [
+    CommonModule,
+    BsDatepickerModule,
+    ReactiveFormsModule,
+    OverlayModule,
+    ScrollingModule,
+    NgxMaskModule.forRoot(),
+    IsCdkModule,
+    IsTimepickerModule
+  ],
+  providers: [DatePipe],
+  declarations: [
+    IsDatepickerComponent,
+    IsDatepickerPopupComponent,
+    IsDatepickerInlineComponent
+  ],
+  exports: [
+    IsDatepickerComponent,
+    IsDatepickerInlineComponent,
+  ]
 })
 export class IsDatepickerModule {
   static forRoot(config?: IsDatepickerConfig): ModuleWithProviders<IsDatepickerModule> {

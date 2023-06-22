@@ -1,8 +1,6 @@
-import { Overlay } from '@angular/cdk/overlay';
 import {
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   forwardRef,
   Inject,
@@ -10,16 +8,15 @@ import {
   OnDestroy,
   Optional,
   Output,
-  Renderer2,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import moment from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
-import { defaultDatePickerConfig, DatepickerPopupControl } from '../is-datepicker-popup/is-datepicker-popup.component';
-import { IsDatepickerConfig, configToken } from '../is-datepicker.interfaces';
+import { DatepickerPopupControl, defaultDatePickerConfig } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 import { DATE_FORMAT, defaultDatePickerRootConfig } from '../is-datepicker/is-datepicker.component';
 
 export const NG_DATEPICKER_INLINE_VALUE_ACCESSOR: any = {
@@ -84,11 +81,8 @@ export class IsDatepickerInlineComponent implements OnDestroy, ControlValueAcces
   private onTouched: Function;
 
   constructor(
-    @Optional() @Inject(configToken) private dpConfig: IsDatepickerConfig,
+    @Optional() @Inject(configToken) dpConfig: IsDatepickerConfig,
     private changeDetector: ChangeDetectorRef,
-    private overlay: Overlay,
-    private el: ElementRef,
-    private renderer: Renderer2
   ) {
     this.rootConfig = { ...this.rootConfig, ...dpConfig };
     // Properties didnt get their input values, yet
@@ -114,8 +108,6 @@ export class IsDatepickerInlineComponent implements OnDestroy, ControlValueAcces
       this.changeDetector.markForCheck();
       return;
     }
-    const date = this.stripTimezone(this.dateValue);
-    // console.log(date.toISOString());
     this.changed.emit(this.stringMode ? moment(this.dateValue).format(DATE_FORMAT) : this.dateValue);
     this.changeDetector.markForCheck();
   }

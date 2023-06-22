@@ -12,7 +12,7 @@
 </div>
 <div class="row">
   <div class="col-sm-6">
-    <is-datepicker [readonly]="readonly" [config]="{withTimepicker: true, initCurrentTime: true}" [class.is-input-small]="small" [formControl]="control" [alignment]="'right'" [allowClear]="true"></is-datepicker>
+    <is-datepicker [readonly]="readonly" [withTimepicker]="true" [class.is-input-small]="small" [formControl]="control" [alignment]="'right'" [allowClear]="true"></is-datepicker>
     <div style="margin-top: 5px;">
       <button class="btn btn-primary pull-right" (click)="onClearDate()">Clear date</button>
       <button class="btn btn-primary" (click)="toggleInvalid()">Invalid</button>

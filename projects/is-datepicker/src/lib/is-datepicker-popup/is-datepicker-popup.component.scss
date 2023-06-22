@@ -5,18 +5,40 @@ is-datepicker-popup {
   position: absolute;
   top: 4px;
   display: block;
+  @include is-input-active;
+
+  border-width: 1px;
+  border-style: solid;
+  border-radius: $is-general-border-radius;
+  overflow: hidden;
+  background-color: $is-datepicker-bg-color;
   &.is-datepicker-popup-dropup {
     top: initial;
     bottom: 4px;
   }
+  &.with-timepicker {
+    .bs-datepicker {
+      border-bottom: none;
+    }
+  }
+
+  .time-picker {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $is-general-padding-small;
+    padding: 12px;
+    padding-top: 1px;
+    > button {
+      line-height: 1;
+      height: 24px;
+      padding: 0px 4px;
+    }
+  }
+
   // dropdown container style
   .bs-datepicker {
-    box-shadow: none;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: $is-general-border-radius;
-    @include is-input-active;
 
+    box-shadow: none;
     >.bs-datepicker-container {
       padding: 0;
 

@@ -110,6 +110,9 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
   @Input()
   alignment: 'left' | 'center' | 'right' = 'left';
 
+  @Input()
+  withTimepicker = false;
+
   @Output()
   changed: EventEmitter<any> = new EventEmitter<any>();
 
@@ -395,9 +398,9 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     });
     this.pickerInstanceRef.instance.value = this.dateValue;
     this.pickerInstanceRef.instance.config = this.config;
+    this.pickerInstanceRef.instance.withTimepicker = this.withTimepicker;
     this.pickerInstanceRef.instance.control = {
       onChange: (value: Date) => {
-        console.log('onChange', value);
         this.dateValue = value;
         this.dateControl.setErrors(null);
         this.closePopup();

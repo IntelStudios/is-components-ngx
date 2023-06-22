@@ -7,10 +7,12 @@
   "peerDependencies": {
     "@angular/common": "^13.3.1",
     "@angular/core": "^13.3.1",
+    "@angular/forms": "^13.3.1",
     "moment": "^2.24.0",
     "ngx-bootstrap": "^8.0.0",
     "@angular/cdk": "^13.3.2",
     "@intelstudios/cdk": "^13.0.0",
+    "@intelstudios/timepicker": "^13.0.3",
     "ngx-mask": "^13.1.4"
   }
 }

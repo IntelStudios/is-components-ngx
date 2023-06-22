@@ -1,1 +1,6 @@
 <bs-datepicker-inline [bsValue]="value" (bsValueChange)="onValueChange($event)" [bsConfig]="config"></bs-datepicker-inline>
+<div class="time-picker" *ngIf="withTimepicker">
+  <is-timepicker class="is-input-small" [allowPopup]="false" (keyup.enter)="save()" [formControl]="timepickerCtrl"></is-timepicker>
+  <button class="btn btn-sm btn-success" (click)="save()" [disabled]="timepickerCtrl.invalid || !value">OK</button>
+</div>
+
