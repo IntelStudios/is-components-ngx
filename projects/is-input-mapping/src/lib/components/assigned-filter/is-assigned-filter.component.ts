@@ -35,7 +35,6 @@ export class IsAssignedFilterComponent {
   filterDefs = FILTER_DEFS;
 
   constructor() {
-
   }
 
   release(filter: IsInputSchemaFilter) {

@@ -2,13 +2,13 @@ import { iconEmpty, iconNotEmpty } from './filter-type.internal';
 import { FilterType, IFilterDef } from './filter.type';
 
 export const JSON_DEFS: { [key in FilterType]?: IFilterDef } = {
-  StringEmpty: {
+  JsonEmpty: {
     Type: 'JsonEmpty',
     Name: 'empty',
     Icon: iconEmpty,
     InputType: 'none',
   },
-  StringNotEmpty: {
+  JsonNotEmpty: {
     Type: 'JsonNotEmpty',
     Name: 'not empty',
     Icon: iconNotEmpty,
