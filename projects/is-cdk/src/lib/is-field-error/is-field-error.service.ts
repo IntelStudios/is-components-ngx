@@ -5,7 +5,7 @@ import { IsFieldError } from './is-field-error.model';
 export class IsFieldErrorFactory {
 
   static requiredError() {
-    const error = new IsFieldError('required', false).withPriority(0);
+    const error = new IsFieldError('required', false).withPriority(1000);
     error.message = 'Field is required';
 
     return { required: error };
