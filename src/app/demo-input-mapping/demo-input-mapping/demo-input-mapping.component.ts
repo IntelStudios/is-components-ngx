@@ -20,7 +20,7 @@ export class DemoInputMappingComponent implements OnInit {
   MOCK_DATA: IsInputMappingInput = {
     'InputSchema': [
       {
-        Code: 'CodeName',
+        Code: null,
         'Name': 'Name',
         'DataType': 2,
         'AllowNull': false,

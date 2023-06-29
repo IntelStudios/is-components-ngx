@@ -280,7 +280,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
       // root element saves the selection state into value
       if (this.level === 0) {
-        this.inputSchemaMap.delete(data.Item.Code);
+        this.inputSchemaMap.delete(data.Item.Code ?? data.Item.Name);
         if (!data.hasOwnProperty('EmmitChange') || data.EmmitChange) {
           this.propagateNewValue();
         }
@@ -588,7 +588,8 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
     const findItemByCode = (code): InputSchema => {
       for (const schema of this._data.InputSchema) {
-        if (schema.Code === code) {
+        const Code = schema.Code ?? schema.Name;
+        if (Code === code) {
           return schema;
         }
       }
@@ -698,7 +699,8 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
 
     // root element saves the selection state into value
     if (this.level === 0) {
-      this.inputSchemaMap.set(status.Item.Code, status.Path);
+      const Code = status.Item.Code ?? status.Item.Name;
+      this.inputSchemaMap.set(Code, status.Path);
       if (!status.hasOwnProperty('EmmitChange') || status.EmmitChange) {
         this.propagateNewValue();
       }
