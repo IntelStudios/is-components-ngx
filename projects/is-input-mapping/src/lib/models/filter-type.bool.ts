@@ -14,14 +14,14 @@ export const BOOL_DEFS: { [key in FilterType]?: IFilterDef } = {
     Icon: 'fa fa-check',
     InputType: 'none',
   },
-  StringEmpty: {
-    Type: 'StringEmpty',
+  BoolEmpty: {
+    Type: 'BoolEmpty',
     Name: 'empty',
     Icon: iconEmpty,
     InputType: 'none',
   },
-  StringNotEmpty: {
-    Type: 'StringNotEmpty',
+  BoolNotEmpty: {
+    Type: 'BoolNotEmpty',
     Name: 'not empty',
     Icon: iconNotEmpty,
     InputType: 'none',
