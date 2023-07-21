@@ -2,16 +2,16 @@ import { iconEmpty, iconNotEmpty } from './filter-type.internal';
 import { FilterType, IFilterDef } from './filter.type';
 
 export const BOOL_DEFS: { [key in FilterType]?: IFilterDef } = {
-  BoolFalse: {
-    Type: 'BoolFalse',
-    Name: 'False',
-    Icon: 'fa fa-exclamation',
-    InputType: 'none',
-  },
   BoolTrue: {
     Type: 'BoolTrue',
-    Name: 'True',
+    Name: 'is true',
     Icon: 'fa fa-check',
+    InputType: 'none',
+  },
+  BoolFalse: {
+    Type: 'BoolFalse',
+    Name: 'is false',
+    Icon: 'fa fa-exclamation',
     InputType: 'none',
   },
   BoolEmpty: {

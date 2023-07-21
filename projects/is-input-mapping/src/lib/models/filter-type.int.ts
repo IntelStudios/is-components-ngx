@@ -14,6 +14,30 @@ export const INT_DEFS: { [key in FilterType]?: IFilterDef } = {
     Icon: iconNeq,
     InputType: 'number',
   },
+  IntGt: {
+    Type: 'IntGt',
+    Name: 'greater than',
+    Icon: iconGt,
+    InputType: 'number',
+  },
+  IntLt: {
+    Type: 'IntLt',
+    Name: 'less than',
+    Icon: iconLt,
+    InputType: 'number',
+  },
+  IntGeq: {
+    Type: 'IntGeq',
+    Name: 'greater of equals',
+    Icon: iconGeq,
+    InputType: 'number',
+  },
+  IntLeq: {
+    Type: 'IntLeq',
+    Name: 'less of equals',
+    Icon: iconLeq,
+    InputType: 'number',
+  },
   IntIn: {
     Type: 'IntIn',
     Name: 'in',
@@ -37,30 +61,6 @@ export const INT_DEFS: { [key in FilterType]?: IFilterDef } = {
     Name: 'not between',
     Icon: iconNotBetween,
     InputType: 'number-range',
-  },
-  IntGt: {
-    Type: 'IntGt',
-    Name: 'greater than',
-    Icon: iconGt,
-    InputType: 'number',
-  },
-  IntLt: {
-    Type: 'IntLt',
-    Name: 'less than',
-    Icon: iconLt,
-    InputType: 'number',
-  },
-  IntGeq: {
-    Type: 'IntGeq',
-    Name: 'greater or equal',
-    Icon: iconGeq,
-    InputType: 'number',
-  },
-  IntLeq: {
-    Type: 'IntLeq',
-    Name: 'less or equal',
-    Icon: iconLeq,
-    InputType: 'number',
   },
   IntEmpty: {
     Type: 'IntEmpty',

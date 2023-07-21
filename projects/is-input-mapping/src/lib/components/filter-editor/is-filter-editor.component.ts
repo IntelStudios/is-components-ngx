@@ -21,7 +21,7 @@ import { IFilterDef } from '../../models';
   styleUrls: ['./is-filter-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IsFilterEditorComponent implements  AfterViewInit {
+export class IsFilterEditorComponent implements AfterViewInit {
 
   @Input()
   filterDef: IFilterDef;
@@ -69,12 +69,16 @@ export class IsFilterEditorComponent implements  AfterViewInit {
         Value: this.ctrl.value,
         Value2: this.ctrl2.value,
       };
-      if (this.filterDef.InputType === 'date') {
+      const { InputType } = this.filterDef;
+      if (InputType === 'date') {
         // remove time from date
         value.Value = this.getDate(value.Value);
-      } else if (this.filterDef.InputType === 'date-range') {
+      } else if (InputType === 'date-range') {
         value.Value = this.getDate(value.Value);
         value.Value2 = this.getDate(value.Value2);
+      }
+      if (InputType !== 'none' && !value.Value) {
+        return;
       }
       this.onApply.emit(value);
     });

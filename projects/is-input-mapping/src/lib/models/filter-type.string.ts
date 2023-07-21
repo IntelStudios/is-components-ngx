@@ -14,18 +14,6 @@ export const STRING_DEFS: { [key in FilterType]?: IFilterDef } = {
     Icon: iconNeq,
     InputType: 'text',
   },
-  StringContains: {
-    Type: 'StringContains',
-    Name: 'contains',
-    Icon: iconContains,
-    InputType: 'text',
-  },
-  StringNotContains: {
-    Type: 'StringNotContains',
-    Name: 'not contains',
-    Icon: iconNotContains,
-    InputType: 'text',
-  },
   StringIn: {
     Type: 'StringIn',
     Name: 'in',
@@ -36,6 +24,18 @@ export const STRING_DEFS: { [key in FilterType]?: IFilterDef } = {
     Type: 'StringNotIn',
     Name: 'not in',
     Icon: iconNotIn,
+    InputType: 'text',
+  },
+  StringContains: {
+    Type: 'StringContains',
+    Name: 'contains',
+    Icon: iconContains,
+    InputType: 'text',
+  },
+  StringNotContains: {
+    Type: 'StringNotContains',
+    Name: 'not contains',
+    Icon: iconNotContains,
     InputType: 'text',
   },
   StringEmpty: {

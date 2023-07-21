@@ -14,6 +14,30 @@ export const DOUBLE_DEFS: { [key in FilterType]?: IFilterDef } = {
     Icon: iconNeq,
     InputType: 'number',
   },
+  DoubleGt: {
+    Type: 'DoubleGt',
+    Name: 'greater than',
+    Icon: iconGt,
+    InputType: 'number',
+  },
+  DoubleLt: {
+    Type: 'DoubleLt',
+    Name: 'less than',
+    Icon: iconLt,
+    InputType: 'number',
+  },
+  DoubleGeq: {
+    Type: 'DoubleGeq',
+    Name: 'greater of equals',
+    Icon: iconGeq,
+    InputType: 'number',
+  },
+  DoubleLeq: {
+    Type: 'DoubleLeq',
+    Name: 'less of equals',
+    Icon: iconLeq,
+    InputType: 'number',
+  },
   DoubleIn: {
     Type: 'DoubleIn',
     Name: 'in',
@@ -37,30 +61,6 @@ export const DOUBLE_DEFS: { [key in FilterType]?: IFilterDef } = {
     Name: 'not between',
     Icon: iconNotBetween,
     InputType: 'number-range',
-  },
-  DoubleGt: {
-    Type: 'DoubleGt',
-    Name: 'greater than',
-    Icon: iconGt,
-    InputType: 'number',
-  },
-  DoubleGeq: {
-    Type: 'DoubleGeq',
-    Name: 'greater or equal',
-    Icon: iconGeq,
-    InputType: 'number',
-  },
-  DoubleLeq: {
-    Type: 'DoubleLeq',
-    Name: 'less or equal',
-    Icon: iconLeq,
-    InputType: 'number',
-  },
-  DoubleLt: {
-    Type: 'DoubleLt',
-    Name: 'less than',
-    Icon: iconLt,
-    InputType: 'number',
   },
   DoubleEmpty: {
     Type: 'DoubleEmpty',

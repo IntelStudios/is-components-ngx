@@ -28,13 +28,13 @@ export const DATE_DEFS: { [key in FilterType]?: IFilterDef } = {
   },
   DateTimeGeq: {
     Type: 'DateTimeGeq',
-    Name: 'greater or equal',
+    Name: 'greater of equals',
     Icon: iconGeq,
     InputType: 'date',
   },
   DateTimeLeq: {
     Type: 'DateTimeLeq',
-    Name: 'less or equal',
+    Name: 'less of equals',
     Icon: iconLeq,
     InputType: 'date',
   },
