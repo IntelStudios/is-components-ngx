@@ -69,7 +69,7 @@ export class IsFilterEditorComponent implements AfterViewInit {
         Value: this.ctrl.value,
         Value2: this.ctrl2.value,
       };
-      const { InputType } = this.filterDef;
+      const { InputType, Type } = this.filterDef;
       if (InputType === 'date') {
         // remove time from date
         value.Value = this.getDate(value.Value);
@@ -80,8 +80,21 @@ export class IsFilterEditorComponent implements AfterViewInit {
       if (InputType !== 'none' && !value.Value) {
         return;
       }
+      if (InputType === 'text' && Type.endsWith('In')) {
+        value.Value = this.cleanupInNotInSeparators(value.Value);
+      }
       this.onApply.emit(value);
     });
+  }
+
+  private cleanupInNotInSeparators(value: string): string {
+    if (!value) {
+      return value;
+    }
+    return value.replace(/;/g, ',')
+      .split(',')
+      .filter(x => !!x)
+      .join(',');
   }
 
   private getDate(value: string) {

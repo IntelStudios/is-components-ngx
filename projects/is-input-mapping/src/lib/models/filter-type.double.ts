@@ -28,13 +28,13 @@ export const DOUBLE_DEFS: { [key in FilterType]?: IFilterDef } = {
   },
   DoubleGeq: {
     Type: 'DoubleGeq',
-    Name: 'greater of equals',
+    Name: 'greater or equals',
     Icon: iconGeq,
     InputType: 'number',
   },
   DoubleLeq: {
     Type: 'DoubleLeq',
-    Name: 'less of equals',
+    Name: 'less or equals',
     Icon: iconLeq,
     InputType: 'number',
   },

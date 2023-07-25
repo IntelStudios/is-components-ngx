@@ -28,13 +28,13 @@ export const INT_DEFS: { [key in FilterType]?: IFilterDef } = {
   },
   IntGeq: {
     Type: 'IntGeq',
-    Name: 'greater of equals',
+    Name: 'greater or equals',
     Icon: iconGeq,
     InputType: 'number',
   },
   IntLeq: {
     Type: 'IntLeq',
-    Name: 'less of equals',
+    Name: 'less or equals',
     Icon: iconLeq,
     InputType: 'number',
   },
