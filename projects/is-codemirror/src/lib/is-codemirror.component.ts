@@ -74,13 +74,23 @@ export class IsCodemirrorComponent implements ControlValueAccessor, OnDestroy {
   @Output() instance = null;
 
   @HostBinding('class.is-cm-disabled')
-  disabled: boolean = false;
+
+  @Input()
+  set disabled(value: boolean) {
+    this.setDisabledState(value);
+  }
+
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  _disabled: boolean = false;
 
   _value = '';
   _config: any = {
     gutters: ['CodeMirror-lint-markers'],
     lint: true,
-    readOnly: this.disabled ? 'nocursor': false,
+    readOnly: this._disabled ? 'nocursor' : false,
     extraKeys: { 'Ctrl-Space': 'autocomplete' },
     tabSize: 2,
     viewportMargin: Infinity, // enable autoresize together with CSS style for .CodeMirror
@@ -190,7 +200,8 @@ export class IsCodemirrorComponent implements ControlValueAccessor, OnDestroy {
    * Implemented as part of ControlValueAccessor.
    */
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this._disabled = isDisabled;
+
     if (this.instance) {
       this.instance.setOption('readOnly', isDisabled ? 'nocursor' : false);
     }
