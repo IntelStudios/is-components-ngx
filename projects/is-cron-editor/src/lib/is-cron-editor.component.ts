@@ -78,7 +78,7 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
    */
   @Input()
   set disabled(value: boolean) {
-    this._disabled = value;
+    this.setDisabledState(value);
   }
 
   get disabled(): boolean {
