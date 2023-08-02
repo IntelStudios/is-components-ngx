@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { IsCodemirrorModule } from 'projects/is-codemirror/src/public_api';
+import { IsCoreUIModule } from 'projects/is-core-ui/src/public_api';
 
 import { DemoCodemirrorComponent } from '../demo-codemirror/demo-codemirror/demo-codemirror.component';
 
@@ -9,7 +11,7 @@ import { DemoCodemirrorComponent } from '../demo-codemirror/demo-codemirror/demo
 @NgModule({
   declarations: [DemoCodemirrorComponent],
   imports: [
-    CommonModule, IsCodemirrorModule
+    CommonModule, IsCodemirrorModule, IsCoreUIModule.forRoot(),
   ]
 })
 export class DemoCodemirrorModule { }

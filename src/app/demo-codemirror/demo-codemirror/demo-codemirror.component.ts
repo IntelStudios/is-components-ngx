@@ -36,6 +36,8 @@ npm install --save codemirror</pre>
 ]</pre>
   `
 
+  disabled: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
