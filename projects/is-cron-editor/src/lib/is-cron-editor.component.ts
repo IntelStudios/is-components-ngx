@@ -73,8 +73,20 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
     this.setRandomAbleValues();
   }
 
-  private _allowRandom = false;
+  /**
+   * If set to true, the editor is in readonly mode
+   */
+  @Input()
+  set disabled(value: boolean) {
+    this.setDisabledState(value);
+  }
 
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  private _allowRandom = false;
+  private _disabled = false;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -999,6 +1011,8 @@ export class IsCronEditorComponent implements OnInit, ControlValueAccessor, Vali
   }
 
   setDisabledState(isDisabled: boolean): void {
+    this._disabled = isDisabled;
+
     function setDisabledRecursively(dict) {
       Object.keys(dict).forEach(k => {
         const v = dict[k];
