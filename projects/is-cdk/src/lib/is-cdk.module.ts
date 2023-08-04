@@ -10,10 +10,23 @@ import { StopPropagationDirective } from './directives/stop-propagation.directiv
 
 @NgModule({
   imports: [
-    CommonModule, OverlayModule,
+    CommonModule,
+    OverlayModule,
   ],
-  declarations: [IsIFrameResizeDirective, PreventDoubleclickDirective, IsIFrameClickDirective, IsEncapsulatedComponent, StopPropagationDirective],
-  exports: [IsIFrameResizeDirective, PreventDoubleclickDirective, IsIFrameClickDirective, IsEncapsulatedComponent, StopPropagationDirective],
+  declarations: [
+    IsIFrameResizeDirective,
+    PreventDoubleclickDirective,
+    IsIFrameClickDirective,
+    IsEncapsulatedComponent,
+    StopPropagationDirective,
+  ],
+  exports: [
+    IsIFrameResizeDirective,
+    PreventDoubleclickDirective,
+    IsIFrameClickDirective,
+    IsEncapsulatedComponent,
+    StopPropagationDirective,
+  ],
   providers: [IsCdkService],
 })
 export class IsCdkModule { }
