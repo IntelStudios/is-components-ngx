@@ -32,12 +32,8 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
       doc.querySelectorAll('style').forEach((styleEl) => {
         try {
           const parsedCss = this.parseCss(styleEl.innerText);
-          parsedCss.stylesheet.rules.forEach((rule) => {
-            rule.selectors = rule.selectors?.map((s) => {
-              const selector = s.replace('body', '');
-              return `is-encapsulated > .${className} ${selector}`;
-            });
-          });
+          const prefix = `is-encapsulated > .${className}`;
+          parsedCss.stylesheet.rules = parsedCss.stylesheet.rules.map((r) => this.processRule(r, prefix));
           const newStyle = document.createElement('style');
           newStyle.innerText = stringifyCss(parsedCss).replace(/\n/g, '');
           styleEl.parentNode.replaceChild(newStyle, styleEl);
@@ -63,6 +59,17 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
       }
       this.el.nativeElement.replaceChild(doc, contentChild);
     }
+  }
+
+  private processRule(rule, prefix: string) {
+    rule.selectors = rule.selectors?.map((s) => {
+      const selector = s.replace('body', '');
+      return `${prefix} ${selector}`;
+    });
+    if (rule.rules) {
+      rule.rules = rule.rules.map((r) => this.processRule(r, prefix));
+    }
+    return rule;
   }
 
   private setInnerHTML(target: HTMLDivElement, html: string) {

@@ -55,7 +55,11 @@ export class DemoCoreUIComponent implements OnInit {
     75% {left: 50px}
     100% {left: 100px;}
     }
-
+  @media(max-width: 768px) {
+    div {
+      background: blue;
+    }
+  }
   <!--
     /* Font Definitions */
     

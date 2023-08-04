@@ -161,6 +161,12 @@ describe('IsEncapsulatedComponent', () => {
       css: '/* body { color: red; } */',
       expected: []
     },
+    // TODO implement expect support for media queries
+    // {
+    //   name: '@media query',
+    //   css: '@media(max-width: 1000) { div { color: red; } }',
+    //   expected: []
+    // },
     {
       name: 'Multi line comment',
       css: `<!--
