@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AssignStatus, DataStructure, IsInputSchemaFilter, IsInputSchemaFilterStatus } from '../is-input-mapping.interface';
+import { AssignStatus, DataStructure, IsInputMappingChangeEvent, IsInputSchemaFilter, IsInputSchemaFilterStatus } from '../is-input-mapping.interface';
 
 @Injectable()
 export class IsInputMappingService {
@@ -9,6 +9,7 @@ export class IsInputMappingService {
   private releaseSource = new Subject<AssignStatus>();
   private disabledSource = new Subject<boolean>();
   private filterSource = new Subject<IsInputSchemaFilterStatus>();
+  private events$ = new Subject<IsInputMappingChangeEvent>();
 
   /*
     key: path of item that has assigns
@@ -22,6 +23,14 @@ export class IsInputMappingService {
   itemReleased$ = this.releaseSource.asObservable();
   disabledChange$ = this.disabledSource.asObservable();
   filterChange$ = this.filterSource.asObservable();
+
+  fireEvent(event: IsInputMappingChangeEvent): void {
+    this.events$.next(event);
+  }
+
+  event() {
+    return this.events$.asObservable();
+  }
 
   /**
    * Applies new filters, saves it into cache and notifies components

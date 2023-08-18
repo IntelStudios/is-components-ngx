@@ -52,3 +52,10 @@ export interface AssignStatus {
 export interface FilterValueFormatter {
   formatDate(value: string): string;
 }
+
+export interface IsInputMappingChangeEvent {
+  type: 'assign' | 'release' | 'add-filter' | 'remove-filter';
+  filter?: IsInputSchemaFilter;
+  path?: string;
+
+}

@@ -3,10 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   Input,
   OnDestroy,
-  OnInit, QueryList, ViewChildren,
+  OnInit, Output, QueryList, ViewChildren,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -24,6 +25,7 @@ import {
   DataStructure,
   FilterValueFormatter,
   InputSchema,
+  IsInputMappingChangeEvent,
   IsInputMappingInput,
   IsInputMappingValue,
   IsInputSchemaFilter, IsInputSchemaFilterStatus
@@ -129,6 +131,9 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     this.filterTypes = value === true ? FILTER_TYPES_LIMITED : FILTER_TYPES;
   }
 
+  @Output()
+  userEvent: EventEmitter<IsInputMappingChangeEvent> = new EventEmitter<IsInputMappingChangeEvent>();
+
   get limitedFilterSet(): boolean {
     return this._limitedFilterSet;
   }
@@ -211,7 +216,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       this.inputSchemaMap = new Map<string, string>();
       this.collapsible = true;
       this._validator = isInputRequiredFilledValidator(this);
-
+      this._subscriptions.push(this.service.event().subscribe((e) => this.userEvent.emit(e)));
       if (this._data) {
         this.paintedStructure = this._data.DataStructure;
       }
@@ -414,6 +419,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
    */
   assign(item: InputSchema) {
     this.service.assignItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
+    this.service.fireEvent({ type: 'assign', path: this.paintedStructure.Path });
   }
 
   /**
@@ -426,6 +432,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
       return;
     }
     this.service.releaseItem({ Item: item, PaintedPath: this.paintedPath, Path: this.paintedStructure.Path });
+    this.service.fireEvent({ type: 'release', path: this.paintedStructure.Path });
   }
 
   /**
@@ -547,6 +554,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     };
 
     this.service.applyFilters(newStatus);
+    this.service.fireEvent({ type: 'add-filter', filter: f });
   }
 
   /**
@@ -634,6 +642,7 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     };
 
     this.service.applyFilters(newStatus);
+    this.service.fireEvent({ type: 'remove-filter', filter });
   }
 
   /*

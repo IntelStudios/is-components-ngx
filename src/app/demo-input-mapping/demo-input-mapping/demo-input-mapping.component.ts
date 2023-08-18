@@ -557,6 +557,10 @@ export class DemoInputMappingComponent implements OnInit {
     this.formControl.setValue({ InputSchemaMapping: {} });
   }
 
+  onUserEvent($event) {
+    console.log('onUserEvent', $event);
+  }
+
   modified2Created() {
     // this example does NOT emit value change event
     // we have to cache current value by ourselves
