@@ -36,12 +36,20 @@ export class IsRadioGroupDirective implements ControlValueAccessor, AfterViewIni
   @ContentChildren(forwardRef(() => IsCheckboxComponent), { descendants: true })
   _radios: QueryList<IsCheckboxComponent>;
 
+  private _disabled: boolean = false;
+  
   @Input()
-  disabled: boolean = false;
+  set disabled(value: boolean) {
+    this.setDisabledState(value);
+  }
+
+  get disabled(): boolean {
+    return this._disabled;
+  }
 
   @Input()
-  set readonly(readonly: boolean) {
-    this.setDisabledState(readonly);
+  set readonly(value: boolean) {
+    this.setDisabledState(value);
   }
 
   get readonly(): boolean {
@@ -87,7 +95,8 @@ export class IsRadioGroupDirective implements ControlValueAccessor, AfterViewIni
    * Implemented as part of ControlValueAccessor.
    */
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this._disabled = isDisabled;
+
     if (this._radios) {
       this._radios.forEach(radio => {
         radio.setDisabledState(isDisabled);
@@ -140,8 +149,16 @@ export class IsCheckboxComponent implements ControlValueAccessor {
 
   @Input() value;
 
+  private _disabled = false;
+
   @Input()
-  disabled = false;
+  set disabled(value: boolean) {
+    this.setDisabledState(value);
+  }
+
+  get disabled(): boolean {
+    return this._disabled;
+  }
 
   @Input()
   set indeterminate(value: boolean) {
@@ -197,7 +214,7 @@ export class IsCheckboxComponent implements ControlValueAccessor {
    * Implemented as part of ControlValueAccessor.
    */
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this._disabled = isDisabled;
     this.changeDetector.markForCheck();
   }
 
