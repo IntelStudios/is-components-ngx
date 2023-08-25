@@ -152,8 +152,11 @@ export class IsSelectTreeComponent implements OnDestroy {
     this.expandTree();
   }
 
-  filterNodes(value: string) {
-    if (!value) {
+  filterNodes(match: string | ((node: IsSelectTreeNode) => boolean)) {
+    let matchFn = (node: IsSelectTreeNode) => {
+      return true;
+    }
+    if (!match) {
       this.tree.treeModel.filterNodes((node: TreeNode) => {
         const n: IsSelectTreeNode = node.data as IsSelectTreeNode;
         n.$matchesFilter = false;
@@ -162,13 +165,20 @@ export class IsSelectTreeComponent implements OnDestroy {
       this.changeDetector.markForCheck();
       return;
     }
-    value = value.toLowerCase();
+    if (typeof match === 'function') {
+      matchFn = match;
+    } else {
+      const value = String(match).toLowerCase();
+      matchFn = (node: IsSelectTreeNode) => {
+        return node.name.toLowerCase().indexOf(value) > -1;
+      }
+    }
     this.tree.treeModel.filterNodes((node: TreeNode) => {
       const n: IsSelectTreeNode = node.data as IsSelectTreeNode;
       if (n.parent && n.parent.$matchesFilter) {
         n.$matchesFilter = n.parent.$matchesFilter;
       } else {
-        n.$matchesFilter = n.name.toLowerCase().indexOf(value) > -1;
+        n.$matchesFilter = matchFn(n);
       }
       return n.$matchesFilter;
     });
