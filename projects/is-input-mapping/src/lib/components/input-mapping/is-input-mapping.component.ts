@@ -62,7 +62,10 @@ export class IsInputMappingComponent implements OnInit, OnDestroy, ControlValueA
     if (typeof (value) === 'undefined') {
       value = null;
     }
-
+    // InputSchema may not be defined
+    if (!value.InputSchema) {
+      value.InputSchema = [];
+    }
     this._data = value;
 
     if (this.data) {
