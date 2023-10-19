@@ -37,7 +37,7 @@ export const routes: Routes = [
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,
-    RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(routes, { useHash: true }),
     TreeModule,
     ReactiveFormsModule, FormsModule,
     TranslateModule.forRoot(),
