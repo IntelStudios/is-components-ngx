@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-demo-editable-textbox',
@@ -16,7 +16,7 @@ export class DemoEditableTextboxComponent implements OnInit {
 <h3>Import Module</h3>
 <pre>import { IsEditableTextboxModule } from '@intelstudios/editable-textbox';</pre>`;
 
-  control = new FormControl();
+  control = new UntypedFormControl();
 
   constructor() { }
 

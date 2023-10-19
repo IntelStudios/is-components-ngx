@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {TestComponentBase} from '../../../test-base/model.spec';
 import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild} from '@angular/core';
-import {FormControl, FormControlDirective, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {UntypedFormControl, FormControlDirective, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
@@ -195,8 +195,8 @@ class TestComponent extends TestComponentBase<TestComponent> {
     super(cd);
   }
 
-  readonly control1 = new FormControl();
-  readonly control2 = new FormControl();
+  readonly control1 = new UntypedFormControl();
+  readonly control2 = new UntypedFormControl();
 
   public getValueElement(picker: ElementRef<HTMLElement>): HTMLInputElement {
     return picker.nativeElement.querySelector('.timepicker-value');

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-demo-timepicker',
@@ -19,16 +19,16 @@ export class DemoTimepickerComponent implements OnInit {
   `
 
   small = false;
-  timepickerControl: FormControl;
-  timepickerControl1: FormControl;
-  timepickerControl2: FormControl;
-  timepickerControl3: FormControl;
+  timepickerControl: UntypedFormControl;
+  timepickerControl1: UntypedFormControl;
+  timepickerControl2: UntypedFormControl;
+  timepickerControl3: UntypedFormControl;
 
   constructor() {
-    this.timepickerControl = new FormControl();
-    this.timepickerControl1 = new FormControl('12:00:00');
-    this.timepickerControl2 = new FormControl();
-    this.timepickerControl3 = new FormControl();
+    this.timepickerControl = new UntypedFormControl();
+    this.timepickerControl1 = new UntypedFormControl('12:00:00');
+    this.timepickerControl2 = new UntypedFormControl();
+    this.timepickerControl3 = new UntypedFormControl();
     this.timepickerControl3.setValidators(Validators.required);
     this.timepickerControl3.updateValueAndValidity();
   }

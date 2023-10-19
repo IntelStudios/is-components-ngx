@@ -3,7 +3,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {IsSelectComponent} from './is-select.component';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {IsCdkService} from '@intelstudios/cdk';
-import {FormControl, FormControlDirective} from '@angular/forms';
+import {UntypedFormControl, FormControlDirective} from '@angular/forms';
 import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BrowserModule, By} from '@angular/platform-browser';
@@ -274,11 +274,11 @@ class TestComponent extends TestComponentBase<TestComponent> {
     'Zagreb', 'Zaragoza', 'Łódź'
   ];
 
-  public control = new FormControl();
-  public control2 = new FormControl();
-  public control3 = new FormControl();
-  public control4 = new FormControl();
-  public control5 = new FormControl();
+  public control = new UntypedFormControl();
+  public control2 = new UntypedFormControl();
+  public control3 = new UntypedFormControl();
+  public control4 = new UntypedFormControl();
+  public control5 = new UntypedFormControl();
 
   async getSelectMultiFixed(): Promise<ElementRef<HTMLElement>> {
     this.showSelectMultiFixed = true;

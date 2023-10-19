@@ -1,6 +1,6 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ElementRef, Injectable } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, UntypedFormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { startWith, take, takeUntil, tap, distinctUntilChanged } from 'rxjs/operators';
 
@@ -41,7 +41,7 @@ export class IsCdkService {
   constructor(private overlay: Overlay) {
   }
 
-  static bridgeControl(source: AbstractControl, target: FormControl, opts: IsCdkBridgeControlOptions) {
+  static bridgeControl(source: AbstractControl, target: UntypedFormControl, opts: IsCdkBridgeControlOptions) {
     if (opts.value !== false) {
       source.valueChanges
         .pipe(

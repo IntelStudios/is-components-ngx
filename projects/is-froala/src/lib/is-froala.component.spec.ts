@@ -3,7 +3,7 @@ import { IsFroalaComponent } from './is-froala.component';
 import { IsFroalaService } from './is-froala.service';
 import {EventEmitterHandler, TestComponentBase} from '../../../test-base/model.spec';
 import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild} from '@angular/core';
-import {FormControl, FormControlDirective} from '@angular/forms';
+import {UntypedFormControl, FormControlDirective} from '@angular/forms';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
@@ -157,7 +157,7 @@ class TestComponent extends TestComponentBase<TestComponent> {
   }
 
   readonly options = { id: 1 };
-  readonly control = new FormControl();
+  readonly control = new UntypedFormControl();
 
   getIframeContent(froala: ElementRef<HTMLElement>): HTMLElement | null {
     const iFrame = froala.nativeElement.querySelector('.fr-iframe') as HTMLIFrameElement;

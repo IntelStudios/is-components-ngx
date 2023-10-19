@@ -11,7 +11,7 @@ import {
   ViewChild,
   Renderer2
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { IsFieldErrorFactory } from '@intelstudios/cdk';
 import { TranslateService } from '@ngx-translate/core';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
@@ -32,18 +32,18 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
    * Attach a FormControl to listen on status/value changes and display correct error
    */
   @Input()
-  set control(value: FormControl) {
+  set control(value: UntypedFormControl) {
     this._control = value;
     if (value) {
       this.unbindControl();
       this.bindControl();
     }
   }
-  get control(): FormControl {
+  get control(): UntypedFormControl {
     return this._control;
   }
 
-  private _control: FormControl;
+  private _control: UntypedFormControl;
 
   @Input()
   faIcon = 'fas fa-fw fa-exclamation-triangle';

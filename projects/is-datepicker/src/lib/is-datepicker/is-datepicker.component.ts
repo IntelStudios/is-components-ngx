@@ -22,7 +22,7 @@ import {
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormControl,
+  UntypedFormControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
@@ -125,7 +125,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
 
   @Input() readonly: boolean = false;
 
-  dateControl: FormControl;
+  dateControl: UntypedFormControl;
 
   private pickerOverlayRef: OverlayRef;
   private pickerInstanceRef: ComponentRef<IsDatepickerPopupComponent>;
@@ -150,7 +150,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     this.localDateMode = this.rootConfig.localDateMode;
     this.mask = this.rootConfig.mask;
 
-    this.dateControl = new FormControl();
+    this.dateControl = new UntypedFormControl();
   }
 
   ngOnInit(): void {

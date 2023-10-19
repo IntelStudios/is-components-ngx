@@ -1,6 +1,6 @@
 import {ComponentFixture} from '@angular/core/testing';
 import {ChangeDetectorRef, DebugElement, ElementRef, EventEmitter} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {By} from '@angular/platform-browser';
 
@@ -87,7 +87,7 @@ export class TestComponentBase<T> {
    * @param control which form control to listen to
    * @param value a new value to set
    */
-  public async onFirstValue(control: FormControl, value: any): Promise<unknown> {
+  public async onFirstValue(control: UntypedFormControl, value: any): Promise<unknown> {
     return new Promise((resolve) => {
       control.valueChanges.pipe(first()).subscribe((val) => {
         this.afterChanges().then(() => resolve(val));
@@ -112,7 +112,7 @@ export class TestComponentBase<T> {
    * @param control which form control to listen to
    * @param disabled true to disable the element, false to enable element
    */
-  public async onDisabledChange(control: FormControl, disabled: boolean): Promise<boolean> {
+  public async onDisabledChange(control: UntypedFormControl, disabled: boolean): Promise<boolean> {
     return new Promise((resolve) => {
       control.registerOnDisabledChange((val) => {
         if (val === disabled) {

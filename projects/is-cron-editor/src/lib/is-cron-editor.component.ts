@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormControl,
+  UntypedFormControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
@@ -97,92 +97,92 @@ export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAcc
 
   formControl = {
     seconds: {
-      type: new FormControl(),
+      type: new UntypedFormControl(),
       everyX: {
-        everyX: new FormControl(),
-        staringAt: new FormControl()
+        everyX: new UntypedFormControl(),
+        staringAt: new UntypedFormControl()
       },
-      specific: new FormControl(),
+      specific: new UntypedFormControl(),
       between: {
-        start: new FormControl(),
-        end: new FormControl()
+        start: new UntypedFormControl(),
+        end: new UntypedFormControl()
       },
     },
     minutes: {
-      type: new FormControl(),
+      type: new UntypedFormControl(),
       everyX: {
-        everyX: new FormControl(),
-        staringAt: new FormControl()
+        everyX: new UntypedFormControl(),
+        staringAt: new UntypedFormControl()
       },
-      specific: new FormControl(),
+      specific: new UntypedFormControl(),
       between: {
-        start: new FormControl(),
-        end: new FormControl()
+        start: new UntypedFormControl(),
+        end: new UntypedFormControl()
       },
     },
     hours: {
-      type: new FormControl(),
+      type: new UntypedFormControl(),
       everyX: {
-        everyX: new FormControl(),
-        staringAt: new FormControl()
+        everyX: new UntypedFormControl(),
+        staringAt: new UntypedFormControl()
       },
-      specific: new FormControl(),
+      specific: new UntypedFormControl(),
       between: {
-        start: new FormControl(),
-        end: new FormControl()
+        start: new UntypedFormControl(),
+        end: new UntypedFormControl()
       },
     },
     days: {
-      type: new FormControl(),
+      type: new UntypedFormControl(),
       everyX: {
-        everyX: new FormControl(),
-        staringAt: new FormControl()
+        everyX: new UntypedFormControl(),
+        staringAt: new UntypedFormControl()
       },
       between: {
-        start: new FormControl('1'),
-        end: new FormControl('31')
+        start: new UntypedFormControl('1'),
+        end: new UntypedFormControl('31')
       },
       everyXDay: {
-        everyX: new FormControl(),
-        staringAt: new FormControl()
+        everyX: new UntypedFormControl(),
+        staringAt: new UntypedFormControl()
       },
-      specificDayOfWeek: new FormControl(),
-      specificDayOfMonth: new FormControl(),
-      lastDayOfWeekOfTheMonth: new FormControl(),
-      XBeforeEnd: new FormControl(),
-      nearestWeekdayTo: new FormControl(),
+      specificDayOfWeek: new UntypedFormControl(),
+      specificDayOfMonth: new UntypedFormControl(),
+      lastDayOfWeekOfTheMonth: new UntypedFormControl(),
+      XBeforeEnd: new UntypedFormControl(),
+      nearestWeekdayTo: new UntypedFormControl(),
       XthDay: {
-        x: new FormControl(),
-        day: new FormControl()
+        x: new UntypedFormControl(),
+        day: new UntypedFormControl()
       }
     },
     months: {
-      type: new FormControl(),
+      type: new UntypedFormControl(),
       everyX: {
-        everyX: new FormControl(),
-        staringAt: new FormControl()
+        everyX: new UntypedFormControl(),
+        staringAt: new UntypedFormControl()
       },
-      specific: new FormControl(),
+      specific: new UntypedFormControl(),
       between: {
-        start: new FormControl(),
-        end: new FormControl()
+        start: new UntypedFormControl(),
+        end: new UntypedFormControl()
       },
     },
     years: {
-      type: new FormControl(),
+      type: new UntypedFormControl(),
       everyX: {
-        everyX: new FormControl(),
-        staringAt: new FormControl()
+        everyX: new UntypedFormControl(),
+        staringAt: new UntypedFormControl()
       },
-      specific: new FormControl(),
+      specific: new UntypedFormControl(),
       between: {
-        start: new FormControl(),
-        end: new FormControl()
+        start: new UntypedFormControl(),
+        end: new UntypedFormControl()
       },
     },
   };
 
-  cronExpressionControl = new FormControl();
+  cronExpressionControl = new UntypedFormControl();
 
   _defaultSelectTypeValues = defaultSelectTypeValues();
 
@@ -312,7 +312,7 @@ export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAcc
     dict = dict === null ? this.formControl : dict;
     Object.keys(dict).forEach(k => {
       const v = dict[k];
-      if (v instanceof FormControl) {
+      if (v instanceof UntypedFormControl) {
         v.valueChanges.pipe(
           takeUntil(this.ends$)
         ).subscribe(() => this.readState());
@@ -1028,7 +1028,7 @@ export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAcc
     function setDisabledRecursively(dict) {
       Object.keys(dict).forEach(k => {
         const v = dict[k];
-        if (v instanceof FormControl) {
+        if (v instanceof UntypedFormControl) {
           isDisabled ? v.disable() : v.enable();
         } else {
           setDisabledRecursively(v);

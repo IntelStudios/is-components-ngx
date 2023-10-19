@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, Validators } from '@angular/forms';
 import { IsFieldError, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { of } from 'rxjs';
 
@@ -133,16 +133,16 @@ fn();
 
   small = false;
 
-  formControl1: FormControl;
-  formControl2: FormControl;
-  formControl3: FormControl;
-  formControl4: FormControl;
-  formControl5: FormControl;
-  passwordControl: FormControl;
-  checkboxControl: FormControl = new FormControl();
+  formControl1: UntypedFormControl;
+  formControl2: UntypedFormControl;
+  formControl3: UntypedFormControl;
+  formControl4: UntypedFormControl;
+  formControl5: UntypedFormControl;
+  passwordControl: UntypedFormControl;
+  checkboxControl: UntypedFormControl = new UntypedFormControl();
   checkboxIndeterminate = false;
-  radioGroupControl: FormControl = new FormControl();
-  switchControl: FormControl = new FormControl();
+  radioGroupControl: UntypedFormControl = new UntypedFormControl();
+  switchControl: UntypedFormControl = new UntypedFormControl();
 
   tabValid = true;
 
@@ -158,19 +158,19 @@ fn();
     'Zagreb', 'Zaragoza', 'Łódź'];
 
   constructor() {
-    this.formControl1 = new FormControl();
-    this.formControl2 = new FormControl();
-    this.formControl3 = new FormControl();
+    this.formControl1 = new UntypedFormControl();
+    this.formControl2 = new UntypedFormControl();
+    this.formControl3 = new UntypedFormControl();
     this.formControl3.setValidators([Validators.required, Validators.min(10), Validators.max(100)]);
     this.formControl3.updateValueAndValidity();
-    this.formControl4 = new FormControl();
+    this.formControl4 = new UntypedFormControl();
     this.formControl4.setValidators(Validators.minLength(3));
     this.formControl4.updateValueAndValidity();
-    this.formControl5 = new FormControl();
+    this.formControl5 = new UntypedFormControl();
     this.formControl5.setValidators(Validators.required);
     this.formControl5.updateValueAndValidity();
 
-    this.passwordControl = new FormControl();
+    this.passwordControl = new UntypedFormControl();
 
     let inputRequiredValidator = (control: AbstractControl) => {
       let invalid = IsFieldErrorFactory.requiredError();
@@ -198,7 +198,7 @@ fn();
   ngOnInit() {
   }
 
-  toggleInvalid(ctrl: FormControl) {
+  toggleInvalid(ctrl: UntypedFormControl) {
     if (ctrl.valid) {
       ctrl.setErrors({ invalid: true })
     } else {
@@ -206,7 +206,7 @@ fn();
     }
   }
 
-  toggleDisabled(ctrl: FormControl) {
+  toggleDisabled(ctrl: UntypedFormControl) {
     if (ctrl.enabled) {
       ctrl.disable();
     } else {
