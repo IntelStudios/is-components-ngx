@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IsFroalaService } from 'projects/is-froala/src/lib/is-froala.service';
 import { IIsFroalaOptions, IsFroalaComponent } from 'projects/is-froala/src/public_api';
@@ -111,9 +111,9 @@ npm install --save froala-editor at.js font-awesome tributejs</pre>
   };
 
 
-  control: FormControl = new FormControl();
+  control: UntypedFormControl = new UntypedFormControl();
 
-  control1: FormControl = new FormControl();
+  control1: UntypedFormControl = new UntypedFormControl();
 
   constructor(private froalaService: IsFroalaService) { }
 
@@ -153,7 +153,7 @@ npm install --save froala-editor at.js font-awesome tributejs</pre>
     }
   }
 
-  toggleInvalid(ctrl: FormControl = this.control) {
+  toggleInvalid(ctrl: UntypedFormControl = this.control) {
     if (ctrl.errors) {
       ctrl.setErrors(null);
     } else {

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { IsSelectBadgeItem } from 'projects/is-select/src/public_api';
 import { of, Observable, Subject, BehaviorSubject } from 'rxjs';
 
@@ -23,19 +23,19 @@ export class DemoSelectComponent implements OnInit {
 
   small = false;
 
-  select1Control: FormControl = new FormControl();
-  select2Control: FormControl = new FormControl();
-  select3Control: FormControl = new FormControl();
-  select4Control: FormControl = new FormControl();
-  select4ControlMulti: FormControl = new FormControl();
-  select5Control: FormControl = new FormControl();
-  select5ControlMulti: FormControl = new FormControl();
-  select6Control: FormControl = new FormControl();
-  select6ControlMulti: FormControl = new FormControl();
-  select7Control: FormControl = new FormControl();
-  selectColorControl: FormControl = new FormControl();
-  select8Control = new FormControl();
-  select9Control = new FormControl();
+  select1Control: UntypedFormControl = new UntypedFormControl();
+  select2Control: UntypedFormControl = new UntypedFormControl();
+  select3Control: UntypedFormControl = new UntypedFormControl();
+  select4Control: UntypedFormControl = new UntypedFormControl();
+  select4ControlMulti: UntypedFormControl = new UntypedFormControl();
+  select5Control: UntypedFormControl = new UntypedFormControl();
+  select5ControlMulti: UntypedFormControl = new UntypedFormControl();
+  select6Control: UntypedFormControl = new UntypedFormControl();
+  select6ControlMulti: UntypedFormControl = new UntypedFormControl();
+  select7Control: UntypedFormControl = new UntypedFormControl();
+  selectColorControl: UntypedFormControl = new UntypedFormControl();
+  select8Control = new UntypedFormControl();
+  select9Control = new UntypedFormControl();
 
   public items: Array<string> = ['Amsterdam', 'Nové Město za devatero řekami a desatero horami a jedenáctero černými lesy', 'Antwerp', 'Athens', 'Barcelona',
     'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
@@ -125,7 +125,7 @@ export class DemoSelectComponent implements OnInit {
     this.changeDetector.markForCheck();
   }
 
-  toggleInvalid(ctrl: FormControl) {
+  toggleInvalid(ctrl: UntypedFormControl) {
     if (ctrl.errors) {
       ctrl.setErrors(null);
     } else {

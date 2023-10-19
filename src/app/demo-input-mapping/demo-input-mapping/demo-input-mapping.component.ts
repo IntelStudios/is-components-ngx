@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FilterValueFormatter, IsInputMappingInput, IsInputMappingValue } from 'projects/is-input-mapping/src/public_api';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-demo-input-mapping',
@@ -508,7 +508,7 @@ export class DemoInputMappingComponent implements OnInit {
     }
   };
 
-  formControl = new FormControl({ InputSchemaMapping: { 'CodeModified': 'Load files.Created' }, InputSchemaFilter: {} });
+  formControl = new UntypedFormControl({ InputSchemaMapping: { 'CodeModified': 'Load files.Created' }, InputSchemaFilter: {} });
   currentValue = '';
   filtersAllowed = true;
   showOnlyFiltered = false;

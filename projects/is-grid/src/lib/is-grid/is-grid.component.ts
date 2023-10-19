@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 //import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { Observable, of, Subscription, timer } from 'rxjs';
@@ -164,9 +164,9 @@ export class IsGridComponent implements OnInit, OnDestroy {
   numPages: number;
   length: number = 0;
   collapseMode: boolean = false;
-  searchControl: FormControl;
-  pageSizeControl: FormControl;
-  autoRefreshControl: FormControl;
+  searchControl: UntypedFormControl;
+  pageSizeControl: UntypedFormControl;
+  autoRefreshControl: UntypedFormControl;
   statusText: string;
   pageSizeOptions: any[];
   private config: DatagridConfig;
@@ -202,9 +202,9 @@ export class IsGridComponent implements OnInit, OnDestroy {
       { ID: 50, Value: '50' },
       { ID: 100, Value: '100' }
     ];
-    this.searchControl = new FormControl();
-    this.pageSizeControl = new FormControl();
-    this.autoRefreshControl = new FormControl();
+    this.searchControl = new UntypedFormControl();
+    this.pageSizeControl = new UntypedFormControl();
+    this.autoRefreshControl = new UntypedFormControl();
     this.rowSelected = new EventEmitter();
     this.requestReload = new EventEmitter();
     this.rowsChecked = new EventEmitter<IsGridDataRow[]>();

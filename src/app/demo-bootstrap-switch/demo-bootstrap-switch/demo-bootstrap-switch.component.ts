@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { IsModalConfig, IsModalService } from 'projects/is-modal/src/public_api';
 
 @Component({
@@ -37,22 +37,22 @@ export class DemoBootstrapSwitchComponent implements OnInit {
 
 `;
 
-  control1: FormControl = new FormControl();
-  control2: FormControl = new FormControl();
+  control1: UntypedFormControl = new UntypedFormControl();
+  control2: UntypedFormControl = new UntypedFormControl();
 
   constructor(private modalService: IsModalService, private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.control1 = new FormControl();
+    this.control1 = new UntypedFormControl();
     this.control1.setValue(false);
   }
 
-  toggle(control: FormControl) {
+  toggle(control: UntypedFormControl) {
     const val = control.value;
     control.setValue(!val);
   }
 
-  disable(control: FormControl) {
+  disable(control: UntypedFormControl) {
     control.disabled ? control.enable() : control.disable();
   }
 

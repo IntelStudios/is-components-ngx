@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation, Input, HostBinding } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import moment from 'moment';
 import { TIME_FORMAT } from '@intelstudios/timepicker';
@@ -44,7 +44,7 @@ export class IsDatepickerPopupComponent implements OnInit {
   @Input()
   value: Date;
 
-  timepickerCtrl = new FormControl(null, Validators.required);
+  timepickerCtrl = new UntypedFormControl(null, Validators.required);
 
   constructor() { }
 

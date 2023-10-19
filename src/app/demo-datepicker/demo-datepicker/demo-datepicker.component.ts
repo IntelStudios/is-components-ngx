@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
@@ -21,13 +21,13 @@ export class DemoDatepickerComponent implements OnInit {
   `
 
   small = false;
-  control: FormControl = new FormControl();
+  control: UntypedFormControl = new UntypedFormControl();
 
-  control2: FormControl = new FormControl();
+  control2: UntypedFormControl = new UntypedFormControl();
 
-  control3: FormControl = new FormControl();
+  control3: UntypedFormControl = new UntypedFormControl();
 
-  control4: FormControl = new FormControl();
+  control4: UntypedFormControl = new UntypedFormControl();
 
   config: Partial<BsDatepickerConfig> = { minDate: new Date() };
 
@@ -45,7 +45,7 @@ export class DemoDatepickerComponent implements OnInit {
     this.control.setValue(null);
   }
 
-  setTomorrow(ctrl: FormControl) {
+  setTomorrow(ctrl: UntypedFormControl) {
     const now = new Date();
     now.setDate(now.getDate() + 1);
     if (ctrl === this.control) {
@@ -59,7 +59,7 @@ export class DemoDatepickerComponent implements OnInit {
     }
   }
 
-  toggleInvalid(ctrl: FormControl = this.control) {
+  toggleInvalid(ctrl: UntypedFormControl = this.control) {
     if (ctrl.errors) {
       ctrl.setErrors(null);
     } else {

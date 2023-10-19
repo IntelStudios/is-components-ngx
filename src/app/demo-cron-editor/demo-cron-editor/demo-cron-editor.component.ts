@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { CronState } from 'projects/is-cron-editor/src/public_api';
 
 @Component({
@@ -17,7 +17,7 @@ export class DemoCronEditorComponent implements OnInit {
 <pre>import { IsCronEditorModule } from '@intelstudios/cron-editor';</pre>
 `;
 
-  cronControl = new FormControl();
+  cronControl = new UntypedFormControl();
   randomExtensionSwitch = false;
 
   fixedState?: CronState = undefined;

@@ -15,7 +15,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { AbstractControl, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 import moment from 'moment';
 import { IsCdkService, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
@@ -76,7 +76,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
   public timeValue: Date;
   public viewValue: string = '';
 
-  timeControl: FormControl;
+  timeControl: UntypedFormControl;
   disabled: boolean;
   active: boolean;
 
@@ -94,7 +94,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private overlay: Overlay,
     private changeDetector: ChangeDetectorRef) {
-    this.timeControl = new FormControl();
+    this.timeControl = new UntypedFormControl();
   }
 
   ngOnInit(): void {

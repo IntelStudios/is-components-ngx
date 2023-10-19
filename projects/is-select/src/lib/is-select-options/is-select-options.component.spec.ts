@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {OverlayModule} from '@angular/cdk/overlay';
 import {IsCdkService} from '@intelstudios/cdk';
-import {FormControl, FormControlDirective} from '@angular/forms';
+import {UntypedFormControl, FormControlDirective} from '@angular/forms';
 import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BrowserModule, By} from '@angular/platform-browser';
@@ -219,5 +219,5 @@ class TestComponent extends TestComponentBase<TestComponent> {
     ID: '1', Value: 'TestGroup', children: this.colors
   })];
 
-  public control = new FormControl();
+  public control = new UntypedFormControl();
 }

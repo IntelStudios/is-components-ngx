@@ -13,7 +13,7 @@ import {
   Inject,
   TemplateRef
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -122,8 +122,8 @@ export class IsTableComponent implements OnInit, OnDestroy {
   numPages: number;
   length: number = 0;
   statusText: string;
-  searchControl: FormControl;
-  pageSizeControl: FormControl;
+  searchControl: UntypedFormControl;
+  pageSizeControl: UntypedFormControl;
 
   pageSizeOptions: any[];
   private config: DatatableConfig;
@@ -159,8 +159,8 @@ export class IsTableComponent implements OnInit, OnDestroy {
       { ID: 100, Value: '100' }
     ];
 
-    this.searchControl = new FormControl();
-    this.pageSizeControl = new FormControl();
+    this.searchControl = new UntypedFormControl();
+    this.pageSizeControl = new UntypedFormControl();
     this.rowSelected = new EventEmitter();
     this.rowTrashClicked = new EventEmitter();
   }

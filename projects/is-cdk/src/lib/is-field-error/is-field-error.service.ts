@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { IsFieldError } from './is-field-error.model';
 
@@ -454,7 +454,7 @@ export class IsFieldErrorFactory {
     return { schemaFormRemoteNotValid: error };
   }
 
-  static getErrors(control: FormControl, prefix: string, translate: TranslateService, onlyHighest: boolean = true): string[] {
+  static getErrors(control: UntypedFormControl, prefix: string, translate: TranslateService, onlyHighest: boolean = true): string[] {
     let ret: string[] = [];
     if (control.errors !== null) {
       let remapped = {};

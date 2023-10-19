@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { IsDatepickerComponent } from '@intelstudios/datepicker';
 import { IsInputSchemaFilter } from '../../is-input-mapping.interface';
 import { IFilterDef } from '../../models';
@@ -32,8 +32,8 @@ export class IsFilterEditorComponent implements AfterViewInit {
   @ViewChild('focus', { static: false })
   focusedEl: ElementRef;
 
-  ctrl = new FormControl();
-  ctrl2 = new FormControl();
+  ctrl = new UntypedFormControl();
+  ctrl2 = new UntypedFormControl();
 
   constructor() {
 
