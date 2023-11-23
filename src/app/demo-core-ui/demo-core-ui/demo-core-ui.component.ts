@@ -214,6 +214,9 @@ fn();
     }
   }
 
+  checkboxChange($event) {
+    console.log('checkboxChange', $event);
+  }
   toggleCheckboxValue() {
     const val = this.checkboxControl.value;
     this.checkboxControl.setValue(!val);

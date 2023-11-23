@@ -147,6 +147,14 @@ export class IsCheckboxComponent implements ControlValueAccessor {
   @Input()
   checked = false;
 
+  /**
+   * when enabled, checkbox is basically readonly and cannot be changed by clicking on it.
+   * Then only way to change value is setting [checked] property. Checkbox will still emit (change) event.
+   * This option may not be used, when in radio button mode or when bound to form control.
+   */
+  @Input()
+  viewOnly = false;
+
   @Input() value;
 
   private _disabled = false;
@@ -230,6 +238,12 @@ export class IsCheckboxComponent implements ControlValueAccessor {
     // I stop propagation on the change event.
     // Otherwise the change event, from the input element, will bubble up and
     event.stopPropagation();
+    if (this.viewOnly) {
+      (event.target as HTMLInputElement).checked = this.checked;
+      this._onChangeCallback(checked);
+      this.change.emit({ value, checked: this.checked, event });
+      return;
+    }
     // emit true/false in case of checkbox,
     // value in case of radio button
     this.checked = checked;

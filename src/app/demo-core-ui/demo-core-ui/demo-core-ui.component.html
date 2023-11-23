@@ -39,8 +39,8 @@
     <h2>Checkbox</h2>
   </div>
   <div class="col-sm-12">
-    <is-checkbox [formControl]="checkboxControl" [class.is-input-small]="small" [indeterminate]="checkboxIndeterminate">
-      Checkbox value
+    <is-checkbox [checked]="true" [viewOnly]="true" (change)="checkboxChange($event)" [class.is-input-small]="small" [indeterminate]="checkboxIndeterminate">
+      Checkbox value (view only)
     </is-checkbox>
     <is-checkbox [formControl]="checkboxControl" [class.is-input-small]="small" [indeterminate]="checkboxIndeterminate">
       Checkbox value
