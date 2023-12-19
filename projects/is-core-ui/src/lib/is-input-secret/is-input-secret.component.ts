@@ -66,7 +66,7 @@ export class IsInputSecretComponent {
    */
   writeValue(value: string): void {
     if (!value) {
-      return;
+      value = '';
     }
     this.value = value;
     this.cd.markForCheck();

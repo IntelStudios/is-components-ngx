@@ -38,8 +38,8 @@ export class DemoCoreUIComponent implements OnInit {
   `;
 
   encapsulatedHtml1 = `
-  <style>body 
-  
+  <style>body
+
   { color: red;}
   div {
     width: 100px;
@@ -48,7 +48,7 @@ export class DemoCoreUIComponent implements OnInit {
     position: relative;
     animation: mymove 5s infinite;
     }
-    
+
     @keyframes mymove {
     0% {left: 0px;}
     25% {left: 200px;}
@@ -62,18 +62,18 @@ export class DemoCoreUIComponent implements OnInit {
   }
   <!--
     /* Font Definitions */
-    
+
     @font-face {
         font-family: "Cambria Math";
         panose-1: 2 4 5 3 5 4 6 3 2 4;
     }
-    
+
     @font-face {
         font-family: Calibri;
         panose-1: 2 15 5 2 2 2 4 3 2 4;
     }
     /* Style Definitions */
-    
+
     p.MsoNormal,
     li.MsoNormal,
     div.MsoNormal {
@@ -82,28 +82,28 @@ export class DemoCoreUIComponent implements OnInit {
         font-family: "Calibri", sans-serif;
         mso-ligatures: standardcontextual;
     }
-    
+
     span.EmailStyle17 {
         mso-style-type: personal-compose;
         font-family: "Calibri", sans-serif;
         color: windowtext;
     }
-    
+
     .MsoChpDefault {
         mso-style-type: export-only;
         font-family: "Calibri", sans-serif;
         mso-ligatures: standardcontextual;
     }
-    
+
     @page WordSection1 {
         size: 612.0pt 792.0pt;
         margin: 72.0pt 72.0pt 72.0pt 72.0pt;
     }
-    
+
     div.WordSection1 {
         page: WordSection1;
     }
-    
+
     -->
   </style>
   <h3>Encapsulated HTML 1</h3>
