@@ -15,6 +15,8 @@ import {
 
 import { IsPortletTitleDirective } from './is-portlet.directives';
 
+type PortletCollapsed = 'open' | 'closed';
+
 @Component({
   selector: 'is-portlet, is-section',
   templateUrl: './is-portlet.component.html',
@@ -62,18 +64,10 @@ export class IsPortletComponent implements OnInit {
   templateTitle: IsPortletTitleDirective;
 
   /**
-   * set true to collapse the section, false to expand it
+   * set true to initially collapse the section, false to expand it
    */
   @Input()
-  set collapse(value: boolean){
-    if (value) {
-      this._collapse = 'closed';
-    } else {
-      this._collapse = 'open';
-    }
-    this.changeDetector.markForCheck();
-  }
-  _collapse: string = 'open';
+  collapsed: PortletCollapsed = 'open';
 
   /**
    * emits when Porltet is collapsed (true) / expanded (false) by user
@@ -91,16 +85,16 @@ export class IsPortletComponent implements OnInit {
     this.isSection = this.el.nativeElement.localName === 'is-section';
     if (this.id) {
       const setting = localStorage.getItem(`is-portlet:${this.id}`);
-      this._collapse = ['open', 'closed'].indexOf(setting) < 0 ? 'open' : setting;
+      this.collapsed = ['open', 'closed'].indexOf(setting) < 0 ? 'open' : setting as PortletCollapsed;
     }
   }
 
   toggleCollapse() {
-    this._collapse = this._collapse === 'open' ? 'closed' : 'open';
+    this.collapsed = this.collapsed === 'open' ? 'closed' : 'open';
     if (this.id) {
-      localStorage.setItem(`is-portlet:${this.id}`, this._collapse);
+      localStorage.setItem(`is-portlet:${this.id}`, this.collapsed);
     }
-    this.collapseChange.next(this._collapse === 'closed');
+    this.collapseChange.next(this.collapsed === 'closed');
     this.changeDetector.markForCheck();
   }
 }
