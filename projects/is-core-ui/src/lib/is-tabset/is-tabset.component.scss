@@ -8,15 +8,17 @@
 
 @mixin hide-scroll {
   scrollbar-width: none;
+
   &::-webkit-scrollbar {
-   display: none;
+    display: none;
   }
 }
 
 :host {
   position: relative;
   display: block;
-  > .tabset-invalid {
+
+  >.tabset-invalid {
     position: absolute;
     z-index: 1;
     top: 0;
@@ -24,6 +26,7 @@
     &.left {
       left: 0;
     }
+
     &.right {
       right: 0;
     }
@@ -42,14 +45,14 @@
     flex-direction: column;
     overflow: auto;
 
-    > .tab-content {
+    >.tab-content {
       display: flex;
       overflow: auto;
     }
   }
 
   .tab-header {
-    > .scroll-btn {
+    >.scroll-btn {
       position: absolute;
       z-index: 1;
       align-items: center;
@@ -59,28 +62,32 @@
 
       &.right {
         right: 0;
-        background: linear-gradient(90deg, rgba(255,255,255,0) 25%, $is-tabset-nav-bg-color);
+        padding-left: 24px;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0) 25%, $is-tabset-nav-bg-color 85%, $is-tabset-nav-bg-color);
         border-top-right-radius: 4px;
       }
+
       &.left {
         left: 0;
-        background: linear-gradient(90deg, $is-tabset-nav-bg-color 25%, rgba(255,255,255,0));
+        padding-right: 24px;
+        background: linear-gradient(90deg, $is-tabset-nav-bg-color 85%, $is-tabset-nav-bg-color 25%, rgba(255, 255, 255, 0));
         border-top-left-radius: 4px;
       }
-      > i {
+
+      >i {
         color: $is-control-handle-color;
         cursor: pointer;
         border-radius: 14px;
       }
     }
 
-    > ul.stretched {
-      > .nav-item {
+    >ul.stretched {
+      >.nav-item {
         flex: 1;
       }
     }
 
-    > ul {
+    >ul {
       display: flex;
       white-space: nowrap;
       flex-wrap: nowrap;
@@ -91,12 +98,17 @@
       @include hide-scroll();
       background-color: $is-tabset-nav-bg-color;
 
+      // The last item mast has a blank space on the right side
+      >.nav-item:last-child {
+        margin-right: 32px;
+      }
+
       &.nav-pills {
         padding: $is-general-padding;
         border-bottom: none;
 
-        > .nav-item {
-          > .nav-link {
+        >.nav-item {
+          >.nav-link {
             &:hover {
               &::before {
                 content: none;
@@ -112,7 +124,7 @@
         }
       }
 
-      > .nav-item {
+      >.nav-item {
         text-align: center;
         cursor: pointer;
         position: relative;
@@ -162,11 +174,13 @@
   .tab-content {
     position: relative;
     padding: $is-general-padding;
+
     &.pills {
       &:after {
         content: none;
       }
     }
+
     &:after {
       content: ' ';
       position: absolute;
