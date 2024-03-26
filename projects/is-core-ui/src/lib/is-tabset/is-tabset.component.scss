@@ -62,15 +62,13 @@
 
       &.right {
         right: 0;
-        padding-left: 24px;
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0) 25%, $is-tabset-nav-bg-color 85%, $is-tabset-nav-bg-color);
+        background: linear-gradient(270deg, $is-tabset-nav-bg-color 65%, $is-tabset-nav-bg-color 25%, rgba(255, 255, 255, 0));
         border-top-right-radius: 4px;
       }
 
       &.left {
         left: 0;
-        padding-right: 24px;
-        background: linear-gradient(90deg, $is-tabset-nav-bg-color 85%, $is-tabset-nav-bg-color 25%, rgba(255, 255, 255, 0));
+        background: linear-gradient(90deg, $is-tabset-nav-bg-color 65%, $is-tabset-nav-bg-color 25%, rgba(255, 255, 255, 0));
         border-top-left-radius: 4px;
       }
 
