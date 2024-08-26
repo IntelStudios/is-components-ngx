@@ -586,7 +586,7 @@ export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAcc
         break;
       case '3':
         if (this.formControl.years.specific.value && this.formControl.years.specific.value.length) {
-          this.cronState.years = this.formControl.years.specific.value.sort().map(v => `${v - 1}`).join(',');
+          this.cronState.years = this.formControl.years.specific.value.sort().map(v => `${v}`).join(',');
         } else {
           this.cronState.years = `${(new Date()).getFullYear()}`;
         }
