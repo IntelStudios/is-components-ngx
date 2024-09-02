@@ -7,7 +7,7 @@ import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {IsCdkService} from '@intelstudios/cdk';
 import {IsTimepickerComponent} from './is-timepicker.component';
-import {NgxMaskModule} from 'ngx-mask';
+import {provideEnvironmentNgxMask} from 'ngx-mask';
 import {IsTimepickerPickerComponent} from './is-timepicker-picker.component';
 import {TimepickerModule} from 'ngx-bootstrap/timepicker';
 import {ScrollingModule} from '@angular/cdk/scrolling';
@@ -25,11 +25,12 @@ describe('IsTimepickerComponent', () => {
         IsTimepickerPickerComponent,
       ],
       imports: [
-        OverlayModule, CommonModule, BrowserModule, NgxMaskModule.forRoot(), OverlayModule,
+        OverlayModule, CommonModule, BrowserModule, OverlayModule,
         TimepickerModule.forRoot(), FormsModule, ScrollingModule, ReactiveFormsModule
       ],
       providers: [
         {provide: IsCdkService},
+        provideEnvironmentNgxMask(),
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
