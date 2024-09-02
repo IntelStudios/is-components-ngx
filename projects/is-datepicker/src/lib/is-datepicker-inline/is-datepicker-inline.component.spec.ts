@@ -1,17 +1,17 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { EventEmitterHandler, TestComponentBase } from '../../../../test-base/model.spec';
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild } from '@angular/core';
-import { FormControlDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormControlDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { IsCdkService } from '@intelstudios/cdk';
-import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { IsDatepickerInlineComponent } from './is-datepicker-inline.component';
+import { provideNgxMask } from 'ngx-mask';
+import { EventEmitterHandler, TestComponentBase } from '../../../../test-base/model.spec';
 import { defaultDatePickerConfig } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken } from '../is-datepicker.interfaces';
+import { IsDatepickerInlineComponent } from './is-datepicker-inline.component';
 
 describe('IsDatepickerInlineComponent', () => {
   let componentRoot: TestComponent;
@@ -31,7 +31,7 @@ describe('IsDatepickerInlineComponent', () => {
       providers: [
         { provide: IsCdkService },
         { provide: configToken, useValue: { '_tesT': 'YeS' } },
-        provideEnvironmentNgxMask(),
+        provideNgxMask(),
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA

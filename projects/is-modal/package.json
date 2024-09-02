@@ -1,15 +1,15 @@
 {
   "name": "@intelstudios/modal",
-  "version": "13.2.0",
+  "version": "18.0.0",
   "dependencies": {
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/common": "^13.3.1",
-    "@angular/core": "^13.3.1",
-    "ngx-bootstrap": "^8.0.0",
-    "@angular/cdk": "^13.3.2",
-    "@intelstudios/cdk": "^13.0.13",
+    "@angular/common": ">=18.0.0",
+    "@angular/core": ">=18.0.0",
+    "ngx-bootstrap": ">=18.0.0",
+    "@angular/cdk": ">=18.0.0",
+    "@intelstudios/cdk": ">=18.0.0",
     "@ngx-translate/core": "^14.0.0"
   }
 }

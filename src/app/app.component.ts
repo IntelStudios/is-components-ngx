@@ -12,23 +12,17 @@ export class AppComponent implements OnInit {
 
   theme: string = 'is-theme-light';
 
-  demos: any[] = [
+  demos = [
     { title: 'Select', route: '/select' },
-    { title: 'Codemirror', route: '/codemirror' },
     { title: 'Froala', route: '/froala' },
     { title: 'Core UI', route: '/core-ui' },
     { title: 'Date Picker', route: '/datepicker' },
-    { title: 'Bootstrap Switch', route: '/bootstrap-switch' },
     { title: 'Editable textbox', route: '/editable-textbox' },
-    { title: 'Select Tree', route: '/select-tree' },
-    { title: 'Select Tree DX', route: '/dx-select-tree' },
-    { title: 'Input Mapping Tree', route: '/input-mapping' },
+    //{ title: 'Select Tree', route: '/select-tree' },
+    //{ title: 'Select Tree DX', route: '/dx-select-tree' },
     { title: 'Modal', route: '/modal' },
-    { title: 'Grid', route: '/grid' },
-    { title: 'Table', route: '/table' },
     { title: 'Time Picker', route: '/timepicker' },
     { title: 'Cron editor', route: '/croneditor' },
-    { title: 'Check Map', route: '/checkmap' }
   ].sort((a, b) => a.title.localeCompare(b.title));
 
   constructor(private translate: TranslateService, private renderer: Renderer2, private route: ActivatedRoute, private router: Router) {

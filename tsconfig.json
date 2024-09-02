@@ -28,12 +28,6 @@
       "@intelstudios/select/*": [
         "dist/is-select/*"
       ],
-      "@intelstudios/codemirror": [
-        "dist/is-codemirror"
-      ],
-      "@intelstudios/codemirror/*": [
-        "dist/is-codemirror/*"
-      ],
       "@intelstudios/froala": [
         "dist/is-froala"
       ],
@@ -52,12 +46,6 @@
       "@intelstudios/datepicker/*": [
         "dist/is-datepicker/*"
       ],
-      "@intelstudios/bootstrap-switch": [
-        "dist/is-bootstrap-switch"
-      ],
-      "@intelstudios/bootstrap-switch/*": [
-        "dist/is-bootstrap-switch/*"
-      ],
       "@intelstudios/select-tree": [
         "dist/is-select-tree"
       ],
@@ -70,12 +58,6 @@
       "@intelstudios/modal/*": [
         "dist/is-modal/*"
       ],
-      "@intelstudios/grid": [
-        "dist/is-grid"
-      ],
-      "@intelstudios/grid/*": [
-        "dist/is-grid/*"
-      ],
       "@intelstudios/timepicker": [
         "dist/is-timepicker"
       ],
@@ -84,18 +66,6 @@
       ],
       "@intelstudios/cron-editor/*": [
         "dist/is-cron-editor/*"
-      ],
-      "is-checkmap": [
-        "dist/is-checkmap"
-      ],
-      "@intelstudios/checkmap/*": [
-        "dist/is-checkmap/*"
-      ],
-      "@intelstudios/input-mapping": [
-        "dist/is-input-mapping"
-      ],
-      "@intelstudios/input-mapping/*": [
-        "dist/is-input-mapping/*"
       ],
       "@intelstudios/editable-textbox": [
         "dist/is-editable-textbox"

@@ -4,7 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { IsCdkModule } from '@intelstudios/cdk';
 import { IsDatepickerInlineComponent } from './is-datepicker-inline/is-datepicker-inline.component';
 import { IsDatepickerPopupComponent } from './is-datepicker-popup/is-datepicker-popup.component';
@@ -20,11 +20,12 @@ import { IsTimepickerModule } from '@intelstudios/timepicker';
     OverlayModule,
     ScrollingModule,
     IsCdkModule,
-    IsTimepickerModule
+    IsTimepickerModule,
+    NgxMaskDirective,
   ],
   providers: [
     DatePipe,
-    provideEnvironmentNgxMask(),
+    provideNgxMask(),
   ],
   declarations: [
     IsDatepickerComponent,
