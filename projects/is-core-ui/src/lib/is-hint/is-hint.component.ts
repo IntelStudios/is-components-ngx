@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy, Renderer2, ChangeDetectionStrategy } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
-import { AvailbleBSPositions } from 'ngx-bootstrap/positioning';
+import { AvailableBSPositions } from 'ngx-bootstrap/positioning';
 
 @Component({
   selector: 'is-hint',
@@ -18,7 +18,7 @@ export class IsHintComponent implements OnInit, OnDestroy {
   hintTitle: string = 'Hint';
 
   @Input()
-  placement: AvailbleBSPositions = 'right';
+  placement: AvailableBSPositions = 'right';
 
   @Input()
   icon: string = 'fa fa-info-circle';

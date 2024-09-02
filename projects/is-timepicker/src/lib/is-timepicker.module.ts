@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IsCdkModule } from '@intelstudios/cdk';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
 import { IsTimepickerComponent } from './is-timepicker.component';
@@ -19,11 +19,17 @@ import { IsTimepickerComponent } from './is-timepicker.component';
     ScrollingModule,
     ReactiveFormsModule,
     IsCdkModule,
+    NgxMaskDirective,
   ],
   providers: [
-    provideEnvironmentNgxMask(),
+    provideNgxMask(),
   ],
-  declarations: [IsTimepickerComponent, IsTimepickerPickerComponent],
-  exports: [IsTimepickerComponent]
+  declarations: [
+    IsTimepickerComponent,
+    IsTimepickerPickerComponent,
+  ],
+  exports: [
+    IsTimepickerComponent,
+  ]
 })
 export class IsTimepickerModule { }

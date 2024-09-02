@@ -1,16 +1,16 @@
+import { OverlayModule } from '@angular/cdk/overlay';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {TestComponentBase} from '../../../test-base/model.spec';
-import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild} from '@angular/core';
-import {UntypedFormControl, FormControlDirective, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {OverlayModule} from '@angular/cdk/overlay';
-import {CommonModule} from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
-import {IsCdkService} from '@intelstudios/cdk';
-import {IsTimepickerComponent} from './is-timepicker.component';
-import {provideEnvironmentNgxMask} from 'ngx-mask';
-import {IsTimepickerPickerComponent} from './is-timepicker-picker.component';
-import {TimepickerModule} from 'ngx-bootstrap/timepicker';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { FormControlDirective, FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { IsCdkService } from '@intelstudios/cdk';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { provideNgxMask } from 'ngx-mask';
+import { TestComponentBase } from '../../../test-base/model.spec';
+import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
+import { IsTimepickerComponent } from './is-timepicker.component';
 
 describe('IsTimepickerComponent', () => {
   let componentRoot: TestComponent;
@@ -30,7 +30,7 @@ describe('IsTimepickerComponent', () => {
       ],
       providers: [
         {provide: IsCdkService},
-        provideEnvironmentNgxMask(),
+        provideNgxMask(),
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
