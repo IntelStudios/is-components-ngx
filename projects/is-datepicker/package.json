@@ -13,6 +13,6 @@
     "@angular/cdk": "^13.3.2",
     "@intelstudios/cdk": "^13.0.0",
     "@intelstudios/timepicker": "^13.0.3",
-    "ngx-mask": "^13.1.4"
+    "ngx-mask": "^18.0.0"
   }
 }

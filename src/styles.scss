@@ -10,7 +10,7 @@
 
 @import "../node_modules/@intelstudios/font-awesome/fontawesome/css/all.css";
 
-@import "~@circlon/angular-tree-component/css/angular-tree-component.css";
+@import "@circlon/angular-tree-component/css/angular-tree-component.css";
 
 @import '../node_modules/text-security/text-security.css';
 
@@ -21,7 +21,7 @@
 $cdk-z-index-overlay-container: 1055;
 $cdk-z-index-overlay: 1055;
 $cdk-z-index-overlay-bakcdrop: 1055;
-@include cdk-overlay();
+@include overlay();
 
 // @import '../node_modules/pretty-checkbox/src/pretty-checkbox.scss';
 
