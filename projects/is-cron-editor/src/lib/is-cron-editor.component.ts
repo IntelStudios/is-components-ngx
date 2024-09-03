@@ -261,8 +261,9 @@ export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAcc
 
   isSelectMultiple: IsSelectMultipleConfig = { showButtons: true };
 
+
+  private _onChangeCallback = (_: any) => { };
   onTouched: Function;
-  private _changeSubscription: Subscription = null;
   private _value: string;
   private _ignore_reading = false;
   private validatorOnChangeFn: Function = null;
@@ -291,7 +292,19 @@ export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAcc
     } else {
       this.readState();
     }
-    this.cronExpressionControl.valueChanges.pipe(debounceTime(500), takeUntil(this.ends$)).subscribe((val) => this.parseState(val));
+    this.cronExpressionControl.valueChanges
+    .pipe(
+      debounceTime(500),
+      takeUntil(this.ends$)
+    )
+    .subscribe((val) => {
+      console.log('yes');
+      this.parseState(val);
+      if(this._onChangeCallback){
+        console.log('Hello');
+        this._onChangeCallback(val);
+      }
+    });
   }
 
   /**
@@ -1004,12 +1017,7 @@ export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   registerOnChange(fn: (_: any) => {}): void {
-    if (this._changeSubscription) {
-      this._changeSubscription.unsubscribe();
-    }
-    this._changeSubscription = this.cronExpressionControl.valueChanges.pipe(
-      takeUntil(this.ends$)
-    ).subscribe(fn);
+    this._onChangeCallback = fn;
   }
 
   registerOnTouched(fn: (_: any) => {}): void {
