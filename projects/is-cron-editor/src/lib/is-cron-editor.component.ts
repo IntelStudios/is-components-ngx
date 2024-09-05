@@ -298,10 +298,8 @@ export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAcc
       takeUntil(this.ends$)
     )
     .subscribe((val) => {
-      console.log('yes');
       this.parseState(val);
       if(this._onChangeCallback){
-        console.log('Hello');
         this._onChangeCallback(val);
       }
     });
@@ -988,7 +986,7 @@ export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAcc
           }
         } else {
           this.formControl.years.type.setValue('3');
-          this.formControl.years.specific.setValue(mapNumbers(years.split(',')).map((v) => `${v + 1}`));
+          this.formControl.years.specific.setValue(mapNumbers(years.split(',')).map((v) => `${v}`));
         }
       }
     } catch (e) {
