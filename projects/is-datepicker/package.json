@@ -9,7 +9,7 @@
     "@angular/core": ">=18.0.0",
     "@angular/forms": ">=18.0.0",
     "moment": "^2.24.0",
-    "ngx-bootstrap": "^8.0.0",
+    "ngx-bootstrap": "^18.0.0",
     "@angular/cdk": ">=18.0.0",
     "@intelstudios/cdk": ">=18.0.0",
     "@intelstudios/timepicker": ">=18.0.0",
