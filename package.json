@@ -52,7 +52,6 @@
     "@intelstudios/font-awesome": "^6.1.1-1",
     "@intelstudios/text-utils": "^1.1.2",
     "@ngx-translate/core": "^15.0.0",
-    "@rollup/rollup-linux-x64-gnu": "^4.21.2",
     "at.js": "^1.5.4",
     "bootstrap": "^5.1.3",
     "bootstrap-sass": "^3.4.3",
