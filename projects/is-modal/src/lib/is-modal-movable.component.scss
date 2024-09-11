@@ -13,7 +13,7 @@ is-modal-movable {
     @for $i from 50 through 100 {
       &.modal-width-#{$i} {
         .ui-modal {
-          width: 0% +$i;
+          width: 0% + $i;
           max-width: 0% + $i;
         }
       }

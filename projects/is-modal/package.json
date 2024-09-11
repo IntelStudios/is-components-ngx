@@ -10,6 +10,6 @@
     "ngx-bootstrap": ">=18.0.0",
     "@angular/cdk": ">=18.0.0",
     "@intelstudios/cdk": ">=18.0.0",
-    "@ngx-translate/core": "^14.0.0"
+    "@ngx-translate/core": "^15.0.0"
   }
 }

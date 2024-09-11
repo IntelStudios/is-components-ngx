@@ -3,7 +3,7 @@
   "peerDependencies": {
     "@angular/common": ">=18.0.0",
     "@angular/core": ">=18.0.0",
-    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/core": "^15.0.0",
     "font-awesome": "^4.7.0",
     "@intelstudios/cdk": ">=18.0.0",
     "froala-editor": "^2.9.5",
