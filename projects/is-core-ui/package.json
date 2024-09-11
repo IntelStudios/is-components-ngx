@@ -7,7 +7,7 @@
     "@angular/animations": ">=18.0.0",
     "@angular/router": ">=18.0.0",
     "@angular/platform-browser": ">=18.0.0",
-    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/core": "^15.0.0",
     "moment": "^2.22.2",
     "ngx-bootstrap": "^18.0.0",
     "@intelstudios/cdk": "^18.0.0",
