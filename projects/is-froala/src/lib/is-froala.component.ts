@@ -465,8 +465,7 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
       });
     }).bind(this);
 
-    // default event, stores images in base64 format
-    defaults.events['froalaEditor.image.beforeUpload'] = (e, editor, files) => {
+    const imageUploadEventHandler = (e, editor, files) => {
       if (files.length) {
         // Create a File Reader.
         const reader = new FileReader();
@@ -486,6 +485,10 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
       // Stop default upload chain.
       return false;
     };
+
+    // default event, stores images in base64 format
+    defaults.events['froalaEditor.image.beforePasteUpload'] = imageUploadEventHandler;
+    defaults.events['froalaEditor.image.beforeUpload'] = imageUploadEventHandler;
 
     // listen to codeview button click
     defaults.events['froalaEditor.commands.before'] = (e, editor, cmd, param1, param2) => {
