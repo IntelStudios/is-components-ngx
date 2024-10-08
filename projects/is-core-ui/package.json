@@ -12,10 +12,10 @@
     "ngx-bootstrap": "^18.0.0",
     "@intelstudios/cdk": "^18.0.0",
     "text-security": "^3.2.1",
-    "@intelstudios/text-utils": "^1.1.0"
+    "@intelstudios/text-utils": "^2.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
   },
-  "version": "18.0.0"
+  "version": "18.0.1"
 }
