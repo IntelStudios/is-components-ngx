@@ -48,7 +48,7 @@
     "@angular/platform-browser-dynamic": "^18.2.2",
     "@angular/router": "^18.2.2",
     "@circlon/angular-tree-component": "^11.0.4",
-    "@intelstudios/css": "^3.0.0",
+    "@intelstudios/css": "^4.0.0",
     "@intelstudios/font-awesome": "^6.1.1-1",
     "@intelstudios/text-utils": "^2.0.2",
     "@ngx-translate/core": "^15.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "@intelstudios/cdk",
-  "version": "18.0.0",
+  "version": "18.0.1",
   "dependencies": {
     "tslib": "^2.0.0"
   },
@@ -8,6 +8,6 @@
     "@angular/common": ">=18.0.0",
     "@angular/core": ">=18.0.0",
     "@angular/cdk": ">=18.0.0",
-    "@intelstudios/css": "^3.0.0"
+    "@intelstudios/css": "^4.0.0"
   }
 }
