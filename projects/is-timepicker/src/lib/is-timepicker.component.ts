@@ -16,12 +16,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { AbstractControl, UntypedFormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
-import moment from 'moment';
 import { IsCdkService, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
 
 import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { format, isValid } from 'date-fns';
 
 export const TIME_FORMAT = 'HH:mm:ss';
 
@@ -350,23 +350,23 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
         value = date;
       }
 
-      const val = moment(value, TIME_FORMAT);
-      if (val.isValid()) {
-        this.viewValue = val.format(TIME_FORMAT);
+      if (isValid(value)) {
+        this.viewValue = format(value, TIME_FORMAT);
         this.timeValue = value;
       } else {
         this.viewValue = '';
         this.timeValue = null;
       }
+
       if (emitEvent) {
-        this.changed.emit(this.stringMode ? moment(value).format(TIME_FORMAT) : value);
+        this.changed.emit(this.stringMode ? format(value, TIME_FORMAT) : value);
       }
+
       setTimeout(() => {
         if (this.input) {
           this.input.nativeElement.value = this.viewValue;
         }
       });
-
     }
     else {
       this.viewValue = '';

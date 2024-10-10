@@ -11,13 +11,14 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import moment from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
 import { DatepickerPopupControl, defaultDatePickerConfig } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 import { DATE_FORMAT, defaultDatePickerRootConfig } from '../is-datepicker/is-datepicker.component';
+import { format, parse } from 'date-fns';
+import { toDate } from 'date-fns-tz';
 
 export const NG_DATEPICKER_INLINE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -108,7 +109,7 @@ export class IsDatepickerInlineComponent implements OnDestroy, ControlValueAcces
       this.changeDetector.markForCheck();
       return;
     }
-    this.changed.emit(this.stringMode ? moment(this.dateValue).format(DATE_FORMAT) : this.dateValue);
+    this.changed.emit(this.stringMode ? format(this.dateValue, DATE_FORMAT) : this.dateValue);
     this.changeDetector.markForCheck();
   }
 
@@ -152,8 +153,8 @@ export class IsDatepickerInlineComponent implements OnDestroy, ControlValueAcces
 
   private setValue(value: string) {
     if (value) {
-      const date = this.stringMode ? moment(value, DATE_FORMAT).local(true) : moment.utc(value).local(true);
-      this.dateValue = date.toDate();
+      const dateValue = this.stringMode ? parse(value, DATE_FORMAT, new Date()) : toDate(value, { timeZone : "UTC"});;
+      this.dateValue = dateValue;
     }
     else {
       this.dateValue = null;
