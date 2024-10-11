@@ -10,6 +10,8 @@
     "ngx-bootstrap": "^18.0.0",
     "@angular/cdk":">=18.0.0",
     "@intelstudios/cdk": ">=18.0.0",
-    "ngx-mask": ">=18.0.0"
+    "ngx-mask": ">=18.0.0",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0"
   }
 }
