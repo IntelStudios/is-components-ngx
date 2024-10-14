@@ -437,7 +437,6 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       return;
     };
 
-    console.log(value, this.stringMode);
     const date = this.stringMode ? parse(value, DATE_FORMAT, new Date()) : toDate(value, { timeZone : "UTC"});
     this.dateValue = this.localDateMode ? this.stripTimezone(date) : date;
     // unless this is set, we wont get initial value displayed
