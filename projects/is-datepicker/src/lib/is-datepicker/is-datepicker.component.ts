@@ -27,7 +27,6 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
 } from '@angular/forms';
-import moment from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { IsCdkService, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
@@ -35,8 +34,10 @@ import { Subscription } from 'rxjs';
 import { defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { addDays, format, parse } from 'date-fns';
+import { toDate } from 'date-fns-tz';
 
-export const DATE_FORMAT = 'DD-MM-YYYY';
+export const DATE_FORMAT = 'dd-MM-yyyy';
 
 export const NG_DATEPICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -198,12 +199,12 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     // UP/DOWN arrows to incr/decr date
     if (!readOnly && this.dateValue) {
       if ($event.key === 'ArrowUp') {
-        this.dateValue = moment(this.dateValue).add(1, 'day').toDate();
+        this.dateValue = addDays(this.dateValue, 1);
         this.onValueChange();
         return;
       }
       if ($event.key === 'ArrowDown') {
-        this.dateValue = moment(this.dateValue).add(-1, 'day').toDate();
+        this.dateValue = addDays(this.dateValue, -1);
         this.onValueChange();
         return;
       }
@@ -223,7 +224,8 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       return;
     }
 
-    const date = moment(value, DATE_FORMAT).toDate();
+    const date = parse(value, DATE_FORMAT, new Date());
+
     const valid = !isNaN(date.valueOf());
     if (!valid) {
       this.dateControl.setErrors(IsFieldErrorFactory.dateInvalidError());
@@ -239,7 +241,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       return;
     }
     if (this.stringMode) {
-      this.changed.emit(moment(this.dateValue).format(DATE_FORMAT));
+      this.changed.emit(format(this.dateValue, DATE_FORMAT));
     } else {
       if (this.localDateMode) {
         const date = new Date(this.dateValue);
@@ -266,7 +268,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       return;
     }
     if (this.stringMode) {
-      this.changed.emit(moment(this.dateValue).format(DATE_FORMAT));
+      this.changed.emit(format(this.dateValue, DATE_FORMAT));
     } else {
       if (this.localDateMode) {
         const date = new Date(this.dateValue);
@@ -434,8 +436,9 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       this.dateValue = null;
       return;
     };
-    const date = this.stringMode ? moment(value, DATE_FORMAT).local(true) : moment.utc(value);
-    this.dateValue = this.localDateMode ? this.stripTimezone(date.toDate()) : date.toDate();
+
+    const date = this.stringMode ? parse(value, DATE_FORMAT, new Date()) : toDate(value, { timeZone : "UTC"});
+    this.dateValue = this.localDateMode ? this.stripTimezone(date) : date;
     // unless this is set, we wont get initial value displayed
     this.dateControl.patchValue(this.datePipe.transform(this.dateValue, this.viewFormat));
   }

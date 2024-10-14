@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation, Input, HostBinding } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import moment from 'moment';
 import { TIME_FORMAT } from '@intelstudios/timepicker';
+import { format, set } from 'date-fns';
 
 export interface DatepickerPopupControl {
   onChange: (value: Date) => void;
@@ -50,8 +50,8 @@ export class IsDatepickerPopupComponent implements OnInit {
 
   ngOnInit() {
     if (this.value) {
-      const dateValue = moment(this.value);
-      this.timepickerCtrl.setValue(dateValue.format(TIME_FORMAT));
+      const dateValue = format(this.value, TIME_FORMAT);
+      this.timepickerCtrl.setValue(dateValue);
     }
   }
 
@@ -62,10 +62,18 @@ export class IsDatepickerPopupComponent implements OnInit {
     if (!value || !this.value) {
       return;
     }
-    const dateValue = moment(this.value);
+
     const [hours, minutes, seconds] = value.split(':');
-    dateValue.set({ hours, minutes, seconds });
-    this.control.onChange(dateValue.toDate());
+
+    const dateValue = set(this.value, 
+      { 
+        hours : hours, 
+        minutes : minutes, 
+        seconds : seconds
+      }
+    )
+
+    this.control.onChange(dateValue);
   }
 
 
