@@ -53,6 +53,11 @@ export interface IIsFroalaOptions {
    *  * codeview (html editor) toolbar action will not be available
    */
   tributeOptions?: TributeOptions<any>;
+  /**
+   * useClasses is used to determine whether froala editor will replace CSS classes with inline styles
+   * default is true (froala will use classes as is and will NOT replace classes with inline styles)
+   */
+  useClasses?: boolean;
 }
 
 export type IsFroalaCommandType = 'close-codeview'
