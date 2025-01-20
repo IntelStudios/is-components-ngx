@@ -16,7 +16,7 @@ export const routes: Routes = [
   { path: 'froala', loadChildren: () => import('./demo-froala/demo-froala.module').then(m => m.DemoFroalaRoutingModule) },
   { path: 'core-ui', loadChildren: () => import('./demo-core-ui/demo-core-ui.module').then(m => m.DemoCoreUIRoutingModule) },
   { path: 'editable-textbox', loadChildren: () => import('./demo-editable-textbox/demo-editable-textbox.module').then(m => m.DemoEditableTextboxRoutingModule) },
-  //{ path: 'select-tree', loadChildren: () => import('./demo-select-tree/demo-select-tree.module').then(m => m.DemoSelectTreeRoutingModule) },
+  { path: 'select-tree', loadChildren: () => import('./demo-select-tree/demo-select-tree.module').then(m => m.DemoSelectTreeRoutingModule) },
   //{ path: 'dx-select-tree', loadChildren: () => import('./demo-dx-select-tree/demo-dx-select-tree.module').then(m => m.DemoDxSelectTreeRoutingModule) },
   { path: 'modal', loadChildren: () => import('./demo-modal/demo-modal.module').then(m => m.DemoModalRoutingModule) },
   { path: 'timepicker', loadChildren: () => import('./demo-timepicker/demo-timepicker.module').then(m => m.DemoTimepickerRoutingModule) },

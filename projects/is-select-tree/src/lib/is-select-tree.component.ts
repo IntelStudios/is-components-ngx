@@ -8,7 +8,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ITreeOptions, TreeComponent, TreeNode } from '@circlon/angular-tree-component';
+import { ITreeOptions, TreeComponent, TreeNode } from '@ali-hm/angular-tree-component';
 import { Subscription } from 'rxjs';
 import { IsSelectTree, IsSelectTreeChangeEvent, IsSelectTreeChanges, IsSelectTreeNode } from './is-select-tree.models';
 
