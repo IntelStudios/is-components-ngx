@@ -6,7 +6,7 @@ import {
   OnInit
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TreeNode } from '@circlon/angular-tree-component';
+import { TreeNode } from '@ali-hm/angular-tree-component';
 import { Subscription } from 'rxjs';
 import { IsSelectField, IsSelectTree, IsSelectTreeChangeEvent, IsSelectTreeNode } from './is-select-tree.models';
 

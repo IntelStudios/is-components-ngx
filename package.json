@@ -37,6 +37,7 @@
   },
   "private": true,
   "dependencies": {
+    "@ali-hm/angular-tree-component": "^18.0.5",
     "@angular-devkit/core": "^18.2.2",
     "@angular/animations": "^18.2.2",
     "@angular/cdk": "^18.2.2",
@@ -47,7 +48,6 @@
     "@angular/platform-browser": "^18.2.2",
     "@angular/platform-browser-dynamic": "^18.2.2",
     "@angular/router": "^18.2.2",
-    "@circlon/angular-tree-component": "^11.0.4",
     "@intelstudios/css": "^4.0.0",
     "@intelstudios/font-awesome": "^6.1.1-1",
     "@intelstudios/text-utils": "^2.0.2",

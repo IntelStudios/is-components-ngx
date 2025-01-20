@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     { title: 'Core UI', route: '/core-ui' },
     { title: 'Date Picker', route: '/datepicker' },
     { title: 'Editable textbox', route: '/editable-textbox' },
-    //{ title: 'Select Tree', route: '/select-tree' },
+    { title: 'Select Tree', route: '/select-tree' },
     //{ title: 'Select Tree DX', route: '/dx-select-tree' },
     { title: 'Modal', route: '/modal' },
     { title: 'Time Picker', route: '/timepicker' },
