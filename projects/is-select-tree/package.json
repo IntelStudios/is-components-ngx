@@ -1,7 +1,7 @@
 {
   "name": "@intelstudios/select-tree",
   "version": "18.0.0",
-  "dependencies": {
+  "dependencies": 
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
