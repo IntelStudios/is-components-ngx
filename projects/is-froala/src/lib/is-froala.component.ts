@@ -448,9 +448,7 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
 
     }).bind(this);
 
-    // before we use blur event, but it is not fire event when style of content was changed
-    defaults.events['froalaEditor.contentChanged'] = ((e) => {
-      debug(e);
+    const updateModel = () => {
       this.zone.run(() => {
         time('updateModel');
         time('getHTML')
@@ -463,7 +461,10 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
         }
         timeEnd('updateModel');
       });
-    }).bind(this);
+    }
+
+    // before we use blur event, but it is not fire event when style of content was changed
+    defaults.events['froalaEditor.contentChanged'] = ((e) => updateModel()).bind(this);
 
     const imageUploadEventHandler = (e, editor, files) => {
       if (files.length) {
@@ -474,6 +475,7 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
         reader.onload = function (e) {
           const eventTarget = <FileReader>e.target;
           editor.image.insert(eventTarget.result, null, null, editor.image.get());
+          updateModel();
         };
 
         // Read image as base64.
@@ -481,7 +483,7 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
       }
 
       editor.popups.hideAll();
-
+      updateModel();
       // Stop default upload chain.
       return false;
     };
