@@ -17,6 +17,8 @@ import {
   TemplateRef,
   ChangeDetectorRef,
   HostBinding,
+  SimpleChanges,
+  OnChanges
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, interval, merge, Subscription, bindCallback, Subject } from 'rxjs';
@@ -183,7 +185,7 @@ export class IsTabDirective {
     </div>
   `,
 })
-export class IsTabsetComponent implements AfterContentChecked, AfterContentInit, OnInit, OnDestroy, AfterViewInit {
+export class IsTabsetComponent implements AfterContentChecked, AfterContentInit, OnInit, OnDestroy, AfterViewInit, OnChanges {
   /**
    * An identifier of an initially selected (active) tab. Use the "select" method to switch a tab programmatically.
    */
@@ -379,7 +381,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
       return;
     }
     let selectedTab = this._getTabById(tabId);
-    if (selectedTab && !selectedTab.disabled && this.activeId !== selectedTab.id) {
+    if (selectedTab && !selectedTab.disabled && this.activeId !== selectedTab.id || force) {
       let defaultPrevented = false;
 
       if (force === undefined) {
@@ -399,8 +401,16 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
         if (this.useRouter) {
           this.isSelecting = true;
           this.router.navigate([], { fragment: selectedTab.id })
-            .then(() => this.isSelecting = false)
-            .catch(() => this.isSelecting = false);
+            .then(() => {
+              this.isSelecting = false;
+              this.scrollToActiveTab();
+            })
+            .catch(() => {
+              this.isSelecting = false;
+              this.scrollToActiveTab();
+            });
+        } else {
+          this.scrollToActiveTab();
         }
       }
     }
@@ -467,5 +477,33 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   private _getTabById(id: string): IsTabDirective {
     const tabsWithId: IsTabDirective[] = this.tabs.filter(tab => tab.id === id);
     return tabsWithId.length ? tabsWithId[0] : null;
+  }
+
+  /**
+   * Scrolls to the active tab
+   */
+  private scrollToActiveTab() {
+    if (!this.elUL) {
+      return;
+    }
+    const activeTab = this.elUL.querySelector(`[id="${this.activeId}"]`);
+    if (activeTab) {
+      const tabRect = activeTab.getBoundingClientRect();
+      const ulRect = this.elUL.getBoundingClientRect();
+      
+      if (tabRect.left < ulRect.left) {
+        this.elUL.scrollBy({ behavior: 'smooth', left: tabRect.left - ulRect.left + 20 });
+      } else if (tabRect.right > ulRect.right) {
+        this.elUL.scrollBy({ behavior: 'smooth', left: tabRect.right - ulRect.right + 20 });
+      }
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.activeId && this.activeId) {
+      setTimeout(() => {
+        this.scrollToActiveTab();
+      });
+    }
   }
 }
