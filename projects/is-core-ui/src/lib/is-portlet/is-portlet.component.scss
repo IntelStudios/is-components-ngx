@@ -17,6 +17,11 @@ is-portlet, is-section {
       color: $is-portlet-header-fg-color;
       border-top-left-radius: $is-portlet-border-radius;
       border-top-right-radius: $is-portlet-border-radius;
+
+      &.clickable {
+        cursor: pointer;
+      }
+      
       >.caption {
         width: 100%;
         font-size: 20px;
