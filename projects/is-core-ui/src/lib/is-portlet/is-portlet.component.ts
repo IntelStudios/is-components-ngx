@@ -60,6 +60,9 @@ export class IsPortletComponent implements OnInit {
   @Input()
   enableCollapse: boolean = false;
 
+  @Input()
+  clickableHeader: boolean = false;
+
   @ContentChild(IsPortletTitleDirective, { static: true })
   templateTitle: IsPortletTitleDirective;
 
@@ -89,7 +92,10 @@ export class IsPortletComponent implements OnInit {
     }
   }
 
-  toggleCollapse() {
+  toggleCollapse(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.collapsed = this.collapsed === 'open' ? 'closed' : 'open';
     if (this.id) {
       localStorage.setItem(`is-portlet:${this.id}`, this.collapsed);
