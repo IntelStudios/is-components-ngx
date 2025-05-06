@@ -1,10 +1,10 @@
 <div class="portlet" [class.section]="isSection">
-    <div *ngIf="showHeader" class="portlet-title {{headingClass}}" [ngClass]="{'collapsed-closed': collapsed ==='closed'}">
+    <div *ngIf="showHeader" class="portlet-title {{headingClass}}" [ngClass]="{'collapsed-closed': collapsed ==='closed'}" (click)="clickableHeader ? toggleCollapse($event) : null">
         <ng-container [ngTemplateOutlet]="templateTitle?.template || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
         </ng-container>
         <ng-content select=".actions"></ng-content>
         <div class="tools">
-            <a *ngIf="enableCollapse" class="is-caret" (click)="toggleCollapse()">
+            <a *ngIf="enableCollapse" class="is-caret" (click)="toggleCollapse($event)">
               <i class=" fa" [class.fa-chevron-up]="collapsed ==='open'" [class.fa-chevron-down]="collapsed ==='closed'"></i>
             </a>
         </div>
