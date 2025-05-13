@@ -482,7 +482,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   /**
    * Scrolls to the active tab
    */
-  private scrollToActiveTab() {
+  scrollToActiveTab() {
     if (!this.elUL) {
       return;
     }
