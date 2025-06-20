@@ -1,5 +1,5 @@
 @import '../../../../styles/variables';
-
+// checkbox & radio icons are from Font Awesome, to adjust it in future, you might need to play with font-family and font-weight
 :host {
   display: flex;
   height: $is-input-height-regular;
@@ -66,8 +66,12 @@
         }
       }
 
-      &:indeterminate::after {
-        content: '\f146' !important; // minus-square
+      &:indeterminate {
+        font-weight: 900;
+        color: $is-checkbox-active-fg-color;
+        &::after {
+          content: '\f146'; // minus-square
+        }
       }
     }
 
