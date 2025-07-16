@@ -113,7 +113,6 @@ is-froala {
   .CodeMirror {
     height: inherit !important;
     border-radius: 4px;
-    max-height: 210px;
   }
 
   .CodeMirror-scroll {
@@ -125,7 +124,7 @@ is-froala {
   }
 
   .CodeMirror-vscrollbar {
-    @include short-scroll;
+    display: none;
   }
 
   .CodeMirror-hscrollbar {
