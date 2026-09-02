@@ -1,8 +1,8 @@
 import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 
 @Directive({
-    selector: '[isPreventDblClick]'
-  })
+    selector: '[isPreventDblClick]',
+})
   export class PreventDoubleclickDirective {
   
     constructor(private el: ElementRef, private renderer: Renderer2) {

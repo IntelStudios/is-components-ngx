@@ -1,4 +1,4 @@
-import { CdkScrollable, ConnectedPosition, Overlay, OverlayRef, ScrollDispatcher } from '@angular/cdk/overlay';
+import { ConnectedPosition, Overlay, OverlayRef, ScrollDispatcher } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ChangeDetectionStrategy,
@@ -15,8 +15,9 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { AbstractControl, UntypedFormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { IsCdkService, IsFieldErrorFactory } from '@intelstudios/cdk';
+import { NgxMaskDirective } from 'ngx-mask';
 import { Subscription } from 'rxjs';
 
 import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
@@ -38,11 +39,12 @@ export const NG_TIMEPICKER_VALUE_VALIDATOR: any = {
 }
 
 @Component({
-  selector: 'is-timepicker',
-  templateUrl: './is-timepicker.component.html',
-  styleUrls: ['./is-timepicker.component.scss'],
-  providers: [IS_TIMEPICKER_VALUE_ACCESSOR, NG_TIMEPICKER_VALUE_VALIDATOR],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'is-timepicker',
+    templateUrl: './is-timepicker.component.html',
+    styleUrls: ['./is-timepicker.component.scss'],
+    providers: [IS_TIMEPICKER_VALUE_ACCESSOR, NG_TIMEPICKER_VALUE_VALIDATOR],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [ReactiveFormsModule, NgxMaskDirective],
 })
 export class IsTimepickerComponent implements OnInit, OnDestroy {
 
@@ -212,7 +214,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
       .withPositions([position])
       .withPush(true);
 
-    const ancScrolls: CdkScrollable[] = this.scrollDispatcher.getAncestorScrollContainers(this.element);
+    const ancScrolls = this.scrollDispatcher.getAncestorScrollContainers(this.element);
     if (ancScrolls.length > 0) {
       this.pickerOverlayRef = this.isCdk.create(
         {
@@ -223,7 +225,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
         this.element
       );
 
-      this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev: CdkScrollable) => {
+      this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev) => {
         if (ev) {
           if (ancScrolls.filter(x => x.getElementRef() === ev.getElementRef()).length > 0) {
             this.hidePicker();
@@ -332,7 +334,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
 
   private setValue(value: any, emitEvent = true): void {
     if (value) {
-      if (this.stringMode && typeof value === 'string') {
+      if (typeof value === 'string') {
         const input = value.split(':');
         const date = new Date();
         date.setHours(0);
@@ -358,6 +360,8 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
         this.timeValue = null;
       }
 
+      this.timeControl.setValue(this.viewValue, { emitEvent: false });
+
       if (emitEvent) {
         this.changed.emit(this.stringMode ? format(value, TIME_FORMAT) : value);
       }
@@ -371,6 +375,7 @@ export class IsTimepickerComponent implements OnInit, OnDestroy {
     else {
       this.viewValue = '';
       this.timeValue = null;
+      this.timeControl.setValue('', { emitEvent: false });
       if (emitEvent) {
         this.changed.emit(null);
       }

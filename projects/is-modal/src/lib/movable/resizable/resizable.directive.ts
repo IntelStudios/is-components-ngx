@@ -7,7 +7,7 @@ import { isLeftButton, getEvent } from '../common/utils';
 import { ResizableEvent } from './types';
 
 @Directive({
-  selector: '[appResizable]'
+  selector: '[appResizable]',
 })
 export class ResizableDirective implements OnDestroy, AfterViewInit {
 

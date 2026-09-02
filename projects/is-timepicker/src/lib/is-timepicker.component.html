@@ -1,7 +1,7 @@
 <div class="input-group"
-     [class.open]="pickerOpened"
-     [class.disabled]="disabled"
->
+  [class.open]="pickerOpened"
+  [class.disabled]="disabled"
+  >
   <input #input
     class="timepicker-input timepicker-value align-{{alignment}}"
     [class.clearable]="allowClear"
@@ -14,12 +14,16 @@
     [class.disabled]="disabled"
     [readOnly]="disabled">
   <div class="input-group-append">
-    <i *ngIf="allowClear"
-       class="fas fa-times btn-remove"
-       [class.shown]="!disabled && timeValue"
-       (click)="removeClick($event)"></i>
-    <span *ngIf="allowPopup" class="timepicker-icon" (click)="onPickerShown()">
-      <i class="fas fa-fw fa-clock"></i>
-    </span>
+    @if (allowClear) {
+      <i
+        class="fas fa-times btn-remove"
+        [class.shown]="!disabled && timeValue"
+      (click)="removeClick($event)"></i>
+    }
+    @if (allowPopup) {
+      <span class="timepicker-icon" (click)="onPickerShown()">
+        <i class="fas fa-fw fa-clock"></i>
+      </span>
+    }
   </div>
 </div>

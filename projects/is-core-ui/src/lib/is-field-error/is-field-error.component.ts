@@ -12,19 +12,20 @@ import {
   Renderer2
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { IsFieldErrorFactory } from '@intelstudios/cdk';
-import { TranslateService } from '@ngx-translate/core';
+import { IsFieldErrorFactory, IsFieldErrorTranslateFn } from '@intelstudios/cdk';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { AvailableBSPositions } from 'ngx-bootstrap/positioning';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Subscription, merge, of } from 'rxjs';
 
 import { configToken, IsCoreUIConfig } from '../is-core-ui.interfaces';
 
 @Component({
-  selector: 'is-field-error',
-  templateUrl: './is-field-error.component.html',
-  styleUrls: ['./is-field-error.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'is-field-error',
+    templateUrl: './is-field-error.component.html',
+    styleUrls: ['./is-field-error.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [TooltipModule],
 })
 export class IsFieldErrorComponent implements OnInit, OnDestroy {
 
@@ -78,14 +79,17 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   tooltip: PopoverDirective;
 
   private transPrefix: string = 'field-error.';
+  private translateFn: IsFieldErrorTranslateFn = (key) => key;
   private _sub: Subscription;
 
   constructor(@Optional() @Inject(configToken) coreUiConfig: IsCoreUIConfig,
     private cd: ChangeDetectorRef,
-    private renderer: Renderer2,
-    private translate: TranslateService) {
+    private renderer: Renderer2) {
     if (coreUiConfig && coreUiConfig.fieldErrorConfig) {
       this.transPrefix = coreUiConfig.fieldErrorConfig.translationPrefix;
+      if (coreUiConfig.fieldErrorConfig.translateFn) {
+        this.translateFn = coreUiConfig.fieldErrorConfig.translateFn;
+      }
     }
     this.hideTooltipOnClick = this.hideTooltipOnClick.bind(this);
   }
@@ -119,7 +123,7 @@ export class IsFieldErrorComponent implements OnInit, OnDestroy {
   private detectChanges() {
     this.isShown = this.control.invalid; // && (this.control.touched || this.control.dirty);
 
-    const errs: string[] = IsFieldErrorFactory.getErrors(this.control, this.transPrefix, this.translate);
+    const errs: string[] = IsFieldErrorFactory.getErrors(this.control, this.transPrefix, this.translateFn);
     this.error = errs[0];
 
     this.cd.detectChanges();

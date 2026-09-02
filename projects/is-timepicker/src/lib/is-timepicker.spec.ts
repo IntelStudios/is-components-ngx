@@ -1,32 +1,26 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControlDirective, FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { IsCdkService } from '@intelstudios/cdk';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-import { provideNgxMask } from 'ngx-mask';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { TestComponentBase } from '../../../test-base/model.spec';
-import { IsTimepickerPickerComponent } from './is-timepicker-picker.component';
 import { IsTimepickerComponent } from './is-timepicker.component';
 
 describe('IsTimepickerComponent', () => {
   let componentRoot: TestComponent;
   let fixtureRoot: ComponentFixture<TestComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TestComponent,
-        FormControlDirective,
-        IsTimepickerComponent,
-        IsTimepickerPickerComponent,
-      ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
-        OverlayModule, CommonModule, BrowserModule, OverlayModule,
-        TimepickerModule.forRoot(), FormsModule, ScrollingModule, ReactiveFormsModule
+        OverlayModule, CommonModule, BrowserModule,
+        TimepickerModule, FormsModule, ScrollingModule, ReactiveFormsModule, NgxMaskDirective,
+        TestComponent,
       ],
       providers: [
         {provide: IsCdkService},
@@ -36,7 +30,7 @@ describe('IsTimepickerComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixtureRoot = TestBed.createComponent(TestComponent);
@@ -174,10 +168,12 @@ describe('IsTimepickerComponent', () => {
 });
 
 @Component({
-  template: `
+    template: `
     <is-timepicker #picker [formControl]="control1" [stringMode]="false" [allowClear]="true"></is-timepicker>
     <is-timepicker #pickerStringMode [formControl]="control2" [stringMode]="true" [allowClear]="false"></is-timepicker>
-  `
+    `,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IsTimepickerComponent, ReactiveFormsModule],
 })
 class TestComponent extends TestComponentBase<TestComponent> {
   @ViewChild('picker', {static: true})

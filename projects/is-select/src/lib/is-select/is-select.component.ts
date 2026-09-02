@@ -1,4 +1,4 @@
-import { Overlay, OverlayRef, ConnectedPosition, OverlayConfig, ScrollDispatcher, CdkScrollable } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, ConnectedPosition, OverlayConfig, ScrollDispatcher } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ChangeDetectionStrategy,
@@ -18,6 +18,7 @@ import {
   Optional,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { IsSelectOptionsComponent } from '../is-select-options/is-select-options.component';
@@ -35,11 +36,12 @@ export const IS_SELECT_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'is-select',
-  templateUrl: './is-select.component.html',
-  styleUrls: ['./is-select.component.scss'],
-  providers: [IS_SELECT_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'is-select',
+    templateUrl: './is-select.component.html',
+    styleUrls: ['./is-select.component.scss'],
+    providers: [IS_SELECT_VALUE_ACCESSOR],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NgClass, NgTemplateOutlet],
 })
 export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
@@ -106,7 +108,7 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
 
   /**
    * alternative to modelConfig. Enabling this
-   * will set default modelConfig from IsSelectConfig (see IsSelectModule.forRoot)
+   * will set default modelConfig from IsSelectConfig (see provideIsSelect)
    * By default compatible to `SelectItem`
    */
   @Input()
@@ -568,14 +570,14 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     }
 
     if (this.closeOptionsOnScroll) {
-      const ancScrolls: CdkScrollable[] = this.scrollDispatcher.getAncestorScrollContainers(this.element);
+      const ancScrolls = this.scrollDispatcher.getAncestorScrollContainers(this.element);
       if (ancScrolls.length > 0) {
         this.optionsOverlayRef = this.isCdk.create(
           overlayConfig,
           this.element
         );
 
-        this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev: CdkScrollable) => {
+        this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev) => {
           if (ev) {
             if (ancScrolls.filter(x => x.getElementRef() === ev.getElementRef()).length > 0) {
               this.hideOptions();

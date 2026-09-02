@@ -5,6 +5,7 @@ import {
   UntypedFormControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
   ValidationErrors,
   Validator,
   ValidatorFn
@@ -12,7 +13,8 @@ import {
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { cronExpressionValidator, mapNumbers } from './is-cron-editor.validator';
-import { IsSelectMultipleConfig } from '@intelstudios/select';
+import { IsSelectComponent, IsSelectMultipleConfig } from '@intelstudios/select';
+import { IsTabContentDirective, IsTabDirective, IsTabsetComponent } from '@intelstudios/core-ui';
 import { CronState } from './is-cron-editor.models';
 
 function defaultSelectTypeValues() {
@@ -43,21 +45,21 @@ function daySelectTypeValues() {
 
 // noinspection DuplicatedCode
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'is-cron-editor',
-  templateUrl: './is-cron-editor.component.html',
-  styleUrls: ['./is-cron-editor.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: IsCronEditorComponent,
-    multi: true
-  },
-  {
-    provide: NG_VALIDATORS,
-    useExisting: IsCronEditorComponent,
-    multi: true
-  }]
+    selector: 'is-cron-editor',
+    templateUrl: './is-cron-editor.component.html',
+    styleUrls: ['./is-cron-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: IsCronEditorComponent,
+            multi: true
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: IsCronEditorComponent,
+            multi: true
+        }],
+    imports: [ReactiveFormsModule, IsSelectComponent, IsTabsetComponent, IsTabDirective, IsTabContentDirective],
 })
 export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
   get allowRandom(): boolean {
@@ -1059,7 +1061,7 @@ export class IsCronEditorComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   ngOnDestroy(): void {
-    this.ends$.next();
+    this.ends$.next(undefined);
     this.ends$.complete();
   }
 

@@ -1,12 +1,12 @@
 import { Component, ChangeDetectionStrategy, Renderer2, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [RouterLink, RouterLinkActive, RouterOutlet],
 })
 export class AppComponent implements OnInit {
 
@@ -17,21 +17,12 @@ export class AppComponent implements OnInit {
     { title: 'Froala', route: '/froala' },
     { title: 'Core UI', route: '/core-ui' },
     { title: 'Date Picker', route: '/datepicker' },
-    { title: 'Editable textbox', route: '/editable-textbox' },
     { title: 'Select Tree', route: '/select-tree' },
-    //{ title: 'Select Tree DX', route: '/dx-select-tree' },
-    { title: 'Modal', route: '/modal' },
     { title: 'Time Picker', route: '/timepicker' },
     { title: 'Cron editor', route: '/croneditor' },
   ].sort((a, b) => a.title.localeCompare(b.title));
 
-  constructor(private translate: TranslateService, private renderer: Renderer2, private route: ActivatedRoute, private router: Router) {
-    // for demo purpose we just set some translations so we do not need to introduce http-loader
-    translate.setTranslation('en', { 'breadcrumb': 'Breadcrumb', 'bs-switch-on': 'Yes ;-)', 'bs-switch-off': 'No :-(' })
-    // this language will be used as a fallback when a translation isn't found in the current language
-    translate.setDefaultLang('en');
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-    translate.use('en');
+  constructor(private renderer: Renderer2, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {

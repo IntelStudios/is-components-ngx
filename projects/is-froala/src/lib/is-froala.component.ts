@@ -20,7 +20,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable, Subject, Subscription } from 'rxjs';
 
-import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import Tribute from 'tributejs';
 import {
@@ -33,6 +32,7 @@ import {
   IsFroalaRemoteCommand
 } from './is-froala.interfaces';
 import { IsFroalaService } from './is-froala.service';
+import { IsEncapsulatedComponent } from '@intelstudios/cdk';
 
 declare var $: any;
 
@@ -86,12 +86,13 @@ const IS_FROALA_EDITOR_VALUE_ACCESSOR: any = {
 export const configToken = new InjectionToken<IsFroalaConfig>('IsFroalaConfig');
 
 @Component({
-  selector: 'is-froala',
-  templateUrl: 'is-froala.component.html',
-  providers: [IS_FROALA_EDITOR_VALUE_ACCESSOR],
-  styleUrls: ['./is-froala.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+    selector: 'is-froala',
+    templateUrl: 'is-froala.component.html',
+    providers: [IS_FROALA_EDITOR_VALUE_ACCESSOR],
+    styleUrls: ['./is-froala.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    imports: [IsEncapsulatedComponent],
 })
 export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
@@ -201,6 +202,12 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
   @Input()
   theme?: FroalaTheme;
 
+  /**
+   * Froala UI language. Used when options.language is not set.
+   */
+  @Input()
+  language = 'en';
+
   @Output()
   change: EventEmitter<string> = new EventEmitter<string>();
 
@@ -237,10 +244,9 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
     private el: ElementRef,
     private zone: NgZone,
     private service: IsFroalaService,
-    private sanitizer: DomSanitizer,
-    private translate: TranslateService) {
+    private sanitizer: DomSanitizer) {
     if (!froalaConfig) {
-      console.warn(`IS-FROALA: Config not provided. Will not load license (use IsFroalaModule.forRoot() )`);
+      console.warn(`IS-FROALA: Config not provided. Will not load license (use provideIsFroala() )`);
       this.froalaConfig = {
         getLicense: () => {
           return '';
@@ -401,7 +407,7 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
         'zh-cn': 'zh_cn',
         'zh_tw': 'zh-tw'
       };
-      defaults.language = languageMap[this.translate.currentLang] || this.translate.currentLang;
+      defaults.language = languageMap[this.language] || this.language;
     }
 
     this.mergeOptions(defaults, this.options);

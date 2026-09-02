@@ -6,7 +6,9 @@ export function escapeRegexp(queryToEscape: string): string {
   return queryToEscape.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
 }
 
-@Pipe({ name: 'highlight' })
+@Pipe({
+    name: 'highlight',
+})
 export class HighlightPipe implements PipeTransform {
   public transform(value: string, query: string): any {
     if (query.length < 1) {

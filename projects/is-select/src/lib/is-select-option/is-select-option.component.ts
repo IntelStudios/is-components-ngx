@@ -1,15 +1,17 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation, Input, TemplateRef, Output, ChangeDetectorRef, HostBinding } from '@angular/core';
+import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import { SelectItem } from '../select-item';
 import { IsSelectOptionsService } from '../is-select.options.service';
 import { Observable } from 'rxjs';
 import { ISelectOptionsControl } from '../is-select.internal.interfaces';
 
 @Component({
-  selector: 'is-select-option',
-  templateUrl: './is-select-option.component.html',
-  styleUrls: ['./is-select-option.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+    selector: 'is-select-option',
+    templateUrl: './is-select-option.component.html',
+    styleUrls: ['./is-select-option.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    imports: [NgClass, NgTemplateOutlet, AsyncPipe, IsSelectOptionComponent],
 })
 export class IsSelectOptionComponent implements OnInit {
 

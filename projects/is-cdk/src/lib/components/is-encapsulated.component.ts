@@ -1,13 +1,24 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
-import { parseCss, stringifyCss } from '@intelstudios/css';
+import { parseCss as parseCssImport, stringifyCss as stringifyCssImport } from '@intelstudios/css';
+
+const parseCssAst = unwrapCjsFn(parseCssImport);
+const stringifyCssAst = unwrapCjsFn(stringifyCssImport);
+
+function unwrapCjsFn<T>(mod: T | { default: T }): T {
+  let value: unknown = mod;
+  while (value && typeof value !== 'function' && typeof value === 'object' && 'default' in (value as object)) {
+    value = (value as { default: unknown }).default;
+  }
+  return value as T;
+}
 
 let instanceCounter = 1;
 
 @Component({
-  selector: 'is-encapsulated',
-  template: '<div></div>',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'is-encapsulated',
+    template: '<div></div>',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IsEncapsulatedComponent implements OnInit, OnChanges {
 
@@ -35,7 +46,7 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
           const prefix = `is-encapsulated > .${className}`;
           parsedCss.stylesheet.rules = parsedCss.stylesheet.rules.map((r) => this.processRule(r, prefix));
           const newStyle = document.createElement('style');
-          newStyle.innerText = stringifyCss(parsedCss).replace(/\n/g, '');
+          newStyle.innerText = stringifyCssAst(parsedCss).replace(/\n/g, '');
           styleEl.parentNode.replaceChild(newStyle, styleEl);
         } catch (e) {
           isError = true;
@@ -92,7 +103,7 @@ export class IsEncapsulatedComponent implements OnInit, OnChanges {
 
   parseCss(style: string) {
     const css = this.preprocessCss(style);
-    const parsedCss = parseCss(css);
+    const parsedCss = parseCssAst(css);
     return parsedCss;
   }
 

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IsInputSecretComponent } from './is-input-secret.component';
 
@@ -6,12 +6,12 @@ describe('IsPasswordComponent', () => {
   let component: IsInputSecretComponent;
   let fixture: ComponentFixture<IsInputSecretComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ IsInputSecretComponent ]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ IsInputSecretComponent ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(IsInputSecretComponent);

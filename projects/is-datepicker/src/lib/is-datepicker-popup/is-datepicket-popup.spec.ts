@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {defaultDatePickerConfig, IsDatepickerPopupComponent} from './is-datepicker-popup.component';
 import {BsDatepickerConfig, BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {provideIsTimepicker} from '@intelstudios/timepicker';
 
 describe('IsDatepickerPopupComponent', () => {
   let component: IsDatepickerPopupComponent;
@@ -9,8 +9,8 @@ describe('IsDatepickerPopupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IsDatepickerPopupComponent ],
-      imports: [ BsDatepickerModule, BrowserAnimationsModule ]
+      imports: [ IsDatepickerPopupComponent, BsDatepickerModule ],
+      providers: [provideIsTimepicker()],
     })
       .compileComponents();
   });

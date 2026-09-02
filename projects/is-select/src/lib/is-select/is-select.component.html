@@ -1,42 +1,58 @@
 <div class="ui-select-container" [class.open]="optionsOpened" [class.is-select-dropup]="optionsDropup" [class.disabled]="disabled" [class.readonly]="readonly" [class.hidden]="hidden">
 
-  <div *ngIf="multiple; else single" class="ui-select-match multiple" [class.fixed-height]="!resize" tabindex="0" (keydown)="mainClick($event)" (click)="matchClick($event)">
-    <span tabindex="-1" class="ui-select-toggle"
-      [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}"
-      >
-      <i *ngIf="icon" [class]="icon"></i>
-      <span *ngIf="(!multiActive || multiActive.length === 0) && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
-      <div *ngFor="let it of multiActive" class="ui-select-match-text {{it.cssClass}}">
-        <ng-container [ngTemplateOutlet]="templateOptionSelected?.template || defaultTemplateSelection"
-          [ngTemplateOutletContext]="{$implicit: it, index: 0, item: it}">
-        </ng-container>
-        <i (click)="unselectClick($event, it)" class="fa fa-times btn-remove"></i>
-      </div>
-    </span>
-    <span *ngIf="additionalValues > 0" class="additional-values">+{{additionalValues}}</span>
-    <i class="fa dropdown-caret"
+  @if (multiple) {
+    <div class="ui-select-match multiple" [class.fixed-height]="!resize" tabindex="0" (keydown)="mainClick($event)" (click)="matchClick($event)">
+      <span tabindex="-1" class="ui-select-toggle"
+        [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}"
+        >
+        @if (icon) {
+          <i [class]="icon"></i>
+        }
+        @if ((!multiActive || multiActive.length === 0) && placeholderShow) {
+          <span class="ui-select-placeholder text-muted">{{placeholder}}</span>
+        }
+        @for (it of multiActive; track it) {
+          <div class="ui-select-match-text {{it.cssClass}}">
+            <ng-container [ngTemplateOutlet]="templateOptionSelected?.template || defaultTemplateSelection"
+              [ngTemplateOutletContext]="{$implicit: it, index: 0, item: it}">
+            </ng-container>
+            <i (click)="unselectClick($event, it)" class="fa fa-times btn-remove"></i>
+          </div>
+        }
+      </span>
+      @if (additionalValues > 0) {
+        <span class="additional-values">+{{additionalValues}}</span>
+      }
+      <i class="fa dropdown-caret"
       [ngClass]="{'fa-chevron-down': !optionsOpened, 'fa-chevron-up': optionsOpened}"></i>
-  </div>
-
-  <ng-template #single>
+    </div>
+  } @else {
     <div class="ui-select-match" tabindex="0" (keyup)="mainClick($event)" (click)="matchClick($event)">
       <span tabindex="-1" class="ui-select-toggle"
         [ngClass]="{'align-left': alignment === 'left', 'align-center': alignment === 'center', 'align-right': alignment === 'right'}"
         >
-        <i *ngIf="icon" [class]="icon"></i>
-        <span *ngIf="!singleActive && placeholderShow" class="ui-select-placeholder text-muted">{{placeholder}}</span>
-        <span *ngIf="singleActive" class="ui-select-match-text {{singleActive.cssClass}}">
-          <ng-container [ngTemplateOutlet]="templateOptionSelected?.template || defaultTemplateSelection"
-            [ngTemplateOutletContext]="{$implicit: singleActive, index: 0, item: singleActive}">
-          </ng-container>
-        </span>
+        @if (icon) {
+          <i [class]="icon"></i>
+        }
+        @if (!singleActive && placeholderShow) {
+          <span class="ui-select-placeholder text-muted">{{placeholder}}</span>
+        }
+        @if (singleActive) {
+          <span class="ui-select-match-text {{singleActive.cssClass}}">
+            <ng-container [ngTemplateOutlet]="templateOptionSelected?.template || defaultTemplateSelection"
+              [ngTemplateOutletContext]="{$implicit: singleActive, index: 0, item: singleActive}">
+            </ng-container>
+          </span>
+        }
       </span>
-
-      <i *ngIf="allowClear && singleActive && !disabled" (click)="removeClick($event)" class="fa fa-times btn-remove"></i>
+      @if (allowClear && singleActive && !disabled) {
+        <i (click)="removeClick($event)" class="fa fa-times btn-remove"></i>
+      }
       <i class="fa dropdown-caret"
-        [ngClass]="{'fa-chevron-down': !optionsOpened, 'fa-chevron-up': optionsOpened}"></i>
+      [ngClass]="{'fa-chevron-down': !optionsOpened, 'fa-chevron-up': optionsOpened}"></i>
     </div>
-  </ng-template>
+  }
+
 </div>
 
 <ng-template #defaultTemplateSelection let-item="item">

@@ -16,11 +16,11 @@ export const IS_PASSWORD_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'is-password',
-  templateUrl: 'is-password.component.html',
-  styleUrls: ['is-password.component.scss'],
-  providers: [IS_PASSWORD_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'is-password',
+    templateUrl: 'is-password.component.html',
+    styleUrls: ['is-password.component.scss'],
+    providers: [IS_PASSWORD_VALUE_ACCESSOR],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IsPasswordComponent {
 

@@ -1,5 +1,5 @@
 <app-modal #modal [class]="control.config.cssClass" [backdrop]="false" (closeModal)="closeModal($event)">
-  <ng-container *ngIf="control.config.title" class="app-modal-header">{{control.config.title|translate}}</ng-container>
+  <ng-container *ngIf="control.config.title" class="app-modal-header">{{control.config.title|transloco}}</ng-container>
   <ng-container class="app-modal-body">
     <div class="scrollable-content" cdkScrollable>
       <ng-container [ngTemplateOutlet]="control.config.template" [ngTemplateOutletContext]="{$implicit: this, modal: this}">
@@ -10,12 +10,12 @@
     <div class="buttons">
       <button *ngFor="let b of control.config?.buttonsLeft" type="button" class="btn is-btn-left {{b.buttonClass}}" (click)="buttonClick(b)">
         <i *ngIf="b.icon" [class]="b.icon"></i>
-        <span>{{b.title|translate}}</span>
+        <span>{{b.title|transloco}}</span>
       </button>
       <div class="divider"></div>
       <button *ngFor="let b of control.config?.buttonsRight" type="button" class="btn is-btn-right {{b.buttonClass}}" (click)="buttonClick(b)">
         <i *ngIf="b.icon" [class]="b.icon"></i>
-        <span>{{b.title|translate}}</span>
+        <span>{{b.title|transloco}}</span>
       </button>
     </div>
   </ng-container>

@@ -1,13 +1,13 @@
 {
   "name": "@intelstudios/cron-editor",
-  "version": "18.0.0",
+  "version": "22.0.0",
   "dependencies": {
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/common": ">=18.0.0",
-    "@angular/core": ">=18.0.0",
-    "@intelstudios/select": ">=18.0.0",
-    "@intelstudios/core-ui": ">=18.0.0"
+    "@angular/common": ">=22.0.0",
+    "@angular/core": ">=22.0.0",
+    "@intelstudios/select": ">=22.0.0",
+    "@intelstudios/core-ui": ">=22.0.0"
   }
 }

@@ -1,6 +1,5 @@
-@import '../../../../styles/variables';
-
-@import '../../../assets/style.scss';
+@use '../../../../styles/variables' as *;
+@use '../../../assets/style.scss' as *;
 
 $info: var(--is-badge-info-color, #72BCFF);
 $warning: var(--is-badge-warning-color, #F0C330);

@@ -15,15 +15,15 @@ export const MASKEDINPUT_VALUE_ACCESSOR: Provider = {
 }
 
 @Directive({
-  host: {
-    '(input)': 'onInput($event.target.value)',
-    '(onBlur)': 'onBlur($event)',
-    '(focus)': 'onFocus($event)',
-    // max length has no effect when inputMask is defined
-    '[attr.maxlength]': 'xeMaxLength && !maskConfig ? xeMaxLength : null'
-  },
-  selector: '[isInputMask]',
-  providers: [MASKEDINPUT_VALUE_ACCESSOR]
+    host: {
+        '(input)': 'onInput($event)',
+        '(onBlur)': 'onBlur($event)',
+        '(focus)': 'onFocus($event)',
+        // max length has no effect when inputMask is defined
+        '[attr.maxlength]': 'xeMaxLength && !maskConfig ? xeMaxLength : null'
+    },
+    selector: '[isInputMask]',
+    providers: [MASKEDINPUT_VALUE_ACCESSOR],
 })
 export class IsInputMaskDirective implements ControlValueAccessor, AfterViewInit {
   private textMaskInputElement: any
@@ -107,7 +107,8 @@ export class IsInputMaskDirective implements ControlValueAccessor, AfterViewInit
     this._onTouched();
   }
 
-  onInput(value) {
+  onInput(event: Event) {
+    let value = (event.target as HTMLInputElement).value;
     if (!this.isMaskingActive) {
       this._onChange(value);
       return;

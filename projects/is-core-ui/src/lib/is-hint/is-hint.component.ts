@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy, Renderer2, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PopoverDirective } from 'ngx-bootstrap/popover';
+import { PopoverDirective, PopoverModule } from 'ngx-bootstrap/popover';
 import { AvailableBSPositions } from 'ngx-bootstrap/positioning';
 
 @Component({
-  selector: 'is-hint',
-  templateUrl: './is-hint.component.html',
-  styleUrls: ['./is-hint.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'is-hint',
+    templateUrl: './is-hint.component.html',
+    styleUrls: ['./is-hint.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [PopoverModule],
 })
 export class IsHintComponent implements OnInit, OnDestroy {
 

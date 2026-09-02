@@ -18,8 +18,11 @@ import {
   ChangeDetectorRef,
   HostBinding,
   SimpleChanges,
-  OnChanges
+  OnChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, interval, merge, Subscription, bindCallback, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -55,7 +58,9 @@ export type IsTabsetScrollableMode = 'none' | 'sticky-headers' | 'scrollable-tab
  * This directive should be used to render invalid content, which appears
  * when there is an invalid tab not visible by user because of wrap feature
  */
-@Directive({ selector: 'ng-template[TabsetInvalid]' })
+@Directive({
+    selector: 'ng-template[TabsetInvalid]',
+})
 export class IsTabsetInvalidDirective {
   constructor(public templateRef: TemplateRef<any>) { }
 }
@@ -63,13 +68,17 @@ export class IsTabsetInvalidDirective {
 /**
  * This directive should be used to wrap tab titles that need to contain HTML markup or other directives.
  */
-@Directive({ selector: 'ng-template[TabTitle]' })
+@Directive({
+    selector: 'ng-template[TabTitle]',
+})
 export class IsTabTitleDirective {
   constructor(public templateRef: TemplateRef<any>) { }
 }
 
 
-@Directive({ selector: 'ng-template[TabsetAfterNavItems]' })
+@Directive({
+    selector: 'ng-template[TabsetAfterNavItems]',
+})
 export class IsTabsetAfterNavItemsDirective {
   constructor(public templateRef: TemplateRef<any>) { }
 }
@@ -77,7 +86,9 @@ export class IsTabsetAfterNavItemsDirective {
 /**
  * This directive must be used to wrap content to be displayed in a tab.
  */
-@Directive({ selector: 'ng-template[TabContent]' })
+@Directive({
+    selector: 'ng-template[TabContent]',
+})
 export class IsTabContentDirective {
   constructor(public templateRef: TemplateRef<any>) { }
 }
@@ -85,7 +96,9 @@ export class IsTabContentDirective {
 /**
  * A directive representing an individual tab.
  */
-@Directive({ selector: 'is-tab' })
+@Directive({
+    selector: 'is-tab',
+})
 export class IsTabDirective {
   /**
    * Unique tab identifier. Must be unique for the entire document for proper accessibility support.
@@ -149,41 +162,53 @@ export class IsTabDirective {
  * A component that makes it easy to create tabbed interface.
  */
 @Component({
-  selector: 'is-tabset',
-  styleUrls: ['is-tabset.component.scss'],
-  template: `
+    selector: 'is-tabset',
+    styleUrls: ['is-tabset.component.scss'],
+    template: `
     <div class="tab-header">
       <ul [class]="tabClass" role="tablist" [class.stretched]="stretched">
-        <li class="nav-item" *ngFor="let tab of tabs" [class.disabled]="tab.disabled" [class.is-tab-invalid]="tab.valid === false">
-          <a [id]="tab.id" class="nav-link {{tab.titleClass}}" [ngClass]="{'active show' : tab.id === activeId}" (click)="select(tab.id)">
-            {{tab.title}}<ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
-          </a>
-        </li>
+        @for (tab of tabs; track tab) {
+          <li class="nav-item" [class.disabled]="tab.disabled" [class.is-tab-invalid]="tab.valid === false">
+            <a [id]="tab.id" class="nav-link {{tab.titleClass}}" [ngClass]="{'active show' : tab.id === activeId}" (click)="select(tab.id)">
+              {{tab.title}}<ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
+            </a>
+          </li>
+        }
         <ng-container [ngTemplateOutlet]="tabsetAfterNavItemsTemplate?.templateRef"></ng-container>
       </ul>
       <div class="scroll-btn left"><i class="fas fa-chevron-left" (click)="scrollRight()" (mousedown)="startScrollRight()" (mouseup)="stopScroll()"></i></div>
       <div class="scroll-btn right"><i class="fas fa-chevron-right" (click)="scrollLeft()" (mousedown)="startScrollLeft()" (mouseup)="stopScroll()"></i></div>
     </div>
-
-    <div *ngIf="tabsetInvalidLeft" class="tabset-invalid left">
-      <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate?.templateRef || defaultInvalidTemplate">
-      </ng-container>
-    </div>
-    <div *ngIf="tabsetInvalidRight" class="tabset-invalid right">
-      <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate?.templateRef || defaultInvalidTemplate">
-      </ng-container>
-    </div>
+    
+    @if (tabsetInvalidLeft) {
+      <div class="tabset-invalid left">
+        <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate?.templateRef || defaultInvalidTemplate">
+        </ng-container>
+      </div>
+    }
+    @if (tabsetInvalidRight) {
+      <div class="tabset-invalid right">
+        <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate?.templateRef || defaultInvalidTemplate">
+        </ng-container>
+      </div>
+    }
     <ng-template #defaultInvalidTemplate>
       <i class="fas fa-exclamation"></i>
     </ng-template>
-    <div class="tab-content" [class.pills]="pills" *ngIf="tabs.length > 0" cdkScrollable>
-      <ng-template ngFor let-tab [ngForOf]="tabs">
-        <div class="tab-pane" [className]="tab.paneClass" [ngClass]="{'active show' : tab.id === activeId }" *ngIf="tab.loaded || tab.id === activeId" role="tabpanel" [attr.aria-labelledby]="tab.id">
-          <ng-template [ngTemplateOutlet]="tab.contentTpl.templateRef"></ng-template>
-        </div>
-      </ng-template>
-    </div>
-  `,
+    @if (tabs.length > 0) {
+      <div class="tab-content" [class.pills]="pills" cdkScrollable>
+        @for (tab of tabs; track tab) {
+          @if (tab.loaded || tab.id === activeId) {
+            <div class="tab-pane" [className]="tab.paneClass" [ngClass]="{'active show' : tab.id === activeId }" role="tabpanel" [attr.aria-labelledby]="tab.id">
+              <ng-template [ngTemplateOutlet]="tab.contentTpl.templateRef"></ng-template>
+            </div>
+          }
+        }
+      </div>
+    }
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NgClass, NgTemplateOutlet, CdkScrollable],
 })
 export class IsTabsetComponent implements AfterContentChecked, AfterContentInit, OnInit, OnDestroy, AfterViewInit, OnChanges {
   /**
@@ -361,14 +386,18 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   }
 
   ngAfterContentChecked() {
-    // // auto-correct activeId that might have been set incorrectly as input
+    // auto-correct activeId that might have been set incorrectly as input
     let activeTab = this._getTabById(this.activeId);
     if (activeTab) {
-      this.activeId = activeTab.id;
+      if (this.activeId !== activeTab.id) {
+        this.activeId = activeTab.id;
+        this.changeDetector.markForCheck();
+      }
     } else if (this.tabs.length) {
       activeTab = this.tabs.first;
       activeTab.loaded = true;
       this.activeId = activeTab.id;
+      this.changeDetector.markForCheck();
     }
   }
 
@@ -398,16 +427,19 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
         }
         this.activeId = selectedTab.id;
         selectedTab.loaded = true;
+        this.changeDetector.markForCheck();
         if (this.useRouter) {
           this.isSelecting = true;
           this.router.navigate([], { fragment: selectedTab.id })
             .then(() => {
               this.isSelecting = false;
               this.scrollToActiveTab();
+              this.changeDetector.markForCheck();
             })
             .catch(() => {
               this.isSelecting = false;
               this.scrollToActiveTab();
+              this.changeDetector.markForCheck();
             });
         } else {
           this.scrollToActiveTab();
@@ -444,7 +476,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
 
 
   updateValidityIndication() {
-    this._updateValidity$.next();
+    this._updateValidity$.next(undefined);
   }
 
   private updateScrollBtnVisibility() {

@@ -1,19 +1,34 @@
-const argv = require("yargs").string("project").argv;
+const { execSync } = require('child_process');
+const path = require('path');
 
-const dist = "../dist";
+const projectFlag = process.argv.indexOf('--project');
+const project = projectFlag !== -1 ? process.argv[projectFlag + 1] : undefined;
 
-const project = argv.project;
 if (!project) {
-  console.error("--project parameter is required");
+  console.error('--project parameter is required (e.g. pnpm run build -- --project is-cdk)');
   process.exit(1);
 }
 
-const exec = require("child_process").execSync;
+if (!/^[a-z0-9-]+$/i.test(project)) {
+  console.error(`Invalid --project value: ${project}`);
+  process.exit(1);
+}
+
+const root = path.join(__dirname, '..');
+const projectDist = path.join(root, 'dist', project);
 
 console.info(`Building local module ${project}`);
-const postBuild = project === 'is-core-ui' ? '&& node copy-styles.js' : '';
-exec(
-  `npx ng build ${project} --prod ${postBuild} && cd ${dist}/${project} && npm pack --quiet && cp *.tgz ../`
-);
 
-console.info(`${project} NPM package built in [${dist}] folder`);
+const run = (command, cwd = root) =>
+  execSync(command, { stdio: 'inherit', cwd, env: process.env });
+
+run(`pnpm exec ng build ${project} --configuration production`);
+
+if (project === 'is-core-ui') {
+  run(`node ${path.join(__dirname, 'copy-styles.js')}`);
+}
+
+run('pnpm pack', projectDist);
+run('cp *.tgz ..', projectDist);
+
+console.info(`${project} NPM package built in [${path.join(root, 'dist')}] folder`);

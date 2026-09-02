@@ -1,5 +1,5 @@
-@import '../../../../styles/mixins';
-@import '../../../../styles/variables';
+@use '../../../../styles/mixins' as *;
+@use '../../../../styles/variables' as *;
 
 is-datepicker-popup {
   position: absolute;
@@ -17,17 +17,28 @@ is-datepicker-popup {
     bottom: 4px;
   }
   &.with-timepicker {
-    .bs-datepicker {
-      border-bottom: none;
+    bs-datepicker-inline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 
   .time-picker {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: $is-general-padding-small;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
     padding: 12px;
     padding-top: 1px;
+
+    > is-timepicker {
+      display: block;
+      min-width: 0;
+    }
+
     > button {
       line-height: 1;
       height: 24px;
@@ -57,11 +68,6 @@ is-datepicker-popup {
           &:hover {
             background-color: $is-datepicker-hover-bg-color;
             border-radius: $is-general-border-radius;
-          }
-
-          &.next span,
-          &.previous span {
-            line-height: 22px;
           }
         }
       }

@@ -1,6 +1,7 @@
 import { UntypedFormControl } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { IsFieldError } from './is-field-error.model';
+
+export type IsFieldErrorTranslateFn = (key: string, params?: Record<string, unknown>) => string;
 
 export class IsFieldErrorFactory {
 
@@ -454,7 +455,7 @@ export class IsFieldErrorFactory {
     return { schemaFormRemoteNotValid: error };
   }
 
-  static getErrors(control: UntypedFormControl, prefix: string, translate: TranslateService, onlyHighest: boolean = true): string[] {
+  static getErrors(control: UntypedFormControl, prefix: string, translateFn: IsFieldErrorTranslateFn = (key) => key, onlyHighest: boolean = true): string[] {
     let ret: string[] = [];
     if (control.errors !== null) {
       let remapped = {};
@@ -479,7 +480,7 @@ export class IsFieldErrorFactory {
         });
 
         const key = prefix + highestPriorityError.key;
-        const translated: string = translate.instant(key, highestPriorityError.params);
+        const translated: string = translateFn(key, highestPriorityError.params);
 
         if (translated !== key) {
           ret.push(translated);
@@ -492,7 +493,7 @@ export class IsFieldErrorFactory {
           let actError: IsFieldError = remapped[key];
 
           const prefixedKey = prefix + actError.key;
-          const translated: string = translate.instant(prefixedKey, actError.params);
+          const translated: string = translateFn(prefixedKey, actError.params);
 
           if (translated !== prefixedKey) {
             ret.push(translated);

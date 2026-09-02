@@ -1,6 +1,8 @@
+@use "sass:color";
+
 $is-color-success-fg: var(--is-color-success, green);
 
-$is-color-node-hover: var(--is-select-tree-item-hover, lighten(#67809F, 10%));
+$is-color-node-hover: var(--is-select-tree-item-hover, color.adjust(#67809F, $lightness: 10%));
 $is-color-node-active: var(--is-select-tree-item-active, #fff);
 $is-color-node-focus: var(--is-select-tree-item-focus, #fff);
 $level-padding: var(--is-select-tree-level-padding, 20px);

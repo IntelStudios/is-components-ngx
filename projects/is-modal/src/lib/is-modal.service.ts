@@ -1,6 +1,7 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, Type } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ModalOptions } from 'ngx-bootstrap/modal';
 import { IsCdkService } from '@intelstudios/cdk';
 import { defer, merge, Observable, Subject } from 'rxjs';
@@ -38,7 +39,7 @@ export class IsModalService {
       }
 
       const detached$ = overlayRef.detachments().pipe(mapTo(null));
-      const hidden$ = modalComponent.modal.onHide.pipe(mapTo(null));
+      const hidden$ = outputToObservable(modalComponent.modal.onHide).pipe(mapTo(null));
 
       return merge(modalComponent.output, hidden$, detached$)
         .pipe(

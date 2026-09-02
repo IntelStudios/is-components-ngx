@@ -1,5 +1,7 @@
-<ng-container *ngIf="isShown">
+@if (isShown) {
   <i [class]="faIcon" [placement]="tooltipPlacement" #tooltip="bs-tooltip" [adaptivePosition]="false" [tooltip]="error"
-    container="body" containerClass="tooltip-is-field-error"></i>
-  <span *ngIf="!iconOnly">{{error}}</span>
-</ng-container>
+  container="body" containerClass="tooltip-is-field-error"></i>
+  @if (!iconOnly) {
+    <span>{{error}}</span>
+  }
+}

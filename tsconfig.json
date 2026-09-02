@@ -4,22 +4,21 @@
     "strictTemplates": true,
   },
   "compilerOptions": {
+    "strict": false,
+    "skipLibCheck": true,
+    "ignoreDeprecations": "6.0",
     "baseUrl": "./",
     "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "module": "es2020",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
     ],
     "paths": {
       "@intelstudios/select": [
@@ -52,12 +51,6 @@
       "@intelstudios/select-tree/*": [
         "dist/is-select-tree/*"
       ],
-      "@intelstudios/modal": [
-        "dist/is-modal"
-      ],
-      "@intelstudios/modal/*": [
-        "dist/is-modal/*"
-      ],
       "@intelstudios/timepicker": [
         "dist/is-timepicker"
       ],
@@ -67,15 +60,12 @@
       "@intelstudios/cron-editor/*": [
         "dist/is-cron-editor/*"
       ],
-      "@intelstudios/editable-textbox": [
-        "dist/is-editable-textbox"
-      ],
-      "@intelstudios/editable-textbox/*": [
-        "dist/is-editable-textbox/*"
-      ],
       "@intelstudios/cdk": [
         "dist/is-cdk/is-cdk",
         "dist/is-cdk"
+      ],
+      "@intelstudios/modal": [
+        "dist/is-modal"
       ]
     },
     "useDefineForClassFields": false

@@ -1,5 +1,5 @@
-@import '../../../../styles/mixins';
-@import '../../../../styles/variables';
+@use '../../../../styles/mixins' as *;
+@use '../../../../styles/variables' as *;
 
 $is-color-multi-item-bg: var(--is-select-multi-item-bg-color, #efefef);
 $is-color-multi-item-fg: var(--is-select-multi-item-fg-color, #000);

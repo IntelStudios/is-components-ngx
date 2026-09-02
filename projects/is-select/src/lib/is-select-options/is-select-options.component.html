@@ -3,29 +3,39 @@
     <i class="fa fa-search"></i>
     <input type="text" autocomplete="off" [style.text-align]="alignment"
       (input)="onSearchChange($event)" (keydown)="inputEvent($event)" (keyup)="inputEvent($event, true)" (paste)="onPaste($event)"
-      class="form-control" [placeholder]="searchPlaceholder | translate">
+      class="form-control" [placeholder]="searchPlaceholder">
   </div>
-  <i *ngIf="isLoadingOptions" class="fas fa-circle-notch fa-spin options-loading" [class.is-search]="isSearch"></i>
+  @if (isLoadingOptions) {
+    <i class="fas fa-circle-notch fa-spin options-loading" [class.is-search]="isSearch"></i>
+  }
 
   <ul class="ui-select-choices">
-    <is-select-option *ngFor="let c of selectedOptions" [option]="c" [control]="control" [optionTemplate]="optionMainTemplate" [alignment]="alignment"></is-select-option>
-    <li *ngIf="selectedOptions && selectedOptions.length > 0">
+    @for (c of selectedOptions; track c) {
+      <is-select-option [option]="c" [control]="control" [optionTemplate]="optionMainTemplate" [alignment]="alignment"></is-select-option>
+    }
+    @if (selectedOptions && selectedOptions.length > 0) {
+      <li>
         <div class="ui-select-choices-row">
           <div class="dropdown-item divider"></div>
         </div>
-    </li>
-    <is-select-option *ngFor="let c of visibleOptions" [option]="c" [control]="control" [optionTemplate]="optionMainTemplate" [alignment]="alignment"></is-select-option>
-</ul>
-<div *ngIf="multipleConfig?.showButtons" class="select-all">
-  <button class="btn {{multipleConfig.selectAll.cssClass}}" (click)="selectAll()">
-    <i class="fas fa-fw fa-check-square"></i>
-    <span>{{multipleConfig.selectAll.label}}</span>
-  </button>
-  <button class="btn {{multipleConfig.deselectAll.cssClass}}" (click)="deselectAll()">
-    <i class="fas fa-fw fa-window-close"></i>
-    <span>{{multipleConfig.deselectAll.label}}</span>
-  </button>
-</div>
+      </li>
+    }
+    @for (c of visibleOptions; track c) {
+      <is-select-option [option]="c" [control]="control" [optionTemplate]="optionMainTemplate" [alignment]="alignment"></is-select-option>
+    }
+  </ul>
+  @if (multipleConfig?.showButtons) {
+    <div class="select-all">
+      <button class="btn {{multipleConfig.selectAll.cssClass}}" (click)="selectAll()">
+        <i class="fas fa-fw fa-check-square"></i>
+        <span>{{multipleConfig.selectAll.label}}</span>
+      </button>
+      <button class="btn {{multipleConfig.deselectAll.cssClass}}" (click)="deselectAll()">
+        <i class="fas fa-fw fa-window-close"></i>
+        <span>{{multipleConfig.deselectAll.label}}</span>
+      </button>
+    </div>
+  }
 
 </div>
 <!-- option: single-mode -->
@@ -49,5 +59,7 @@
 
 <ng-template #defaultOptionTemplate let-item="item">
   <div [innerHtml]="sanitize(item.Value)"></div>
-  <div *ngIf="item.Description" class="item-desc">{{item.Description}}</div>
+  @if (item.Description) {
+    <div class="item-desc">{{item.Description}}</div>
+  }
 </ng-template>

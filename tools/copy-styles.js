@@ -1,14 +1,13 @@
-const fse = require("fs-extra");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
-async function copyAssets() {
-  try {
-    const sourceFile = path.join(__dirname, "../projects/styles");
-    const destPath = path.join(__dirname, "../dist/is-core-ui/scss");
-    await fse.copy(sourceFile, destPath);
-    console.log("Styles has been copied");
-  } catch (err) {
-    console.error(err);
-  }
+const sourceFile = path.join(__dirname, '../projects/styles');
+const destPath = path.join(__dirname, '../dist/is-core-ui/scss');
+
+try {
+  fs.cpSync(sourceFile, destPath, { recursive: true });
+  console.log('Styles has been copied');
+} catch (err) {
+  console.error(err);
+  process.exit(1);
 }
-copyAssets();

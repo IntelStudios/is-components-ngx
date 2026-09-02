@@ -1,11 +1,13 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { IBreadcrumb } from './is-breadcrumb-box.interface';
 
 @Component({
-  selector: 'is-breadcrumb-box',
-  templateUrl: './is-breadcrumb-box.component.html',
-  styleUrls: ['./is-breadcrumb-box.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'is-breadcrumb-box',
+    templateUrl: './is-breadcrumb-box.component.html',
+    styleUrls: ['./is-breadcrumb-box.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [RouterLink],
 })
 export class IsBreadcrumbBoxComponent {
 

@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { CronState } from 'projects/is-cron-editor/src/public_api';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { CronState, IsCronEditorComponent } from 'projects/is-cron-editor/src/public_api';
 
 @Component({
-  selector: 'app-demo-cron-editor',
-  templateUrl: './demo-cron-editor.component.html',
-  styleUrls: ['./demo-cron-editor.component.scss']
+    selector: 'app-demo-cron-editor',
+    templateUrl: './demo-cron-editor.component.html',
+    styleUrls: ['./demo-cron-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [ReactiveFormsModule, JsonPipe, IsCronEditorComponent],
 })
 export class DemoCronEditorComponent implements OnInit {
   usage = `
@@ -13,8 +16,9 @@ export class DemoCronEditorComponent implements OnInit {
 <h3>Installation</h3>
 <pre>npm install --save @intelstudios/cron-editor</pre>
 
-<h3>Import Module</h3>
-<pre>import { IsCronEditorModule } from '@intelstudios/cron-editor';</pre>
+<h3>Provide in application config</h3>
+<pre>import { provideIsCronEditor } from '@intelstudios/cron-editor';
+providers: [provideIsCronEditor()]</pre>
 `;
 
   cronControl = new UntypedFormControl();

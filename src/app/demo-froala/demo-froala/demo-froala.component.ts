@@ -1,14 +1,28 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { IsFroalaService } from 'projects/is-froala/src/lib/is-froala.service';
 import { IIsFroalaOptions, IsFroalaComponent } from 'projects/is-froala/src/public_api';
+import {
+  IsFieldErrorComponent,
+  IsTabContentDirective,
+  IsTabDirective,
+  IsTabsetComponent,
+} from 'projects/is-core-ui/src/public_api';
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'app-demo-froala',
-  templateUrl: './demo-froala.component.html',
-  styleUrls: ['./demo-froala.component.scss']
+    selector: 'app-demo-froala',
+    templateUrl: './demo-froala.component.html',
+    styleUrls: ['./demo-froala.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [
+      ReactiveFormsModule,
+      IsTabsetComponent,
+      IsTabDirective,
+      IsTabContentDirective,
+      IsFroalaComponent,
+      IsFieldErrorComponent,
+    ],
 })
 export class DemoFroalaComponent implements OnInit {
 
@@ -19,9 +33,9 @@ export class DemoFroalaComponent implements OnInit {
 <pre>npm install --save @intelstudios/froala
 npm install --save froala-editor at.js font-awesome tributejs</pre>
 
-<h3>Import Module</h3>
-<pre>import { IsFroalaModule } from '@intelstudios/froala';
-  imports: [IsFroalaModule.forRoot({
+<h3>Provide in application config</h3>
+<pre>import { provideIsFroala } from '@intelstudios/froala';
+providers: [provideIsFroala({
     getLicense: () => {
       return 'your license key';
     },
@@ -29,9 +43,7 @@ npm install --save froala-editor at.js font-awesome tributejs</pre>
     getTheme(): () => {
       return isDarkTheme ? 'dark' : null;
     }
-  })
-
-</pre>
+  })]</pre>
 
 <h3>Package Froala</h3>
 <pre>

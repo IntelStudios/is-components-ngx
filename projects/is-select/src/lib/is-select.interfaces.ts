@@ -82,7 +82,7 @@ export interface IsSelectConfig {
    */
   closeOptionsOnScroll?: boolean;
   /**
-   * placeholder for empty search input, can be ngx-translate key
+   * placeholder for empty search input
    */
   searchPlaceholder?: string;
 }

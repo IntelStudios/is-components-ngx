@@ -2,7 +2,33 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "@intelstudios/cdk": [
+        "projects/is-cdk/src/public-api.ts"
+      ],
+      "@intelstudios/core-ui": [
+        "projects/is-core-ui/src/public_api.ts"
+      ],
+      "@intelstudios/select": [
+        "projects/is-select/src/public_api.ts"
+      ],
+      "@intelstudios/datepicker": [
+        "projects/is-datepicker/src/public_api.ts"
+      ],
+      "@intelstudios/timepicker": [
+        "projects/is-timepicker/src/public_api.ts"
+      ],
+      "@intelstudios/select-tree": [
+        "projects/is-select-tree/src/public_api.ts"
+      ],
+      "@intelstudios/froala": [
+        "projects/is-froala/src/public_api.ts"
+      ],
+      "@intelstudios/cron-editor": [
+        "projects/is-cron-editor/src/public_api.ts"
+      ]
+    }
   },
   "files": [
     "main.ts",

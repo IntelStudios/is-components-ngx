@@ -28,8 +28,8 @@ export const IS_RADIO_GROUP_VALUE_ACCESSOR: any = {
 };
 
 @Directive({
-  selector: 'is-radio-group',
-  providers: [IS_RADIO_GROUP_VALUE_ACCESSOR]
+    selector: 'is-radio-group',
+    providers: [IS_RADIO_GROUP_VALUE_ACCESSOR],
 })
 export class IsRadioGroupDirective implements ControlValueAccessor, AfterViewInit {
 
@@ -135,11 +135,11 @@ export const IS_CHECKBOX_VALUE_ACCESSOR: any = {
 
 
 @Component({
-  selector: 'is-checkbox,is-radio',
-  templateUrl: './is-checkbox.component.html',
-  styleUrls: ['is-checkbox.component.scss'],
-  providers: [IS_CHECKBOX_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'is-checkbox,is-radio',
+    templateUrl: './is-checkbox.component.html',
+    styleUrls: ['is-checkbox.component.scss'],
+    providers: [IS_CHECKBOX_VALUE_ACCESSOR],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IsCheckboxComponent implements ControlValueAccessor {
 

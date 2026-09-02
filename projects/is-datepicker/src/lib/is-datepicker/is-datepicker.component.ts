@@ -1,4 +1,4 @@
-import { CdkScrollable, ConnectedPosition, Overlay, OverlayRef, ScrollDispatcher } from '@angular/cdk/overlay';
+import { ConnectedPosition, Overlay, OverlayRef, ScrollDispatcher } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { DatePipe } from '@angular/common';
 import {
@@ -26,8 +26,10 @@ import {
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { NgxMaskDirective } from 'ngx-mask';
 import { IsCdkService, IsFieldErrorFactory } from '@intelstudios/cdk';
 import { Subscription } from 'rxjs';
 
@@ -58,12 +60,13 @@ export const defaultDatePickerRootConfig = (): IsDatepickerConfig => ({
 });
 
 @Component({
-  selector: 'is-datepicker',
-  templateUrl: './is-datepicker.component.html',
-  styleUrls: ['./is-datepicker.component.scss'],
-  providers: [NG_DATEPICKER_VALUE_ACCESSOR, NG_DATEPICKER_VALUE_VALIDATOR],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+    selector: 'is-datepicker',
+    templateUrl: './is-datepicker.component.html',
+    styleUrls: ['./is-datepicker.component.scss'],
+    providers: [NG_DATEPICKER_VALUE_ACCESSOR, NG_DATEPICKER_VALUE_VALIDATOR],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    imports: [DatePipe, ReactiveFormsModule, NgxMaskDirective],
 })
 export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
@@ -194,6 +197,17 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     return !!this.pickerOverlayRef;
   }
 
+  get showClearButton(): boolean {
+    if (this.disabled) {
+      return false;
+    }
+    if (this.dateValue) {
+      return true;
+    }
+    const value = this.dateControl?.value;
+    return typeof value === 'string' && /\d/.test(value);
+  }
+
   onInputValueChange($event: KeyboardEvent): void {
     const { value, readOnly } = $event.target as HTMLInputElement;
     // UP/DOWN arrows to incr/decr date
@@ -262,6 +276,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
         this.dateValue = this.stringMode ? this.stripTimezone(new Date()) : new Date();
       }
     }
+    this.updateDisplayedValue();
     if (this.dateValue === null) {
       this.changed.emit(null);
       this.changeDetector.markForCheck();
@@ -337,7 +352,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
       .withPositions([position])
       .withPush(true);
 
-    const ancScrolls: CdkScrollable[] = this.scrollDispatcher.getAncestorScrollContainers(this.el);
+    const ancScrolls = this.scrollDispatcher.getAncestorScrollContainers(this.el);
     if (ancScrolls.length > 0) {
       this.pickerOverlayRef = this.isCdk.create(
         {
@@ -348,7 +363,7 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
         this.el
       );
 
-      this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev: CdkScrollable) => {
+      this._scrollSub = this.scrollDispatcher.scrolled().pipe(distinctUntilChanged()).subscribe((ev) => {
         if (ev) {
           if (ancScrolls.filter(x=>x.getElementRef() === ev.getElementRef()).length > 0) {
             this.closePopup();
@@ -431,16 +446,15 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
    * Implemented as part of ControlValueAccessor.
    */
   writeValue(value: string): void {
-    this.changeDetector.markForCheck();
     if (!value) {
       this.dateValue = null;
+      this.updateDisplayedValue();
       return;
     };
 
     const date = this.stringMode ? parse(value, DATE_FORMAT, new Date()) : toDate(value, { timeZone : "UTC"});
     this.dateValue = this.localDateMode ? this.stripTimezone(date) : date;
-    // unless this is set, we wont get initial value displayed
-    this.dateControl.patchValue(this.datePipe.transform(this.dateValue, this.viewFormat));
+    this.updateDisplayedValue();
   }
 
   /**
@@ -489,6 +503,17 @@ export class IsDatepickerComponent implements OnInit, OnDestroy, ControlValueAcc
     } else {
       return IsFieldErrorFactory.dateInvalidError();
     }
+  }
+
+  private updateDisplayedValue(): void {
+    const displayed = this.dateValue
+      ? this.datePipe.transform(this.dateValue, this.viewFormat)
+      : '';
+    this.dateControl.setValue(displayed, { emitEvent: false });
+    if (this.input) {
+      this.input.nativeElement.value = displayed ?? '';
+    }
+    this.changeDetector.detectChanges();
   }
 
   private stripTimezone(date: Date): Date {

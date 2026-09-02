@@ -1,38 +1,31 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IsFroalaComponent } from './is-froala.component';
 import { IsFroalaService } from './is-froala.service';
 import {EventEmitterHandler, TestComponentBase} from '../../../test-base/model.spec';
-import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild} from '@angular/core';
-import {UntypedFormControl, FormControlDirective} from '@angular/forms';
+import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {ReactiveFormsModule, UntypedFormControl} from '@angular/forms';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
-import {IsCdkModule, IsCdkService} from '@intelstudios/cdk';
-import {TranslateMockModule} from '@hetznercloud/ngx-translate-mock';
+import {IsCdkService, provideIsCdk} from '@intelstudios/cdk';
 import { IsEncapsulatedComponent } from 'projects/is-cdk/src/public-api';
 
 describe('IsFroalaComponent', () => {
   let componentRoot: TestComponent;
   let fixtureRoot: ComponentFixture<TestComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TestComponent,
-        FormControlDirective,
-        IsFroalaComponent,
-        IsEncapsulatedComponent
-      ],
-      imports: [OverlayModule, CommonModule, BrowserModule, TranslateMockModule, IsCdkModule],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [OverlayModule, CommonModule, BrowserModule, TestComponent],
       providers: [
-        {provide: IsCdkService},
+        provideIsCdk(),
         {provide: IsFroalaService},
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixtureRoot = TestBed.createComponent(TestComponent);
@@ -128,11 +121,13 @@ describe('IsFroalaComponent', () => {
 });
 
 @Component({
-  template: `
+    template: `
     <style>.test-hidden{visibility: hidden; position: fixed; left: 100vw;}</style>
     <is-froala #froala class="test-hidden" [options]="options" [formControl]="control"></is-froala>
     <is-froala #froalaFixed class="test-hidden" [minHeight]="150" [maxHeight]="150" [loadOnInit]="false"></is-froala>
-  `
+    `,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IsFroalaComponent, ReactiveFormsModule],
 })
 class TestComponent extends TestComponentBase<TestComponent> {
   get froalaFixedEl(): ElementRef<HTMLElement> {

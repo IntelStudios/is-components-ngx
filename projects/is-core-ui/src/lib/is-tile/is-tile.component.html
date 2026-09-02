@@ -1,8 +1,12 @@
 <a class="tile" [title]="label" isPreventDblClick (click)="onClick($event)">
   <div class="tile-body">
-    <i *ngIf="icon" [class]="icon"></i>
+    @if (icon) {
+      <i [class]="icon"></i>
+    }
   </div>
   <div class="tile-object">
-    <div *ngIf="label" class="name" >{{label}}</div>
+    @if (label) {
+      <div class="name" >{{label}}</div>
+    }
   </div>
 </a>

@@ -1,4 +1,4 @@
-@import '../../../../styles/variables';
+@use '../../../../styles/variables' as *;
 // checkbox & radio icons are from Font Awesome, to adjust it in future, you might need to play with font-family and font-weight
 :host {
   display: flex;

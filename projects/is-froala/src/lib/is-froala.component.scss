@@ -1,5 +1,5 @@
-@import "../../../styles/mixins";
-@import "../../../styles/variables";
+@use "../../../styles/mixins" as *;
+@use "../../../styles/variables" as *;
 
 $is-froala-min-height: var(--is-froala-min-height, 249px);
 $is-froala-max-height: var(--is-froala-max-height, 1049px);

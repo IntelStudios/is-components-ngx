@@ -1,7 +1,7 @@
 import { AfterViewInit, Directive, ElementRef, OnDestroy, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: 'iframe[isIframeResize]'
+    selector: 'iframe[isIframeResize]',
 })
 export class IsIFrameResizeDirective implements AfterViewInit, OnDestroy {
 

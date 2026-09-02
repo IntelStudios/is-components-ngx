@@ -4,10 +4,11 @@ import { Observable, of } from 'rxjs';
 import { IsSelectTree, IsSelectField, IsSelectTreeNode, IsSelectTreeChangeEvent, IsSelectTreeComponent } from 'projects/is-select-tree/src/public_api';
 
 @Component({
-  selector: 'app-demo-select-tree',
-  templateUrl: './demo-select-tree.component.html',
-  styleUrls: ['./demo-select-tree.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-demo-select-tree',
+    templateUrl: './demo-select-tree.component.html',
+    styleUrls: ['./demo-select-tree.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IsSelectTreeComponent],
 })
 export class DemoSelectTreeComponent implements OnInit {
 
@@ -16,8 +17,9 @@ export class DemoSelectTreeComponent implements OnInit {
 <h3>Installation</h3>
 <pre>npm install --save @intelstudios/select-tree</pre>
 
-<h3>Import Module</h3>
-<pre>import { IsSelectTreeModule } from '@intelstudios/select-tree';</pre>
+<h3>Provide in application config</h3>
+<pre>import { provideIsSelectTree } from '@intelstudios/select-tree';
+providers: [provideIsSelectTree()]</pre>
 `
 
   tree1: IsSelectTree = IsSelectTree.deserializeTree(

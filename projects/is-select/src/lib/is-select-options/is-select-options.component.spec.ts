@@ -1,9 +1,9 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {OverlayModule} from '@angular/cdk/overlay';
 import {IsCdkService} from '@intelstudios/cdk';
-import {UntypedFormControl, FormControlDirective} from '@angular/forms';
-import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild} from '@angular/core';
+import {ReactiveFormsModule, UntypedFormControl} from '@angular/forms';
+import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BrowserModule, By} from '@angular/platform-browser';
 import {IsSelectOptionsComponent} from './is-select-options.component';
@@ -24,15 +24,9 @@ describe('IsSelectOptionsComponent', () => {
     itemsDeselected?: () => void
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TestComponent, IsSelectOptionsComponent,
-        IsSelectOptionComponent, IsSelectOptionSelectedDirective,
-        IsSelectOptionDirective,
-        FormControlDirective
-      ],
-      imports: [OverlayModule, CommonModule, BrowserModule],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [OverlayModule, CommonModule, BrowserModule, TestComponent],
       providers: [
         {provide: IsCdkService},
       ],
@@ -40,7 +34,7 @@ describe('IsSelectOptionsComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixtureRoot = TestBed.createComponent(TestComponent);
@@ -53,6 +47,7 @@ describe('IsSelectOptionsComponent', () => {
       active: null,
       optionTemplate: null,
       searchPlaceholder: 'Search TeSt placeholder',
+      searchValue: '',
       options: [],
       alignItems: 'left',
       alignment: 'left',
@@ -96,13 +91,18 @@ describe('IsSelectOptionsComponent', () => {
 
     let loadRequestValue;
 
-    callbacks.loadOptions = (value) => loadRequestValue = value;
+    callbacks.loadOptions = (value) => {
+      if (value) {
+        loadRequestValue = value;
+      }
+    };
     // we cannot create our event with data
     // because of https://stackoverflow.com/questions/54460136/unit-testing-keyboardevent-returning-istrusted-false-and-cannot-read-propert
 
-    comp.onSearchChange('Te');
-    comp.onSearchChange('TeS');
-    comp.onSearchChange('TeSt');
+    const searchEvent = (value: string) => ({ target: { value } } as unknown as Event);
+    comp.onSearchChange(searchEvent('Te'));
+    comp.onSearchChange(searchEvent('TeS'));
+    comp.onSearchChange(searchEvent('TeSt'));
     await componentRoot.afterChanges();
     await new Promise((resolve) => {
       const interval = setInterval(() => {
@@ -189,20 +189,22 @@ describe('IsSelectOptionsComponent', () => {
 });
 
 @Component({
-  template: `
+    template: `
     <style>.hidden {visibility: hidden;}</style>
 
     <is-select-options id="testOptions" #options></is-select-options>
 
-    <ng-template #customOptionsTemplate let-item="item">
+    <ng-template is-select-option #customOptionsTemplate let-item="item">
       <div>HoDnOta: {{item.Value}}</div>
     </ng-template>
-  `
+    `,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IsSelectOptionsComponent, IsSelectOptionDirective],
 })
 class TestComponent extends TestComponentBase<TestComponent> {
   @ViewChild('options', {static: true, read: ElementRef}) public optionsEl: ElementRef<HTMLElement>;
   @ViewChild('options', {static: true}) public options: IsSelectOptionsComponent;
-  @ViewChild('customOptionsTemplate', {static: true}) public customOptionsTemplate: IsSelectOptionDirective;
+  @ViewChild('customOptionsTemplate', {static: true, read: IsSelectOptionDirective}) public customOptionsTemplate: IsSelectOptionDirective;
 
   constructor(private cd: ChangeDetectorRef) {
     super(cd);

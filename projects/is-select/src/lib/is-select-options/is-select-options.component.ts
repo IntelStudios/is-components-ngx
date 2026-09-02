@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, AfterViewInit, TemplateRef, ViewChild, Optional } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import { IsCheckboxComponent } from '@intelstudios/core-ui';
 
 import { IOptionsBehavior, ChildrenOptionsBehavior, GenericOptionsBehavior, OptionsBehavior } from '../options-behavior';
 import { IsSelectOptionDirective } from '../is-select.directives';
@@ -8,13 +10,15 @@ import { configToken, IsSelectConfig, IsSelectMultipleConfig } from '../is-selec
 import { IsSelectOptionsService } from '../is-select.options.service';
 import { Inject } from '@angular/core';
 import { ISelectOptionsControl } from '../is-select.internal.interfaces';
+import { IsSelectOptionComponent } from '../is-select-option/is-select-option.component';
 
 @Component({
-  selector: 'is-select-options',
-  templateUrl: './is-select-options.component.html',
-  styleUrls: ['./is-select-options.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [IsSelectOptionsService],
+    selector: 'is-select-options',
+    templateUrl: './is-select-options.component.html',
+    styleUrls: ['./is-select-options.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    viewProviders: [IsSelectOptionsService],
+    imports: [IsSelectOptionComponent, IsCheckboxComponent, NgTemplateOutlet],
 })
 export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
 

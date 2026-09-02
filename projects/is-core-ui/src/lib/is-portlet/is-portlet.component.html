@@ -1,24 +1,32 @@
 <div class="portlet" [class.section]="isSection">
-    <div *ngIf="showHeader" class="portlet-title {{headingClass}}" [ngClass]="{'collapsed-closed': collapsed ==='closed', 'clickable': clickableHeader}" (click)="clickableHeader ? toggleCollapse($event) : null">
-        <ng-container [ngTemplateOutlet]="templateTitle?.template || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
-        </ng-container>
-        <ng-content select=".actions"></ng-content>
-        <div class="tools">
-            <a *ngIf="enableCollapse" class="is-caret" (click)="toggleCollapse($event)">
-              <i class=" fa" [class.fa-chevron-up]="collapsed ==='open'" [class.fa-chevron-down]="collapsed ==='closed'"></i>
-            </a>
-        </div>
+  @if (showHeader) {
+    <div class="portlet-title {{headingClass}}" [ngClass]="{'collapsed-closed': collapsed ==='closed', 'clickable': clickableHeader}" (click)="clickableHeader ? toggleCollapse($event) : null">
+      <ng-container [ngTemplateOutlet]="templateTitle?.template || defaultTemplateTitle" [ngTemplateOutletContext]="{$implicit: 0, index: 0, item: 0}">
+      </ng-container>
+      <ng-content select=".actions"></ng-content>
+      <div class="tools">
+        @if (enableCollapse) {
+          <a class="is-caret" (click)="toggleCollapse($event)">
+            <i class=" fa" [class.fa-chevron-up]="collapsed ==='open'" [class.fa-chevron-down]="collapsed ==='closed'"></i>
+          </a>
+        }
+      </div>
     </div>
-    <ng-content select=".alerts"></ng-content>
-    <div [@collapseInOut]="collapsed">
-        <ng-content select=".portlet-body"></ng-content>
+  }
+  <ng-content select=".alerts"></ng-content>
+  <div class="portlet-collapse" [class.portlet-collapse-closed]="collapsed === 'closed'">
+    <div class="portlet-collapse-inner">
+      <ng-content select=".portlet-body"></ng-content>
     </div>
+  </div>
 </div>
 
 <!--Default templates-->
 <ng-template #defaultTemplateTitle>
   <div class="caption">
-    <i *ngIf="icon" [class]="icon" aria-hidden="true"></i>
-    <span class="caption-subject">{{heading|translate}}</span>
+    @if (icon) {
+      <i [class]="icon" aria-hidden="true"></i>
+    }
+    <span class="caption-subject">{{heading}}</span>
   </div>
 </ng-template>

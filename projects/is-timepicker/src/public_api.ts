@@ -3,4 +3,4 @@
  */
 
 export * from './lib/is-timepicker.component';
-export * from './lib/is-timepicker.module';
+export * from './lib/provide-is-timepicker';

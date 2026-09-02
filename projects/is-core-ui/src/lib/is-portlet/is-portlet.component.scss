@@ -1,12 +1,10 @@
-@import '../../../../styles/variables';
+@use '../../../../styles/variables' as *;
 
 is-portlet, is-section {
   .portlet {
     border: 1px solid $is-portlet-border-color;
     border-radius: $is-portlet-border-radius;
     margin-bottom: 5px;
-    display: flex;
-    flex-flow: column nowrap;
 
     >.portlet-title {
       flex: 1;
@@ -61,7 +59,25 @@ is-portlet, is-section {
       }
     }
 
-    > div >.portlet-body {
+    > .portlet-collapse {
+      display: grid;
+      grid-template-rows: 1fr;
+      overflow: hidden;
+      opacity: 1;
+      transition: grid-template-rows 250ms ease-in-out, opacity 250ms ease-in-out;
+
+      &.portlet-collapse-closed {
+        grid-template-rows: 0fr;
+        opacity: 0;
+      }
+
+      > .portlet-collapse-inner {
+        min-height: 0;
+        overflow: hidden;
+      }
+    }
+
+    > .portlet-collapse > .portlet-collapse-inner > .portlet-body {
       border-top: 1px solid $is-portlet-border-color;
     }
 
@@ -87,7 +103,7 @@ is-portlet, is-section {
           }
         }
       }
-      > div >.portlet-body {
+      > .portlet-collapse > .portlet-collapse-inner > .portlet-body {
         border: none;
       }
     }

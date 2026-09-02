@@ -1,4 +1,4 @@
-@import 'projects/is-select/assets/style.scss';
+@use 'projects/is-select/assets/style.scss' as *;
 
 @include is-select-badge(default-badge-custom, blue, white);
 @include is-select-badge(danger-badge-custom, red, white);

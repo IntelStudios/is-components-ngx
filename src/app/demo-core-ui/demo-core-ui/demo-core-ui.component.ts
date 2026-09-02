@@ -1,13 +1,66 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, UntypedFormControl, Validators } from '@angular/forms';
-import { IsFieldError, IsFieldErrorFactory } from '@intelstudios/cdk';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { AbstractControl, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { IsEncapsulatedComponent, IsFieldError, IsFieldErrorFactory } from '@intelstudios/cdk';
+import {
+  IsBreadcrumbBoxComponent,
+  IsCheckboxComponent,
+  IsFieldErrorComponent,
+  IsHintComponent,
+  IsInputSecretComponent,
+  IsPasswordComponent,
+  IsPortletComponent,
+  IsPortletTitleDirective,
+  IsRadioGroupDirective,
+  IsSearchComponent,
+  IsSwitchComponent,
+  IsTabContentDirective,
+  IsTabDirective,
+  IsTabsetAfterNavItemsDirective,
+  IsTabsetComponent,
+  IsTabsetInvalidDirective,
+  IsTabTitleDirective,
+  IsTileComponent,
+} from 'projects/is-core-ui/src/public_api';
+import { IsDatepickerComponent } from 'projects/is-datepicker/src/public_api';
+import { IsSelectComponent } from 'projects/is-select/src/public_api';
+import { IsTimepickerComponent } from 'projects/is-timepicker/src/public_api';
 import { of } from 'rxjs';
 
 
 @Component({
-  selector: 'app-demo-core-ui',
-  templateUrl: './demo-core-ui.component.html',
-  styleUrls: ['./demo-core-ui.component.scss']
+    selector: 'app-demo-core-ui',
+    templateUrl: './demo-core-ui.component.html',
+    styleUrls: ['./demo-core-ui.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [
+      ReactiveFormsModule,
+      AsyncPipe,
+      RouterLink,
+      IsEncapsulatedComponent,
+      IsSwitchComponent,
+      IsInputSecretComponent,
+      IsTileComponent,
+      IsCheckboxComponent,
+      IsRadioGroupDirective,
+      IsSearchComponent,
+      IsPasswordComponent,
+      IsBreadcrumbBoxComponent,
+      IsPortletComponent,
+      IsPortletTitleDirective,
+      IsTabsetComponent,
+      IsTabDirective,
+      IsTabContentDirective,
+      IsTabTitleDirective,
+      IsTabsetInvalidDirective,
+      IsTabsetAfterNavItemsDirective,
+      IsSelectComponent,
+      IsDatepickerComponent,
+      IsTimepickerComponent,
+      IsHintComponent,
+      IsFieldErrorComponent,
+    ],
 })
 export class DemoCoreUIComponent implements OnInit {
 
@@ -16,8 +69,9 @@ export class DemoCoreUIComponent implements OnInit {
 <h3>Installation</h3>
 <pre>npm install --save @intelstudios/core-ui</pre>
 
-<h3>Import Module</h3>
-<pre>import { IsCoreUIModule } from '@intelstudios/core-ui';</pre>
+<h3>Provide in application config</h3>
+<pre>import { provideIsCoreUi } from '@intelstudios/core-ui';
+providers: [provideIsCoreUi()]</pre>
 
 <h3>Import Styles</h3>
 <pre>

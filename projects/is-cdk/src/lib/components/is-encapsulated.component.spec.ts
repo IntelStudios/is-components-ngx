@@ -1,5 +1,5 @@
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IsEncapsulatedComponent } from './is-encapsulated.component';
 
@@ -106,12 +106,12 @@ describe('IsEncapsulatedComponent', () => {
     };
   }
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [IsEncapsulatedComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [IsEncapsulatedComponent]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(IsEncapsulatedComponent);

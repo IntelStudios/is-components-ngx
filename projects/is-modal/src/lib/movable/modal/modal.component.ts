@@ -1,14 +1,18 @@
+import { NgClass, NgIf } from '@angular/common';
 import {
   Component, ElementRef, ViewChild, Input, Output, AfterViewChecked, HostListener, EventEmitter, ViewEncapsulation
 } from '@angular/core';
 import {ResizableEvent} from '../resizable/types';
 import {maxZIndex, findAncestor} from '../common/utils';
+import { DraggableDirective } from '../draggable/draggable.directive';
+import { ResizableDirective } from '../resizable/resizable.directive';
 
 @Component({
   selector: 'app-modal',
   templateUrl: 'modal.component.html',
   styleUrls: ['modal.component.css'],
   encapsulation: ViewEncapsulation.None,
+  imports: [NgIf, NgClass, DraggableDirective, ResizableDirective],
 })
 export class MovableModalComponent implements AfterViewChecked {
 

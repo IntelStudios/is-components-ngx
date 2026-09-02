@@ -1,6 +1,6 @@
 import {EventEmitterHandler, TestComponentBase} from '../../../../test-base/model.spec';
-import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild} from '@angular/core';
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {IsIFrameClickDirective} from './iframe-click.directive';
@@ -10,20 +10,16 @@ describe('IsIFrameClickDirective', () => {
   let componentRoot: TestComponent;
   let fixtureRoot: ComponentFixture<TestComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TestComponent,
-        IsIFrameClickDirective
-      ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
-        CommonModule, BrowserModule
+        CommonModule, BrowserModule, TestComponent
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixtureRoot = TestBed.createComponent(TestComponent);
@@ -49,9 +45,11 @@ describe('IsIFrameClickDirective', () => {
 });
 
 @Component({
-  template: `
+    template: `
     <iframe #frame [isIframeClick]></iframe>
-  `
+  `,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IsIFrameClickDirective],
 })
 class TestComponent extends TestComponentBase<TestComponent> {
   @ViewChild('frame', {static: true, read: IsIFrameClickDirective})

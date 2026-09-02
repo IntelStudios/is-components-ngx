@@ -1,11 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { IsFieldErrorComponent, IsSwitchComponent } from 'projects/is-core-ui/src/public_api';
+import { IsDatepickerComponent, IsDatepickerInlineComponent } from 'projects/is-datepicker/src/public_api';
 
 @Component({
-  selector: 'app-demo-datepicker',
-  templateUrl: './demo-datepicker.component.html',
-  styleUrls: ['./demo-datepicker.component.scss']
+    selector: 'app-demo-datepicker',
+    templateUrl: './demo-datepicker.component.html',
+    styleUrls: ['./demo-datepicker.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [
+      ReactiveFormsModule,
+      AsyncPipe,
+      IsSwitchComponent,
+      IsDatepickerComponent,
+      IsDatepickerInlineComponent,
+      IsFieldErrorComponent,
+    ],
 })
 export class DemoDatepickerComponent implements OnInit {
 
@@ -15,8 +27,9 @@ export class DemoDatepickerComponent implements OnInit {
 <h3>Installation</h3>
 <pre>npm install --save @intelstudios/datepicker</pre>
 
-<h3>Import Module</h3>
-<pre>import { IsDatepickerModule } from '@intelstudios/datepicker';</pre>
+<h3>Provide in application config</h3>
+<pre>import { provideIsDatepicker } from '@intelstudios/datepicker';
+providers: [provideIsDatepicker()]</pre>
 
   `
 

@@ -13,6 +13,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IsSelectBadgeItem } from '../is-select.interfaces';
 import { IsSelectComponent } from '../is-select/is-select.component';
+import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from '../is-select.directives';
 import { SelectItem } from '../select-item';
 
 
@@ -25,12 +26,13 @@ export const IS_SELECT_BADGE_CONTROL_VALUE_ACCESSOR: any = {
 export const BADGE_PATTERN: RegExp = new RegExp(/\[(\w+)_(.+?)\]/g);
 
 @Component({
-  selector: 'is-select-badge',
-  templateUrl: './is-select-badge.component.html',
-  providers: [IS_SELECT_BADGE_CONTROL_VALUE_ACCESSOR],
-  styleUrls: ['./is-select-badge.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+    selector: 'is-select-badge',
+    templateUrl: './is-select-badge.component.html',
+    providers: [IS_SELECT_BADGE_CONTROL_VALUE_ACCESSOR],
+    styleUrls: ['./is-select-badge.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    imports: [IsSelectComponent, IsSelectOptionDirective, IsSelectOptionSelectedDirective],
 })
 export class IsSelectBadgeComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
 

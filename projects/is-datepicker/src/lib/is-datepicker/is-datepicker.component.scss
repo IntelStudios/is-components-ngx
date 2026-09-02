@@ -1,5 +1,5 @@
-@import '../../../../styles/mixins';
-@import '../../../../styles/variables';
+@use '../../../../styles/mixins' as *;
+@use '../../../../styles/variables' as *;
 
 is-datepicker {
   &.ng-invalid {
@@ -17,6 +17,8 @@ is-datepicker {
       @include is-input-small(false);
       > input {
         @include is-input-small();
+        height: 100%;
+        line-height: normal;
       }
     }
   }
@@ -56,6 +58,8 @@ is-datepicker {
       flex: 1;
       outline: 0;
       min-width: 0;
+      height: 100%;
+      line-height: normal;
       white-space: nowrap;
       overflow: hidden;
 
@@ -65,8 +69,9 @@ is-datepicker {
       box-shadow: none !important;
 
       &.disabled:not(.readonly) {
-        @include is-input-disabled;
-        cursor: default;;
+        color: $is-control-disabled-fg-color;
+        cursor: default;
+        background: transparent;
       }
 
       &.align-left {

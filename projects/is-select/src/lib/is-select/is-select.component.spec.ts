@@ -1,16 +1,12 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {IsSelectComponent} from './is-select.component';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {IsCdkService} from '@intelstudios/cdk';
-import {UntypedFormControl, FormControlDirective} from '@angular/forms';
-import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule, UntypedFormControl} from '@angular/forms';
+import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {AsyncPipe, CommonModule} from '@angular/common';
 import {BrowserModule, By} from '@angular/platform-browser';
-import {IsSelectOptionsComponent} from '../is-select-options/is-select-options.component';
-import {IsSelectOptionComponent} from '../is-select-option/is-select-option.component';
-import {IsSelectOptionSelectedDirective} from '@intelstudios/select';
-import {IsSelectOptionDirective} from '../is-select.directives';
 import {Observable, of} from 'rxjs';
 import {TestComponentBase} from '../../../../test-base/model.spec';
 import {SelectItem} from '../select-item';
@@ -19,15 +15,9 @@ describe('IsSelectComponent', () => {
   let componentRoot: TestComponent;
   let fixtureRoot: ComponentFixture<TestComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TestComponent, IsSelectComponent, IsSelectOptionsComponent,
-        IsSelectOptionComponent, IsSelectOptionSelectedDirective,
-        IsSelectOptionDirective,
-        FormControlDirective
-      ],
-      imports: [OverlayModule, CommonModule, BrowserModule],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [OverlayModule, CommonModule, BrowserModule, TestComponent],
       providers: [
         {provide: IsCdkService},
       ],
@@ -35,7 +25,7 @@ describe('IsSelectComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixtureRoot = TestBed.createComponent(TestComponent);
@@ -184,30 +174,34 @@ describe('IsSelectComponent', () => {
 });
 
 @Component({
-  template: `
+    template: `
     <style>.hidden {visibility: hidden; position: fixed;} .width { width: 100px; }</style>
-
+    
     <is-select #placeholder [placeholder]="'TeSt'" class="hidden">></is-select>
-
+    
     <is-select #placeholderShow [placeholderShow]="false" class="hidden">></is-select>
-
+    
     <is-select #selectValue [formControl]="control" [items]="items" class="hidden"></is-select>
-
+    
     <is-select #allowClear [formControl]="control" [items]="items" [allowClear]="true" class="hidden"></is-select>
-
+    
     <is-select #selectColorValue [formControl]="control" [items]="colors" class="hidden"></is-select>
-
+    
     <is-select #selectMulti [formControl]="control2" [items]="colorItems" [multipleConfig]="{showButtons: true}" class="hidden width"></is-select>
-
+    
     <is-select #selectMultiAsync [modelConfig]="{idProp: 'ID', textProp: 'Value'}"  [formControl]="control5" [items]="colors" [multipleConfig]="{}" class="hidden"></is-select>
-
-    <is-select *ngIf="showSelectMultiFixed" #selectMultiFixed [formControl]="control2" [items]="colorItems" [multipleConfig]="{showButtons: true}" [resize]="false" class="hidden width"></is-select>
-
+    
+    @if (showSelectMultiFixed) {
+      <is-select #selectMultiFixed [formControl]="control2" [items]="colorItems" [multipleConfig]="{showButtons: true}" [resize]="false" class="hidden width"></is-select>
+    }
+    
     <is-select id="testLazyLoadSearch" #lazyLoadSearch [formControl]="control" [minLoadChars]="2" [items]="colors$ | async" (loadOptions)="loadColors()" class="hidden"></is-select>
-
+    
     <is-select [formControl]="control3" [items]="colors" [unsetNoMatch]="true" class="hidden"></is-select>
     <is-select [formControl]="control4" [items]="colors" class="hidden"></is-select>
-  `
+    `,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IsSelectComponent, ReactiveFormsModule, AsyncPipe],
 })
 class TestComponent extends TestComponentBase<TestComponent> {
   get selectMultiAsync(): ElementRef<HTMLElement> {

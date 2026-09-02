@@ -5,4 +5,5 @@
 // export * from './lib/is-datepicker.component';
 export * from './lib/is-datepicker/is-datepicker.component';
 export * from './lib/is-datepicker-inline/is-datepicker-inline.component';
-export * from './lib/is-datepicker.module';
+export * from './lib/is-datepicker.interfaces';
+export * from './lib/provide-is-datepicker';

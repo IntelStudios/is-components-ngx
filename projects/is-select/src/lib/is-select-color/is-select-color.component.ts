@@ -16,6 +16,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { IsColorItem } from '../is-select.interfaces';
 import { IsSelectComponent } from '../is-select/is-select.component';
+import { IsSelectOptionDirective, IsSelectOptionSelectedDirective } from '../is-select.directives';
 
 
 const NONE_COLOR = { 'ID': null, 'Value': 'None', Object: '#fff' };
@@ -29,12 +30,13 @@ export const IS_SELECT_COLOR_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'is-select-color',
-  templateUrl: './is-select-color.component.html',
-  providers: [IS_SELECT_COLOR_CONTROL_VALUE_ACCESSOR],
-  styleUrls: ['./is-select-color.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+    selector: 'is-select-color',
+    templateUrl: './is-select-color.component.html',
+    providers: [IS_SELECT_COLOR_CONTROL_VALUE_ACCESSOR],
+    styleUrls: ['./is-select-color.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    imports: [IsSelectComponent, IsSelectOptionDirective, IsSelectOptionSelectedDirective],
 })
 export class IsSelectColorComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
 

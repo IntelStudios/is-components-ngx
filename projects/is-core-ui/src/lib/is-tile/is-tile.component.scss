@@ -1,4 +1,4 @@
-@import '../../../../styles/variables';
+@use '../../../../styles/variables' as *;
 
 $is-tile-bg-color: var(--is-tile-bg-color, #555);
 $is-tile-fg-color: var(--is-tile-fg-color, #fff);

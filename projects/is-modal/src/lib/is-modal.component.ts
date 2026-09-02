@@ -1,5 +1,8 @@
+import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap/modal';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { ModalDirective, ModalModule } from 'ngx-bootstrap/modal';
 
 import { IsModalButtonConfig, IsModalConfig, IsModalControl, IsModalInstance, IsModalRef } from './is-modal.interfaces';
 
@@ -7,7 +10,8 @@ import { IsModalButtonConfig, IsModalConfig, IsModalControl, IsModalInstance, Is
   selector: 'is-modal',
   templateUrl: 'is-modal.component.html',
   styleUrls: ['is-modal.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgIf, NgFor, NgTemplateOutlet, TranslocoPipe, CdkScrollable, ModalModule],
 })
 export class IsModalComponent implements OnInit, IsModalInstance {
 

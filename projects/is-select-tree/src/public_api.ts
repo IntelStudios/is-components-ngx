@@ -5,4 +5,4 @@
 export * from './lib/is-select-tree.models';
 export * from './lib/is-select-tree.interfaces';
 export * from './lib/is-select-tree.component';
-export * from './lib/is-select-tree.module';
+export * from './lib/provide-is-select-tree';

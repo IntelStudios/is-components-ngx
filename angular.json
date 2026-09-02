@@ -22,8 +22,7 @@
         "@schematics/angular:guard": {
           "skipTests": true
         },
-        "@schematics/angular:module": {
-        },
+        "@schematics/angular:module": {},
         "@schematics/angular:pipe": {
           "skipTests": true
         },
@@ -33,7 +32,7 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": {
               "base": "dist/app"
@@ -48,8 +47,21 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/tributejs/dist/tribute.css"
+              "node_modules/codemirror/lib/codemirror.css",
+              "node_modules/codemirror/addon/hint/show-hint.css",
+              "node_modules/codemirror/addon/lint/lint.css",
+              "node_modules/froala-editor/css/froala_editor.pkgd.min.css",
+              "node_modules/froala-editor/css/froala_style.min.css",
+              "node_modules/froala-editor/css/plugins/code_view.min.css",
+              "node_modules/froala-editor/css/themes/dark.css",
+              "node_modules/@intelstudios/font-awesome/fontawesome/css/all.css",
+              "node_modules/@ali-hm/angular-tree-component/css/angular-tree-component.css",
+              "node_modules/text-security/text-security.css",
+              "node_modules/at.js/dist/css/jquery.atwho.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/tributejs/dist/tribute.css",
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -104,7 +116,7 @@
           "defaultConfiguration": ""
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "options": {
             "buildTarget": "is-components-ngx:build"
           },
@@ -115,7 +127,7 @@
           }
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "is-components-ngx:build"
           }
@@ -133,23 +145,14 @@
               "src/assets"
             ]
           }
-        }
-      }
-    },
-    "is-components-ngx-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "is-components-ngx:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "is-components-ngx:serve:production"
-            }
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
@@ -161,7 +164,7 @@
       "prefix": "is",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/is-select/tsconfig.lib.json",
             "project": "projects/is-select/ng-package.json"
@@ -179,6 +182,16 @@
             "tsConfig": "projects/is-select/tsconfig.spec.json",
             "karmaConfig": "projects/is-select/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/is-select/**/*.ts",
+              "projects/is-select/**/*.html"
+            ],
+            "eslintConfig": "projects/is-select/eslint.config.js"
+          }
         }
       }
     },
@@ -189,7 +202,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/is-froala/tsconfig.lib.json",
             "project": "projects/is-froala/ng-package.json"
@@ -211,6 +224,16 @@
               "node_modules/froala-editor/js/froala_editor.pkgd.min.js"
             ]
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/is-froala/**/*.ts",
+              "projects/is-froala/**/*.html"
+            ],
+            "eslintConfig": "projects/is-froala/eslint.config.js"
+          }
         }
       }
     },
@@ -221,7 +244,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/is-core-ui/tsconfig.lib.json",
             "project": "projects/is-core-ui/ng-package.json"
@@ -239,6 +262,16 @@
             "tsConfig": "projects/is-core-ui/tsconfig.spec.json",
             "karmaConfig": "projects/is-core-ui/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/is-core-ui/**/*.ts",
+              "projects/is-core-ui/**/*.html"
+            ],
+            "eslintConfig": "projects/is-core-ui/eslint.config.js"
+          }
         }
       }
     },
@@ -249,7 +282,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/is-datepicker/tsconfig.lib.json",
             "project": "projects/is-datepicker/ng-package.json"
@@ -267,33 +300,15 @@
             "tsConfig": "projects/is-datepicker/tsconfig.spec.json",
             "karmaConfig": "projects/is-datepicker/karma.conf.js"
           }
-        }
-      }
-    },
-    "is-bootstrap-switch": {
-      "root": "projects/is-bootstrap-switch",
-      "sourceRoot": "projects/is-bootstrap-switch/src",
-      "projectType": "library",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/is-bootstrap-switch/tsconfig.lib.json",
-            "project": "projects/is-bootstrap-switch/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/is-bootstrap-switch/tsconfig.lib.prod.json"
-            }
-          }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "main": "projects/is-bootstrap-switch/src/test.ts",
-            "tsConfig": "projects/is-bootstrap-switch/tsconfig.spec.json",
-            "karmaConfig": "projects/is-bootstrap-switch/karma.conf.js"
+            "lintFilePatterns": [
+              "projects/is-datepicker/**/*.ts",
+              "projects/is-datepicker/**/*.html"
+            ],
+            "eslintConfig": "projects/is-datepicker/eslint.config.js"
           }
         }
       }
@@ -305,7 +320,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/is-select-tree/tsconfig.lib.json",
             "project": "projects/is-select-tree/ng-package.json"
@@ -323,33 +338,15 @@
             "tsConfig": "projects/is-select-tree/tsconfig.spec.json",
             "karmaConfig": "projects/is-select-tree/karma.conf.js"
           }
-        }
-      }
-    },
-    "is-modal": {
-      "root": "projects/is-modal",
-      "sourceRoot": "projects/is-modal/src",
-      "projectType": "library",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/is-modal/tsconfig.lib.json",
-            "project": "projects/is-modal/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/is-modal/tsconfig.lib.prod.json"
-            }
-          }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "main": "projects/is-modal/src/test.ts",
-            "tsConfig": "projects/is-modal/tsconfig.spec.json",
-            "karmaConfig": "projects/is-modal/karma.conf.js"
+            "lintFilePatterns": [
+              "projects/is-select-tree/**/*.ts",
+              "projects/is-select-tree/**/*.html"
+            ],
+            "eslintConfig": "projects/is-select-tree/eslint.config.js"
           }
         }
       }
@@ -361,7 +358,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/is-timepicker/tsconfig.lib.json",
             "project": "projects/is-timepicker/ng-package.json"
@@ -379,6 +376,16 @@
             "tsConfig": "projects/is-timepicker/tsconfig.spec.json",
             "karmaConfig": "projects/is-timepicker/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/is-timepicker/**/*.ts",
+              "projects/is-timepicker/**/*.html"
+            ],
+            "eslintConfig": "projects/is-timepicker/eslint.config.js"
+          }
         }
       }
     },
@@ -389,7 +396,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/is-cron-editor/tsconfig.lib.json",
             "project": "projects/is-cron-editor/ng-package.json"
@@ -407,33 +414,15 @@
             "tsConfig": "projects/is-cron-editor/tsconfig.spec.json",
             "karmaConfig": "projects/is-cron-editor/karma.conf.js"
           }
-        }
-      }
-    },
-    "is-editable-textbox": {
-      "root": "projects/is-editable-textbox",
-      "sourceRoot": "projects/is-editable-textbox/src",
-      "projectType": "library",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/is-editable-textbox/tsconfig.lib.json",
-            "project": "projects/is-editable-textbox/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/is-editable-textbox/tsconfig.lib.prod.json"
-            }
-          }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "main": "projects/is-editable-textbox/src/test.ts",
-            "tsConfig": "projects/is-editable-textbox/tsconfig.spec.json",
-            "karmaConfig": "projects/is-editable-textbox/karma.conf.js"
+            "lintFilePatterns": [
+              "projects/is-cron-editor/**/*.ts",
+              "projects/is-cron-editor/**/*.html"
+            ],
+            "eslintConfig": "projects/is-cron-editor/eslint.config.js"
           }
         }
       }
@@ -445,7 +434,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/is-cdk/tsconfig.lib.json",
             "project": "projects/is-cdk/ng-package.json"
@@ -463,11 +452,67 @@
             "tsConfig": "projects/is-cdk/tsconfig.spec.json",
             "karmaConfig": "projects/is-cdk/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/is-cdk/**/*.ts",
+              "projects/is-cdk/**/*.html"
+            ],
+            "eslintConfig": "projects/is-cdk/eslint.config.js"
+          }
+        }
+      }
+    },
+    "is-modal": {
+      "root": "projects/is-modal",
+      "sourceRoot": "projects/is-modal/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "tsConfig": "projects/is-modal/tsconfig.lib.json",
+            "project": "projects/is-modal/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/is-modal/tsconfig.lib.prod.json"
+            }
+          }
         }
       }
     }
   },
   "cli": {
     "analytics": false
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    }
   }
 }

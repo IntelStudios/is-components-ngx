@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation, Input, HostBinding } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { TIME_FORMAT } from '@intelstudios/timepicker';
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TIME_FORMAT, IsTimepickerComponent } from '@intelstudios/timepicker';
 import { format, set } from 'date-fns';
 
 export interface DatepickerPopupControl {
@@ -15,11 +15,12 @@ export const defaultDatePickerConfig = () => ({
 });
 
 @Component({
-  selector: 'is-datepicker-popup',
-  templateUrl: './is-datepicker-popup.component.html',
-  styleUrls: ['./is-datepicker-popup.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+    selector: 'is-datepicker-popup',
+    templateUrl: './is-datepicker-popup.component.html',
+    styleUrls: ['./is-datepicker-popup.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    imports: [BsDatepickerModule, IsTimepickerComponent, ReactiveFormsModule],
 })
 export class IsDatepickerPopupComponent implements OnInit {
 

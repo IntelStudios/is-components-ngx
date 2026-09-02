@@ -1,7 +1,7 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, NgZone, OnDestroy, Output, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: 'iframe[isIframeClick]'
+    selector: 'iframe[isIframeClick]',
 })
 export class IsIFrameClickDirective implements AfterViewInit, OnDestroy {
 

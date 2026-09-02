@@ -3,7 +3,7 @@
  */
 
 export * from './lib/is-cdk.service';
-export * from './lib/is-cdk.module';
+export * from './lib/provide-is-cdk';
 export * from './lib/directives/stop-propagation.directive';
 export * from './lib/directives/iframe-resize.directive';
 export * from './lib/directives/prevent-dblclick.directive';

@@ -11,11 +11,10 @@ import { Subscription } from 'rxjs';
 import { IsSelectField, IsSelectTree, IsSelectTreeChangeEvent, IsSelectTreeNode } from './is-select-tree.models';
 
 @Component({
-  selector: 'is-select-tree-node',
-  templateUrl: './is-select-tree-node.component.html',
-  styleUrls: ['is-select-tree-node.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
- // encapsulation: ViewEncapsulation.None
+    selector: 'is-select-tree-node',
+    templateUrl: './is-select-tree-node.component.html',
+    styleUrls: ['is-select-tree-node.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IsSelectTreeNodeComponent implements OnInit, OnDestroy {
 

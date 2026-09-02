@@ -1,8 +1,8 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControlDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { IsCdkService } from '@intelstudios/cdk';
@@ -18,17 +18,12 @@ describe('IsDatepickerComponent', () => {
   let componentRoot: TestComponent;
   let fixtureRoot: ComponentFixture<TestComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TestComponent,
-        FormControlDirective,
-        IsDatepickerComponent
-      ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
-        OverlayModule, CommonModule, BrowserModule, OverlayModule,
-        TimepickerModule.forRoot(), FormsModule, ScrollingModule, ReactiveFormsModule,
-        BsDatepickerModule
+        OverlayModule, CommonModule, BrowserModule,
+        TimepickerModule, FormsModule, ScrollingModule, ReactiveFormsModule,
+        BsDatepickerModule, TestComponent,
       ],
       providers: [
         { provide: IsCdkService },
@@ -40,7 +35,7 @@ describe('IsDatepickerComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixtureRoot = TestBed.createComponent(TestComponent);
@@ -78,6 +73,31 @@ describe('IsDatepickerComponent', () => {
     picker.onValueChange();
     await handler.waitForNewValue();
     expect(handler.valueLast).toBe(value);
+  });
+
+  it('should display selected value in the input', async () => {
+    const { picker, pickerEl } = componentRoot;
+    const value = new Date(2011, 10, 9);
+    picker.dateValue = value;
+    picker.onValueChange();
+    await componentRoot.afterChanges();
+
+    expect(componentRoot.getInput(pickerEl).value).toBe('09-11-2011');
+    expect(picker.dateControl.value).toBe('09-11-2011');
+  });
+
+  it('should clear displayed value in the input', async () => {
+    const { picker, pickerEl } = componentRoot;
+    picker.dateValue = new Date(2011, 10, 9);
+    picker.onValueChange();
+    await componentRoot.afterChanges();
+
+    picker.dateValue = null;
+    picker.onValueChange();
+    await componentRoot.afterChanges();
+
+    expect(componentRoot.getInput(pickerEl).value).toBe('');
+    expect(picker.dateControl.value).toBe('');
   });
 
   it('should respect string mode settings', async () => {
@@ -213,6 +233,16 @@ describe('IsDatepickerComponent', () => {
     expect(handler.valueLast.getTime()).toBe(dayDown.getTime());
   });
 
+  it('should not show clear button when value is empty', async () => {
+    const { pickerLocal, pickerLocalEl } = componentRoot;
+    pickerLocal.dateValue = null;
+    pickerLocal.dateControl.setValue('', { emitEvent: false });
+    pickerLocal.setDisabledState(false);
+
+    await componentRoot.afterChanges();
+    expect(componentRoot.getBtnClear(pickerLocalEl)).withContext('value is empty').toBeNull();
+  });
+
   it('should allow clearing value with button when enabled', async () => {
     const { picker, pickerEl, pickerLocal, pickerLocalEl } = componentRoot;
 
@@ -302,11 +332,13 @@ describe('IsDatepickerComponent', () => {
 });
 
 @Component({
-  template: `
+    template: `
     <is-datepicker #picker></is-datepicker>
     <is-datepicker #pickerLocal [localDateMode]="true" [allowClear]="true"></is-datepicker>
     <is-datepicker #pickerString [stringMode]="true"></is-datepicker>
-  `
+    `,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IsDatepickerComponent],
 })
 class TestComponent extends TestComponentBase<TestComponent> {
   constructor(private cd: ChangeDetectorRef) {

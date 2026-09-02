@@ -1,10 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { IsFieldErrorComponent, IsSwitchComponent } from 'projects/is-core-ui/src/public_api';
+import { IsTimepickerComponent } from 'projects/is-timepicker/src/public_api';
 
 @Component({
-  selector: 'app-demo-timepicker',
-  templateUrl: './demo-timepicker.component.html',
-  styleUrls: ['./demo-timepicker.component.scss']
+    selector: 'app-demo-timepicker',
+    templateUrl: './demo-timepicker.component.html',
+    styleUrls: ['./demo-timepicker.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [
+      ReactiveFormsModule,
+      IsSwitchComponent,
+      IsTimepickerComponent,
+      IsFieldErrorComponent,
+    ],
 })
 export class DemoTimepickerComponent implements OnInit {
 
@@ -13,8 +22,9 @@ export class DemoTimepickerComponent implements OnInit {
 <h3>Installation</h3>
 <pre>npm install --save @intelstudios/timepicker</pre>
 
-<h3>Import Module</h3>
-<pre>import { IsTimepickerModule } from 'is-timepicker';</pre>
+<h3>Provide in application config</h3>
+<pre>import { provideIsTimepicker } from '@intelstudios/timepicker';
+providers: [provideIsTimepicker()]</pre>
 
   `
 

@@ -8,17 +8,19 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ITreeOptions, TreeComponent, TreeNode } from '@ali-hm/angular-tree-component';
+import { ITreeOptions, TreeComponent, TreeModule, TreeNode } from '@ali-hm/angular-tree-component';
 import { Subscription } from 'rxjs';
 import { IsSelectTree, IsSelectTreeChangeEvent, IsSelectTreeChanges, IsSelectTreeNode } from './is-select-tree.models';
+import { IsSelectTreeNodeComponent } from './is-select-tree-node.component';
 
 
 @Component({
-  selector: 'is-select-tree',
-  templateUrl: './is-select-tree.component.html',
-  styleUrls: ['./is-select-tree.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+    selector: 'is-select-tree',
+    templateUrl: './is-select-tree.component.html',
+    styleUrls: ['./is-select-tree.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    imports: [TreeModule, IsSelectTreeNodeComponent],
 })
 export class IsSelectTreeComponent implements OnDestroy {
 

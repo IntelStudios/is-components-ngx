@@ -1,9 +1,8 @@
-@import '../../../styles/variables';
-@import '../../../styles/mixins.scss';
+@use '../../../styles/mixins' as m;
 
 :host {
   .modal-footer>.buttons {
-    @include modal-footer-buttons();
+    @include m.modal-footer-buttons();
   }
 
   .modal-body {

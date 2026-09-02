@@ -1,8 +1,8 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControlDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { IsCdkService } from '@intelstudios/cdk';
@@ -17,16 +17,12 @@ describe('IsDatepickerInlineComponent', () => {
   let componentRoot: TestComponent;
   let fixtureRoot: ComponentFixture<TestComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        TestComponent,
-        FormControlDirective,
-        IsDatepickerInlineComponent
-      ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
-        OverlayModule, CommonModule, BrowserModule, OverlayModule,
-        TimepickerModule.forRoot(), FormsModule, ScrollingModule, ReactiveFormsModule
+        OverlayModule, CommonModule, BrowserModule,
+        TimepickerModule, FormsModule, ScrollingModule, ReactiveFormsModule,
+        TestComponent,
       ],
       providers: [
         { provide: IsCdkService },
@@ -37,7 +33,7 @@ describe('IsDatepickerInlineComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixtureRoot = TestBed.createComponent(TestComponent);
@@ -113,10 +109,12 @@ describe('IsDatepickerInlineComponent', () => {
 });
 
 @Component({
-  template: `
+    template: `
     <is-datepicker-inline #picker></is-datepicker-inline>
     <is-datepicker-inline #pickerString [stringMode]="true"></is-datepicker-inline>
-  `
+    `,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IsDatepickerInlineComponent],
 })
 class TestComponent extends TestComponentBase<TestComponent> {
   constructor(private cd: ChangeDetectorRef) {

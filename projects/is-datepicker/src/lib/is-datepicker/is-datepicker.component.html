@@ -12,12 +12,14 @@
     [class.disabled]="disabled"
     [readonly]="!mask || disabled || readonly"
     [class.readonly]="readonly"
-  >
+    >
   <div class="input-group-append">
-    <i *ngIf="allowClear"
-       [class.shown]="!disabled && (input.value || dateValue)"
-       class="fas fa-times btn-remove"
-       (click)="onRemove($event)"></i>
+    @if (allowClear) {
+      <i
+        [class.shown]="showClearButton"
+        class="fas fa-times btn-remove"
+      (click)="onRemove($event)"></i>
+    }
     <span class="datepicker-icon" [class.disabled]="disabled" (click)="openPopup()">
       <i class="fas fa-calendar-alt fa-fw"></i>
     </span>

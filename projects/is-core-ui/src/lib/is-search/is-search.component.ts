@@ -18,11 +18,11 @@ export const IS_SEARCH_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'is-search',
-  templateUrl: 'is-search.component.html',
-  styleUrls: ['is-search.component.scss'],
-  providers: [IS_SEARCH_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'is-search',
+    templateUrl: 'is-search.component.html',
+    styleUrls: ['is-search.component.scss'],
+    providers: [IS_SEARCH_VALUE_ACCESSOR],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IsSearchComponent {
 
@@ -69,7 +69,7 @@ export class IsSearchComponent {
   clear(): void {
     this.writeValue('');
     this.emitChange();
-    this.onClear.next();
+    this.onClear.emit();
   }
 
   /**

@@ -1,40 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
-@import "../node_modules/codemirror/lib/codemirror.css";
-@import "../node_modules/codemirror/addon/hint/show-hint.css";
-@import "../node_modules/codemirror/addon/lint/lint.css";
+@use "sass:color";
+@use "@angular/cdk" as cdk with (
+  $overlay-container-z-index: 1055,
+  $overlay-z-index: 1055,
+  $overlay-backdrop-z-index: 1055
+);
+@use "../projects/styles/mixins" as *;
 
-@import "../node_modules/froala-editor/css/froala_editor.pkgd.min.css";
-@import "../node_modules/froala-editor/css/froala_style.min.css";
-@import "../node_modules/froala-editor/css/plugins/code_view.min.css";
-@import "../node_modules/froala-editor/css/themes/dark.css";
-
-@import "../node_modules/@intelstudios/font-awesome/fontawesome/css/all.css";
-
-@import '@ali-hm/angular-tree-component/css/angular-tree-component.css';
-
-@import '../node_modules/text-security/text-security.css';
-
-@import '../node_modules/at.js/dist/css/jquery.atwho.min.css';
-// import angular/cdk styles, but override overlay z-index
-// to work with bootstrap overlay z-index
-@import "../node_modules/@angular/cdk/overlay/index";
-$cdk-z-index-overlay-container: 1055;
-$cdk-z-index-overlay: 1055;
-$cdk-z-index-overlay-bakcdrop: 1055;
-@include overlay();
-
-// @import '../node_modules/pretty-checkbox/src/pretty-checkbox.scss';
-
-@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
-
-@import "bootstrap/dist/css/bootstrap.css";
+@include cdk.overlay();
 
 body {
   background-color: #fff;
   font-size: 14px;
 }
-
-@import "../projects/styles/mixins";
 
 .short-scroll {
   @include short-scroll();
@@ -82,10 +59,10 @@ h3 {
 
 // light (default) theme
 $light-base-color: #7d90a3;
-$light-border-color: transparentize($light-base-color, 0.7);
-$light-hover-color: transparentize($light-base-color, 0.5);
-$light-handle-color: transparentize($light-base-color, 0.5);
-$light-focused-color: transparentize($light-base-color, 0.1);
+$light-border-color: color.adjust($light-base-color, $alpha: -0.7);
+$light-hover-color: color.adjust($light-base-color, $alpha: -0.5);
+$light-handle-color: color.adjust($light-base-color, $alpha: -0.5);
+$light-focused-color: color.adjust($light-base-color, $alpha: -0.1);
 
 :root {
   // general colors
@@ -105,7 +82,7 @@ $light-focused-color: transparentize($light-base-color, 0.1);
   --xe-dark-08: #edeeef;
   --xe-dark-04: #f5f6f6;
   --xe-white: #ffffff;
-  --xe-white-04: #{transparentize(#fff, 0.96)};
+  --xe-white-04: #{color.adjust(#fff, $alpha: -0.96)};
 
   --xe-blue-100: #4674be;
   --xe-blue-96: #4d79c0;
@@ -255,9 +232,9 @@ $light-focused-color: transparentize($light-base-color, 0.1);
 // dark theme
 $dark-background: #2c3e50;
 $dark-base-color: #72bcff;
-$dark-border-color: transparentize($dark-base-color, 0.5);
-$dark-hover-color: transparentize($dark-base-color, 0.3);
-$dark-handle-color: transparentize(#fff, 0.5);
+$dark-border-color: color.adjust($dark-base-color, $alpha: -0.5);
+$dark-hover-color: color.adjust($dark-base-color, $alpha: -0.3);
+$dark-handle-color: color.adjust(#fff, $alpha: -0.5);
 
 body.is-theme-dark {
   background-color: $dark-background;
@@ -276,10 +253,10 @@ body.is-theme-dark {
   --is-control-border-focus-color: #{$dark-base-color};
   --is-control-border-hover-color: #{$dark-hover-color};
   --is-control-handle-color: #{$dark-handle-color};
-  --is-control-selected-item-color: #{transparentize(#fff, 0.8)};
-  --is-control-active-item-bg-color: #{transparentize(#72bcff, 0.8)};
+  --is-control-selected-item-color: #{color.adjust(#fff, $alpha: -0.8)};
+  --is-control-active-item-bg-color: #{color.adjust(#72bcff, $alpha: -0.8)};
   --is-control-disabled-bg-color: #304558;
-  --is-control-disabled-fg-color: #{transparentize(#fff, 0.7)};
+  --is-control-disabled-fg-color: #{color.adjust(#fff, $alpha: -0.7)};
 
   --is-froala-toolbar-bg-color: var(--xe-dark-100);
   --is-froala-toolbar-fg-color: var(--xe-white);

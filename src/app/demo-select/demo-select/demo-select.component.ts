@@ -1,14 +1,44 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { IsSelectBadgeItem } from 'projects/is-select/src/public_api';
+import { AsyncPipe, JsonPipe } from '@angular/common';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import {
+  IsTabContentDirective,
+  IsTabDirective,
+  IsTabsetComponent,
+  IsSwitchComponent,
+} from 'projects/is-core-ui/src/public_api';
+import {
+  IsSelectBadgeComponent,
+  IsSelectBadgeItem,
+  IsSelectColorComponent,
+  IsSelectComponent,
+  IsSelectOptionDirective,
+  IsSelectOptionSelectedDirective,
+} from 'projects/is-select/src/public_api';
 import { of, Observable, Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-demo-select',
-  templateUrl: './demo-select.component.html',
-  styleUrls: ['./demo-select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-demo-select',
+    templateUrl: './demo-select.component.html',
+    styleUrls: ['./demo-select.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    imports: [
+      ReactiveFormsModule,
+      AsyncPipe,
+      JsonPipe,
+      CdkScrollable,
+      IsSwitchComponent,
+      IsTabsetComponent,
+      IsTabDirective,
+      IsTabContentDirective,
+      IsSelectComponent,
+      IsSelectOptionDirective,
+      IsSelectOptionSelectedDirective,
+      IsSelectColorComponent,
+      IsSelectBadgeComponent,
+    ],
 })
 export class DemoSelectComponent implements OnInit {
 
@@ -17,8 +47,9 @@ export class DemoSelectComponent implements OnInit {
 <h3>Installation</h3>
 <pre>npm install --save @intelstudios/select</pre>
 
-<h3>Import Module</h3>
-<pre>import { IsSelectModule } from '@intelstudios/select';</pre>
+<h3>Provide in application config</h3>
+<pre>import { provideIsSelect } from '@intelstudios/select';
+providers: [provideIsSelect({ allowClear: true })]</pre>
 `
 
   small = false;

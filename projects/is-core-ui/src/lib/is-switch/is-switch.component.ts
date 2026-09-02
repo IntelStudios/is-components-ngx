@@ -24,11 +24,11 @@ export const IS_SWITCH_VALUE_ACCESSOR: any = {
 let switchId = 0;
 
 @Component({
-  selector: 'is-switch',
-  templateUrl: './is-switch.component.html',
-  styleUrls: ['is-switch.component.scss'],
-  providers: [IS_SWITCH_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'is-switch',
+    templateUrl: './is-switch.component.html',
+    styleUrls: ['is-switch.component.scss'],
+    providers: [IS_SWITCH_VALUE_ACCESSOR],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IsSwitchComponent implements ControlValueAccessor {
 

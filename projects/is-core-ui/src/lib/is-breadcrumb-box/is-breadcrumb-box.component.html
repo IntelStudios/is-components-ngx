@@ -1,14 +1,21 @@
-<a *ngIf="breadcrumb" class="tile {{bgClass}}" [routerLink]="route">
-  <div class="tile-body" *ngIf="breadcrumb.icon; else noicon">
-    <i [class]="breadcrumb.icon"></i>
-  </div>
-  <ng-template #noicon>
-    <div class="tile-body no-icon">
-      <div class="name-no-icon">{{breadcrumb.name|translate}}</div>
+@if (breadcrumb) {
+  <a class="tile {{bgClass}}" [routerLink]="route">
+    @if (breadcrumb.icon) {
+      <div class="tile-body">
+        <i [class]="breadcrumb.icon"></i>
+      </div>
+    } @else {
+      <div class="tile-body no-icon">
+        <div class="name-no-icon">{{breadcrumb.name}}</div>
+      </div>
+    }
+    <div class="tile-object">
+      @if (breadcrumb.icon) {
+        <div class="name">{{breadcrumb.name}}</div>
+      }
+      @if (count) {
+        <div class="number">{{count}}</div>
+      }
     </div>
-  </ng-template>
-  <div class="tile-object">
-    <div class="name" *ngIf="breadcrumb.icon">{{breadcrumb.name|translate}}</div>
-    <div class="number" *ngIf="count">{{count}}</div>
-  </div>
-</a>
+  </a>
+}

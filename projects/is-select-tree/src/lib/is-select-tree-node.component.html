@@ -1,14 +1,24 @@
-<i *ngIf="!node.isLeaf" (click)="toggleExpandNode();" class="fa fa-fw fa-angle-right"
+@if (!node.isLeaf) {
+  <i (click)="toggleExpandNode();" class="fa fa-fw fa-angle-right"
   [class.fa-rotate-90]="node.isExpanded"></i>
+}
 
 <div class="node-title" (click)="select();">
-  <i *ngIf="node.data.icon" [class]="node.data.icon"></i>
+  @if (node.data.icon) {
+    <i [class]="node.data.icon"></i>
+  }
   <span [title]="node.data.name">{{ node.data.name }}</span>
   <span class="badge-html" [innerHtml]="sanitize(node.data.badgeHtml)"></span>
-  <i *ngIf="node.data.$isSaving" class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+  @if (node.data.$isSaving) {
+    <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+  }
 </div>
 
-<div class="selection-fields" *ngIf="selection.selectionFields.length > 0">
-  <i class="fa fa-fw selection-field" [title]="f.name|translate" [class]="node.data.$classes[f.fieldName]"
-    (click)="toggleSelect($event, node, f)" *ngFor="let f of selection.selectionFields;"></i>
-</div>
+@if (selection.selectionFields.length > 0) {
+  <div class="selection-fields">
+    @for (f of selection.selectionFields; track f) {
+      <i class="fa fa-fw selection-field" [title]="f.name" [class]="node.data.$classes[f.fieldName]"
+      (click)="toggleSelect($event, node, f)"></i>
+    }
+  </div>
+}

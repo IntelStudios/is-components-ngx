@@ -1,4 +1,7 @@
+import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { IsModalButtonConfig, IsModalMovableControl, IsModalMovableInstance } from './is-modal.interfaces';
 import { MovableModalComponent } from './movable/modal/modal.component';
@@ -8,7 +11,8 @@ import { MovableModalComponent } from './movable/modal/modal.component';
   templateUrl: 'is-modal-movable.component.html',
   styleUrls: ['is-modal-movable.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  imports: [NgIf, NgFor, NgTemplateOutlet, TranslocoPipe, CdkScrollable, MovableModalComponent],
 })
 export class IsModalMovableComponent implements OnInit, AfterViewInit, IsModalMovableInstance {
 

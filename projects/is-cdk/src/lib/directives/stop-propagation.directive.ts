@@ -3,7 +3,7 @@ import { Directive, HostListener } from '@angular/core';
 
 
 @Directive({
-  selector: '[isStopPropagation]'
+    selector: '[isStopPropagation]',
 })
 export class StopPropagationDirective {
 

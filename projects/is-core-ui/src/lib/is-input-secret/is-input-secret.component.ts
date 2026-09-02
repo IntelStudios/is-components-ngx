@@ -20,7 +20,7 @@ export const IS_INPUT_SECRET_VALUE_ACCESSOR: any = {
   templateUrl: 'is-input-secret.component.html',
   styleUrls: ['is-input-secret.component.scss'],
   providers: [IS_INPUT_SECRET_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IsInputSecretComponent {
 

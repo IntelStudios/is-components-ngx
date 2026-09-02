@@ -1,4 +1,3 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -12,33 +11,19 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 
 import { IsPortletTitleDirective } from './is-portlet.directives';
 
 type PortletCollapsed = 'open' | 'closed';
 
 @Component({
-  selector: 'is-portlet, is-section',
-  templateUrl: './is-portlet.component.html',
-  styleUrls: ['./is-portlet.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger('collapseInOut', [
-      state('open', style({
-        overflow: 'hidden',
-        height: '*',
-      })),
-      state('closed', style({
-        opacity: '0',
-        overflow: 'hidden',
-        height: '0px',
-        width: '0px'
-      })),
-      transition('closed => open', animate('250ms ease-in-out')),
-      transition('open => closed', animate('250ms ease-in-out'))
-    ])
-  ]
+    selector: 'is-portlet, is-section',
+    templateUrl: './is-portlet.component.html',
+    styleUrls: ['./is-portlet.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    imports: [NgClass, NgTemplateOutlet],
 })
 export class IsPortletComponent implements OnInit {
 

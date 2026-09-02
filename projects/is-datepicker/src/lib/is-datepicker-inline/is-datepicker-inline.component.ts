@@ -8,13 +8,14 @@ import {
   OnDestroy,
   Optional,
   Output,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Subscription } from 'rxjs';
 
-import { DatepickerPopupControl, defaultDatePickerConfig } from '../is-datepicker-popup/is-datepicker-popup.component';
+import { DatepickerPopupControl, defaultDatePickerConfig, IsDatepickerPopupComponent } from '../is-datepicker-popup/is-datepicker-popup.component';
 import { configToken, IsDatepickerConfig } from '../is-datepicker.interfaces';
 import { DATE_FORMAT, defaultDatePickerRootConfig } from '../is-datepicker/is-datepicker.component';
 import { format, parse } from 'date-fns';
@@ -27,11 +28,13 @@ export const NG_DATEPICKER_INLINE_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'is-datepicker-inline',
-  templateUrl: './is-datepicker-inline.component.html',
-  styleUrls: ['./is-datepicker-inline.component.scss'],
-  providers: [NG_DATEPICKER_INLINE_VALUE_ACCESSOR],
-  encapsulation: ViewEncapsulation.None
+    selector: 'is-datepicker-inline',
+    templateUrl: './is-datepicker-inline.component.html',
+    styleUrls: ['./is-datepicker-inline.component.scss'],
+    providers: [NG_DATEPICKER_INLINE_VALUE_ACCESSOR],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IsDatepickerPopupComponent],
 })
 export class IsDatepickerInlineComponent implements OnDestroy, ControlValueAccessor {
 

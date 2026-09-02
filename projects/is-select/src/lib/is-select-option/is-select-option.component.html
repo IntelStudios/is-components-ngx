@@ -1,15 +1,20 @@
-<ng-container *ngIf="option.children; else leaf">
-  <div *ngIf="option.children" class="dropdown-header">
-    <div class="group-divider" *ngFor="let d of dividers"></div>
-    {{option.Value}}
-    <div class="group-divider end"></div>
-  </div>
-  <is-select-option *ngFor="let o of option.children" [option]="o" [level]="level + 1" [alignment]="alignment" [control]="control" [optionTemplate]="optionTemplate"></is-select-option>
-</ng-container>
-<ng-template #leaf>
+@if (option.children) {
+  @if (option.children) {
+    <div class="dropdown-header">
+      @for (d of dividers; track d) {
+        <div class="group-divider"></div>
+      }
+      {{option.Value}}
+      <div class="group-divider end"></div>
+    </div>
+  }
+  @for (o of option.children; track o) {
+    <is-select-option [option]="o" [level]="level + 1" [alignment]="alignment" [control]="control" [optionTemplate]="optionTemplate"></is-select-option>
+  }
+} @else {
   <div class="ui-select-choices-row" [ngClass]="{'disabled': option.disabled === true}" [class.selected]="isSelected$ | async" [class.active]="isActive$ | async" (mouseenter)="selectActive()"  (click)="selectMatch($event)">
     <ng-container [ngTemplateOutlet]="optionTemplate"
       [ngTemplateOutletContext]="{$implicit: option, index: 0, item: option}">
     </ng-container>
   </div>
-</ng-template>
+}
