@@ -48,14 +48,14 @@ describe('IsEncapsulatedComponent', () => {
 
   function testCSSParsing(testCase: ParseTest): void {
     const result: ParseResult = component.parseCss(testCase.css);
-    const expectedFailOutput = [testCase, result];
 
     // no parse errors should occur
-    expect(result.stylesheet.parsingErrors.length).toBe(0, expectedFailOutput);
+    expect(result.stylesheet.parsingErrors.length).toBe(0);
+
 
     // expected elements should have correct length
     const rules = result.stylesheet.rules.filter((x) => x.type !== 'comment');
-    expect(rules.length).toBe(testCase.expected.length, expectedFailOutput);
+    expect(rules.length).toBe(testCase.expected.length);
 
     // check that all parsed rules are expected and accounted for
     expect(compareArrayContent(rules, testCase.expected, (rule, expectedRule) => {
@@ -80,7 +80,7 @@ describe('IsEncapsulatedComponent', () => {
       }
 
       return false;
-    })).toBeTruthy(expectedFailOutput);
+    })).toBeTruthy();
   }
 
   function encapsulateHTML(html: string): {root:  HTMLElement, style: HTMLStyleElement} {

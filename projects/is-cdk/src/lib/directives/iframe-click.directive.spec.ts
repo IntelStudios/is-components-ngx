@@ -46,7 +46,7 @@ describe('IsIFrameClickDirective', () => {
 
 @Component({
     template: `
-    <iframe #frame [isIframeClick]></iframe>
+    <iframe #frame isIframeClick></iframe>
   `,
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IsIFrameClickDirective],

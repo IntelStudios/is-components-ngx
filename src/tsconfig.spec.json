@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "types": [
-      "jasmine",
       "node"
     ],
     "paths": {
@@ -33,9 +32,14 @@
       ]
     }
   },
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  },
   "files": [
-    "test.ts",
-    "polyfills.ts"
+    "test-providers.ts",
+    "test-setup-jquery.ts",
+    "test-setup.ts",
+    "test-setup.d.ts"
   ],
   "include": [
     "**/*.spec.ts",

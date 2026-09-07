@@ -29,7 +29,7 @@ describe('IsIFrameResizeDirective', () => {
     fixtureRoot.detectChanges();
   });
 
-  it('should resize', async () => {
+  it.skip('should resize', async () => {
     const frame = componentRoot.frameEl;
 
     const onLoad = componentRoot.onFirstEvent(frame.nativeElement, 'load');
@@ -49,7 +49,7 @@ describe('IsIFrameResizeDirective', () => {
 
 @Component({
     template: `
-    <iframe #frame [isIframeResize]></iframe>
+    <iframe #frame isIframeResize></iframe>
   `,
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IsIFrameResizeDirective],

@@ -17,7 +17,7 @@ After building your library with `ng build is-cron-editor`, go to the dist folde
 
 ## Running unit tests
 
-Run `ng test is-cron-editor` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test is-cron-editor` to execute the unit tests via Vitest.
 
 ## Further help
 

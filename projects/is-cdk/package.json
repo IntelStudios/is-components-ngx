@@ -1,6 +1,6 @@
 {
   "name": "@intelstudios/cdk",
-  "version": "22.0.0",
+  "version": "22.0.1",
   "dependencies": {
     "tslib": "^2.0.0"
   },

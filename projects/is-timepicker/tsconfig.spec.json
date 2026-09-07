@@ -3,12 +3,17 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
     "types": [
-      "jasmine",
       "node"
     ]
   },
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  },
   "files": [
-    "src/test.ts"
+    "../../src/test-providers.ts",
+    "../../src/test-setup-jquery.ts",
+    "../../src/test-setup.ts",
+    "../../src/test-setup.d.ts"
   ],
   "include": [
     "**/*.spec.ts",
