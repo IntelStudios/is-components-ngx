@@ -133,10 +133,10 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     this.behavior.ensureHighlightVisible();
     if (this.control.minLoadChars === 0) {
       setTimeout(() => {
-        // immediatelly request options from client
         this.isLoadingOptions = true;
         this.control.onLoadOptions('');
         this.cd.markForCheck();
+        this.cd.detectChanges();
       });
     }
 
@@ -185,12 +185,19 @@ export class IsSelectOptionsComponent implements OnInit, AfterViewInit {
     if (this.multiple && this.value) {
       this.options = OptionsBehavior.filterPredicate(this.options, (opt) => !opt.Checked);
     }
-    if (options && this.isLoadingOptions && (this.control.minLoadChars === 0) || (this.searchFilter && this.searchFilter.length >= this.control.minLoadChars)) {
-      this.behavior.filter(createFilterRegexp(this.searchFilter));
+    const loadComplete = this.isLoadingOptions && (
+      this.control.minLoadChars === 0
+      || (this.searchFilter && this.searchFilter.length >= this.control.minLoadChars)
+    );
+    if (loadComplete) {
       this.isLoadingOptions = false;
     }
     this.behavior.init();
+    if (this.searchFilter) {
+      this.behavior.filter(createFilterRegexp(this.searchFilter));
+    }
     this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   selectMatch(value: SelectItem, e: Event = void 0) {

@@ -186,7 +186,9 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
     }
 
     if (this.optionsInstanceRef) {
+      this.optionsInstanceRef.instance.control.options = this.options;
       this.optionsInstanceRef.instance.setOptions(this.options);
+      this.optionsInstanceRef.changeDetectorRef.detectChanges();
     }
   }
 
@@ -714,6 +716,8 @@ export class IsSelectComponent implements OnInit, ControlValueAccessor {
         this.loadOptions.emit(filter);
       }
     }
+
+    this.optionsInstanceRef.changeDetectorRef.detectChanges();
 
     // listen for a general mousedown to close all options (mousedown is generated e. g. when a movable modal drag is started)
     this._clickedOutsideListener = this.renderer.listen('document', 'mousedown', ($event: MouseEvent) => {

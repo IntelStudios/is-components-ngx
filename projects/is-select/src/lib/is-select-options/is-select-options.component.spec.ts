@@ -117,6 +117,51 @@ describe('IsSelectOptionsComponent', () => {
     expect(loadRequestValue).withContext('should load options exactly on 3 characters').toBe('TeS');
   });
 
+  it('should load options immediately when minLoadChars is 0', async () => {
+    const comp = componentRoot.options;
+    const el = componentRoot.optionsEl;
+
+    let loadRequestValue: string | undefined;
+    callbacks.loadOptions = (value) => {
+      loadRequestValue = value;
+    };
+
+    await componentRoot.afterTick();
+    await componentRoot.afterChanges();
+
+    expect(loadRequestValue).withContext('should request options with empty filter').toBe('');
+    expect(comp.isLoadingOptions).withContext('should show loader while waiting').toBeTrue();
+    expect(el.nativeElement.querySelector('.options-loading')).withContext('loader should be in DOM').not.toBeNull();
+
+    comp.setOptions(componentRoot.colors);
+    await componentRoot.afterChanges();
+
+    expect(comp.isLoadingOptions).withContext('should hide loader after options arrive').toBeFalse();
+    expect(el.nativeElement.querySelector('.options-loading')).withContext('loader should leave DOM').toBeNull();
+
+    const optionTexts: string[] = [];
+    el.nativeElement.querySelectorAll('is-select-option').forEach((x) => optionTexts.push(x.textContent));
+    for (const col of componentRoot.colors) {
+      expect(optionTexts.find((text) => text.includes(col.Value))).withContext(`should show "${col.Value}" option`).toBeDefined();
+    }
+  });
+
+  it('should hide loader when minLoadChars is 0 and load returns no options', async () => {
+    const comp = componentRoot.options;
+    const el = componentRoot.optionsEl;
+
+    await componentRoot.afterTick();
+    await componentRoot.afterChanges();
+    expect(comp.isLoadingOptions).toBeTrue();
+
+    comp.setOptions([]);
+    await componentRoot.afterChanges();
+
+    expect(comp.isLoadingOptions).withContext('empty result still completes the load').toBeFalse();
+    expect(el.nativeElement.querySelector('.options-loading')).toBeNull();
+    expect(el.nativeElement.querySelectorAll('is-select-option').length).toBe(0);
+  });
+
   it('should use custom template', async () => {
     const comp = componentRoot.options;
     const el = componentRoot.optionsEl;

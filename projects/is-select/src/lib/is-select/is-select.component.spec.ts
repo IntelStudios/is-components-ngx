@@ -123,6 +123,22 @@ describe('IsSelectComponent', () => {
     expect(componentRoot.getSelectOptions()).withContext('search should be visible').not.toBeNull();
   });
 
+  it('should show lazy loaded options when minLoadChars is 0', async () => {
+    const element = componentRoot.lazyLoadZero;
+
+    await componentRoot.openSelectOptions(element);
+    await componentRoot.afterTick();
+    await componentRoot.afterChanges();
+
+    const overlay = componentRoot.getSelectOptions();
+    expect(overlay).withContext('options overlay should be open').not.toBeNull();
+    expect(overlay.querySelector('.options-loading')).withContext('loader should hide after items arrive').toBeNull();
+
+    const optionTexts: string[] = [];
+    overlay.querySelectorAll('is-select-option').forEach((x) => optionTexts.push(x.textContent));
+    expect(optionTexts.find((text) => text.includes('green'))).withContext('should show loaded options').toBeDefined();
+  });
+
   it('should select multiple', async () => {
     const element = componentRoot.selectMultiEl;
     const control = componentRoot.control2;
@@ -197,6 +213,8 @@ describe('IsSelectComponent', () => {
     
     <is-select id="testLazyLoadSearch" #lazyLoadSearch [formControl]="control" [minLoadChars]="2" [items]="colors$ | async" (loadOptions)="loadColors()" class="hidden"></is-select>
     
+    <is-select id="testLazyLoadZero" #lazyLoadZero [formControl]="control" [minLoadChars]="0" [items]="colors$ | async" (loadOptions)="loadColors()" class="hidden"></is-select>
+    
     <is-select [formControl]="control3" [items]="colors" [unsetNoMatch]="true" class="hidden"></is-select>
     <is-select [formControl]="control4" [items]="colors" class="hidden"></is-select>
     `,
@@ -212,6 +230,9 @@ class TestComponent extends TestComponentBase<TestComponent> {
   }
   get lazyLoadSearch(): ElementRef<HTMLElement> {
     return TestComponent.useElement(this._lazyLoadSearch);
+  }
+  get lazyLoadZero(): ElementRef<HTMLElement> {
+    return TestComponent.useElement(this._lazyLoadZero);
   }
   get selectColorValue(): ElementRef<HTMLElement> {
     return TestComponent.useElement(this._selectColorValue);
@@ -250,6 +271,7 @@ class TestComponent extends TestComponentBase<TestComponent> {
   @ViewChild('allowClear', {static: true, read: ElementRef}) private _allowClear: ElementRef<HTMLElement>;
   @ViewChild('selectColorValue', {static: true, read: ElementRef}) private _selectColorValue: ElementRef<HTMLElement>;
   @ViewChild('lazyLoadSearch', {static: true, read: ElementRef}) private _lazyLoadSearch: ElementRef<HTMLElement>;
+  @ViewChild('lazyLoadZero', {static: true, read: ElementRef}) private _lazyLoadZero: ElementRef<HTMLElement>;
   @ViewChild('selectMultiFixed', {static: false, read: ElementRef}) private _selectMultiFixed: ElementRef<HTMLElement>;
   @ViewChild('selectMulti', {static: true, read: ElementRef}) private _selectMultiEl: ElementRef<HTMLElement>;
   @ViewChild('selectMultiAsync', {static: true, read: ElementRef}) private _selectMultiAsync: ElementRef<HTMLElement>;
