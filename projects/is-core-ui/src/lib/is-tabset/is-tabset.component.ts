@@ -1,10 +1,7 @@
 import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewInit,
   Component,
   ContentChild,
-  ContentChildren,
+  DestroyRef,
   Directive,
   ElementRef,
   EventEmitter,
@@ -12,16 +9,20 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  QueryList,
   Renderer2,
+  afterRenderEffect,
+  computed,
+  contentChildren,
+  inject,
+  input,
+  linkedSignal,
+  signal,
   TemplateRef,
-  ChangeDetectorRef,
   HostBinding,
-  SimpleChanges,
-  OnChanges,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NgTemplateOutlet } from '@angular/common';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, interval, merge, Subscription, bindCallback, Subject } from 'rxjs';
@@ -53,6 +54,12 @@ export interface TabChangeEvent {
 }
 
 export type IsTabsetScrollableMode = 'none' | 'sticky-headers' | 'scrollable-tabcontent';
+
+interface ActiveTabSource {
+  tabs: readonly IsTabDirective[];
+  id: string;
+  requested: IsTabDirective;
+}
 
 /**
  * This directive should be used to render invalid content, which appears
@@ -103,59 +110,34 @@ export class IsTabDirective {
   /**
    * Unique tab identifier. Must be unique for the entire document for proper accessibility support.
    */
-  @Input() id: string = `is-tab-${nextId++}`;
+  readonly id = input<string>(`is-tab-${nextId++}`);
   /**
    * Simple (string only) title. Use the "NgbTabTitle" directive for more complex use-cases.
    */
-  @Input() title: string;
+  readonly title = input<string>();
 
-  @Input() titleClass: string = '';
+  readonly titleClass = input('');
   /**
    * Allows toggling disabled state of a given state. Disabled tabs can't be selected.
    */
-  @Input() disabled = false;
+  readonly disabled = input(false);
 
-  @Input() paneClass = '';
+  readonly paneClass = input('');
 
   /**
    * Valid/invalid tab incidation. This allows to incidate invalid tab in tabset
    * which is not visible to user (because of wrap being enabled)
    */
-  @Input()
-  set valid(value: boolean) {
-    this._valid = value;
-    if (this.tabset && (value === true || value === false)) {
-      this.tabset.updateValidityIndication();
-    }
-  }
-  get valid(): boolean {
-    return this._valid;
-  }
-  private _valid = true;
+  readonly valid = input(true);
   /**
-   * set wheather tab content should be lazy-loaded or not. Default is false,
-   * so tab's content is immediately rendered. If set to `true` tab's content
-   * is loaded when selected for the 1st time
+   * always - content is rendered immediately and stays rendered
+   * selected - content is rendered when the tab is selected for the 1st time and then stays rendered
+   * activeOnly - content is rendered only while the tab is active
    */
-  @Input() load: 'always' | 'activeOnly' | 'selected' = 'always';
+  readonly load = input<'always' | 'activeOnly' | 'selected'>('always');
 
   @ContentChild(IsTabContentDirective, { static: true }) contentTpl: IsTabContentDirective;
   @ContentChild(IsTabTitleDirective, { static: true }) titleTpl: IsTabTitleDirective;
-
-  loaded: boolean = false;
-
-  private tabset: IsTabsetComponent;
-
-  constructor() {
-
-  }
-
-  /**
-   * *internal use only*
-   */
-  registerTabset(tabset: IsTabsetComponent) {
-    this.tabset = tabset;
-  }
 }
 
 /**
@@ -167,10 +149,10 @@ export class IsTabDirective {
     template: `
     <div class="tab-header">
       <ul [class]="tabClass" role="tablist" [class.stretched]="stretched">
-        @for (tab of tabs; track tab) {
-          <li class="nav-item" [class.disabled]="tab.disabled" [class.is-tab-invalid]="tab.valid === false">
-            <a [id]="tab.id" class="nav-link {{tab.titleClass}}" [ngClass]="{'active show' : tab.id === activeId}" (click)="select(tab.id)">
-              {{tab.title}}<ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
+        @for (tab of tabs(); track tab.id()) {
+          <li class="nav-item" [class.disabled]="tab.disabled()" [class.is-tab-invalid]="tab.valid() === false">
+            <a [id]="tab.id()" class="nav-link" [class]="tab.titleClass()" [class.active]="tab === activeTab()" [class.show]="tab === activeTab()" (click)="select(tab.id())">
+              {{tab.title()}}<ng-template [ngTemplateOutlet]="tab.titleTpl?.templateRef"></ng-template>
             </a>
           </li>
         }
@@ -180,13 +162,13 @@ export class IsTabDirective {
       <div class="scroll-btn right"><i class="fas fa-chevron-right" (click)="scrollLeft()" (mousedown)="startScrollLeft()" (mouseup)="stopScroll()"></i></div>
     </div>
     
-    @if (tabsetInvalidLeft) {
+    @if (tabsetInvalidLeft()) {
       <div class="tabset-invalid left">
         <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate?.templateRef || defaultInvalidTemplate">
         </ng-container>
       </div>
     }
-    @if (tabsetInvalidRight) {
+    @if (tabsetInvalidRight()) {
       <div class="tabset-invalid right">
         <ng-container [ngTemplateOutlet]="tabsetInvalidTemplate?.templateRef || defaultInvalidTemplate">
         </ng-container>
@@ -195,11 +177,11 @@ export class IsTabDirective {
     <ng-template #defaultInvalidTemplate>
       <i class="fas fa-exclamation"></i>
     </ng-template>
-    @if (tabs.length > 0) {
+    @if (tabs().length > 0) {
       <div class="tab-content" [class.pills]="pills" cdkScrollable>
-        @for (tab of tabs; track tab) {
-          @if (tab.loaded || tab.id === activeId) {
-            <div class="tab-pane" [className]="tab.paneClass" [ngClass]="{'active show' : tab.id === activeId }" role="tabpanel" [attr.aria-labelledby]="tab.id">
+        @for (tab of tabs(); track tab.id()) {
+          @if (renderedTabs().has(tab)) {
+            <div class="tab-pane" [class]="tab.paneClass()" [class.active]="tab === activeTab()" [class.show]="tab === activeTab()" role="tabpanel" [attr.aria-labelledby]="tab.id()">
               <ng-template [ngTemplateOutlet]="tab.contentTpl.templateRef"></ng-template>
             </div>
           }
@@ -208,13 +190,20 @@ export class IsTabDirective {
     }
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, NgTemplateOutlet, CdkScrollable],
+    imports: [NgTemplateOutlet, CdkScrollable],
 })
-export class IsTabsetComponent implements AfterContentChecked, AfterContentInit, OnInit, OnDestroy, AfterViewInit, OnChanges {
+export class IsTabsetComponent implements OnInit, OnDestroy {
   /**
    * An identifier of an initially selected (active) tab. Use the "select" method to switch a tab programmatically.
+   * Reading returns the id of the tab that is actually shown (the first tab when the requested id does not exist).
    */
-  @Input() activeId: string;
+  @Input()
+  set activeId(id: string) {
+    this.selectedId.set(id);
+  }
+  get activeId(): string {
+    return this.activeTab()?.id();
+  }
 
   /**
    * Sets stretched display behavior. If Enabled, tab titless will stretch to max available space. If disabled
@@ -263,7 +252,58 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
    */
   @Output() tabChange = new EventEmitter<TabChangeEvent>();
 
-  @ContentChildren(IsTabDirective) tabs: QueryList<IsTabDirective>;
+  /**
+   * OnPush skips a ContentChildren query, so added or removed is-tab nodes never redraw.
+   * Reading this signal in the template subscribes to that list and schedules a check.
+   */
+  readonly tabs = contentChildren(IsTabDirective, { descendants: false });
+
+  private readonly selectedId = signal<string>(undefined);
+
+  /**
+   * The requested tab when it exists. Otherwise the current tab stays active while it exists,
+   * so added or reordered tabs do not move the selection; a new request that matches nothing
+   * and a removed active tab both fall back to the first tab.
+   */
+  private readonly _activeTab = linkedSignal<ActiveTabSource, IsTabDirective>({
+    source: () => {
+      const tabs = this.tabs();
+      const id = this.selectedId();
+      return { tabs, id, requested: tabs.find(tab => tab.id() === id) };
+    },
+    computation: ({ tabs, id, requested }, previous) => {
+      if (requested) {
+        return requested;
+      }
+      const current = previous?.value;
+      const sameRequest = previous?.source.id === id;
+      return sameRequest && current && tabs.includes(current) ? current : tabs[0] ?? null;
+    },
+  });
+
+  readonly activeTab = this._activeTab.asReadonly();
+
+  /**
+   * Every tab that has been active, so `load: 'selected'` content stays rendered after leaving it.
+   * Tabs that were active only between two renders are not recorded; their content was never shown.
+   */
+  private readonly visitedTabs = linkedSignal<IsTabDirective, ReadonlySet<IsTabDirective>>({
+    source: this.activeTab,
+    computation: (active, previous) => {
+      const visited = new Set(previous?.value);
+      if (active) {
+        visited.add(active);
+      }
+      return visited;
+    },
+  });
+
+  readonly renderedTabs = computed(() => {
+    const active = this.activeTab();
+    const visited = this.visitedTabs();
+    return new Set(this.tabs().filter(tab =>
+      tab === active || tab.load() === 'always' || (tab.load() === 'selected' && visited.has(tab))));
+  });
 
   @ContentChild(IsTabsetInvalidDirective, { static: true })
   tabsetInvalidTemplate: IsTabsetInvalidDirective;
@@ -271,8 +311,8 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   @ContentChild(IsTabsetAfterNavItemsDirective, { static: true })
   tabsetAfterNavItemsTemplate: IsTabsetAfterNavItemsDirective;
 
-  tabsetInvalidLeft: boolean = false;
-  tabsetInvalidRight: boolean = false;
+  readonly tabsetInvalidLeft = signal(false);
+  readonly tabsetInvalidRight = signal(false);
 
 
   private isSelecting: boolean = false;
@@ -286,10 +326,23 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   private _scrollSub: Subscription;
   private _updateValidity$: Subject<any> = new Subject();
   private _updateValiditySub: Subscription;
-  private _fragment: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private changeDetector: ChangeDetectorRef) {
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly el = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
+  private readonly destroyRef = inject(DestroyRef);
 
+  constructor() {
+    afterRenderEffect(() => {
+      this.activeTab();
+      for (const tab of this.tabs()) {
+        tab.valid();
+      }
+      this.scrollToActiveTab();
+      this.updateScrollBtnVisibility();
+      this.updateValidityIndication();
+    });
   }
 
   ngOnInit() {
@@ -299,13 +352,16 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
 
     if (this.useRouter) {
       this.route.fragment
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((fragment) => {
-          this._fragment = fragment;
-          if (this.tabs) {
-            const tab = this.tabs.toArray().find((t) => t.id === fragment);
-            if (tab) {
-              this.select(tab.id);
-            }
+          if (!fragment) {
+            return;
+          }
+          if (this._getTabById(fragment)) {
+            this.select(fragment);
+          } else {
+            // the tab may not be rendered yet; activeTab switches to it once it appears
+            this.selectedId.set(fragment);
           }
         });
     }
@@ -335,116 +391,53 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
           const width = ulRect.left + this.elUL.clientWidth;
           const tabs = this.elUL.querySelectorAll('ul > .is-tab-invalid');
 
-          this.tabsetInvalidRight = false;
-          this.tabsetInvalidLeft = false;
+          this.tabsetInvalidRight.set(false);
+          this.tabsetInvalidLeft.set(false);
           tabs.forEach(t => {
             const rect = t.getBoundingClientRect();
             if (rect.left < ulRect.left) {
-              this.tabsetInvalidLeft = true;
+              this.tabsetInvalidLeft.set(true);
             }
             if (rect.left + (rect.width - 1) > width) {
-              this.tabsetInvalidRight = true;
+              this.tabsetInvalidRight.set(true);
             }
           });
-          this.tabsetInvalidRight;
-          this.changeDetector.markForCheck();
         });
     }
   }
 
   ngOnDestroy() {
-    if (this._updateValidity$) {
-      this._updateValiditySub.unsubscribe();
-    }
-    if (this._sub) {
-      this._sub.unsubscribe();
-    }
-  }
-
-  ngAfterViewInit() {
-    this.updateScrollBtnVisibility();
-
-  }
-
-  ngAfterContentInit() {
-    //set internal loaded state based on input lazyLoad option
-    this.tabs.forEach((t: IsTabDirective) => {
-      t.registerTabset(this);
-      if (!t.loaded) {
-        t.loaded = t.load === 'always';
-      } else {
-        t.loaded = t.load !== 'activeOnly';
-      }
-    });
-    this.updateValidityIndication();
-    if (this.useRouter && this._fragment) {
-      const tab = this.tabs.find((t) => t.id === this._fragment);
-      if (tab) {
-        this.select(tab.id);
-      }
-    }
-  }
-
-  ngAfterContentChecked() {
-    // auto-correct activeId that might have been set incorrectly as input
-    let activeTab = this._getTabById(this.activeId);
-    if (activeTab) {
-      if (this.activeId !== activeTab.id) {
-        this.activeId = activeTab.id;
-        this.changeDetector.markForCheck();
-      }
-    } else if (this.tabs.length) {
-      activeTab = this.tabs.first;
-      activeTab.loaded = true;
-      this.activeId = activeTab.id;
-      this.changeDetector.markForCheck();
-    }
+    this._updateValiditySub?.unsubscribe();
+    this._sub?.unsubscribe();
+    this.stopScroll();
   }
 
   /**
    * Selects the tab with the given id and shows its associated pane.
    * Any other tab that was previously selected becomes unselected and its associated pane is hidden.
    */
-  select(tabId: string, force?: boolean) {
+  select(tabId: string, force = false) {
     if (this.isSelecting) {
       return;
     }
-    let selectedTab = this._getTabById(tabId);
-    if (selectedTab && !selectedTab.disabled && this.activeId !== selectedTab.id || force) {
-      let defaultPrevented = false;
+    const selectedTab = this._getTabById(tabId);
+    const currentTab = this.activeTab();
+    if (!selectedTab || (!force && (selectedTab.disabled() || selectedTab === currentTab))) {
+      return;
+    }
 
-      if (force === undefined) {
-        force = false;
-      }
-      this.tabChange.emit(
-        { forced: force, activeId: this.activeId, nextId: selectedTab.id, preventDefault: () => { defaultPrevented = true; } });
+    let defaultPrevented = false;
+    this.tabChange.emit(
+      { forced: force, activeId: currentTab?.id(), nextId: selectedTab.id(), preventDefault: () => { defaultPrevented = true; } });
+    if (defaultPrevented && !force) {
+      return;
+    }
 
-      if (!defaultPrevented || force) {
-        const previousTab = this._getTabById(this.activeId);
-        if (previousTab && previousTab.load === 'activeOnly' && previousTab.loaded) {
-          // unload tab content when tab desires to be loaded as activeOnly
-          previousTab.loaded = false;
-        }
-        this.activeId = selectedTab.id;
-        selectedTab.loaded = true;
-        this.changeDetector.markForCheck();
-        if (this.useRouter) {
-          this.isSelecting = true;
-          this.router.navigate([], { fragment: selectedTab.id })
-            .then(() => {
-              this.isSelecting = false;
-              this.scrollToActiveTab();
-              this.changeDetector.markForCheck();
-            })
-            .catch(() => {
-              this.isSelecting = false;
-              this.scrollToActiveTab();
-              this.changeDetector.markForCheck();
-            });
-        } else {
-          this.scrollToActiveTab();
-        }
-      }
+    this.selectedId.set(selectedTab.id());
+    if (this.useRouter) {
+      this.isSelecting = true;
+      const done = () => { this.isSelecting = false; };
+      this.router.navigate([], { fragment: selectedTab.id() }).then(done, done);
     }
   }
 
@@ -507,8 +500,7 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
   }
 
   private _getTabById(id: string): IsTabDirective {
-    const tabsWithId: IsTabDirective[] = this.tabs.filter(tab => tab.id === id);
-    return tabsWithId.length ? tabsWithId[0] : null;
+    return this.tabs().find(tab => tab.id() === id) ?? null;
   }
 
   /**
@@ -528,14 +520,6 @@ export class IsTabsetComponent implements AfterContentChecked, AfterContentInit,
       } else if (tabRect.right > ulRect.right) {
         this.elUL.scrollBy({ behavior: 'smooth', left: tabRect.right - ulRect.right + 20 });
       }
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.activeId && this.activeId) {
-      setTimeout(() => {
-        this.scrollToActiveTab();
-      });
     }
   }
 }
