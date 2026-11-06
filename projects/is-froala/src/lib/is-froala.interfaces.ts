@@ -7,6 +7,12 @@ export interface IsFroalaConfig {
    */
   getLicense(): string;
   getTheme?: () => FroalaTheme;
+  /**
+   * Application UI language, read when the editor instance is created.
+   * App codes `pt`, `zh-cn` and `zh-tw` are mapped to Froala language ids.
+   * Overridden by `options.language` and by the `language` input.
+   */
+  getLanguage?: () => string;
   defaultToolbarButtons?: string[];
 }
 

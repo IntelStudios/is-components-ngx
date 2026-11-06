@@ -203,10 +203,11 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
   theme?: FroalaTheme;
 
   /**
-   * Froala UI language. Used when options.language is not set.
+   * Froala UI language. Overrides `IsFroalaConfig.getLanguage()`.
+   * Ignored when `options.language` is set.
    */
   @Input()
-  language = 'en';
+  language?: string;
 
   @Output()
   change: EventEmitter<string> = new EventEmitter<string>();
@@ -360,6 +361,24 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
     }
   }
 
+  /**
+   * `options.language` wins and is passed through unchanged.
+   * Otherwise the input, then `getLanguage()`, then English.
+   * App codes are mapped to Froala language ids.
+   */
+  private resolveLanguage(): string {
+    if (this._options?.language) {
+      return this._options.language;
+    }
+    const languageMap: Record<string, string> = {
+      'pt': 'pt_pt',
+      'zh-cn': 'zh_cn',
+      'zh-tw': 'zh_tw'
+    };
+    const language = this.language || this.froalaConfig.getLanguage?.() || 'en';
+    return languageMap[language] || language;
+  }
+
   private createFroalaConfig(): any {
 
     const defaults: any = {
@@ -399,16 +418,7 @@ export class IsFroalaComponent implements ControlValueAccessor, OnInit, AfterVie
       defaults.theme = this.froalaConfig.getTheme();
     }
 
-    if (this._options && this._options.language) {
-      defaults.language = this._options.language;
-    } else {
-      const languageMap = {
-        'pt': 'pt_pt',
-        'zh-cn': 'zh_cn',
-        'zh_tw': 'zh-tw'
-      };
-      defaults.language = languageMap[this.language] || this.language;
-    }
+    defaults.language = this.resolveLanguage();
 
     this.mergeOptions(defaults, this.options);
     // delete observables & atjs config
